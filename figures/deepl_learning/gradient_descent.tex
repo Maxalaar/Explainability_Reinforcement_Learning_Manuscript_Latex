@@ -1,16 +1,17 @@
 \begin{tikzpicture}
     \begin{axis}[
-        view={45}{45},
+        view={-45}{45},
         xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
         colormap/viridis,
         colorbar,
         mesh/ordering=y varies,
+        scaled z ticks=false,
     ]
 
     \addplot3[
         surf,
         shader=flat,
-        opacity=0.6,
+        opacity=0.8,
         faceted color=none
     ] table {figures/deepl_learning/loss_surface.data};
 
