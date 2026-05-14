@@ -1,0 +1,30 @@
+% ----- Internal helper (now uses #1...#8 correctly) -----
+\newcommand{\event}[8]{%
+    \pgfmathsetmacro{\x}{(#1 - \timelineStart) * \timelineScale}%
+    \pgfmathsetmacro{\y}{#6}%
+    \begin{scope}[on background layer]
+        \draw[thick, dashed] (\x,0) -- ++(0,\y);
+    \end{scope}
+    \node[
+        draw, rounded corners, very thick, fill=#8,
+        minimum height=#5, text width=#4, align=center, font=#7
+    ] at (\x,\y) {\textbf{\cite{#2}} \\[2pt] #3};
+}
+
+% ----- Main timeline command -----
+% Usage: \Timeline[start_year,end_year,scale]{ list of \event{...} ... }
+\newcommand{\Timeline}[2][1943,2025,0.3]{%
+    % Extract parameters
+    \edef\timelineParams{#1}%
+    \pgfmathsetmacro{\timelineStart}{{\timelineParams}[0]}%
+    \pgfmathsetmacro{\timelineEnd}{{\timelineParams}[1]}%
+    \pgfmathsetmacro{\timelineScale}{{\timelineParams}[2]}%
+    %
+    \begin{tikzpicture}
+        % Main timeline arrow
+        \draw[draw, thick, -{Stealth[length=3mm]}, line cap=round] 
+            (0,0) -- ({(\timelineEnd - \timelineStart) * \timelineScale},0);
+        % All events
+        #2
+    \end{tikzpicture}%
+}
