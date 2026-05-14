@@ -1,0 +1,56 @@
+\begin{figure}[t]
+    \centering
+    \resizebox{0.85\textwidth}{!}{
+        \begin{tikzpicture}[
+            >={Stealth},
+            neuron/.style={circle, draw, minimum size=1.2cm, inner sep=0pt},
+            function/.style={rectangle, draw, minimum width=3.4cm, minimum height=3.4cm,
+                            align=center, text width=3cm, inner sep=2pt},
+            dotted line/.style={dotted, line width=2pt},
+        ]
+
+        % Background circle
+        \draw (0,0) circle (5);
+
+        % Combination function (left)
+        \node[function] (combination_function) at (-2.2, 0) {
+            Combination function \\[4pt] $b + \sum_{i=1}^{n} w_i a_i$
+        };
+
+        % Activation function (right)
+        \node[function] (activation_function) at (2.2, 0) {
+            Activation function \\[4pt] $\sigma(\cdot)$
+        };
+
+        % Arrow between the two functions
+        \draw[->] (combination_function.east) -- (activation_function.west);
+
+        % Bias (constant 1) and its connection
+        \node[neuron] (bias) at (-2.2, -3.5) {$1$};
+        \draw[->] (bias) -- (combination_function) node[midway, right] {$b$};
+
+        % Incoming neurons – unrolled for clarity and to avoid parsing errors
+        \node[neuron] (in0) at (-8, 5) {$a_1$};
+        \draw[->] (in0) -- (combination_function) node[midway, above] {$w_1$};
+
+        \node[neuron] (in1) at (-8, 3) {$a_2$};
+        \draw[->] (in1) -- (combination_function) node[midway, above] {$w_2$};
+
+        \node[neuron] (in2) at (-8, -3) {$a_{n-1}$};
+        \draw[->] (in2) -- (combination_function) node[midway, above] {$w_{n-1}$};
+
+        \node[neuron] (in3) at (-8, -5) {$a_n$};
+        \draw[->] (in3) -- (combination_function) node[midway, above] {$w_n$};
+
+        % Dotted line indicating more neurons
+        \draw[dotted, thick] (-8, -1.1) -- (-8, 1.1);
+
+        % Output activation node
+        \node[align=center] (activation_output) at (7,0) {Activation \\ $a$};
+        \draw[->] (activation_function.east) -- (activation_output.west);
+
+        \end{tikzpicture}
+    }
+    \caption{Illustration of a artificiale neurone.}
+    \label{fig:artificiale neurone}
+\end{figure}
