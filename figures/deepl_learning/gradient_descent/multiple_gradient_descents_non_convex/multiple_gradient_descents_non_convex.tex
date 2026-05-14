@@ -1,0 +1,109 @@
+% --- General path for the data files ---
+\def\datapath{figures/deepl_learning/gradient_descent/multiple_gradient_descents_non_convex/}
+% ----------------------------------------
+
+\begin{figure}[t]
+    \centering
+    % First row: Goldstein-Price and Rosenbrock
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tikzpicture}
+        \begin{axis}[
+            view={-45}{45},
+            colormap/viridis,
+            mesh/ordering=y varies,
+            scaled z ticks=false,
+            xticklabels={}, yticklabels={}, zticklabels={},
+        ]
+            \addplot3[
+                surf, shader=flat, opacity=0.8,
+                faceted color=none, point meta=-z,
+            ] table {\datapath loss_surface_goldstein.data};
+            \addplot3[red, line width=1.2pt] table {\datapath optimization_path_goldstein_a.data};
+            \addplot3[red, line width=1.2pt] table {\datapath optimization_path_goldstein_b.data};
+        \end{axis}
+        \end{tikzpicture}%
+        }
+        \caption{Goldstein-Price}
+        \label{fig:goldstein}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tikzpicture}
+        \begin{axis}[
+            view={-45}{-45},
+            colormap/viridis,
+            mesh/ordering=y varies,
+            scaled z ticks=false,
+            xticklabels={}, yticklabels={}, zticklabels={},
+        ]
+            \addplot3[
+                surf, shader=flat, opacity=0.8,
+                faceted color=none, point meta=-z,
+            ] table {\datapath loss_surface_rosenbrock.data};
+            \addplot3[red, line width=1.2pt] table {\datapath optimization_path_rosenbrock_a.data};
+            \addplot3[red, line width=1.2pt] table {\datapath optimization_path_rosenbrock_b.data};
+        \end{axis}
+        \end{tikzpicture}%
+        }
+        \caption{Rosenbrock}
+        \label{fig:rosenbrock}
+    \end{subfigure}
+
+    \vspace{1em}
+
+    % Second row: Sombrero and Ackley
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tikzpicture}
+        \begin{axis}[
+            view={-45}{45},
+            colormap/viridis,
+            mesh/ordering=y varies,
+            scaled z ticks=false,
+            xticklabels={}, yticklabels={}, zticklabels={},
+        ]
+            \addplot3[
+                surf, shader=flat, opacity=0.8,
+                faceted color=none, point meta=-z,
+            ] table {\datapath loss_surface_sombrero.data};
+            \addplot3[red, line width=1.2pt] table {\datapath optimization_path_sombrero_a.data};
+            \addplot3[red, line width=1.2pt] table {\datapath optimization_path_sombrero_b.data};
+        \end{axis}
+        \end{tikzpicture}%
+        }
+        \caption{Sombrero}
+        \label{fig:sombrero}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tikzpicture}
+        \begin{axis}[
+            view={-135}{45},
+            colormap/viridis,
+            mesh/ordering=y varies,
+            scaled z ticks=false,
+            xticklabels={}, yticklabels={}, zticklabels={},
+        ]
+            \addplot3[
+                surf, shader=flat, opacity=0.8,
+                faceted color=none, point meta=-z,
+            ] table {\datapath loss_surface_ackley.data};
+            \addplot3[red, line width=1.2pt] table {\datapath optimization_path_ackley_a.data};
+            \addplot3[red, line width=1.2pt] table {\datapath optimization_path_ackley_b.data};
+        \end{axis}
+        \end{tikzpicture}%
+        }
+        \caption{Ackley}
+        \label{fig:ackley}
+    \end{subfigure}
+
+    \caption{Comparison of loss surfaces and gradient descent trajectories.}
+    \label{fig:multiple_gradient_descents_non_convex}
+\end{figure}

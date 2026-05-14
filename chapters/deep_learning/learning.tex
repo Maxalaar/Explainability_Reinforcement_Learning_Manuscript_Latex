@@ -32,6 +32,8 @@ To achieve this, we compute the partial derivatives of the loss function $\mathc
 \nabla_{\theta} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}) = \left[ \frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_1}, \dots, \frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_P} \right].
 \]
 
+\input{figures/deepl_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
+
 Since both the \gls{nn} and the loss function are compositions of differentiable functions, these derivatives can be efficiently computed using the chain rule.
 Each component of the gradient $\frac{\partial \mathcal{L}(\dots)}{\partial w_k} \; \forall k \in [1, \dots, P]$ indicates how a small increase in the corresponding parameter $w_k$ affects the loss.
 More precisely, for a given parameter, a positive value in the corresponding gradient component indicates that increasing this parameter will locally increase the loss.
