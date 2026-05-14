@@ -1,0 +1,26 @@
+
+\section{Historical Developments}
+\gls{dl} and \gls{nn} emerged from an ambition to study the expressive capabilities of organic brain.
+They can be seen as a particularly striking example of biomimicry, as they draw inspiration from living systems to address scientific challenges.
+The first major milestone came in 1943 with the proposal of a mathematical model of an artificial neuron, with a formulation of networked interactions \cite{mcculloch1943logical}.
+This work established the key idea that networks of simple units can give rise to complex computations.
+The focus was on representational power, not on the ability of such systems to learn.
+As a result, this work remained largely theoretical and had limited practical applications.
+A major step toward operationalizing the idea of networks with the perceptron algorithm in 1958 \cite{rosenblatt1958perceptron}.
+The perceptron was designed to adjusting its parameters based on input–output pairs in order to approximate a function.
+However, the perceptron’s fundamental limitations were exposed in 1969, revealing that the algorithm could not learn functions as simple as the exclusive-or \cite{minsky1969introduction}.
+To overcome this limitation, researchers in 1986 proposed using gradient descent optimization to train deep \glspl{nn} \cite{rumelhart1986learning}.
+
+It took several decades before \gls{dl} reached the level of prominence it has today.
+One major obstacle was the absence of theoretical guarantees regarding the convergence of learning algorithms.
+Although the universal approximation theorem shows that \gls{nn} can represent a wide class of functions \cite{hornik1989multilayer}, it did not ensure that such representations could be effectively learned through optimization methods like gradient descent.
+This lack of rigorous guarantees initially reduced interest within the academic community.
+As a result, early progress relied largely on empirical breakthroughs.
+
+These empirical advances were made possible by two key developments: the availability of large-scale datasets and significant improvements in computational infrastructure.
+\gls{dl} methods require vast amounts of data to perform well, and the rise of the internet alongside the digitization of information enabled the creation of such datasets \cite{hilbert2011world}.
+At the same time, progress in hardware, particularly the use of graphics processing units, greatly increased computational capacity and made it feasible to train large-scale models \cite{krizhevsky2012imagenet}.
+
+These societal changes paved the way for the rise of \gls{dl} as we know it today.
+\gls{dl} has achieved remarkable success across a wide range of domains, including computer vision \cite{krizhevsky2012imagenet}, complex games \cite{silver2017mastering}, content recommendation \cite{covington2016deep}, bio-chemistry \cite{jumper2021highly}, as well as the now essential digital assistants based on large language models \cite{brown2020language}.
+The diversity of these applications explains the enthusiasm for this technology, which continues to redefine the boundaries of what was once considered automatable.

@@ -1,0 +1,53 @@
+\section{Evaluation}
+
+Now that we have described how to train a model, we must turn to the question of how to evaluate it.
+In the supervised learning setting, this evaluation relies on two aspects:
+
+\begin{itemize}
+    \item its performance on the data it was trained on,
+    \item its performance on data it was not trained on.
+\end{itemize}
+
+The first aspect measures how well the loss minimization process has succeeded.
+The second measures how well the model generalizes.
+Indeed, the dataset $\mathcal{D}$ represents a small subset of all possible inputs.
+To estimate how the model will perform in general, it is important to evaluate how it performs on data it has not seen during training.
+
+In order to quantify these two aspects, the dataset is split into two subsets:
+
+\begin{itemize}
+    \item $\mathcal{D}_{\text{train}}$ is the set on which the model minimizes its loss during the training.
+    \item $\mathcal{D}_{\text{test}}$ is kept aside during training in order to evaluate the model's ability to generalize.
+\end{itemize}
+
+When training is completed, the first step is to verify that the model performs well on the data it was trained on.
+To do so, we study the average loss on the training set, denoted $\bar{\ell}_{\text{train}}$:
+\[
+\bar{\ell}_{\text{train}} = \frac{1}{|\mathcal{D}_{\text{train}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{train}}} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})
+\]
+
+If $\bar{\ell}_{\text{train}}$ is not sufficiently low, this means that the model has not been able to learn the task.
+It is not necessary to go further in the analysis of the model's quality.
+Before restarting the training process, various design choices are then adjusted.
+Based on what we have discussed so far in this chapter, these include modifications to the number of layers, the number of neurons per layer, activation functions, the learning rate, or the initialization strategy.
+However, in practice, there are many other possible variations.
+There is no universal rule for choosing the appropriate value for each of them.
+They are therefore chosen empirically, based on models that perform well on similar tasks, combined with intuition.
+Their selection is often costly and remains a challenging problem in \gls{dl}.
+
+Assuming now that the model achieves satisfactory performance on the training dataset $\mathcal{D}_{\text{train}}$.
+We must now study its ability to generalize.
+To do so, we compute the corresponding average loss on $\mathcal{D}_{\text{test}}$:
+\[
+\bar{\ell}_{\text{test}} = \frac{1}{|\mathcal{D}_{\text{test}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{test}}} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})
+\]
+
+If $\bar{\ell}_{\text{test}} \gg \bar{\ell}_{\text{train}}$, the model fails to generalize.
+This situation most often arises due to a phenomenon known as overfitting.
+In such cases, the model does not learn general patterns but instead memorizes the training examples.
+This typically occurs when the number of parameters is too large relative to the amount of training data.
+The simplest remedy is therefore to reduce the number of parameters in the model.
+However, it is still necessary to ensure that the model remains sufficiently expressive to perform well on the data.
+
+If $\bar{\ell}_{\text{test}} \approx \bar{\ell}_{\text{train}}$, this indicates that the model generalizes well beyond the training data.
+The model can therefore be used with confidence for the task on which it was trained.
