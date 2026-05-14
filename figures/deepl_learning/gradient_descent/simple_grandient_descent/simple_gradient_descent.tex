@@ -1,0 +1,96 @@
+% ---------- Customisation ----------
+% Arrow style
+\def\arrowcolor{red}
+\def\arrowtype{->}          % -stealth, -latex, etc.
+\def\arrowthickness{thick}
+
+% Label style
+\def\labelfont{\footnotesize}
+\def\labelfill{white}
+\def\labelprefix{\theta}
+
+% Label offset (in axis units)
+\def\labeloffsetx{0}
+\def\labeloffsety{0.75}
+\def\labeloffsetz{-10}
+% -----------------------------------
+
+\begin{figure}[t]
+    \centering
+    \resizebox{0.85\textwidth}{!}{
+        \begin{tikzpicture}
+        \begin{axis}[
+                % title={$\mathcal{L}(\theta) = w_{1}^2 + w_{2}^2$},
+                view={-60}{60},
+                xlabel={$w_{1}$},
+                ylabel={$w_{2}$},
+                zlabel={$\mathcal{L}$},
+                colormap/viridis,
+                % colorbar,
+                % colorbar style={
+                %     y dir=reverse,
+                %     yticklabel={\pgfmathparse{-\tick}\pgfmathprintnumber{\pgfmathresult}},
+                % },
+                mesh/ordering=y varies,
+                scaled z ticks=false,
+        ]
+
+        % ---------- Loss surface ----------
+        \addplot3[
+            surf,
+            shader=flat,
+            opacity=0.8,
+            faceted color=none,
+            point meta=-z,
+        ] table {figures/deepl_learning/gradient_descent/simple_grandient_descent/loss_surface.data};
+
+        % ---------- Optimization path ----------
+        \pgfplotstableread{figures/deepl_learning/gradient_descent/simple_grandient_descent/optimization_path.data}\datatable
+        \pgfplotstablegetrowsof{\datatable}
+        \pgfmathtruncatemacro{\numpts}{\pgfplotsretval}
+        \pgfmathtruncatemacro{\lastpoint}{\numpts-1}
+        \pgfmathtruncatemacro{\lastseg}{\numpts-2}
+
+        % 1. Draw every segment with an arrow
+        \foreach \i in {0,...,\lastseg}{
+            \pgfmathtruncatemacro{\j}{\i+1}
+            \pgfplotstablegetelem{\i}{0}\of\datatable \let\xstart\pgfplotsretval
+            \pgfplotstablegetelem{\i}{1}\of\datatable \let\ystart\pgfplotsretval
+            \pgfplotstablegetelem{\i}{2}\of\datatable \let\zstart\pgfplotsretval
+            \pgfplotstablegetelem{\j}{0}\of\datatable \let\xend\pgfplotsretval
+            \pgfplotstablegetelem{\j}{1}\of\datatable \let\yend\pgfplotsretval
+            \pgfplotstablegetelem{\j}{2}\of\datatable \let\zend\pgfplotsretval
+            \addplot3[
+                \arrowcolor,
+                \arrowtype,
+                \arrowthickness,
+                mark=none,
+            ] coordinates {
+                (\xstart,\ystart,\zstart) (\xend,\yend,\zend)
+            };
+        }
+
+        % 2. Place a label on every point
+        \foreach \k in {0,...,\lastpoint}{
+            \pgfmathtruncatemacro{\labelidx}{\k+1}
+            \pgfplotstablegetelem{\k}{0}\of\datatable \let\x\pgfplotsretval
+            \pgfplotstablegetelem{\k}{1}\of\datatable \let\y\pgfplotsretval
+            \pgfplotstablegetelem{\k}{2}\of\datatable \let\z\pgfplotsretval
+            % Expand coordinates immediately, but protect font commands
+            \edef\templabel{
+                \noexpand\node[
+                    font=\noexpand\labelfont,
+                    fill=\noexpand\labelfill,
+                    inner sep=1pt,
+                ] at (axis cs: \x+\labeloffsetx,\y+\labeloffsety,\z+\labeloffsetz)
+                    {$\labelprefix_{\labelidx}$};
+            }
+            \templabel
+        }
+
+        \end{axis}
+        \end{tikzpicture}
+    }
+    \caption{Gradient descent in a case $\mathcal{L}(w_{1}, w_{2}) = w_{1}^2 + w_{2}^2$.}
+    \label{fig:simple_gradient_descent}
+\end{figure}
