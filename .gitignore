@@ -91,3 +91,6 @@ Thumbs.db
 # --- latexdiff ---
 *.orig
 *.diff
+
+# --- custom ---
+temporary/
