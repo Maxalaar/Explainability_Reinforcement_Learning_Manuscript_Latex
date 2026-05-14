@@ -1,8 +1,7 @@
 \begin{tikzpicture}
     \begin{axis}[
-        view={60}{45},
+        view={45}{45},
         xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
-        title={Surface $z = x^2 + y^2$ (opacité 0.6)},
         colormap/viridis,
         colorbar,
         mesh/ordering=y varies,
@@ -10,7 +9,9 @@
 
     \addplot3[
         surf,
+        shader=flat,
         opacity=0.6,
+        faceted color=none
     ] table {figures/deepl_learning/loss_surface.data};
 
     \end{axis}
