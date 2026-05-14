@@ -1,0 +1,93 @@
+\newcommand{\layerLeftX}{-10}
+\newcommand{\layerRightX}{10}
+\newcommand{\contentY}{-8.5}
+\pgfmathsetmacro{\centerX}{(\layerLeftX + \layerRightX)/2}
+
+\begin{figure}[t]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tikzpicture}[
+            x=0.65cm, y=0.65cm,
+            neuron/.style={circle, draw, minimum size=30pt, inner sep=1pt},
+            arr/.style={-{Stealth[length=4pt, width=3pt]}},
+        ]
+
+        %%── Previous layer  (x = \layerLeftX) ───────────────────────────────────────
+        \node[neuron] (P1) at (\layerLeftX,  3.5) {$a^{l-1}_1$};
+        \node[neuron] (P2) at (\layerLeftX,  1.5) {$a^{l-1}_2$};
+        \node[neuron] (P3) at (\layerLeftX, -1.5) {$a^{l-1}_{n_{l-1}-1}$};
+        \node[neuron] (P4) at (\layerLeftX, -3.5) {$a^{l-1}_{n_{l-1}}$};
+
+        \draw[dotted, thick] (\layerLeftX, 0.5) -- (\layerLeftX, -0.5);
+        \node[font=\large] at (\layerLeftX, 5.2) {Layer $l-1$};
+
+        %%── Current layer  (x = \layerRightX) ───────────────────────────────────────
+        \node[neuron] (C1) at (\layerRightX,  3.5) {$a^l_1$};
+        \node[neuron] (C2) at (\layerRightX,  1.5) {$a^l_2$};
+        \node[neuron] (C3) at (\layerRightX, -1.5) {$a^l_{n_l-1}$};
+        \node[neuron] (C4) at (\layerRightX, -3.5) {$a^l_{n_l}$};
+
+        \draw[dotted, thick] (\layerRightX, 0.5) -- (\layerRightX, -0.5);
+        \node[font=\large] at (\layerRightX, 5.2) {Layer $l$};
+
+        %%── Fully-connected arrows ──────────────────────────────────────────────────
+        \foreach \i in {1,...,4}{
+        \foreach \j in {1,...,4}{
+            \draw[arr] (P\i) -- (C\j);
+        }
+        }
+
+        %%── Braces (mirror = opens downward) ───────────────────────────────────────
+        % Under P4
+        \draw[decorate, decoration={brace, amplitude=5pt, mirror}]
+        ([xshift=-6pt, yshift=-12pt]P4.south west)
+        -- ([xshift=6pt, yshift=-12pt]P4.south east);
+
+        % Under C4
+        \draw[decorate, decoration={brace, amplitude=5pt, mirror}]
+        ([xshift=-6pt, yshift=-12pt]C4.south west)
+        -- ([xshift=6pt, yshift=-12pt]C4.south east);
+
+        % Spanning brace from P4 south-east to C4 south-west
+        \draw[decorate, decoration={brace, amplitude=5pt, mirror}]
+        ([xshift=6pt,  yshift=-12pt]P4.south east)
+        -- ([xshift=-6pt, yshift=-12pt]C4.south west);
+
+        %%── Content below (position Y pilotée par \contentY) ────────────────────────
+        \node[align=center, font=\small] at (\layerLeftX, \contentY) {%
+        Activation\\[2pt]layer $l-1$\\[6pt]
+        $h^{l-1} = \begin{bmatrix}
+            a^{l-1}_1 \\[2pt] a^{l-1}_2 \\[2pt] \vdots \\[2pt]
+            a^{l-1}_{n_{l-1}-1} \\[2pt] a^{l-1}_{n_{l-1}}
+        \end{bmatrix}$%
+        };
+
+        \node[align=center, font=\small] at (\centerX, \contentY) {%
+        Weight matrix connecting\\[2pt]layer $l-1$ to layer $l$\\[6pt]
+        $W^l = \begin{bmatrix}
+            \scriptstyle w_{1\to 1}           & \scriptstyle w_{2\to 1}           & \cdots &
+            \scriptstyle w_{n_{l-1}-1\to 1}   & \scriptstyle w_{n_{l-1}\to 1}   \\[3pt]
+            \scriptstyle w_{1\to 2}           & \scriptstyle w_{2\to 2}           & \cdots &
+            \scriptstyle w_{n_{l-1}-1\to 2}   & \scriptstyle w_{n_{l-1}\to 2}   \\[3pt]
+            \vdots                            & \vdots                            & \ddots &
+            \vdots                            & \vdots                           \\[3pt]
+            \scriptstyle w_{1\to n_l-1}       & \scriptstyle w_{2\to n_l-1}       & \cdots &
+            \scriptstyle w_{n_{l-1}-1\to n_l-1} & \scriptstyle w_{n_{l-1}\to n_l-1}\\[3pt]
+            \scriptstyle w_{1\to n_l}         & \scriptstyle w_{2\to n_l}         & \cdots &
+            \scriptstyle w_{n_{l-1}-1\to n_l} & \scriptstyle w_{n_{l-1}\to n_l}
+        \end{bmatrix}$%
+        };
+
+        \node[align=center, font=\small] at (\layerRightX, \contentY) {%
+        Activation\\[2pt]layer $l$\\[6pt]
+        $h^l = \begin{bmatrix}
+            a^l_1 \\[2pt] a^l_2 \\[2pt] \vdots \\[2pt]
+            a^l_{n_l-1} \\[2pt] a^l_{n_l}
+        \end{bmatrix}$%
+        };
+
+        \end{tikzpicture}
+    }
+    \caption{Illustration of a interaction between layers.}
+    \label{fig:matrix_interaction_between_layers}
+\end{figure}

@@ -38,13 +38,13 @@ where:
 \item $\sigma$ is the activation function.
 \end{itemize}
 
+\input{figures/deepl_learning/artificiale_neurone.tex}
+
 Figure~\ref{fig:artificiale_neurone} shows a schematic view of this basic unit.
 The set of weights $w_1, \dots, w_i$ with the bias $b$ constitute the parameters of the neuron, and they are the elements that evolve during training.
 The magnitude of a weight $w$ (relative to the others) indicates how strongly a neuron depends on the activation of the neurons to which it is connected.
 A large positive weight means that a high activation in the connected neuron tends to increase the activation of the receiving neuron, whereas a negative weight implies the opposite effect.
 In this way, the weights modulate the strength and nature of the connections between neurons, thereby defining the overall pattern of interaction within the network.
-
-\input{figures/deepl_learning/artificiale_neurone.tex}
 
 The activation function $\sigma$ models how a neuron transforms incoming signals into its output activation.
 Originally, this function was inspired by biological neurons, with the goal of mimicking the firing behavior of organic cells.
@@ -54,17 +54,14 @@ Nonlinearity is a crucial property, since without it a \gls{nn} would reduce to 
 
 \subsection{Layers}
 
-In \gls{mlp} architectures, neurons are organized into successive layers, as illustrated in Figure~\ref{fig:mlp_architecture}.
+\input{figures/deepl_learning/general_architecture_multilayer_perceptron.tex}
+
+In \gls{mlp} architectures, neurons are organized into successive layers, as illustrated in Figure~\ref{fig:general_architecture_multilayer_perceptron}.
 This layered structure determines how neurons are connected.
 In this setting, each neuron receives inputs from all neurons in the preceding layer and sends its output to all neurons in the following layer.
 Consequently, neurons within the same layer do not interact with each other.
 
-% \begin{figure}[t]
-% \centering
-% \includegraphics[width=0.55\linewidth]{../../figures/deepl_learning/mlp_architecture.pdf}
-% \caption{Representation of the \gls{mlp} architecture}
-% \label{fig:mlp_architecture}
-% \end{figure}
+\newpage
 
 Three types of layers are distinguished:
 \begin{itemize}
@@ -99,14 +96,9 @@ where:
 \item $\sigma^{(l)}$ is the activation function applied element-wise to the neurons of layer $l$.
 \end{itemize}
 
-This matrix-vector representation is visualised in Figure~\ref{fig:interaction_between_layers}, which highlights how each neuron in layer $l$ receives weighted signals from all neurons in the previous layer.
+\input{figures/deepl_learning/matrix_interaction_between_layers.tex}
 
-% \begin{figure}[t]
-% \centering
-% \includegraphics[width=0.65\linewidth]{../../figures/deepl_learning/interaction_between_layers.pdf}
-% \caption{Representation of the interaction between layer $l-1$ and layer $l$}
-% \label{fig:interaction_between_layers}
-% \end{figure}
+This matrix-vector representation is visualised in Figure~\ref{fig:matrix_interaction_between_layers}, which highlights how each neuron in layer $l$ receives weighted signals from all neurons in the previous layer.
 
 It is important to examine the role played by the intermediate layers of a \gls{nn}.
 At least one hidden layer is required to represent sufficiently complex functions.
