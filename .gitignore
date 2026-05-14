@@ -1,0 +1,93 @@
+# --- Fichiers auxiliaires LaTeX (compilation) ---
+*.aux
+*.log
+*.lof
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+*.xdv
+*.dvi
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+
+# --- BibTeX / Biber ---
+*.bbl
+*.bcf
+*-blx.bib
+*.blg
+*.run.xml
+
+# --- Index / Glossaire / Nomenclature ---
+*.idx
+*.ilg
+*.ind
+*.ist
+*.acr
+*.acn
+*.alg
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.nlo
+*.nls
+*.xdy
+
+# --- Beamer ---
+*.nav
+*.snm
+*.vrb
+
+# --- latexmk / arara / autres outils ---
+*.fdb_latexmk
+*.auxlock
+*.pdfsync
+*.tmp
+*.tmp.*
+*.lg
+*.dpth
+*.md5
+
+# --- Minted / Pygments ---
+_minted*/
+*.pyg
+
+# --- sagetex ---
+*.sagetex.sage
+*.sagetex.scmd
+*.sagetex.py
+*.sage.py
+*.sout
+
+# --- TikZ externalize / images générées ---
+tikz-cache/
+tikzexternal/
+tikz-figures/
+*.tikzexternal*
+*.tikz
+*.gnuplot
+*.table
+
+# --- Dossiers de build courants ---
+build/
+out/
+aux/
+dist/
+
+# --- Fichiers de sauvegarde/éditeurs/OS ---
+*.bak
+*~
+*.swp
+*.swx
+.DS_Store
+Thumbs.db
+
+# --- latexdiff ---
+*.orig
+*.diff
