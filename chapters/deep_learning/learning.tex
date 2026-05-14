@@ -1,4 +1,5 @@
-\section{Learning}
+\section{Learning}\label{sec:learning}
+
 Now that we have detailed the structure of a \gls{nn}, we must turn our attention to how it is modified in order to accomplish the task assigned to it.
 To do so, we need to focus on what lies at the very core of \gls{dl}: the learning process itself.
 As a reminder, the objective of a \gls{nn} is to adjust its parameters so that it becomes a good approximation of a target function.
@@ -12,7 +13,9 @@ However, the \gls{nn} $\hat{f}$ used to approximate the target function $f$ is h
 It involves a large number of parameters as well as many nonlinear components.
 As a result, we cannot find an exact solution by directly studying the properties of the function.
 So, one must therefore rely on approximate methods to optimize \gls{nn}s.
+
 The class of algorithms used for this optimization is known as gradient descent methods.
+To develop an intuition, Figure~\ref{fig:simple_gradient_descent} illustrates gradient descent applied to the simple convex loss function $\mathcal{L}(w_1,w_2)=w_1^2+w_2^2$, where the red path shows the parameter updates converging to the minimum.
 
 \input{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
 
@@ -31,6 +34,9 @@ To achieve this, we compute the partial derivatives of the loss function $\mathc
 \[
 \nabla_{\theta} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}) = \left[ \frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_1}, \dots, \frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_P} \right].
 \]
+
+In neural network training, the loss surface is highly non‑convex, meaning that the optimization path depends strongly on the initialisation.
+Figure~\ref{fig:multiple_gradient_descents_non_convex} illustrates this behaviour for several well‑known non‑convex functions, showing how different starting points can lead to distinct local minima.
 
 \input{figures/deepl_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
 
