@@ -1,0 +1,69 @@
+\chapter{Latent Space}
+After presenting, in the previous chapter, the fundamental principles of deep learning and the training procedures of deep neural networks, we now focus on one of the most important outcomes of this learning process: latent representations.
+When a deep neural network processes an input, it does not simply produce a final prediction.
+Each hidden layer also generates an intermediate representation of the information, as illustrated in Figure X.
+These internal representations progressively transform the input data in a way that is adapted to the task being solved.
+The purpose of this chapter is to study these intermediate representations in order to understand the type of information they contain and what can be extracted from them.
+The study of latent representations is a relatively recent research field.
+Although rapidly expanding, this domain still lacks a fully unified terminology.
+Different expressions coexist depending on the scientific community, such as \textit{latent semantic analysis}, \textit{representation learning}, \textit{embedding analysis}, or \textit{concept discovery}.
+In this manuscript, we will use the general term \textbf{latent representation analysis} to encompass these approaches.
+
+First, we introduce the main terminology and clarify the meaning of the concepts used throughout this manuscript.
+We then discuss the notions of concept, representation, and semantics, which form the theoretical foundations of latent space analysis.
+
+Once these foundations are established, we present the principal approaches used to identify and extract the concepts encoded within neural networks.
+To the best of our current knowledge, four major families of methods can be distinguished:
+
+\begin{itemize}
+    \item the use of \textbf{probes} to detect the presence of a given concept within a latent representation;
+    \item the identification of \textbf{semantic directions} in latent spaces, corresponding to transformations interpretable by humans;
+    \item the study of the \textbf{superposition hypothesis}, as well as the use of \textbf{Sparse Autoencoders} to isolate individual concepts;
+    \item \textbf{deep clustering} approaches, which aim to identify groups of representations sharing a common semantic meaning.
+\end{itemize}
+
+\section{Fundamental Definitions}
+
+\subsection{Latent Activation}
+A \textbf{latent activation} (also referred to as a \textit{hidden activation} or \textit{intermediate activation}) denotes the output of a hidden layer \( l \in \{2, \dots, L-1\} \) of a neural network parameterized by \( \hat{f}_{\theta} \), given an input \( x \).
+This activation is represented by a vector:
+\[
+h_l = [a_1, a_2, \dots, a_{n_l}] \in \mathbb{R}^{n_l},
+\]
+where \( n_l \) denotes the number of neurons in layer \( l \).
+We denote by \( \phi_l \) the function mapping an input \( x \) to its latent activation at layer \( l \):
+\[
+\phi_l : \mathcal{X} \rightarrow \mathbb{R}^{n_l},
+\qquad
+x \mapsto h_l.
+\]
+The function \( \phi_l \) implicitly contains all transformations applied from the input layer up to layer \( l \).
+It can therefore be expressed recursively as the composition of all preceding layers:
+\[
+\phi_l = f_l \circ f_{l-1} \circ \cdots \circ f_1.
+\]
+At initialization, since the network parameters are randomly initialized, latent activations do not carry any particular meaning.
+They merely correspond to random projections of the input data.
+
+\subsection{Latent Representation}
+During training, the network parameters are progressively adjusted so that latent activations become informative with respect to the target task.
+Consequently, for an input \( x \), the vector \( \phi_l(x) \) evolves in such a way that it captures the relevant characteristics required for the network to produce the expected output.
+Once training is completed, these intermediate activations are referred to as \textbf{latent representations} (or \textit{embeddings}).
+The term ``representation'' emphasizes that these vectors are no longer simple random projections, but instead encode structured and task-relevant information.
+In other words, they constitute a new description of the data, optimized to allow the network \( \hat{f}_{\theta} \) to correctly predict the output \( y \) associated with the input \( x \).
+
+\subsection{Latent Space}
+A latent representation only acquires meaning when considered relative to other representations.
+Let us consider a dataset:
+\[
+\{x_1, x_2, \dots, x_m\}.
+\]
+After training, projecting these samples through the function \( \phi_l \) produces the set:
+\[
+\{\phi_l(x_1), \phi_l(x_2), \dots, \phi_l(x_m)\}.
+\]
+This structured set of vectors is called the \textbf{latent space} (also referred to as the \textit{embedding space} or \textit{latent feature space}).
+The relative organization of representations within this space --- for example their distances, clusters, or principal directions --- reflects how the network distinguishes different inputs and encodes the information necessary for prediction.
+It is important to note that the term ``latent space'' should not be understood solely in the mathematical sense of a subspace of \( \mathbb{R}^{n_l} \).
+More broadly, it refers to the semantic structure induced by the representations and the relationships between them.
+This structure forms the foundation of the interpretation methods studied throughout this chapter.
