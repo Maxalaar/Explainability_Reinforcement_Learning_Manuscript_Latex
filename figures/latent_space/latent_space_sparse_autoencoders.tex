@@ -1,0 +1,136 @@
+\documentclass[tikz, border=10pt]{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfkeys}
+\usetikzlibrary{arrows.meta}
+\pgfplotsset{compat=1.18}
+
+\input{plot_points.tex}
+\input{plot_ellipse.tex}
+
+% ================================================================
+%  Cluster colours — single definition, reused everywhere
+% ================================================================
+\colorlet{colorA}{blue!70!cyan}
+\colorlet{colorB}{orange}
+\colorlet{colorC}{green!60!black}
+
+% ================================================================
+%  Shared axis style
+% ================================================================
+\pgfplotsset{
+  latent panel/.style={
+    height       = 9cm,
+    axis x line  = bottom,
+    axis y line  = left,
+    axis line style = {-{Stealth[length=7pt,width=5pt]}, thick},
+    ticks        = none,
+    xlabel       = {},
+    ylabel       = {},
+    clip         = true,
+  }
+}
+
+\begin{document}
+\begin{tikzpicture}
+
+% ================================================================
+%  LEFT PANEL — Dense latent space (superposition)
+%  Original point cloud — same data used throughout the series.
+%  Cluster A : mu=(-3.0, 1.5),  sigma=(1.8,0.9),  angle=15 deg
+%  Cluster B : mu=(-2.5,-4.0),  sigma=(1.7,0.85), angle=10 deg
+%  Cluster C : mu=( 4.2,-0.5),  sigma=(1.1,2.0),  angle=-20 deg
+% ================================================================
+\begin{axis}[
+  latent panel,
+  width  = 9cm,
+  xmin=-7, xmax=8,
+  ymin=-7, ymax=5.5,
+  at     = {(0,0)},
+  title  = {\large\bfseries Dense latent space},
+  title style = {yshift=4pt},
+]
+  \plotPoints[color=colorA]{cluster_a.data}
+  \plotPoints[color=colorB]{cluster_b.data}
+  \plotPoints[color=colorC]{cluster_c.data}
+\end{axis}
+
+% ================================================================
+%  Arrow between panels
+% ================================================================
+\draw[-{Stealth[length=10pt,width=8pt]}, line width=2pt, gray!60]
+  (9.6cm, 3.2cm) -- (11.4cm, 3.2cm)
+  node[midway, above, font=\small\itshape, text=gray!80] {SAE};
+
+% ================================================================
+%  RIGHT PANEL — Sparse SAE space  (axis lines hidden)
+%  Three custom sparse feature axes at 120° intervals replace the
+%  standard x/y axes, suggesting projection into a higher-dimensional
+%  sparse basis.  Each cluster aligns tightly along one feature axis.
+%
+%  Sparse feature directions (unit vectors):
+%    Dir 1 (Concept A, 90°) : (0,     1    )  → cluster at (0,    5)
+%    Dir 2 (Concept B,210°) : (-0.866,-0.5 )  → cluster at (-4.33,-2.5)
+%    Dir 3 (Concept C,330°) : ( 0.866,-0.5 )  → cluster at ( 4.33,-2.5)
+%
+%  Clusters generated with sigma_parallel=0.8, sigma_perp=0.25, seed=42
+% ================================================================
+\begin{axis}[
+  width        = 9cm,
+  height       = 9cm,
+  xmin=-8.5, xmax=8.5,
+  ymin=-6,   ymax=9,
+  axis lines   = none,        % hide standard axes
+  ticks        = none,
+  clip         = true,
+  at           = {(11.8cm,0)},
+  title        = {\large\bfseries Sparse SAE space},
+  title style  = {yshift=4pt},
+]
+
+  % -- Sparse feature axis 1 : Concept A (90°, pointing up) --
+  \draw[colorA, thick, -{Stealth[length=7pt,width=5pt]}]
+    (axis cs:0,0) -- (axis cs:0,7);
+  \node[colorA, font=\small\bfseries, above] at (axis cs:0,7.3)
+    {Feature $A$};
+
+  % -- Sparse feature axis 2 : Concept B (210°, bottom-left) --
+  \draw[colorB, thick, -{Stealth[length=7pt,width=5pt]}]
+    (axis cs:0,0) -- (axis cs:-6.062,-3.5);
+  \node[colorB, font=\small\bfseries, below left] at (axis cs:-6.062,-3.8)
+    {Feature $B$};
+
+  % -- Sparse feature axis 3 : Concept C (330°, bottom-right) --
+  \draw[colorC, thick, -{Stealth[length=7pt,width=5pt]}]
+    (axis cs:0,0) -- (axis cs:6.062,-3.5);
+  \node[colorC, font=\small\bfseries, below right] at (axis cs:6.062,-3.8)
+    {Feature $C$};
+
+  % -- Point clouds along each feature axis --
+  \plotPoints[color=colorA]{sae_right_a.data}
+  \plotPoints[color=colorB]{sae_right_b.data}
+  \plotPoints[color=colorC]{sae_right_c.data}
+
+\end{axis}
+
+% ================================================================
+%  Legend — centred below both panels
+% ================================================================
+\node[anchor=north, font=\normalsize]
+  at (10.5cm, -0.8cm) {%
+  \renewcommand{\arraystretch}{1.6}%
+  \begin{tabular}{l@{\hspace{3em}}l}
+    \tikz\fill[colorA,opacity=0.85] circle(2pt);\ Embedding \textbf{Concept A}
+      & \tikz\draw[colorA,thick,-{Stealth[length=6pt,width=5pt]}](0,0.06)--(0.6,0.06);\
+        Feature $A$ \\
+    \tikz\fill[colorB,opacity=0.85] circle(2pt);\ Embedding \textbf{Concept B}
+      & \tikz\draw[colorB,thick,-{Stealth[length=6pt,width=5pt]}](0,0.06)--(0.6,0.06);\
+        Feature $B$ \\
+    \tikz\fill[colorC,opacity=0.85] circle(2pt);\ Embedding \textbf{Concept C}
+      & \tikz\draw[colorC,thick,-{Stealth[length=6pt,width=5pt]}](0,0.06)--(0.6,0.06);\
+        Feature $C$ \\
+  \end{tabular}%
+};
+
+\end{tikzpicture}
+\end{document}

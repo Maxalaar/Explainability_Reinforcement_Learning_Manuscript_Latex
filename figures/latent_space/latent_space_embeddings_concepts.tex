@@ -9,6 +9,13 @@
 \input{plot_ellipse.tex}
 
 % ================================================================
+%  Cluster colours — single definition, reused in plot + caption
+% ================================================================
+\colorlet{colorA}{blue!70!cyan}
+\colorlet{colorB}{orange}
+\colorlet{colorC}{green!60!black}
+
+% ================================================================
 %  Document
 % ================================================================
 \begin{document}
@@ -41,8 +48,8 @@
 %  N points  : 45
 %  Ellipse   : rotation=15 deg, semi-axes=(2.3cm, 1.2cm)
 % ----------------------------------------------------------------
-% \plotEllipse[color=orange]{-3}{1.5}{15}{2.3}{1.2}
-\plotPoints{cluster_a.data}
+% \plotEllipse[color=colorA]{-3}{1.5}{15}{2.3}{1.2}
+\plotPoints[color=colorA]{cluster_a.data}
 
 % ----------------------------------------------------------------
 %  Cluster B
@@ -53,8 +60,8 @@
 %  N points  : 40
 %  Ellipse   : rotation=10 deg, semi-axes=(2.2cm, 1.1cm)
 % ----------------------------------------------------------------
-% \plotEllipse[color=green!50!black]{-2.5}{-4}{10}{2.2}{1.1}
-\plotPoints{cluster_b.data}
+% \plotEllipse[color=colorB]{-2.5}{-4}{10}{2.2}{1.1}
+\plotPoints[color=colorB]{cluster_b.data}
 
 % ----------------------------------------------------------------
 %  Cluster C
@@ -65,20 +72,24 @@
 %  N points  : 38  (2 outliers beyond axis bounds removed)
 %  Ellipse   : rotation=-20 deg, semi-axes=(1.4cm, 2.6cm)
 % ----------------------------------------------------------------
-% \plotEllipse[color=violet]{4.2}{-0.5}{-20}{1.4}{2.6}
-\plotPoints{cluster_c.data}
+% \plotEllipse[color=colorC]{4.2}{-0.5}{-20}{1.4}{2.6}
+\plotPoints[color=colorC]{cluster_c.data}
 
 \end{axis}
 
 % ----------------------------------------------------------------
-%  Caption — positioned below the plot
-%  \bullet  : marker symbol matching the plotted points
-%  Edit the text node to update the caption
+%  Caption — one entry per cluster, in a left-aligned column.
+%  Each marker is an inline TikZ circle using the cluster colour.
+%  Edit concept labels (Concept A / B / C) as needed.
 % ----------------------------------------------------------------
-\node[anchor=north, align=center, font=\normalsize] 
-  at (current bounding box.south) [yshift=-6pt] {%
-  \tikz\fill[black, opacity=0.85] circle (2pt);\;
-  Each point is an \textbf{embedding}
+\node[anchor=north, align=left, font=\normalsize]
+  at (current bounding box.south) [yshift=-10pt] {%
+  \tikz\fill[colorA, opacity=0.85] circle (2pt);\ %
+  Embedding with \textbf{Concept A} \\[5pt]
+  \tikz\fill[colorB, opacity=0.85] circle (2pt);\ %
+  Embedding with \textbf{Concept B} \\[5pt]
+  \tikz\fill[colorC, opacity=0.85] circle (2pt);\ %
+  Embedding with \textbf{Concept C}%
 };
 
 \end{tikzpicture}

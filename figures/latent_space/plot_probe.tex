@@ -1,0 +1,40 @@
+% ================================================================
+%  plot_probe.tex — Linear probing decision boundary
+%
+%  \plotProbe[<options>]{<slope>}{<intercept>}
+%
+%  Draws  y = slope*x + intercept  clipped to the axis bounds.
+%
+%  Options (all optional):
+%    color : line color   (default: black)
+%    style : dash pattern (default: dashed)
+%    width : line width   (default: thick)
+%
+%  WHY \edef ON THE WHOLE CALL: same deferred-rendering issue as
+%  plot_points.tex — pgfplots evaluates ALL \addplot options at
+%  \end{axis}, not at call time, so macro values must be baked in.
+%
+%  Example:
+%    \plotProbe[color=colorA]{1}{3}
+% ================================================================
+\pgfkeys{
+  /plotprobe/.is family, /plotprobe,
+  color/.initial = black,
+  style/.initial = dashed,
+  width/.initial = thick,
+}
+
+\newcommand{\plotProbe}[3][]{%    % #1=opts  #2=slope  #3=intercept
+  \pgfkeys{/plotprobe, #1}%
+  \pgfkeysgetvalue{/plotprobe/color}{\prColor}%
+  \pgfkeysgetvalue{/plotprobe/style}{\prStyle}%
+  \pgfkeysgetvalue{/plotprobe/width}{\prWidth}%
+  % Bake all values as literals before pgfplots defers rendering.
+  \edef\prDoPlot{%
+    \noexpand\addplot[%
+      domain=-7:8, samples=2,%
+      \prStyle, \prWidth, color=\prColor, forget plot%
+    ] {#2 * x + (#3)};%
+  }%
+  \prDoPlot
+}

@@ -1,0 +1,89 @@
+\documentclass[tikz, border=10pt]{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfkeys}
+\usetikzlibrary{arrows.meta}
+\pgfplotsset{compat=1.18}
+
+\input{plot_points.tex}
+\input{plot_ellipse.tex}
+
+% ================================================================
+%  Cluster colours — single definition, reused everywhere
+% ================================================================
+\colorlet{colorA}{blue!70!cyan}
+\colorlet{colorB}{orange}
+\colorlet{colorC}{green!60!black}
+
+% ================================================================
+%  Document
+% ================================================================
+\begin{document}
+\begin{tikzpicture}
+
+\begin{axis}[
+  width        = 11cm,
+  height       = 10cm,
+  xmin=-7, xmax=8,
+  ymin=-7, ymax=5.5,
+  axis x line  = bottom,
+  axis y line  = left,
+  axis line style = {
+    -{Stealth[length=8pt, width=6pt]},
+    thick,
+  },
+  ticks        = none,
+  xlabel       = {},
+  ylabel       = {},
+  clip         = true,
+]
+
+% ================================================================
+%  Cluster fills + boundaries  (colour = concept colour)
+%  Cluster A : rotation=15 deg,  semi-axes=(2.3cm, 1.2cm)
+%  Cluster B : rotation=10 deg,  semi-axes=(2.2cm, 1.1cm)
+%  Cluster C : rotation=-20 deg, semi-axes=(1.4cm, 2.6cm)
+% ================================================================
+\plotEllipse[color=colorA, width=very thick, fill=colorA, fillopacity=0.08]%
+  {-3}{1.5}{15}{2.3}{1.2}
+\plotEllipse[color=colorB, width=very thick, fill=colorB, fillopacity=0.08]%
+  {-2.5}{-4}{10}{2.2}{1.1}
+\plotEllipse[color=colorC, width=very thick, fill=colorC, fillopacity=0.08]%
+  {4.2}{-0.5}{-20}{1.4}{2.6}
+
+% ================================================================
+%  Point clouds — coloured by cluster
+% ================================================================
+\plotPoints[color=colorA]{cluster_a.data}
+\plotPoints[color=colorB]{cluster_b.data}
+\plotPoints[color=colorC]{cluster_c.data}
+
+\end{axis}
+
+% ================================================================
+%  Legend — one row per concept, boundary sample matches concept colour
+% ================================================================
+\node[anchor=north, font=\normalsize]
+  at (current bounding box.south) [yshift=-10pt] {%
+  \renewcommand{\arraystretch}{1.6}%
+  \begin{tabular}{l@{\hspace{2em}}l}
+    \tikz\fill[colorA,opacity=0.85] circle(2pt);\ Embedding \textbf{Concept A}
+      & \tikz{
+          \draw[colorA, very thick] (0,0) ellipse (0.28 and 0.14);
+          \fill[colorA, opacity=0.25] (0,0) ellipse (0.28 and 0.14);
+        }\ Cluster boundary $A$ \\
+    \tikz\fill[colorB,opacity=0.85] circle(2pt);\ Embedding \textbf{Concept B}
+      & \tikz{
+          \draw[colorB, very thick] (0,0) ellipse (0.28 and 0.14);
+          \fill[colorB, opacity=0.25] (0,0) ellipse (0.28 and 0.14);
+        }\ Cluster boundary $B$ \\
+    \tikz\fill[colorC,opacity=0.85] circle(2pt);\ Embedding \textbf{Concept C}
+      & \tikz{
+          \draw[colorC, very thick] (0,0) ellipse (0.28 and 0.14);
+          \fill[colorC, opacity=0.25] (0,0) ellipse (0.28 and 0.14);
+        }\ Cluster boundary $C$ \\
+  \end{tabular}%
+};
+
+\end{tikzpicture}
+\end{document}

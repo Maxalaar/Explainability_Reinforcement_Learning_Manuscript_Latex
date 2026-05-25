@@ -1,34 +1,60 @@
 % ================================================================
-%  \plotEllipse — Companion macro to draw a confidence ellipse
+%  plot_ellipse.tex — Reusable macro to draw a confidence ellipse
 %
-%  Usage:
-%    \plotEllipse[color=<c>, width=<w>]
-%                {<cx>}{<cy>}{<angle>}{<rx>}{<ry>}
+%  \plotEllipse[<options>]{cx}{cy}{angle}{rx}{ry}
 %
-%  Arguments (all optional):
-%    color : stroke color  (default: black)
-%    width : line width    (default: very thick)
+%  Options (all optional):
+%    color       : stroke color              (default: black)
+%    width       : line width                (default: very thick)
+%    fill        : fill color; none=no fill  (default: none)
+%    fillopacity : fill opacity [0..1]       (default: 0.12)
 %
-%  Positional (mandatory):
-%    {cx}    : ellipse center x  (axis coordinates)
-%    {cy}    : ellipse center y  (axis coordinates)
-%    {angle} : counter-clockwise rotation in degrees
-%    {rx}    : horizontal semi-axis (cm)
-%    {ry}    : vertical   semi-axis (cm)
+%  WHY \edef ON THE WHOLE CALL: pgfplots/TikZ defers \draw commands
+%  inside an axis until \end{axis}. Without \edef, every ellipse
+%  inherits the last assigned macro values (same bug as plot_points).
+%  \edef bakes the current color/width as literal strings.
 %
 %  Example:
 %    \plotEllipse[color=orange]{-3}{1.5}{15}{2.3}{1.2}
+%    \plotEllipse[color=colorA, fill=colorA, fillopacity=0.08]{-3}{1.5}{15}{2.3}{1.2}
 % ================================================================
 \pgfkeys{
-  /plotEllipse/.is family, /plotEllipse,
-  color/.initial = black,
-  width/.initial = very thick,
+  /plotellipse/.is family, /plotellipse,
+  color/.initial       = black,
+  width/.initial       = very thick,
+  fill/.initial        = none,
+  fillopacity/.initial = 0.12,
 }
 
 \newcommand{\plotEllipse}[6][]{%
-  \pgfkeys{/plotEllipse, #1}%
-  \pgfkeysgetvalue{/plotEllipse/color}{\peColor}%
-  \pgfkeysgetvalue{/plotEllipse/width}{\peWidth}%
-  \draw[\peColor, \peWidth, rotate around={#4:(#2,#3)}]
-    (#2,#3) ellipse (#5cm and #6cm);%
+  \pgfkeys{/plotellipse, #1}%
+  \pgfkeysgetvalue{/plotellipse/color}      {\peColor}%
+  \pgfkeysgetvalue{/plotellipse/width}      {\peWidth}%
+  \pgfkeysgetvalue{/plotellipse/fill}       {\peFill}%
+  \pgfkeysgetvalue{/plotellipse/fillopacity}{\peFillOp}%
+  % Bake all values now to avoid deferred-rendering overwrite
+  \def\peNone{none}%
+  \ifx\peFill\peNone
+    % No fill — bake stroke only
+    \edef\peDoEllipse{%
+      \noexpand\draw[\peColor, \peWidth,
+        rotate around={#4:(#2,#3)}]
+        (#2,#3) ellipse (#5cm and #6cm);%
+    }%
+    \peDoEllipse
+  \else
+    % Fill + stroke — bake both
+    \edef\peDoFill{%
+      \noexpand\fill[\peFill, opacity=\peFillOp,
+        rotate around={#4:(#2,#3)}]
+        (#2,#3) ellipse (#5cm and #6cm);%
+    }%
+    \edef\peDoStroke{%
+      \noexpand\draw[\peColor, \peWidth,
+        rotate around={#4:(#2,#3)}]
+        (#2,#3) ellipse (#5cm and #6cm);%
+    }%
+    \peDoFill
+    \peDoStroke
+  \fi
 }

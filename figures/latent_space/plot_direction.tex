@@ -1,0 +1,32 @@
+% ================================================================
+%  plot_direction.tex — Interpretable direction vector
+%
+%  \plotDirection[<options>]{<x1>}{<y1>}{<x2>}{<y2>}
+%
+%  Draws a thick arrow from (x1,y1) to (x2,y2) in axis coordinates.
+%  Must be called OUTSIDE the \addplot system, directly inside axis.
+%
+%  Options (all optional):
+%    color : arrow color          (default: black)
+%    width : line width           (default: very thick)
+%    shorten : shorten tip by     (default: 0pt)
+%
+%  Example:
+%    \plotDirection[color=colorA]{-2.5}{-4}{-3}{1.5}
+% ================================================================
+\pgfkeys{
+  /plotdirection/.is family, /plotdirection,
+  color/.initial   = black,
+  width/.initial   = very thick,
+  shorten/.initial = 4pt,
+}
+
+\newcommand{\plotDirection}[6][]{%  #1=opts  #2=x1 #3=y1  #4=x2 #5=y2
+  \pgfkeys{/plotdirection, #1}%
+  \pgfkeysgetvalue{/plotdirection/color}  {\pdColor}%
+  \pgfkeysgetvalue{/plotdirection/width}  {\pdWidth}%
+  \pgfkeysgetvalue{/plotdirection/shorten}{\pdShorten}%
+  \draw[\pdColor, \pdWidth, -Stealth,
+        shorten >=\pdShorten, shorten <=\pdShorten]
+    (axis cs:#2,#3) -- (axis cs:#4,#5);%
+}
