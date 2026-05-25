@@ -1,0 +1,47 @@
+\section{Clarification of Notions: Feature, Representation, Concept, and Semantics}
+
+In the deep learning literature, the notions of \textit{feature}, \textit{representation}, \textit{concept}, and \textit{semantics} are often used with varying degrees of precision across communities (machine learning, computer vision, and interpretability).
+This section provides a conceptual clarification grounded in foundational works in representation learning.
+
+\subsection{Feature}
+
+A \textbf{feature} is a numerical variable derived from observed data, constituting the elementary unit of information processed by a learning model.
+In classical machine learning, features were manually engineered.
+In deep learning, they are now automatically learned at multiple levels of abstraction within the network \cite{lecun2015deep}.
+Formally, a feature can be interpreted as a component of an input vector $x \in \mathbb{R}^d$ or of an intermediate activation $h^{(l)} \in \mathbb{R}^{d_l}$.
+Thus, features correspond to local, scalar-valued quantities forming the basis of learned representations.
+
+\subsection{Representation}
+
+A \textbf{representation} refers to a transformed encoding of data in a latent space, obtained through a composition of parameterized functions:
+\[
+h^{(l)} = f^{(l)}(h^{(l-1)})
+\]
+Each layer of a deep neural network learns such a transformation, producing a hierarchy of representations of increasing abstraction.
+According to Bengio et al.~\cite{bengio2013representation}, deep learning aims at learning distributed representations that capture explanatory factors of variation in the data.
+
+These representations are typically:
+\begin{itemize}
+    \item distributed (each dimension contributes to multiple factors),
+    \item hierarchical,
+    \item task-dependent.
+\end{itemize}
+
+From a geometric perspective, a representation corresponds to a learned embedding of the data into a latent space where relevant factors become more explicitly organized.
+
+\subsection{Concept}
+
+A \textbf{concept} is defined as a semantic abstraction corresponding to a stable regularity in the real world, independent of any particular encoding within a model.
+In neural networks, concepts are not explicitly represented but rather emerge from the structure of learned representations.
+Work in interpretability has shown that concepts can often be associated with directions or subspaces in latent representations \cite{bau2017network, kim2018tcav}.
+For instance, a concept such as \textit{``dog''} may correspond to multiple internal configurations without a unique or bijective mapping to a specific neuron or feature.
+Thus, concepts are best understood as emergent semantic entities inferred from learned representations rather than explicitly encoded variables.
+
+\subsection{Semantics}
+
+\textbf{Semantics} refers to the relationship between an internal representation and its interpretation in terms of meaning in the real world.
+In deep learning, semantics are typically implicit and must be inferred a posteriori.
+They correspond to the alignment between geometric structures in representation spaces and human-interpretable concepts.
+Representation learning has shown that certain geometric properties (e.g., clustering structure, linear separability, vector directions) correlate with semantic regularities \cite{mikolov2013distributed, goodfellow2016deep}.
+
+\subsection{Summary}
