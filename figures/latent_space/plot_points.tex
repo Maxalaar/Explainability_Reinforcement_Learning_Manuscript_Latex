@@ -1,0 +1,38 @@
+% ================================================================
+%  \plotPoints — Reusable macro to render a point cloud from file
+%
+%  Usage:
+%    \plotPoints[color=<c>, size=<s>, opacity=<o>]{<file.data>}
+%
+%  Arguments (all optional, defaults shown below):
+%    color   : fill & stroke color of the markers  (default: black)
+%    size    : marker radius                        (default: 2pt)
+%    opacity : fill opacity [0..1]                  (default: 0.85)
+%
+%  Positional (mandatory):
+%    #1 : path to a whitespace-separated x y data file
+%         (lines starting with % are treated as comments)
+%
+%  Example:
+%    \plotPoints[color=blue!70!cyan, size=3pt]{data/cluster_a.data}
+% ================================================================
+\pgfkeys{
+  /plotPoints/.is family, /plotPoints,
+  % --- defaults ---
+  color/.initial   = black,
+  size/.initial    = 2pt,
+  opacity/.initial = 0.85,
+}
+
+\newcommand{\plotPoints}[2][]{%
+  \pgfkeys{/plotPoints, #1}%                     % apply user overrides
+  \pgfkeysgetvalue{/plotPoints/color}  {\ppColor}%
+  \pgfkeysgetvalue{/plotPoints/size}   {\ppSize}%
+  \pgfkeysgetvalue{/plotPoints/opacity}{\ppOpacity}%
+  \addplot[
+    only marks,
+    mark        = *,
+    mark size   = \ppSize,
+    mark options= {fill=\ppColor, draw=\ppColor, fill opacity=\ppOpacity},
+  ] file {#2};%
+}

@@ -1,0 +1,73 @@
+\documentclass[tikz, border=10pt]{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfkeys}
+\usetikzlibrary{arrows.meta}
+\pgfplotsset{compat=1.18}
+
+\input{plot_points.tex}
+\input{plot_ellipse.tex}
+
+% ================================================================
+%  Document
+% ================================================================
+\begin{document}
+\begin{tikzpicture}
+
+\begin{axis}[
+  width        = 11cm,
+  height       = 10cm,
+  xmin=-7, xmax=8,
+  ymin=-7, ymax=5.5,
+  % --- Arrow-only axes: no box, no labels, no ticks ---
+  axis x line  = bottom,
+  axis y line  = left,
+  axis line style = {
+    -{Stealth[length=8pt, width=6pt]},
+    thick,
+  },
+  ticks        = none,
+  xlabel       = {},
+  ylabel       = {},
+  clip         = true,
+]
+
+% ----------------------------------------------------------------
+%  Cluster A
+%  Generator : numpy.random.multivariate_normal, seed=42
+%  Mean      : mu    = (-3.0,  1.5)
+%  Covariance: sigma = (1.8, 0.9), angle = 15 deg
+%              => R * diag(1.8^2, 0.9^2) * R^T
+%  N points  : 45
+%  Ellipse   : rotation=15 deg, semi-axes=(2.3cm, 1.2cm)
+% ----------------------------------------------------------------
+% \plotEllipse[color=orange]{-3}{1.5}{15}{2.3}{1.2}
+\plotPoints{cluster_a.data}
+
+% ----------------------------------------------------------------
+%  Cluster B
+%  Generator : numpy.random.multivariate_normal, seed=42
+%  Mean      : mu    = (-2.5, -4.0)
+%  Covariance: sigma = (1.7, 0.85), angle = 10 deg
+%              => R * diag(1.7^2, 0.85^2) * R^T
+%  N points  : 40
+%  Ellipse   : rotation=10 deg, semi-axes=(2.2cm, 1.1cm)
+% ----------------------------------------------------------------
+% \plotEllipse[color=green!50!black]{-2.5}{-4}{10}{2.2}{1.1}
+\plotPoints{cluster_b.data}
+
+% ----------------------------------------------------------------
+%  Cluster C
+%  Generator : numpy.random.multivariate_normal, seed=42
+%  Mean      : mu    = (4.2, -0.5)
+%  Covariance: sigma = (1.1, 2.0), angle = -20 deg
+%              => R * diag(1.1^2, 2.0^2) * R^T
+%  N points  : 38  (2 outliers beyond axis bounds removed)
+%  Ellipse   : rotation=-20 deg, semi-axes=(1.4cm, 2.6cm)
+% ----------------------------------------------------------------
+% \plotEllipse[color=violet]{4.2}{-0.5}{-20}{1.4}{2.6}
+\plotPoints{cluster_c.data}
+
+\end{axis}
+\end{tikzpicture}
+\end{document}
