@@ -1,0 +1,8 @@
+\section{Probing}
+
+To investigate this, \emphasize{Probing Methods} were developed.
+Probing techniques evaluate whether \neuralNetworkAcronym encode specific human-interpretable concepts \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent, McGrath_2022}.
+In practice, this involves constructing a dataset in where each input is annotated with the presence or absence of a given concept.
+Each input is then projected into the \latentSpaceAcronym of a deep learning model, and a simple classifier (most often linear) is trained in a supervised manner to predict the presence of the concept from the latent representations.
+If the classifier succeeds, this indicates that the latent representation contains information relevant to that concept, suggesting that the network may rely on this information when making decisions.
+While probing provides valuable insights into the internal structure of \latentSpaceAcronym, it cannot reveal novel concepts and relies heavily on manually labeled data.

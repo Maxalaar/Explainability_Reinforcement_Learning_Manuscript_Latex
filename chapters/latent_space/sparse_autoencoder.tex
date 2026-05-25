@@ -1,0 +1,10 @@
+\section{Sparse Autoencoder}
+
+Further investigations of the \latentSpaceAcronym have revealed linear directions corresponding to semantic attributes, refer as \emphasize{Interpretable Directions} \cite{haas2024discoveringinterpretabledirectionssemantic, voynov2020unsuperviseddiscoveryinterpretabledirections}.
+With this perspective, it is not only possible to detect the presence of a concept but also to study its variation across the \latentSpaceAcronym.
+For example, one can change the zoom level of a generated image simply by shifting its latent representation along a specific linear direction.
+
+Building on this, a stronger hypothesis has been proposed: concepts in \neuralNetworkAcronym are by default linearly encoded, a notion referred to as the \emphasize{Superposition Hypothesis} \cite{elhage2022superposition}.
+According to this perspective, concepts are inherently represented in a linear manner, but the finite dimensionality of \neuralNetworkAcronym gives rise to superposition, where multiple concepts are entangled within the same representational subspace.
+To investigate this, high-dimensional sparse autoencoders \cite{ng2011sparse} have been employed to enforce sparsity in hidden-layer activations, such that the activation of an individual neuron can be interpreted as encoding a distinct concept.
+This approach has proven particularly effective in analyzing the \latentSpaceAcronym of large language models \cite{elhage2022superposition, ng2011sparse, bricken2023monosemanticity, templeton2024scaling}. Nevertheless, research on the superposition hypothesis still lacks rigorous quantitative metrics, and the assumption of linear concept encoding remains a strong claim with limited theoretical grounding \cite{tanhPenaltyDictionaryLearning}.
