@@ -1,8 +1,8 @@
 \section{Probing}
 
-The simplest question one can ask about an agent’s internal representations is whether it encodes a given human-chosen concept.
-To address this, probing methods aim to determine, within embeddings, whether the presence or absence of a selected concept is encoded.
-The underlying idea is that if it is possible to distinguish the presence or absence of a concept within embeddings, this strongly suggests that the neural network likely uses this concept to accomplish its task.
+Probing methods aim to determine whether a given human-defined concept is encoded within the internal representations of a neural network.
+More specifically, they investigate whether the presence or absence of a selected concept can be inferred from embeddings.
+The underlying assumption is that if a concept can be reliably decoded from these representations, it is likely that the network encodes information related to it in order to perform its task.
 
 A probing analysis begins by identifying a set of interpretable concepts that the network could potentially use to accomplish its task.
 Each example in the dataset is then annotated to indicate the presence or absence of the studied concept.

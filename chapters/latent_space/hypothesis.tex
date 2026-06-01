@@ -19,7 +19,7 @@ We refer to them as representations because each layer preserves certain propert
 At each hidden layer, the network refines the representation of $x$, gradually transforming it into a form closer to the desired output.
 This process can therefore be viewed as a chain of successive transformations:
 \[
-x \rightarrow h_1 \rightarrow h_2 \rightarrow \dots \rightarrow y
+x \rightarrow h^{(1)} \rightarrow h^{(2)} \rightarrow \dots \rightarrow h^{(L-1)} \rightarrow y
 \]
 where each hidden state encodes a progressively more task-relevant representation of the input.
 These representations are considered abstract because they do not aim to preserve all details of the original input; instead, they retain only the most useful features for prediction.
@@ -49,3 +49,5 @@ It is important to emphasize that the ideas presented in this section are not ye
 The mathematical tools currently available do not provide a complete explanation of the internal functioning of deep neural networks, nor a rigorous proof of the existence of concepts within learned representations.
 Nevertheless, this perspective currently constitutes the dominant working hypothesis in the community studying latent spaces.
 Many research works therefore aim to characterize internal representations, identify the concepts present in hidden activations, and better understand how these structures emerge during training.
+
+The remainder of this chapter is devoted to presenting different methods for analyzing latent spaces and extracting the concepts encoded within them.
