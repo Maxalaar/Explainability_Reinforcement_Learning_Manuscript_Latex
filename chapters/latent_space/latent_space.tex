@@ -3,7 +3,7 @@
 In classical machine learning approaches, practitioners had to manually design data representations in order to make them usable by simple models.
 Deep learning introduces a paradigm shift: rather than relying on hand-crafted features to meaningfully represent data, it automatically learns these representations.
 Through the successive activation of their hidden layers, neural networks gradually learn increasingly relevant representations for the task.
-As discussed in Chapter I, these representations are not meaningful at initialization; they emerge progressively during training in order to optimize the model’s objective.
+As discussed in Chapter~\ref{chap:deep_learning} these representations are not meaningful at initialization; they emerge progressively during training in order to optimize the model’s objective.
 It is precisely thanks to these representations that a trained network is able to map an input to an output, even for examples never seen during training.
 The study of these representations is therefore a step toward better understanding the internal mechanisms of neural networks.
 In this chapter, we first aim to make explicit the research hypotheses commonly shared across most work in this field.
@@ -17,7 +17,7 @@ It should be noted that this hypothesis is rarely stated explicitly, but rather 
 Rather, it should be understood as a set of intuitions and assumptions guiding the study and interpretation of these spaces.
 The aim of this section is therefore to make this general conceptual framework explicit and to define the main terms associated with it.
 
-This hypothesis aims to explain the generalization ability of neural networks observed after training has been completed (see Chapter I, Evaluation section).
+This hypothesis aims to explain the generalization ability of neural networks observed after training has been completed, as seen in Section~\ref{sec:evaluation}.
 Formally, generalization is defined as, even for an input $x \in X$ never seen during training, the network is often able to produce an output $\hat{y}$ close to the true output $y$.
 This ability implies that the network cannot simply memorize the associations observed during training.
 Instead, it must capture deeper regularities of the function it approximates.
@@ -25,7 +25,7 @@ This process requires a form of abstraction: the network must be able to extract
 
 This capacity for abstraction emerges through the construction of meaningful data representations during training.
 A neural network does not directly map an input $x$ to an output $y$.
-Instead, as discussed in Chapter I (Architecture section), multiple hidden layers lie between these two endpoints and produce intermediate activations.
+Instead, as illustrated in Figure~\ref{fig:general_architecture_multilayer_perceptron}, multiple hidden layers lie between these two endpoints and produce intermediate activations.
 These activations constitute internal representations of the input.
 We refer to them as representations because each layer preserves certain properties of $x$ while progressively reorganizing the information into a form better suited to the task.
 At each hidden layer, the network refines the representation of $x$, gradually transforming it into a form closer to the desired output.
