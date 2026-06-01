@@ -1,14 +1,23 @@
 \chapter{Latent Space Analysis}
 
+The ability of a neural network to generalize provides evidence that the model has learned more than a simple memorization of the training examples.
+Instead, it must construct internal representations that capture regularities present in the data.
+These representations emerge progressively through the hidden layers during training and play a central role in the network's ability to solve a task.
+Understanding their structure is therefore a key step toward understanding how neural networks achieve generalization.
+
 In classical machine learning approaches, practitioners had to manually design data representations in order to make them usable by simple models.
 Deep learning introduces a paradigm shift: rather than relying on hand-crafted features to meaningfully represent data, it automatically learns these representations.
-Through the successive activation of their hidden layers, neural networks gradually learn increasingly relevant representations for the task.
-As discussed in Chapter~\ref{chap:deep_learning} these representations are not meaningful at initialization; they emerge progressively during training in order to optimize the model’s objective.
-It is precisely thanks to these representations that a trained network is able to map an input to an output, even for examples never seen during training.
-The study of these representations is therefore a step toward better understanding the internal mechanisms of neural networks.
-In this chapter, we first aim to make explicit the research hypotheses commonly shared across most work in this field.
-To do so, we will introduce the notions of abstraction, concept, latent space, and semantics.
-Once this conceptual framework has been clarified, we will focus on the different methods that attempt to extract concepts from latent spaces.
+Through the successive activation of hidden layers, neural networks gradually construct representations that become increasingly relevant to the task under consideration.
+As discussed in Chapter~\ref{chap:deep_learning}, these representations are not meaningful at initialization, they emerge progressively during training as the model optimizes its objective.
+It is precisely through these learned representations that a trained network is able to map an input to an output, including for examples never encountered during training.
 
-\input{chapters/latent_space/concept_hypothesis.tex}
+The study of these representations has therefore become a central topic in deep learning research.
+In particular, researchers seek to understand how information is organized within these representations, what concepts they encode, and how they contribute to the model's behavior.
+The collection of representations produced by a hidden layer is referred as a latent space.
+
+In this chapter, we first make explicit the working hypothesis that underlie most research on latent space analysis.
+To do so, we introduce the notions of abstraction, concept, latent space, and semantics.
+Once the notions of this conceptual framework has been established, we review the main methods that aim to identify and extract concepts from latent representations.
+
+\input{chapters/latent_space/hypothesis.tex}
 \input{chapters/latent_space/probing.tex}
