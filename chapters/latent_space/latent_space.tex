@@ -6,12 +6,14 @@ Through the successive activation of their hidden layers, neural networks gradua
 As discussed in Chapter I, these representations are not meaningful at initialization; they emerge progressively during training in order to optimize the model’s objective.
 It is precisely thanks to these representations that a trained network is able to map an input to an output, even for examples never seen during training.
 The study of these representations is therefore a step toward better understanding the internal mechanisms of neural networks.
-This chapter therefore focuses on the representations learned by deep neural networks, their emergence during training, and the methods used to analyze and interpret them.
+In this chapter, we first aim to make explicit the research hypotheses commonly shared across most work in this field.
+To do so, we will introduce the notions of abstraction, concept, latent space, and semantics.
+Once this conceptual framework has been clarified, we will focus on the different methods that attempt to extract concepts from latent spaces.
 
 \section{The Concept Hypothesis}
 
-In this section, we develop the working hypothesis shared by most researchers studying latent space.
-It should be noted that this hypothesis is rarely stated explicitly in the literature.
+In this section, we introduce the main working hypothesis commonly shared in the literature on latent space analysis.
+It should be noted that this hypothesis is rarely stated explicitly, but rather appears implicitly through the notions of abstraction, concept, latent space and semantics, used throughout the field.
 Rather, it should be understood as a set of intuitions and assumptions guiding the study and interpretation of these spaces.
 The aim of this section is therefore to make this general conceptual framework explicit and to define the main terms associated with it.
 
@@ -34,8 +36,7 @@ x \rightarrow h_1 \rightarrow h_2 \rightarrow \dots \rightarrow y
 where each hidden state encodes a progressively more task-relevant representation of the input.
 These representations are considered abstract because they do not aim to preserve all details of the original input; instead, they retain only the most useful features for prediction.
 
-If a network is able to construct sufficiently meaningful representations of data to ensure generalization, this implies that it can associate a partially unknown input with structures already encountered during training.
-In other words, there exist shared regularities between certain representations that allow similar situations to be related to one another.
+If a network is able to construct sufficiently meaningful representations of data to ensure generalization, this implies that it can associate a unknown input with structures already encountered during training.
 These regularities are commonly referred to as concepts.
 A concept can be understood as a general and abstract representation of a situation, useful for accomplishing a given task.
 Although this notion remains difficult to formalize rigorously and is still relatively vague in the scientific literature, it intuitively refers to an abstract representation that groups together relevant information for problem-solving.
