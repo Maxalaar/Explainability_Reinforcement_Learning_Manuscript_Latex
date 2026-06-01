@@ -1,5 +1,24 @@
 \input{figures/timeline.tex}
 
+\tcbset{
+  mydefinition/.style={
+    colback=gray!5,
+    colframe=gray!60,
+    boxrule=0.5pt,
+    arc=3pt,
+    left=6pt,
+    right=6pt,
+    top=4pt,
+    bottom=6pt,
+    fonttitle=\bfseries,
+    coltitle=black
+  }
+}
+
+\newtcbtheorem[number within=section]{definition}{Definition}{
+  mydefinition
+}{def}
+
 \makeglossaries
 \setglossarystyle{index}
 \setabbreviationstyle[acronym]{long-short}
