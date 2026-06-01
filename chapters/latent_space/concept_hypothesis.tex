@@ -1,0 +1,52 @@
+\section{The Concept Hypothesis}
+
+In this section, we introduce the main working hypothesis commonly shared in the literature on latent space analysis.
+It should be noted that this hypothesis is rarely stated explicitly, but rather appears implicitly through the notions of abstraction, concept, latent space and semantics, used throughout the field.
+Rather, it should be understood as a set of intuitions and assumptions guiding the study and interpretation of these spaces.
+The aim of this section is therefore to make this general conceptual framework explicit and to define the main terms associated with it.
+
+This hypothesis aims to explain the generalization ability of neural networks observed after training has been completed, as seen in Section~\ref{sec:evaluation}.
+Formally, generalization is defined as, even for an input $x \in X$ never seen during training, the network is often able to produce an output $\hat{y}$ close to the true output $y$.
+This ability implies that the network cannot simply memorize the associations observed during training.
+Instead, it must capture deeper regularities of the function it approximates.
+This process requires a form of abstraction: the network must be able to extract the relevant information contained in $x$ and properly combine the elements in order to produce a coherent prediction.
+
+This capacity for abstraction emerges through the construction of meaningful data representations during training.
+A neural network does not directly map an input $x$ to an output $y$.
+Instead, as illustrated in Figure~\ref{fig:general_architecture_multilayer_perceptron}, multiple hidden layers lie between these two endpoints and produce intermediate activations.
+These activations constitute internal representations of the input.
+We refer to them as representations because each layer preserves certain properties of $x$ while progressively reorganizing the information into a form better suited to the task.
+At each hidden layer, the network refines the representation of $x$, gradually transforming it into a form closer to the desired output.
+This process can therefore be viewed as a chain of successive transformations:
+\[
+x \rightarrow h_1 \rightarrow h_2 \rightarrow \dots \rightarrow y
+\]
+where each hidden state encodes a progressively more task-relevant representation of the input.
+These representations are considered abstract because they do not aim to preserve all details of the original input; instead, they retain only the most useful features for prediction.
+
+If a network is able to construct sufficiently meaningful representations of data to ensure generalization, this implies that it can associate a unknown input with structures already encountered during training.
+These regularities are commonly referred to as concepts.
+A concept can be understood as a general and abstract representation of a situation, useful for accomplishing a given task.
+Although this notion remains difficult to formalize rigorously and is still relatively vague in the scientific literature, it intuitively refers to an abstract representation that groups together relevant information for problem-solving.
+The internal representations of a network can then be interpreted as a combination of several concepts relevant to prediction.
+
+The set of activations of a given layer is referred to as the latent space.
+This space is not simply an unordered collection of numerical values.
+Rather, representations are organized according to a specific structure learned during training.
+The relative position of representations in this space directly influences the behavior of the network.
+Similar inputs generally produce nearby representations in the latent space, whereas different inputs occupy distinct regions.
+The latent space thus reflects both the properties of the data, the constraints of the task, and the internal mechanisms learned by the network.
+Studying these latent spaces is particularly important because it allows us to observe how the network structures information in order to make predictions.
+
+A central question then arises: are the concepts learned by neural networks similar to those used by humans to accomplish equivalent tasks?
+This question motivates a large body of research on the study of internal representations in neural networks.
+When a human learns a task, they also build abstractions that allow them to generalize to new situations.
+Researchers therefore seek to determine whether the representational mechanisms observed in neural networks share similarities with those used in human intelligence.
+When a concept learned by a network corresponds to a human-interpretable concept, it is generally said to have semantic value.
+However, a network may also learn highly effective concepts for solving a task while remaining difficult for humans to interpret.
+In such cases, internal representations retain strong functional utility despite low semantic interpretability.
+
+It is important to emphasize that the ideas presented in this section are not yet formally proven from a theoretical standpoint.
+The mathematical tools currently available do not yet allow a complete explanation of the internal functioning of deep neural networks, nor a rigorous proof of the existence of concepts within learned representations.
+Nevertheless, this perspective currently constitutes the dominant working hypothesis in the community studying latent spaces.
+Many research works therefore aim to characterize internal representations, identify the concepts present in hidden activations, and better understand how these structures emerge during training.
