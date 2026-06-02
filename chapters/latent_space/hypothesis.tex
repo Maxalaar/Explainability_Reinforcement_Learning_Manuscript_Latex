@@ -5,8 +5,8 @@ Although rarely stated explicitly, this hypothesis is implicitly present in the 
 It should therefore be understood as a set of shared intuitions that guide the study and interpretation of neural representations.  
 The goal of this section is to make this conceptual framework explicit by formally defining its main components.  
 
-A central motivation for this hypothesis is the generalization ability of neural networks observed after training, as discussed in Section~\ref{sec:evaluation}.  
-Formally, a model is said to generalize when, for an input $x \in X$ not seen during training, it still produces an output $\hat{y}$ close to the true output $y$.  
+This hypothesis originates from the need to explain the generalization ability of deep neural networks observed after training, as discussed in Section~\ref{sec:evaluation}.
+Formally, a model is said to generalize when, for an input $x \in \mathcal{X}$ not seen during training, it still produces an output $\hat{y}$ close to the true output $y$.  
 Such behavior cannot be explained by simple memorization of training samples.  
 Instead, the model must extract and exploit underlying regularities in the target function.  
 This requires a process of abstraction, as defined in Definition~\ref{def:abstraction}, whereby raw inputs are transformed into internal structures that are meaningful for the task.  
@@ -33,7 +33,7 @@ x \rightarrow h^{(1)} \rightarrow h^{(2)} \rightarrow \dots \rightarrow h^{(L-1)
 \]
 where each $h^{(l)}$ is a representation in the sense of Definition~\ref{def:representation}.  
 
-The set of all such representations produced over a dataset forms what is commonly referred to as the latent space of the model.  
+The set of all such representations produced by a layer or a model over a dataset defines its latent space, as defined in Definition~\ref{def:latent_space}.
 
 \begin{definition}{Latent Space}{latent_space}
 The latent space is the set of all representations produced by a layer or model over a dataset.  
@@ -42,27 +42,28 @@ It is shaped by learning and organizes representations according to task-relevan
 
 The existence of meaningful structure in the latent space is closely related to generalization.  
 If representations capture reusable regularities across inputs, then unseen inputs can be associated with previously learned structures.  
-These recurring structures are typically referred to as concepts, as defined in Definition~\ref{def:concept}.  
+These recurring structures are typically referred to as concepts, as defined in Definition~\ref{def:concept}.
 
 \begin{definition}{Concept}{concept}
 A concept is a recurring activation pattern in the latent space that is shared across multiple inputs.  
-Concepts are generally distributed and overlapping, such that a single representation typically involves multiple concepts.  
+Concepts are distributed and overlapping, such that a single representation typically involves multiple concepts.  
 \end{definition}
 
 Under this view, a representation can be interpreted as a composition of multiple concepts, each contributing to the model’s prediction.  
 
-This raises the question of whether these learned concepts align with those used by humans to interpret the same data, as formalized in Definition~\ref{def:semantics}.  
+Another property that can be considered when analyzing concepts is their relationship to human interpretation.  
+This relationship is captured by the notion of semantics, defined in Definition~\ref{def:semantics}.  
 
 \begin{definition}{Semantics}{semantics}
 Semantics refers to the alignment between concepts in the latent space and concepts used by a human observer.  
 A structure is semantic if it can be consistently associated with a human-interpretable concept.  
 \end{definition}
 
-When such alignment exists, we say that the learned concepts have semantic meaning.  
-However, neural networks may also develop highly effective internal concepts that remain difficult to interpret from a human perspective.  
+Under this definition, concepts may exhibit varying degrees of semantic content.  
+Some concepts can be readily associated with human-interpretable notions, whereas others may contribute to task performance while remaining difficult to interpret.
 
-It is important to emphasize that this conceptual framework remains largely hypothetical.  
-Current mathematical tools do not provide a complete characterization of deep neural network internals, nor a formal proof of the existence of concepts in learned representations.  
+It is important to note that this conceptual framework is not yet supported by a complete theoretical understanding of deep neural networks.  
+In particular, current mathematical tools do not provide a rigorous characterization of their internal representations and do not formally prove that concepts emerge as identifiable structures within latent spaces.
 Nevertheless, this perspective constitutes a widely adopted working hypothesis in the field of representation and latent space analysis.  
 As a result, many research efforts focus on analyzing latent spaces, identifying recurring patterns in activations, and understanding how such structures emerge during training.  
 
