@@ -1,12 +1,50 @@
 \section{Clustering}
 
-To overcome the limitations of linear concept assumptions, we adopt a \emphasize{Deep Clustering} approach \cite{ren2022deepclusteringcomprehensivesurvey, WEI2024127761}.
-This line of research identifies semantics in the \latentSpaceAcronym by applying clustering functions directly within it.
-The resulting clusters correspond to groups of inputs that share a common semantic meaning.
-For example, autoencoders can be used to group images with similar semantics without requiring supervision.
+\input{figures/latent_space/latent_space_clustering.tex}
 
-This method enables the identification of semantic structures in the \latentSpaceAcronym in an unsupervised manner, without relying on the assumption of linear concept encoding. For this reason, deep clustering is particularly well suited to our explainable reinforcement learning approach.
-Building on this line of work, we introduce, \emphasize{\methodName} (\methodeAcronym) method, which is described in the following section.
-The main objective is to study how the policy’s \latentSpaceAcronym is organized.
-To this end, we aim to identify the semantic clusters within the \latentSpaceAcronym and to investigate their associated meaning using automated techniques.
-This approach allows us to identify which states are perceived as similar by the policy and to simplify the underlying Markov decision process for the purpose of enhancing interpretability.
+The latent space analysis methods presented so far all rely, either explicitly or implicitly, on assumptions about the linear organization of concepts within the latent space.
+For probing methods, concepts must be at least partially linearly separable for simple probes to succeed.
+Interpretability through latent directions assumes that variations associated with a concept can be captured by moving along a linear axis of the latent space.
+Similarly, the superposition hypothesis assumes that concepts are represented through linear directions that become entangled because of representational capacity constraints.
+Although these assumptions have led to numerous empirical successes, their theoretical justification remains limited.
+More importantly, several observations suggest that the linearity hypothesis may not fully capture the structure of latent representations.
+
+For instance, some concepts can only be recovered using non-linear probes.
+Likewise, methods based on interpretable directions typically identify only a limited number of semantic factors.
+Finally, in sparse autoencoder approaches, enforcing excessive sparsity often degrades reconstruction quality and interpretability, suggesting that the underlying representation may not be perfectly described by a sparse linear decomposition.
+
+Taken together, these observations indicate that semantic concepts may not always be organized according to a simple linear structure.
+This motivates the exploration of alternative approaches that rely on weaker assumptions regarding the geometry of latent spaces.
+One such approach is clustering-based analysis.
+Rather than assuming that concepts correspond to directions or linear subspaces, clustering methods only assume that semantically similar inputs produce nearby latent representations.
+Conversely, inputs that differ significantly from a semantic perspective are expected to be located farther apart in the latent space.
+
+Under this assumption, the discovery of concepts can be reformulated as the identification of groups of embeddings that occupy the same region of the latent space.
+Concepts are therefore no longer associated with directions, but with clusters of neighboring representations.
+This idea forms the basis of the research field known as deep clustering.
+In these approaches, a collection of inputs is first projected into a latent space using a neural network.
+The resulting embeddings form a point cloud on which standard clustering algorithms can be applied.
+The obtained clusters are then interpreted as representing distinct semantic concepts.
+
+This methodology enables the discovery of semantic structure in the latent space without requiring concepts to be linearly encoded.
+As a result, it can reveal forms of organization that would remain inaccessible to methods based solely on linear separability or interpretable directions.
+Deep clustering has been particularly successful in unsupervised image classification.
+Typically, an autoencoder is trained to learn a compact latent representation that preserves the essential information contained in the input data.
+Clustering algorithms are then applied to the learned embeddings.
+Empirically, the resulting clusters often correspond to meaningful semantic categories, despite the absence of supervision during training.
+
+More advanced approaches combine representation learning and clustering objectives within a single optimization process.
+In this setting, additional loss terms encourage embeddings to organize themselves around cluster centroids during training.
+This often produces latent spaces that are easier to analyze and improves the quality of the discovered semantic structure.
+
+Despite its effectiveness, clustering-based analysis also presents important limitations.
+First, as with most unsupervised semantic discovery techniques, the interpretation of the resulting clusters remains partially subjective.
+While benchmark datasets often provide class labels that facilitate evaluation, there is generally no guarantee that the discovered clusters correspond to the categories that humans consider most relevant.
+Alternative semantic groupings may be equally valid.
+
+Second, clustering methods are highly sensitive to design choices.
+The number of clusters, the distance metric, and the clustering algorithm itself can significantly influence the results.
+Selecting these parameters is often challenging and may require substantial empirical tuning.
+Finally, semantic concepts do not necessarily form well-separated clusters in latent space.
+Some concepts may overlap, exhibit hierarchical relationships, or vary continuously rather than discretely.
+In such cases, a clustering-based description may provide only a partial view of the underlying representational structure.

@@ -1,108 +1,69 @@
-\documentclass[tikz, border=10pt]{standalone}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage{pgfkeys}
-\usetikzlibrary{arrows.meta}
-\pgfplotsset{compat=1.18}
-
-\input{plot_points.tex}
-\input{plot_ellipse.tex}
-\input{plot_probe.tex}
-\input{plot_direction.tex}
+\begin{figure}[t]
+\centering
 
 % ================================================================
-%  Cluster colours
+% Cluster colours
 % ================================================================
 \colorlet{colorA}{blue!70!cyan}
 \colorlet{colorB}{orange}
 \colorlet{colorC}{green!60!black}
 
 % Direction colours
-\colorlet{colorDirBA}{violet}        % B → A  (interpretable direction 1)
-\colorlet{colorDirBC}{red!70!black}  % B → C  (interpretable direction 2)
+\colorlet{colorDirBA}{violet}
+\colorlet{colorDirBC}{red!70!black}
 
-% ================================================================
-%  Cluster centroids
-%  A : (-3.0,  1.5)
-%  B : (-2.5, -4.0)  ← origin of both direction vectors
-%  C : ( 4.2, -0.5)
-%
-%  Direction line equations (passing through B centroid):
-%  Dir 1 (B→A) : slope = -11.0,   intercept = -31.5
-%  Dir 2 (B→C) : slope =   0.5224, intercept =  -2.694
-% ================================================================
+\input{./figures/latent_space/plot_points.tex}
+\input{./figures/latent_space/plot_ellipse.tex}
+\input{./figures/latent_space/plot_probe.tex}
+\input{./figures/latent_space/plot_direction.tex}
 
-\begin{document}
+\resizebox{0.65\textwidth}{!}{
 \begin{tikzpicture}
 
 \begin{axis}[
-  width        = 11cm,
-  height       = 10cm,
+  width=11cm,
+  height=10cm,
   xmin=-7, xmax=8,
   ymin=-7, ymax=5.5,
-  axis x line  = bottom,
-  axis y line  = left,
-  axis line style = {
+  axis x line=bottom,
+  axis y line=left,
+  axis line style={
     -{Stealth[length=8pt, width=6pt]},
-    thick,
+    thick
   },
-  ticks        = none,
-  xlabel       = {},
-  ylabel       = {},
-  clip         = true,
+  ticks=none,
+  xlabel={},
+  ylabel={},
+  clip=true,
 ]
 
-% ----------------------------------------------------------------
-%  Point clouds
-% ----------------------------------------------------------------
-\plotPoints[color=colorA]{cluster_a.data}
-\plotPoints[color=colorB]{cluster_b.data}
-\plotPoints[color=colorC]{cluster_c.data}
+% ================================================================
+% Point clouds
+% ================================================================
+\plotPoints[color=colorA]{figures/latent_space/cluster_a.data}
+\plotPoints[color=colorB]{figures/latent_space/cluster_b.data}
+\plotPoints[color=colorC]{figures/latent_space/cluster_c.data}
 
 % ================================================================
-%  Interpretable directions
-%
-%  Each direction is rendered as two layers:
-%    1. a dashed full-axis line  — shows the direction extends infinitely
-%    2. a solid arrow from B to the target centroid — shows the vector
+% Interpretable directions
 % ================================================================
-
-% --- Direction 1 (B → A) : slope=-11, intercept=-31.5 ---
 \plotProbe[color=colorDirBA, style=dashed, width=thick]{-11}{-31.5}
 \plotDirection[color=colorDirBA]{-2.5}{-4.0}{-3.0}{1.5}
 
-% --- Direction 2 (B → C) : slope=0.5224, intercept=-2.694 ---
 \plotProbe[color=colorDirBC, style=dashed, width=thick]{0.5224}{-2.694}
 \plotDirection[color=colorDirBC]{-2.5}{-4.0}{4.2}{-0.5}
 
-% Mark the shared origin point (centroid B) with a larger dot
+% centroid B
 \fill[colorB] (axis cs:-2.5,-4.0) circle (4pt);
 
 \end{axis}
-
-% ================================================================
-%  Two-column legend
-%  Left  : coloured dot  + embedding label
-%  Right : arrow + dashed sample + direction label
-% ================================================================
-\node[anchor=north, font=\normalsize]
-  at (current bounding box.south) [yshift=-10pt] {%
-  \renewcommand{\arraystretch}{1.6}%
-  \begin{tabular}{l@{\hspace{2em}}l}
-    \tikz\fill[colorA,opacity=0.85] circle(2pt);\ Embedding \textbf{Concept A}
-      & \tikz{
-          \draw[colorDirBA, dashed, thick](0,0.06)--(0.35,0.06);
-          \draw[colorDirBA, very thick, -Stealth](0.35,0.06)--(0.7,0.06);
-        }\ \textbf{Interpretable direction 1} ($B \to A$) \\
-    \tikz\fill[colorB,opacity=0.85] circle(2pt);\ Embedding \textbf{Concept B}
-      & \tikz{
-          \draw[colorDirBC, dashed, thick](0,0.06)--(0.35,0.06);
-          \draw[colorDirBC, very thick, -Stealth](0.35,0.06)--(0.7,0.06);
-        }\ \textbf{Interpretable direction 2} ($B \to C$) \\
-    \tikz\fill[colorC,opacity=0.85] circle(2pt);\ Embedding \textbf{Concept C}
-      & \\
-  \end{tabular}%
-};
-
 \end{tikzpicture}
-\end{document}
+}
+
+% ================================================================
+% Caption (thèse style)
+% ================================================================
+\caption{Directions interprétables dans l’espace latent reliant le cluster B aux clusters A et C. Les lignes pointillées représentent les directions globales, tandis que les flèches indiquent les vecteurs entre centroïdes.}
+\label{fig:latent_directions}
+
+\end{figure}

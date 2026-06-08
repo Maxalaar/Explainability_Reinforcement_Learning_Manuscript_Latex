@@ -1,10 +1,46 @@
 \section{Sparse Autoencoder}
 
-Further investigations of the \latentSpaceAcronym have revealed linear directions corresponding to semantic attributes, refer as \emphasize{Interpretable Directions} \cite{haas2024discoveringinterpretabledirectionssemantic, voynov2020unsuperviseddiscoveryinterpretabledirections}.
-With this perspective, it is not only possible to detect the presence of a concept but also to study its variation across the \latentSpaceAcronym.
-For example, one can change the zoom level of a generated image simply by shifting its latent representation along a specific linear direction.
+\input{figures/latent_space/latent_space_sparse_autoencoders.tex}
 
-Building on this, a stronger hypothesis has been proposed: concepts in \neuralNetworkAcronym are by default linearly encoded, a notion referred to as the \emphasize{Superposition Hypothesis} \cite{elhage2022superposition}.
-According to this perspective, concepts are inherently represented in a linear manner, but the finite dimensionality of \neuralNetworkAcronym gives rise to superposition, where multiple concepts are entangled within the same representational subspace.
-To investigate this, high-dimensional sparse autoencoders \cite{ng2011sparse} have been employed to enforce sparsity in hidden-layer activations, such that the activation of an individual neuron can be interpreted as encoding a distinct concept.
-This approach has proven particularly effective in analyzing the \latentSpaceAcronym of large language models \cite{elhage2022superposition, ng2011sparse, bricken2023monosemanticity, templeton2024scaling}. Nevertheless, research on the superposition hypothesis still lacks rigorous quantitative metrics, and the assumption of linear concept encoding remains a strong claim with limited theoretical grounding \cite{tanhPenaltyDictionaryLearning}.
+As discussed previously, interpretability approaches based on latent directions face inherent limitations.
+Empirically, only a restricted subset of concepte appears to admit a linear representation, and even these directions are often affected by significant entanglement with other concepte.
+
+To account for this behavior, a complementary hypothesis has been introduced, extending the assumption of linear concepte encoding in neural networks.
+It posits that semantic concepte are preferentially represented in a linear fashion, with each concept ideally corresponding to a distinct direction in latent space.
+In this idealized setting, semantic attributes would form an approximately orthogonal basis, where each direction independently controls a single factor of variation.
+
+We first consider an idealized representation of the latent space in which semantic concepts are perfectly disentangled.
+Let \( \mathbf{h} \in \mathbb{R}^d \) denote a latent embedding.
+In this setting, each concept is associated with a unique direction \( \mathbf{v}_i \in \mathbb{R}^d \), and the representation of a given input can be expressed as a linear combination of these concept directions:
+\[
+\mathbf{h} = \sum_{i=1}^{m} a_i \mathbf{v}_i,
+\]
+where \( a_i \in \mathbb{R} \) represents the activation of concept \( i \).
+
+In the ideal case, the set of concept directions is assumed to be approximately orthogonal, such that each direction independently controls a single semantic factor.
+Moreover, for a given input, only a small subset of coefficients \( a_i \) is non-zero, so that each embedding corresponds to a sparse combination of a few active concepts.
+
+In this idealized setting, concept directions are assumed to form a structured basis of the latent space, in which each concept is independently controllable.
+
+When the representational capacity of the model is limited, such a decomposition leads to interference between concepte.
+In this regime, multiple semantic concepte are encoded within shared directions, a phenomenon known as \emph{superposition}.
+This can be interpreted as a consequence of compression pressure, where the model prioritizes efficient encoding over strict factorization of concepte.
+
+This perspective is closely related to recent work in mechanistic interpretability, where neural representations are assumed to decompose into sparse, approximately linear concepte.
+It also connects naturally to classical results in dictionary learning and sparse coding, where signals are represented as sparse combinations of elements from an overcomplete basis.
+
+Sparse autoencoders instantiate this idea in practice by learning an overcomplete dictionary of concepte while enforcing sparsity constraints on activations.
+From this perspective, they can be interpreted as a tool for recovering a more disentangled basis of concepte from a superposed representation space.
+
+Despite their empirical success, sparse autoencoders rely on strong structural assumptions that are not always justified.
+First, the learned concepte are not guaranteed to be identifiable: different training runs may yield different decompositions of the same latent space, even when the reconstruction performance is similar.
+Second, the assumption that the underlying representation is approximately linearly decomposable may not hold uniformly across all regions of the latent space, especially in highly nonlinear regimes.
+Finally, sparsity itself introduces a modeling bias that may favor certain types of concepte while suppressing others.
+
+These limitations suggest that sparse autoencoders, while powerful, do not fully resolve the problem of entanglement in neural representations.
+They instead provide one possible coordinate system in which parts of the structure become more explicit, but not necessarily a complete or canonical one.
+
+From this perspective, both interpretable directions and sparse autoencoders rely on a shared underlying assumption: that semantic structure can be recovered through linear or approximately linear decompositions.
+While this assumption has led to significant empirical progress, it remains theoretically fragile.
+
+The following section therefore introduces a complementary approach that relaxes this constraint and does not require a globally linear feature decomposition of the latent space.

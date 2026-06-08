@@ -1,89 +1,62 @@
-\documentclass[tikz, border=10pt]{standalone}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage{pgfkeys}
-\usetikzlibrary{arrows.meta}
-\pgfplotsset{compat=1.18}
-
-\input{plot_points.tex}
-\input{plot_ellipse.tex}
+\begin{figure}[t]
+\centering
 
 % ================================================================
-%  Cluster colours — single definition, reused everywhere
+% Cluster colours
 % ================================================================
 \colorlet{colorA}{blue!70!cyan}
 \colorlet{colorB}{orange}
 \colorlet{colorC}{green!60!black}
 
-% ================================================================
-%  Document
-% ================================================================
-\begin{document}
+\input{figures/latent_space/plot_points.tex}
+\input{figures/latent_space/plot_ellipse.tex}
+
+\resizebox{0.65\textwidth}{!}{
 \begin{tikzpicture}
 
 \begin{axis}[
-  width        = 11cm,
-  height       = 10cm,
+  width=11cm,
+  height=10cm,
   xmin=-7, xmax=8,
   ymin=-7, ymax=5.5,
-  axis x line  = bottom,
-  axis y line  = left,
-  axis line style = {
-    -{Stealth[length=8pt, width=6pt]},
-    thick,
+  axis x line=bottom,
+  axis y line=left,
+  axis line style={
+    -{Stealth[length=8pt,width=6pt]},
+    thick
   },
-  ticks        = none,
-  xlabel       = {},
-  ylabel       = {},
-  clip         = true,
+  ticks=none,
+  xlabel={},
+  ylabel={},
+  clip=true,
 ]
 
 % ================================================================
-%  Cluster fills + boundaries  (colour = concept colour)
-%  Cluster A : rotation=15 deg,  semi-axes=(2.3cm, 1.2cm)
-%  Cluster B : rotation=10 deg,  semi-axes=(2.2cm, 1.1cm)
-%  Cluster C : rotation=-20 deg, semi-axes=(1.4cm, 2.6cm)
+% Cluster boundaries
 % ================================================================
-\plotEllipse[color=colorA, width=very thick, fill=colorA, fillopacity=0.08]%
+\plotEllipse[color=colorA,width=very thick,fill=colorA,fillopacity=0.08]
   {-3}{1.5}{15}{2.3}{1.2}
-\plotEllipse[color=colorB, width=very thick, fill=colorB, fillopacity=0.08]%
+
+\plotEllipse[color=colorB,width=very thick,fill=colorB,fillopacity=0.08]
   {-2.5}{-4}{10}{2.2}{1.1}
-\plotEllipse[color=colorC, width=very thick, fill=colorC, fillopacity=0.08]%
+
+\plotEllipse[color=colorC,width=very thick,fill=colorC,fillopacity=0.08]
   {4.2}{-0.5}{-20}{1.4}{2.6}
 
 % ================================================================
-%  Point clouds — coloured by cluster
+% Point clouds
 % ================================================================
-\plotPoints[color=colorA]{cluster_a.data}
-\plotPoints[color=colorB]{cluster_b.data}
-\plotPoints[color=colorC]{cluster_c.data}
+\plotPoints[color=colorA]{figures/latent_space/cluster_a.data}
+\plotPoints[color=colorB]{figures/latent_space/cluster_b.data}
+\plotPoints[color=colorC]{figures/latent_space/cluster_c.data}
 
 \end{axis}
-
-% ================================================================
-%  Legend — one row per concept, boundary sample matches concept colour
-% ================================================================
-\node[anchor=north, font=\normalsize]
-  at (current bounding box.south) [yshift=-10pt] {%
-  \renewcommand{\arraystretch}{1.6}%
-  \begin{tabular}{l@{\hspace{2em}}l}
-    \tikz\fill[colorA,opacity=0.85] circle(2pt);\ Embedding \textbf{Concept A}
-      & \tikz{
-          \draw[colorA, very thick] (0,0) ellipse (0.28 and 0.14);
-          \fill[colorA, opacity=0.25] (0,0) ellipse (0.28 and 0.14);
-        }\ Cluster boundary $A$ \\
-    \tikz\fill[colorB,opacity=0.85] circle(2pt);\ Embedding \textbf{Concept B}
-      & \tikz{
-          \draw[colorB, very thick] (0,0) ellipse (0.28 and 0.14);
-          \fill[colorB, opacity=0.25] (0,0) ellipse (0.28 and 0.14);
-        }\ Cluster boundary $B$ \\
-    \tikz\fill[colorC,opacity=0.85] circle(2pt);\ Embedding \textbf{Concept C}
-      & \tikz{
-          \draw[colorC, very thick] (0,0) ellipse (0.28 and 0.14);
-          \fill[colorC, opacity=0.25] (0,0) ellipse (0.28 and 0.14);
-        }\ Cluster boundary $C$ \\
-  \end{tabular}%
-};
-
 \end{tikzpicture}
-\end{document}
+}
+
+\caption{
+Visualisation de la structure de l’espace latent. Les points représentent les embeddings associés aux concepts A, B et C. Les ellipses indiquent l’étendue approximative de chaque groupe dans l’espace latent et mettent en évidence leur séparation géométrique.
+}
+\label{fig:latent_clusters}
+
+\end{figure}

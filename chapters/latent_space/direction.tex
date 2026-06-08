@@ -1,24 +1,64 @@
 \section{Interpretable Directions}
 
+\input{figures/latent_space/latent_space_directions.tex}
+
 In latent space analysis, probing methods are generally limited to a relatively simple task: predicting the presence or absence of a given concept from a latent representation.
-This approach makes it possible to assess whether information is encoded in the latent space, but it does not provide a detailed characterization of the structure of that space.
+This approach makes it possible to assess whether information is encoded in the latent space, but it does not provide a detailed characterization of its structure.
 
-A more advanced line of investigation focuses on interpretable directions within the latent space.
-Empirically, in certain models, moving a latent representation along a particular direction results in coherent changes in the model's behavior.
-This phenomenon has been extensively studied in generative images models.
+A more advanced line of investigation focuses on directions in latent space.
+Let \( \mathbf{z} \in \mathbb{R}^d \) denote a latent representation.
+Empirically, in certain models, moving a latent representation along a direction \( \mathbf{v} \in \mathbb{R}^d \) results in coherent changes in the model’s output.
 
-In this context, a controlled perturbation of a latent representation along an interpretable direction can induce specific semantic transformations, such as object rotation, scale changes, or age modification in facial images.
-These observations have led to the development of the field of latent space editing, whose objective is to manipulate generated content directly through modifications of the latent space rather than through changes to the prompt.
+More precisely, consider the perturbed representation
+\[
+\mathbf{z}' = \mathbf{z} + \alpha \mathbf{v},
+\]
+where \( \alpha \in \mathbb{R} \) controls the magnitude of the intervention.
+The resulting change in output often varies smoothly with \( \alpha \), suggesting an approximately linear structure in latent space with respect to certain semantic factors.
+This observation has led to the hypothesis that neural networks may organize representations in a partially linear manner with respect to semantic concepts.
 
-However, a central challenge remains: identifying these interpretable directions is far from trivial.
-Most existing approaches rely on auxiliary models that capture human semantics, such as CLIP, to relate latent variations to textual concepts.
-Consequently, these methods face a limitation similar to that of probing, since concept discovery depends on a pre-existing human semantic framework.
+Such vectors \( \mathbf{v} \) are referred to as \emph{interpretable directions}, since they induce transformations that can be associated with semantic meaning.
+The goal of latent space analysis through interpretable directions is therefore to identify these semantically meaningful axes of variation.
 
-To overcome this limitation, a research subfield known as unsupervised semantic discovery has emerged.
+This phenomenon has been extensively studied in generative image models.
+In this context, controlled perturbations of latent representations along interpretable directions can induce specific semantic transformations, such as object rotation, scaling, or age modification in facial images.
+These observations have led to the development of the field of latent space editing, whose objective is to manipulate generated content directly through modifications in latent space rather than through changes in the input prompt.
+
+However, a central challenge remains: identifying such interpretable directions is far from trivial.
+Most existing approaches rely on auxiliary models that encode human-defined semantics, such as CLIP, to relate latent variations to textual concepts.
+Consequently, these methods inherit a limitation similar to that of probing techniques, since concept discovery depends on a pre-existing semantic framework defined by humans.
+
+To overcome this limitation, a research direction known as unsupervised semantic discovery has emerged.
 Its goal is to uncover interpretable directions in latent spaces without explicit semantic supervision.
-In these approaches, one model applies perturbations along random directions in the latent space, while a second model attempts to predict or recognize the transformation that was applied.
-If a stable correspondence emerges between the perturbation and its prediction, this suggests that the considered direction corresponds to a coherent structure within the latent space.
+In these approaches, one model applies perturbations along random directions in latent space, while a second model attempts to predict or recognize the applied transformation.
+If a stable correspondence emerges between the perturbation and its prediction, this suggests that the considered direction corresponds to a coherent structure in latent space.
 
-In this framework, human intervention occurs only a posteriori, to verify that the discovered directions indeed correspond to interpretable semantic variations.
-This approach enables the capture of representations that are richer than the mere presence or absence of a concept, including notions such as the intensity or degree of an attribute.
-As such, it follows a philosophy similar to that of causal probing, while also enabling explicit interventions to assess the causal role of latent representations.
+In this framework, human intervention occurs only a posteriori, to verify whether the discovered directions indeed correspond to interpretable semantic variations.
+This approach enables the capture of representations that go beyond the mere presence or absence of a concept, including notions such as the intensity or degree of an attribute.
+As such, it follows a philosophy similar to causal probing, while also enabling explicit interventions to assess the causal role of latent representations.
+
+However, despite these advances, several challenges remain.
+
+First, it appears that not all concepts encoded by neural networks are linearly identifiable in latent space.
+While some directions correspond to well-defined semantic factors, many others do not admit such a simple linear structure.
+
+In addition, latent representations often exhibit a phenomenon known as \emph{entanglement}.
+Let \( f : \mathbb{R}^d \rightarrow \mathbb{R}^k \) denote a mapping from latent space to a set of semantic attributes.
+Ideally, one would like to associate each semantic factor \( i \in \{1,\dots,k\} \) with a direction \( \mathbf{v}_i \in \mathbb{R}^d \) such that:
+\[
+f(\mathbf{z} + \alpha \mathbf{v}_i)_j \approx f(\mathbf{z})_j \quad \text{for } j \neq i,
+\]
+and
+\[
+f(\mathbf{z} + \alpha \mathbf{v}_i)_i \text{ varies significantly with } \alpha.
+\]
+
+In practice, this property does not hold strictly.
+Instead, a single direction \( \mathbf{v} \) often induces changes in multiple components of \( f(\mathbf{z}) \), i.e.:
+\[
+\frac{\partial f_j(\mathbf{z})}{\partial \alpha} \neq 0 \quad \text{for several } j.
+\]
+
+This phenomenon is referred to as \emph{entanglement}, indicating that semantic attributes are not cleanly separable in latent space.
+
+This difficulty in isolating independent semantic factors, together with the frequent presence of entangled representations, has motivated a more ambitious hypothesis: the \emph{superposition hypothesis}.
