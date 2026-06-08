@@ -1,5 +1,24 @@
-\section{Interpretable Direction}
+\section{Interpretable Directions}
 
-Further investigations of the \latentSpaceAcronym have revealed linear directions corresponding to semantic attributes, refer as \emphasize{Interpretable Directions} \cite{haas2024discoveringinterpretabledirectionssemantic, voynov2020unsuperviseddiscoveryinterpretabledirections}.
-With this perspective, it is not only possible to detect the presence of a concept but also to study its variation across the \latentSpaceAcronym.
-For example, one can change the zoom level of a generated image simply by shifting its latent representation along a specific linear direction.
+In latent space analysis, probing methods are generally limited to a relatively simple task: predicting the presence or absence of a given concept from a latent representation.
+This approach makes it possible to assess whether information is encoded in the latent space, but it does not provide a detailed characterization of the structure of that space.
+
+A more advanced line of investigation focuses on interpretable directions within the latent space.
+Empirically, in certain models, moving a latent representation along a particular direction results in coherent changes in the model's behavior.
+This phenomenon has been extensively studied in generative images models.
+
+In this context, a controlled perturbation of a latent representation along an interpretable direction can induce specific semantic transformations, such as object rotation, scale changes, or age modification in facial images.
+These observations have led to the development of the field of latent space editing, whose objective is to manipulate generated content directly through modifications of the latent space rather than through changes to the prompt.
+
+However, a central challenge remains: identifying these interpretable directions is far from trivial.
+Most existing approaches rely on auxiliary models that capture human semantics, such as CLIP, to relate latent variations to textual concepts.
+Consequently, these methods face a limitation similar to that of probing, since concept discovery depends on a pre-existing human semantic framework.
+
+To overcome this limitation, a research subfield known as unsupervised semantic discovery has emerged.
+Its goal is to uncover interpretable directions in latent spaces without explicit semantic supervision.
+In these approaches, one model applies perturbations along random directions in the latent space, while a second model attempts to predict or recognize the transformation that was applied.
+If a stable correspondence emerges between the perturbation and its prediction, this suggests that the considered direction corresponds to a coherent structure within the latent space.
+
+In this framework, human intervention occurs only a posteriori, to verify that the discovered directions indeed correspond to interpretable semantic variations.
+This approach enables the capture of representations that are richer than the mere presence or absence of a concept, including notions such as the intensity or degree of an attribute.
+As such, it follows a philosophy similar to that of causal probing, while also enabling explicit interventions to assess the causal role of latent representations.
