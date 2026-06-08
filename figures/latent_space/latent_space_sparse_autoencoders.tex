@@ -1,51 +1,56 @@
+\providecommand{\lsePanelWidth}{6cm}
+\newlength{\saePanelWd}
+\newlength{\saePanelHt}
+\newlength{\saePanelGap}
+
+% Lengths must be set BEFORE \resizebox so pgfplots sees non-zero values.
+\setlength{\saePanelWd}{\lsePanelWidth}
+\pgfmathsetlength{\saePanelHt} {\saePanelWd * 5 / 6}
+\pgfmathsetlength{\saePanelGap}{\saePanelWd * 0.9}
+
 \begin{figure}[t]
 \centering
 
 \input{figures/latent_space/latent_space_shared.tex}
 
-\resizebox{0.95\textwidth}{!}{
+\resizebox{1\textwidth}{!}{
 \begin{tikzpicture}
 
   % ================================================================
   % LEFT PANEL — Dense latent space
   % ================================================================
+  \begin{scope}[xshift=0pt]
   \begin{axis}[
-    latent panel,
+    name=axisLeft,
+    latent embed,
+    width=\saePanelWd,
+    height=\saePanelHt,
     xmin=-7, xmax=8,
     ymin=-7, ymax=5.5,
-    at={(0,0)},
-    title={\large\bfseries Dense latent space},
-    title style={yshift=4pt},
   ]
     \plotPoints[color=colorA]{figures/latent_space/cluster_a.data}
     \plotPoints[color=colorB]{figures/latent_space/cluster_b.data}
     \plotPoints[color=colorC]{figures/latent_space/cluster_c.data}
   \end{axis}
-
-  % ================================================================
-  % Arrow between panels
-  % ================================================================
-  \draw[-{Stealth[length=10pt,width=8pt]}, line width=2pt, gray!60]
-    (9.6cm, 3.2cm) -- (11.4cm, 3.2cm)
-    node[midway, above, font=\small\itshape, text=gray!80] {SAE};
+  \node[anchor=north, yshift=-6pt] at (axisLeft.south)
+    {\textbf{(a)} Dense latent space};
+  \end{scope}
 
   % ================================================================
   % RIGHT PANEL — Sparse SAE space
   % ================================================================
+  \begin{scope}[xshift=\saePanelGap]
   \begin{axis}[
-    width=9cm,
-    height=9cm,
+    name=axisRight,
+    width=\saePanelWd,
+    height=\saePanelHt,
     xmin=-8.5, xmax=8.5,
     ymin=-6,   ymax=9,
     axis lines=none,
     ticks=none,
     clip=true,
-    at={(11.8cm,0)},
-    title={\large\bfseries Sparse SAE space},
-    title style={yshift=4pt},
   ]
 
-    % Sparse feature axes
     \draw[colorA, thick, -{Stealth[length=7pt,width=5pt]}]
       (axis cs:0,0) -- (axis cs:0,7);
     \node[colorA, font=\small\bfseries, above] at (axis cs:0,7.3)
@@ -61,21 +66,23 @@
     \node[colorC, font=\small\bfseries, below right] at (axis cs:6.062,-3.8)
       {Feature $C$};
 
-    % Sparse clusters
     \plotPoints[color=colorA]{figures/latent_space/sae_right_a.data}
     \plotPoints[color=colorB]{figures/latent_space/sae_right_b.data}
     \plotPoints[color=colorC]{figures/latent_space/sae_right_c.data}
 
   \end{axis}
+  \node[anchor=north, yshift=-6pt] at (axisRight.south)
+    {\textbf{(b)} Sparse SAE space};
+  \end{scope}
 
 \end{tikzpicture}
 }
 
 \caption{
   Transformation de l'espace latent dense vers une représentation sparse
-  de type SAE. À gauche, les embeddings sont entremêlés dans l'espace
-  latent initial. À droite, la représentation sparse aligne chaque concept
-  sur un axe de feature dédié.
+  de type SAE. À gauche~\textbf{(a)}, les embeddings sont entremêlés dans
+  l'espace latent initial. À droite~\textbf{(b)}, la représentation sparse
+  aligne chaque concept sur un axe de feature dédié.
 }
 \label{fig:dense_to_sparse_sae}
 \end{figure}

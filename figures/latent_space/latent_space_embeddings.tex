@@ -26,7 +26,7 @@
 
   % ---- Panel (a) : observed activations (no colour) ----
   \begin{scope}[xshift=0pt]
-    \begin{axis}[name=axis1, latent embed]
+    \begin{axis}[name=axis1, latent embed, width=\lsePanelWd, height=\lsePanelHt]
       \plotPoints{figures/latent_space/cluster_a.data}
       \plotPoints{figures/latent_space/cluster_b.data}
       \plotPoints{figures/latent_space/cluster_c.data}
@@ -37,7 +37,7 @@
 
   % ---- Panel (b) : under the concept hypothesis (coloured) ----
   \begin{scope}[xshift=\lsePanelGap]
-    \begin{axis}[name=axis2, latent embed]
+    \begin{axis}[name=axis2, latent embed, width=\lsePanelWd, height=\lsePanelHt]
       \plotPoints[color=colorA]{figures/latent_space/cluster_a.data}
       \plotPoints[color=colorB]{figures/latent_space/cluster_b.data}
       \plotPoints[color=colorC]{figures/latent_space/cluster_c.data}
