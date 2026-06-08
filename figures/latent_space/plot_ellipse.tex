@@ -32,10 +32,8 @@
   \pgfkeysgetvalue{/plotellipse/width}      {\peWidth}%
   \pgfkeysgetvalue{/plotellipse/fill}       {\peFill}%
   \pgfkeysgetvalue{/plotellipse/fillopacity}{\peFillOp}%
-  % Bake all values now to avoid deferred-rendering overwrite
   \def\peNone{none}%
   \ifx\peFill\peNone
-    % No fill — bake stroke only
     \edef\peDoEllipse{%
       \noexpand\draw[\peColor, \peWidth,
         rotate around={#4:(#2,#3)}]
@@ -43,7 +41,6 @@
     }%
     \peDoEllipse
   \else
-    % Fill + stroke — bake both
     \edef\peDoFill{%
       \noexpand\fill[\peFill, opacity=\peFillOp,
         rotate around={#4:(#2,#3)}]

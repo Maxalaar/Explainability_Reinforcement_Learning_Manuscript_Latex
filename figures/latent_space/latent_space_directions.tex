@@ -1,69 +1,35 @@
 \begin{figure}[t]
 \centering
 
-% ================================================================
-% Cluster colours
-% ================================================================
-\colorlet{colorA}{blue!70!cyan}
-\colorlet{colorB}{orange}
-\colorlet{colorC}{green!60!black}
-
-% Direction colours
-\colorlet{colorDirBA}{violet}
-\colorlet{colorDirBC}{red!70!black}
-
-\input{./figures/latent_space/plot_points.tex}
-\input{./figures/latent_space/plot_ellipse.tex}
-\input{./figures/latent_space/plot_probe.tex}
-\input{./figures/latent_space/plot_direction.tex}
+\input{figures/latent_space/latent_space_shared.tex}
 
 \resizebox{0.65\textwidth}{!}{
 \begin{tikzpicture}
+\begin{axis}[latent axis]
 
-\begin{axis}[
-  width=11cm,
-  height=10cm,
-  xmin=-7, xmax=8,
-  ymin=-7, ymax=5.5,
-  axis x line=bottom,
-  axis y line=left,
-  axis line style={
-    -{Stealth[length=8pt, width=6pt]},
-    thick
-  },
-  ticks=none,
-  xlabel={},
-  ylabel={},
-  clip=true,
-]
+  % Point clouds
+  \plotPoints[color=colorA]{figures/latent_space/cluster_a.data}
+  \plotPoints[color=colorB]{figures/latent_space/cluster_b.data}
+  \plotPoints[color=colorC]{figures/latent_space/cluster_c.data}
 
-% ================================================================
-% Point clouds
-% ================================================================
-\plotPoints[color=colorA]{figures/latent_space/cluster_a.data}
-\plotPoints[color=colorB]{figures/latent_space/cluster_b.data}
-\plotPoints[color=colorC]{figures/latent_space/cluster_c.data}
+  % Interpretable directions
+  \plotProbe[color=colorDirBA, style=dashed, width=thick]{-11}{-31.5}
+  \plotDirection[color=colorDirBA]{-2.5}{-4.0}{-3.0}{1.5}
 
-% ================================================================
-% Interpretable directions
-% ================================================================
-\plotProbe[color=colorDirBA, style=dashed, width=thick]{-11}{-31.5}
-\plotDirection[color=colorDirBA]{-2.5}{-4.0}{-3.0}{1.5}
+  \plotProbe[color=colorDirBC, style=dashed, width=thick]{0.5224}{-2.694}
+  \plotDirection[color=colorDirBC]{-2.5}{-4.0}{4.2}{-0.5}
 
-\plotProbe[color=colorDirBC, style=dashed, width=thick]{0.5224}{-2.694}
-\plotDirection[color=colorDirBC]{-2.5}{-4.0}{4.2}{-0.5}
-
-% centroid B
-\fill[colorB] (axis cs:-2.5,-4.0) circle (4pt);
+  % Centroid B
+  \fill[colorB] (axis cs:-2.5,-4.0) circle (4pt);
 
 \end{axis}
 \end{tikzpicture}
 }
 
-% ================================================================
-% Caption (thèse style)
-% ================================================================
-\caption{Directions interprétables dans l’espace latent reliant le cluster B aux clusters A et C. Les lignes pointillées représentent les directions globales, tandis que les flèches indiquent les vecteurs entre centroïdes.}
+\caption{
+  Directions interprétables dans l'espace latent reliant le cluster B aux
+  clusters A et C. Les lignes pointillées représentent les directions
+  globales, tandis que les flèches indiquent les vecteurs entre centroïdes.
+}
 \label{fig:latent_directions}
-
 \end{figure}

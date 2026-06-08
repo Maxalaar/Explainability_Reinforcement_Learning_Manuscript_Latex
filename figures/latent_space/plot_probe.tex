@@ -24,12 +24,11 @@
   width/.initial = thick,
 }
 
-\newcommand{\plotProbe}[3][]{%    % #1=opts  #2=slope  #3=intercept
+\newcommand{\plotProbe}[3][]{%
   \pgfkeys{/plotprobe, #1}%
   \pgfkeysgetvalue{/plotprobe/color}{\prColor}%
   \pgfkeysgetvalue{/plotprobe/style}{\prStyle}%
   \pgfkeysgetvalue{/plotprobe/width}{\prWidth}%
-  % Bake all values as literals before pgfplots defers rendering.
   \edef\prDoPlot{%
     \noexpand\addplot[%
       domain=-7:8, samples=2,%

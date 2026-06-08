@@ -7,9 +7,9 @@
 %  Must be called OUTSIDE the \addplot system, directly inside axis.
 %
 %  Options (all optional):
-%    color : arrow color          (default: black)
-%    width : line width           (default: very thick)
-%    shorten : shorten tip by     (default: 0pt)
+%    color   : arrow color   (default: black)
+%    width   : line width    (default: very thick)
+%    shorten : shorten tip   (default: 4pt)
 %
 %  Example:
 %    \plotDirection[color=colorA]{-2.5}{-4}{-3}{1.5}
@@ -21,7 +21,7 @@
   shorten/.initial = 4pt,
 }
 
-\newcommand{\plotDirection}[6][]{%  #1=opts  #2=x1 #3=y1  #4=x2 #5=y2
+\newcommand{\plotDirection}[6][]{%
   \pgfkeys{/plotdirection, #1}%
   \pgfkeysgetvalue{/plotdirection/color}  {\pdColor}%
   \pgfkeysgetvalue{/plotdirection/width}  {\pdWidth}%

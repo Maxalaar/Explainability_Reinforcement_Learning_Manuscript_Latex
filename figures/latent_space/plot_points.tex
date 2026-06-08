@@ -13,36 +13,33 @@
 %
 %  WHY \edef ON THE WHOLE CALL:
 %    pgfplots defers ALL \addplot rendering until \end{axis}.
-%    Using intermediate macros (\ppC, \ppS …) fails because they
-%    are shared and overwritten by every subsequent \plotPoints call;
-%    by render time every plot sees the last call's values.
+%    Using intermediate macros fails because they are shared and
+%    overwritten by every subsequent \plotPoints call; by render
+%    time every plot sees the last call's values.
 %    \edef bakes the current color/size/opacity as literal strings
-%    directly into the \addplot token list, so pgfplots receives
-%    "colorA", "2pt", "0.85" — never a macro reference.
+%    directly into the \addplot token list.
 %
 %  Example:
 %    \plotPoints[color=blue!70!cyan, size=3pt]{cluster_a.data}
 % ================================================================
-% \pgfkeys{
-%   /plotpoints/.is family, /plotpoints,
-%   color/.initial   = black,
-%   size/.initial    = 2pt,
-%   opacity/.initial = 0.85,
-% }
+\pgfkeys{
+  /plotpoints/.is family, /plotpoints,
+  color/.initial   = black,
+  size/.initial    = 2pt,
+  opacity/.initial = 0.85,
+}
 
-% \newcommand{\plotPoints}[2][]{%
-%   \pgfkeys{/plotpoints, #1}%
-%   \pgfkeysgetvalue{/plotpoints/color}  {\ppColor}%
-%   \pgfkeysgetvalue{/plotpoints/size}   {\ppSize}%
-%   \pgfkeysgetvalue{/plotpoints/opacity}{\ppOpacity}%
-%   % Bake literal values into the \addplot call now.
-%   % #2 (filename) is substituted by TeX before \edef runs — safe.
-%   \edef\ppAddPlot{%
-%     \noexpand\addplot[%
-%       only marks, forget plot, mark=*,%
-%       mark size=\ppSize,%
-%       mark options={fill=\ppColor, draw=\ppColor, fill opacity=\ppOpacity}%
-%     ] file {#2};%
-%   }%
-%   \ppAddPlot
-% }
+\newcommand{\plotPoints}[2][]{%
+  \pgfkeys{/plotpoints, #1}%
+  \pgfkeysgetvalue{/plotpoints/color}  {\ppColor}%
+  \pgfkeysgetvalue{/plotpoints/size}   {\ppSize}%
+  \pgfkeysgetvalue{/plotpoints/opacity}{\ppOpacity}%
+  \edef\ppAddPlot{%
+    \noexpand\addplot[%
+      only marks, forget plot, mark=*,%
+      mark size=\ppSize,%
+      mark options={fill=\ppColor, draw=\ppColor, fill opacity=\ppOpacity}%
+    ] file {#2};%
+  }%
+  \ppAddPlot
+}

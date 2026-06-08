@@ -1,0 +1,61 @@
+% ================================================================
+%  latent_space_shared.tex
+%  Couleurs, macros et styles partagés par toutes les figures
+%  latent_space_*.tex
+%  Usage : \input{figures/latent_space/latent_space_shared.tex}
+% ================================================================
+
+% ----------------------------------------------------------------
+% Couleurs des clusters
+% ----------------------------------------------------------------
+\colorlet{colorA}{blue!70!cyan}
+\colorlet{colorB}{orange}
+\colorlet{colorC}{green!60!black}
+
+% Couleurs de directions (latent_space_directions.tex)
+\colorlet{colorDirBA}{violet}
+\colorlet{colorDirBC}{red!70!black}
+
+% ----------------------------------------------------------------
+% Macros de dessin
+% ----------------------------------------------------------------
+\input{figures/latent_space/plot_points.tex}
+\input{figures/latent_space/plot_ellipse.tex}
+\input{figures/latent_space/plot_probe.tex}
+\input{figures/latent_space/plot_direction.tex}
+
+% ----------------------------------------------------------------
+% Styles d'axe partagés
+% ----------------------------------------------------------------
+\pgfplotsset{
+  % Axe standard (clustering, probing, directions)
+  latent axis/.style={
+    width=11cm,
+    height=10cm,
+    xmin=-7, xmax=8,
+    ymin=-7, ymax=5.5,
+    axis x line=bottom,
+    axis y line=left,
+    axis line style={
+      -{Stealth[length=8pt, width=6pt]},
+      thick
+    },
+    ticks=none,
+    xlabel={},
+    ylabel={},
+    clip=true,
+  },
+  % Variante panneau carré (latent_space_sparse_autoencoders.tex)
+  latent panel/.style={
+    latent axis,
+    width=9cm,
+    height=9cm,
+  },
+  % Variante petit panneau (latent_space_embeddings.tex)
+  latent embed/.style={
+    latent axis,
+    width=\lsePanelWd,
+    height=\lsePanelHt,
+    every axis plot/.append style={forget plot},
+  },
+}

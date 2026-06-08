@@ -4,97 +4,63 @@
 \newlength{\lsePanelHt}
 \newlength{\lsePanelGap}
 
-\pgfkeys{
-  /plotpoints/.is family, /plotpoints,
-  color/.initial   = black,
-  size/.initial    = 2pt,
-  opacity/.initial = 0.85,
-}
-
-\newcommand{\plotPoints}[2][]{%
-  \pgfkeys{/plotpoints, #1}%
-  \pgfkeysgetvalue{/plotpoints/color}  {\ppColor}%
-  \pgfkeysgetvalue{/plotpoints/size}   {\ppSize}%
-  \pgfkeysgetvalue{/plotpoints/opacity}{\ppOpacity}%
-  \edef\ppAddPlot{%
-    \noexpand\addplot[%
-      only marks, mark=*,%
-      mark size=\ppSize,%
-      mark options={fill=\ppColor, draw=\ppColor, fill opacity=\ppOpacity}%
-    ] file {#2};%
-  }%
-  \ppAddPlot
-}
-
-\begin{figure}[t]
-\centering
-\resizebox{1\textwidth}{!}{
-\begin{tikzpicture}
-
-\setlength{\lsePanelWd}{\lsePanelWidth}
-\pgfmathsetlength{\lsePanelHt} {\lsePanelWd * 5  / 6}
-\pgfmathsetlength{\lsePanelGap}{\lsePanelWd * 0.9}
-
-\colorlet{colorA}{blue!70!cyan}
-\colorlet{colorB}{orange}
-\colorlet{colorC}{green!60!black}
-
-\begin{scope}[xshift=0pt]
-  \begin{axis}[
-      name=axis1,
-      width=\lsePanelWd, height=\lsePanelHt,
-      xmin=-7, xmax=8, ymin=-7, ymax=5.5,
-      axis x line=bottom, axis y line=left,
-      axis line style={-{Stealth[length=8pt,width=6pt]}, thick},
-      ticks=none, clip=true,
-      every axis plot/.append style={forget plot},
-    ]
-    \plotPoints{figures/latent_space/cluster_a.data}
-    \plotPoints{figures/latent_space/cluster_b.data}
-    \plotPoints{figures/latent_space/cluster_c.data}
-  \end{axis}
-  \node[anchor=north, yshift=-6pt] at (axis1.south)
-        {\textbf{(a)} Observed activations};
-\end{scope}
-
-\begin{scope}[xshift=\lsePanelGap]
-  \begin{axis}[
-      name=axis2,
-      width=\lsePanelWd, height=\lsePanelHt,
-      xmin=-7, xmax=8, ymin=-7, ymax=5.5,
-      axis x line=bottom, axis y line=left,
-      axis line style={-{Stealth[length=8pt,width=6pt]}, thick},
-      ticks=none, clip=true,
-      every axis plot/.append style={forget plot},
-    ]
-    \plotPoints[color=colorA]{figures/latent_space/cluster_a.data}
-    \plotPoints[color=colorB]{figures/latent_space/cluster_b.data}
-    \plotPoints[color=colorC]{figures/latent_space/cluster_c.data}
-  \end{axis}
-  \node[anchor=north, yshift=-6pt] at (axis2.south)
-        {\textbf{(b)} Under the concept hypothesis};
-\end{scope}
-
+% Defined outside the tikzpicture to avoid illegal parameter number
+% error caused by #1 being parsed as an argument of a surrounding macro.
 \newcommand{\legendDot}[1]{%
   \tikz[baseline=-0.6ex]
     \draw[fill=#1, draw=#1, opacity=0.85]
       (0,0) circle [radius=2pt];%
 }
 
-\path (axis1.south west) -- (axis2.south east)
-      coordinate[midway] (legendCenter);
+\begin{figure}[t]
+\centering
 
-\node[anchor=north, yshift=-28pt] at (legendCenter) {%
-  \legendDot{colorA}~Concept A
-  \quad
-  \legendDot{colorB}~Concept B
-  \quad
-  \legendDot{colorC}~Concept C
-};
+\input{figures/latent_space/latent_space_shared.tex}
+
+\resizebox{1\textwidth}{!}{
+\begin{tikzpicture}
+
+  \setlength{\lsePanelWd}{\lsePanelWidth}
+  \pgfmathsetlength{\lsePanelHt} {\lsePanelWd * 5  / 6}
+  \pgfmathsetlength{\lsePanelGap}{\lsePanelWd * 0.9}
+
+  % ---- Panel (a) : observed activations (no colour) ----
+  \begin{scope}[xshift=0pt]
+    \begin{axis}[name=axis1, latent embed]
+      \plotPoints{figures/latent_space/cluster_a.data}
+      \plotPoints{figures/latent_space/cluster_b.data}
+      \plotPoints{figures/latent_space/cluster_c.data}
+    \end{axis}
+    \node[anchor=north, yshift=-6pt] at (axis1.south)
+      {\textbf{(a)} Observed activations};
+  \end{scope}
+
+  % ---- Panel (b) : under the concept hypothesis (coloured) ----
+  \begin{scope}[xshift=\lsePanelGap]
+    \begin{axis}[name=axis2, latent embed]
+      \plotPoints[color=colorA]{figures/latent_space/cluster_a.data}
+      \plotPoints[color=colorB]{figures/latent_space/cluster_b.data}
+      \plotPoints[color=colorC]{figures/latent_space/cluster_c.data}
+    \end{axis}
+    \node[anchor=north, yshift=-6pt] at (axis2.south)
+      {\textbf{(b)} Under the concept hypothesis};
+  \end{scope}
+
+  % ---- Shared legend ----
+  \path (axis1.south west) -- (axis2.south east)
+        coordinate[midway] (legendCenter);
+
+  \node[anchor=north, yshift=-28pt] at (legendCenter) {%
+    \legendDot{colorA}~Concept A
+    \quad
+    \legendDot{colorB}~Concept B
+    \quad
+    \legendDot{colorC}~Concept C
+  };
 
 \end{tikzpicture}
 }
-% Caption makes the hypothesis framing explicit.
+
 \caption{%
   The same latent space activations seen without hypothesis~\textbf{(a)}
   and under the working hypothesis that concepts emerge in the latent
