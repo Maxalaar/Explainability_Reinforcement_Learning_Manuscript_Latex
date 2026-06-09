@@ -2,23 +2,25 @@
 
 \input{figures/latent_space/latent_space_directions.tex}
 
-In latent space analysis, probing methods are generally limited to a relatively simple task: predicting the presence or absence of a given concept from a latent representation.
-This approach makes it possible to assess whether information is encoded in the latent space, but it does not provide a detailed characterization of its structure.
-
-A more advanced line of investigation focuses on directions in latent space.
-Let \( \mathbf{z} \in \mathbb{R}^d \) denote a latent representation.
-Empirically, in certain models, moving a latent representation along a direction \( \mathbf{v} \in \mathbb{R}^d \) results in coherent changes in the model’s output.
-
-More precisely, consider the perturbed representation
+To overcome the limitations of binary concept detection in probing methods, several approaches have been proposed to analyze the geometric structure of latent representations.
+Among them, the notion of interpretable directions has emerged as a natural extension, aiming to capture the continuous nature of how concepts are encoded in representation spaces.
+Empirically, it has been observed that shifting a latent representation along a direction can induce coherent and semantically meaningful changes in the model’s output.
+Such transformations can be expressed as:
 \[
-\mathbf{z}' = \mathbf{z} + \alpha \mathbf{v},
+h' = h + \alpha \mathbf{v}_i,
 \]
-where \( \alpha \in \mathbb{R} \) controls the magnitude of the intervention.
-The resulting change in output often varies smoothly with \( \alpha \), suggesting an approximately linear structure in latent space with respect to certain semantic factors.
-This observation has led to the hypothesis that neural networks may organize representations in a partially linear manner with respect to semantic concepts.
+where:
+\begin{itemize}
+    \item $h$ denotes the original embedding,
+    \item $\mathbf{v}_i$ is a unit vector associated with concept $c_i$,
+    \item $\alpha$ controls the strength of the intervention,
+    \item $h'$ is the resulting perturbed representation.
+\end{itemize}
 
-Such vectors \( \mathbf{v} \) are referred to as \emph{interpretable directions}, since they induce transformations that can be associated with semantic meaning.
-The goal of latent space analysis through interpretable directions is therefore to identify these semantically meaningful axes of variation.
+In many cases, the resulting change in the model’s output varies smoothly with \(\alpha\), suggesting an approximately linear structure of the latent space with respect to certain semantic factors.
+This observation has led to the hypothesis that neural representations may organize concepts in a partially linear manner within the embedding space.
+Vectors of this form are referred to as interpretable directions, as they correspond to transformations that can be associated with specific semantic attributes.
+The objective of this line of work is therefore to identify directions in latent space that align with meaningful variations in the encoded concepts.
 
 This phenomenon has been extensively studied in generative image models.
 In this context, controlled perturbations of latent representations along interpretable directions can induce specific semantic transformations, such as object rotation, scaling, or age modification in facial images.
