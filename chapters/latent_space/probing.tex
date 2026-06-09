@@ -4,32 +4,44 @@
 
 Probing methods aim to determine whether a given human-defined concept is encoded within the internal representations of a neural network.
 More specifically, they investigate whether the presence or absence of a selected concept can be inferred from embeddings.
-The underlying assumption is that if a concept can be reliably decoded from these representations, it is likely that the network encodes information related to it in order to perform its task.
+The underlying assumption is that if a concept can be reliably decoded from these representations, then the network likely encodes information related to it in order to perform its task.
 
 A probing analysis begins by identifying a set of interpretable concepts that the network could potentially use to accomplish its task.
-Each example in the dataset is then annotated to indicate the presence or absence of the studied concept.
+Each example in the dataset is then annotated to indicate the presence or absence of the studied concepts.
+We denote by $c_j$ the presence or absence of concept $j$ in example $x$.
+The dataset can therefore be written as follows:
+\[
+\mathcal{D} = \{(x^{(i)}, y^{(i)}, c^{(i)}_1, \dots, c^{(i)}_n)\}_{i=1}^{N}.
+\]
+
 The data are subsequently projected into the latent space of the pretrained model.
+We denote by $h^{l}$ the representation vector obtained at layer $l$.
 From these latent representations, a classifier is trained in a supervised manner to predict the presence of the considered concept.
-This classifier is referred to as a probe, since its role is to determine whether a concept is present or not.
-The role of this probe is therefore to assess whether the information associated with the concept is accessible from the network’s internal representations.
+This classifier is referred to as a probe, denoted $p$, since its role is to determine whether a concept is present or not.
+Its purpose is therefore to assess whether information associated with the concept is accessible from the network’s internal representations.
+This can be formalized as follows:
+\[
+p_{\theta}^{l, j} : h^{l} \mapsto c_j,
+\quad
+\theta^* = \arg\min_\theta \mathcal{L}\big(p_\theta^{l,j}(h^{l}), c_j\big)
+\]
 
 The classifier used to detect the presence or absence of a concept must remain intentionally simple.
-Indeed, if the probe has too much capacity, it may reconstruct the target information from complex correlations that do not necessarily correspond to a representation explicitly encoded in the latent space.
+Indeed, if the probe has too much capacity, it may reconstruct the target information from complex correlations that do not necessarily correspond to information explicitly encoded in the latent space.
 In such a case, it becomes difficult to determine whether the concept is genuinely represented by the network or merely reconstructed through the expressive power of the classifier.
 For this reason, probing methods often rely on linear classifiers.
-A linear separation suggests that the information is easily accessible to the neural network and potentially usable during decision making.
-
+A linear separation suggests that the information is easily accessible to the neural network and potentially usable during decision-making.
 If the classifier achieves performance significantly above chance level, this suggests that the latent space contains exploitable information related to the considered concept.
-However, the fact that a concept can be decoded from latent representations does not necessarily imply that the model actually uses this information to perform its task.
 
-To ensure that representations play a causal role in the model’s output, it is possible to perform interventions on the latent representations.
+However, the fact that a concept can be decoded from latent representations does not necessarily imply that the model actually uses this information to perform its task.
+To assess whether representations play a causal role in the model’s output, it is possible to perform interventions on the latent representations.
 An intervention consists of modifying a latent representation in a controlled manner by activating or deactivating a given concept, and then studying its impact on the model’s output.
 If the resulting change in the model’s output is consistent with the applied perturbation, this suggests that the representation had a causal role.
 
-The main limitation of this approach is that the concepts under investigation must be defined in advance before any probing analysis can be performed.
+A main limitation of the probing approach is that the concepts under investigation must be predefined before any analysis can be performed.
 This introduces a strong bias in what can be studied.
 Moreover, annotating a dataset for each concept is extremely time-consuming and requires significant human effort.
 Interventions in latent space are also difficult to interpret, as it is not always clear what constitutes a meaningful change in the network’s output under a given perturbation.
 
-This set of limitations makes probing a highly human-centric approach, strongly dependent on the choice of investigated concepts and on the interpretation of interventions.
+These limitations make probing a highly human-centric approach, strongly dependent on the choice of investigated concepts and on the interpretation of interventions.
 To overcome this bias, other methods for studying latent spaces have been developed, particularly those aiming to discover concepts in an unsupervised manner.
