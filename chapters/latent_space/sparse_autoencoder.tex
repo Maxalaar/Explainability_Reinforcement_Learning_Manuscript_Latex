@@ -2,35 +2,62 @@
 
 \input{figures/latent_space/latent_space_sparse_autoencoders.tex}
 
-As discussed previously, interpretability approaches based on latent directions face inherent limitations.
-Empirically, only a restricted subset of concepte appears to admit a linear representation, and even these directions are often affected by significant entanglement with other concepte.
+As discussed previously, approaches based on latent directions face inherent limitations.
+Empirically, only a restricted subset of concepts appears to admit a linear representation, and even these directions are often affected by significant entanglement with other concepts.
 
-To account for this behavior, a complementary hypothesis has been introduced, extending the assumption of linear concepte encoding in neural networks.
-It posits that semantic concepte are preferentially represented in a linear fashion, with each concept ideally corresponding to a distinct direction in latent space.
+To account for this behavior, a complementary hypothesis has been introduced, extending the assumptions underlying the Concept Hypothesis.
+This hypothesis, known as the Superposition Hypothesis, posits that semantic concepts are preferentially represented in a linear fashion, with each concept ideally corresponding to a distinct direction in latent space.
 In this idealized setting, semantic attributes would form an approximately orthogonal basis, where each direction independently controls a single factor of variation.
-
-We first consider an idealized representation of the latent space in which semantic concepts are perfectly disentangled.
-Let \( \mathbf{h} \in \mathbb{R}^d \) denote a latent embedding.
-In this setting, each concept is associated with a unique direction \( \mathbf{v}_i \in \mathbb{R}^d \), and the representation of a given input can be expressed as a linear combination of these concept directions:
+Furthermore, only a small subset of the available concepts is expected to be active for a given representation.
+As a result, latent representations can be viewed as sparse combinations of concept directions.
+This idealized representation can be expressed as follows:
 \[
 \mathbf{h} = \sum_{i=1}^{m} a_i \mathbf{v}_i,
+\qquad
+\forall i \neq j,\quad \mathbf{v}_i^\top \mathbf{v}_j \approx 0,
+\qquad
+\|\mathbf{a}\|_0 \ll m,
 \]
-where \( a_i \in \mathbb{R} \) represents the activation of concept \( i \).
+where:
+\begin{itemize}
+    \item $\mathbf{h}$ denotes a latent representation,
+    \item $\mathbf{v}_i$ represents the direction associated with concept $c_i$,
+    \item $a_i$ corresponds to the activation strength of concept $c_i$ in the representation $\mathbf{h}$,
+    \item $\|\mathbf{a}\|_0 \ll m$ indicates that only a small fraction of concepts are active for a given representation.
+\end{itemize}
 
-In the ideal case, the set of concept directions is assumed to be approximately orthogonal, such that each direction independently controls a single semantic factor.
-Moreover, for a given input, only a small subset of coefficients \( a_i \) is non-zero, so that each embedding corresponds to a sparse combination of a few active concepts.
+According to the Superposition Hypothesis, the reason why latent representations do not perfectly follow this idealized structure is that the representational capacity of neural networks is limited.
+For a given layer, the dimensionality of the representation space is finite, which constrains the number of concepts that can be encoded independently.
+As a result, the network cannot allocate a dedicated direction to every concept.
+Instead, multiple semantic concepts are compressed into shared dimensions, a phenomenon referred to as superposition.
+Under this hypothesis, a single latent direction may therefore participate in the representation of several distinct concepts.
+This notion of superposition is closely related to the phenomenon of entanglement observed in latent space analyses.
+From the perspective both phenomena manifest themselves through the difficulty of isolating semantic factors into independent directions.
+However, while entanglement is an empirical observation about the structure of latent representations, superposition provides a theoretical explanation for why such mixing may emerge.
+More generally, superposition can be viewed as a consequence of compression pressure: given a limited representational budget, the model favors efficient encoding of information over a perfectly disentangled organization of concepts.
 
-In this idealized setting, concept directions are assumed to form a structured basis of the latent space, in which each concept is independently controllable.
+If this hypothesis holds, then any attempt to analyze latent representations will inevitably be affected by the phenomenon of superposition.
+Motivated by this view, with the goal of recovering more structured representations a large body of work has focused on developing methods to disentangle latent spaces.
+Pour ce faire A common strategy consists in projecting a given representation $h$ into a higher-dimensional space, whit additional constraints designed to improve interpretability.
+The idea is to introduce a projection mechanism that encourages the decomposition of dense representations into a set of simpler components capable of capturing semantic concepts.
+These approaches are closely related to the field of dictionary learning, which aims to represent complex signals as sparse combinations of elementary features.
+A widely used implementation of this idea is the sparse autoencoder, which can be defined as follows:
+\[
+s = f_{\text{enc}}(h), \quad \hat{h} = f_{\text{dec}}(s)
+\]
+\[
+\mathcal{L} = \|h - \hat{h}\|_2^2 + \lambda \|s\|_1
+\]
+where:
+\begin{itemize}
+    \item $f_{\text{enc}}(h)$ is the encoding function that projects the original representation space into a sparse latent space,
+    \item $f_{\text{dec}}(s)$ is the decoding function that reconstructs the original representation from the sparse code,
+    \item $s$ is the sparse representation of $h$,
+    \item $\|h - \hat{h}\|_2^2$ is the reconstruction loss ensuring that the original representation can be faithfully recovered,
+    \item $\lambda \|s\|_1$ is the sparsity regularization term that encourages most components of $s$ to be zero.
+\end{itemize}
 
-When the representational capacity of the model is limited, such a decomposition leads to interference between concepte.
-In this regime, multiple semantic concepte are encoded within shared directions, a phenomenon known as \emph{superposition}.
-This can be interpreted as a consequence of compression pressure, where the model prioritizes efficient encoding over strict factorization of concepte.
-
-This perspective is closely related to recent work in mechanistic interpretability, where neural representations are assumed to decompose into sparse, approximately linear concepte.
-It also connects naturally to classical results in dictionary learning and sparse coding, where signals are represented as sparse combinations of elements from an overcomplete basis.
-
-Sparse autoencoders instantiate this idea in practice by learning an overcomplete dictionary of concepte while enforcing sparsity constraints on activations.
-From this perspective, they can be interpreted as a tool for recovering a more disentangled basis of concepte from a superposed representation space.
+Beyond this proof of concept, the method proves powerful when applied to real language models. In a onelayer transformer, training a sparse autoencoder on MLP activations reveals a set of clean, humaninterpretable features functional causal units that do not correspond to individual neurons. For instance, specific autoencoder features selectively activate on base64encoded text or on Arabic script, and manually activating them causes the model to generate outputs in the corresponding format.
 
 Despite their empirical success, sparse autoencoders rely on strong structural assumptions that are not always justified.
 First, the learned concepte are not guaranteed to be identifiable: different training runs may yield different decompositions of the same latent space, even when the reconstruction performance is similar.
