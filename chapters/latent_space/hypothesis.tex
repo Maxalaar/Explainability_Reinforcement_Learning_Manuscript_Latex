@@ -41,30 +41,26 @@ It is shaped by learning and organizes representations according to task-relevan
 \end{definition}
 
 The existence of meaningful structure in the latent space is closely related to generalization.  
-If representations capture reusable regularities across inputs, then unseen inputs can be associated with previously learned structures.  
-These recurring structures are typically referred to as concepts, as defined in Definition~\ref{def:concept}.
+Under the concept hypothesis, we assume that the neural network internally forms task-dependent abstractions, hereafter referred to as concepts and formally defined in Definition~\ref{def:concept}.
+These concepts are not directly observable, but are expected to manifest in the latent space as recurring and structured patterns in the learned representations.
+Under this view, a representation can be interpreted as a composition of multiple concepts, each contributing to the model’s prediction. 
 
 \begin{definition}{Concept}{concept}
-A concept is a recurring activation pattern in the latent space that is shared across multiple inputs.  
-Concepts are distributed and overlapping, such that a single representation typically involves multiple concepts.  
-\end{definition}
-
-Under this view, a representation can be interpreted as a composition of multiple concepts, each contributing to the model’s prediction.  
+A concept is a task-dependent abstraction that captures regularities in the input space relevant for predicting the target output.
+\end{definition} 
 
 Another property that can be considered when analyzing concepts is their relationship to human interpretation.  
 This relationship is captured by the notion of semantics, defined in Definition~\ref{def:semantics}.  
+Under this definition, concepts may exhibit varying degrees of semantic content.  
+Some concepts can be readily associated with human-interpretable notions, whereas others may contribute to task performance while remaining difficult to interpret.
 
 \begin{definition}{Semantics}{semantics}
 Semantics refers to the alignment between concepts in the latent space and concepts used by a human observer.  
 A structure is semantic if it can be consistently associated with a human-interpretable concept.  
 \end{definition}
 
-Under this definition, concepts may exhibit varying degrees of semantic content.  
-Some concepts can be readily associated with human-interpretable notions, whereas others may contribute to task performance while remaining difficult to interpret.
-
 It is important to note that this conceptual framework is not yet supported by a complete theoretical understanding of deep neural networks.  
-In particular, current mathematical tools do not provide a rigorous characterization of their internal representations and do not formally prove that concepts emerge as identifiable structures within latent spaces.
-Nevertheless, this perspective constitutes a widely adopted working hypothesis in the field of representation and latent space analysis.  
-As a result, many research efforts focus on analyzing latent spaces, identifying recurring patterns in activations, and understanding how such structures emerge during training.  
+Current mathematical tools do not provide a rigorous characterization of their internal representations and do not formally prove that concepts emerge as identifiable structures within latent spaces.
+Nevertheless, this perspective constitutes a widely adopted working hypothesis in the field of representation and latent space analysis.    
 
 The remainder of this chapter is devoted to reviewing methods for analyzing latent spaces and extracting the concepts they encode.  
