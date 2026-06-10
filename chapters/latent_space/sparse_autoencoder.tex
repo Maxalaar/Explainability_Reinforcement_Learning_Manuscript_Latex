@@ -1,12 +1,13 @@
 \section{Sparse Autoencoder}
 
 \input{figures/latent_space/latent_space_sparse_autoencoders.tex}
+\input{figures/latent_space/sparse_autoencoder_illustration.tex}
 
 As discussed previously, approaches based on latent directions face inherent limitations.
 Empirically, only a restricted subset of concepts appears to admit a linear representation, and even these directions are often affected by significant entanglement with other concepts.
 
 To explain this phenomenon, a complementary hypothesis has been introduced, extending the assumptions underlying the Concept Hypothesis (\autoref{sec:concept_hypothesis}).
-This hypothesis, known as the Superposition Hypothesis, posits that concepts are preferentially represented in a linear fashion, with each concept ideally corresponding to a distinct direction in latent space.
+This hypothesis, known as the Superposition Hypothesis \cite{elhage2022superposition}, posits that concepts are preferentially represented in a linear fashion, with each concept ideally corresponding to a distinct direction in latent space.
 In this idealized setting, concept vectors would form an approximately orthogonal basis, where each direction independently controls a single factor of variation.
 Furthermore, only a small subset of the available concepts is expected to be active for a given representation.
 As a result, latent representations can be viewed as sparse combinations of concept directions.
