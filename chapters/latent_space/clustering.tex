@@ -30,9 +30,41 @@ The obtained clusters are then interpreted as representing distinct semantic con
 This methodology enables the discovery of semantic structure in the latent space without requiring concepts to be linearly encoded.
 As a result, it can reveal forms of organization that would remain inaccessible to methods based solely on linear separability or interpretable directions.
 Deep clustering has been particularly successful in unsupervised image classification.
-Typically, an autoencoder is trained to learn a compact latent representation that preserves the essential information contained in the input data.
+
+Typically, an autoencoder is composed of an encoder $f_{\text{enc}}$ and a decoder $f_{\text{dec}}$.
+The encoder maps an input $x^{(i)} \in \mathcal{X}$ to a low-dimensional latent representation $z^{(i)} \in \mathbb{R}^d$:
+\[
+z^{(i)} = f_{\text{enc}}(x^{(i)}), \quad d \ll \dim(\mathcal{X}).
+\]
+
+To ensure that this compressed representation does not discard essential information, the decoder reconstructs the input from the latent space:
+\[
+\hat{x}^{(i)} = f_{\text{dec}}(z^{(i)}) = f_{\text{dec}}(f_{\text{enc}}(x^{(i)})).
+\]
+
+The model is trained to minimize the reconstruction error between the original input and its reconstruction, typically using a mean squared error (MSE) loss:
+\[
+\mathcal{L}_{\text{rec}} = \frac{1}{N} \sum_{i=1}^N \left\| x^{(i)} - \hat{x}^{(i)} \right\|_2^2.
+\]
+
+This objective encourages the latent space to preserve the most informative features of the input while enforcing a compact representation.
+
 Clustering algorithms are then applied to the learned embeddings.
-Empirically, the resulting clusters often correspond to meaningful semantic categories, despite the absence of supervision during training.
+
+Let $\mathcal{D} = \{x^{(i)}\}_{i=1}^N$ denote a dataset of inputs.
+Through the encoder $f_{\text{enc}}$, this dataset induces a point cloud in the latent space:
+\[
+\mathcal{Z} = \{z^{(i)} \in \mathbb{R}^d \mid z^{(i)} = f_{\text{enc}}(x^{(i)}), \; x^{(i)} \in \mathcal{D} \}.
+\]
+
+Clustering algorithms are then applied to this set $\mathcal{Z}$ of embeddings in order to identify groups of semantically similar representations.
+
+An example of this methodology can be observed in Figure~\ref{fig:deep_clustering_illustration}, where the approach is applied to the STL-10 dataset using $k$-means clustering with a number of clusters arbitrarily fixed to $K = 10$.
+For each cluster, the corresponding line shows the $10$ samples closest to the associated centroid in the latent space.
+
+We observe that the method captures coherent semantic categories such as animals, vehicles, and flying entities.
+This result is particularly striking given that the only available information to the system consists of raw images.
+It suggests that the compression process induces a latent space in which semantically meaningful structures naturally emerge, and that these structures correspond to high-level concepts.
 
 More advanced approaches combine representation learning and clustering objectives within a single optimization process.
 In this setting, additional loss terms encourage embeddings to organize themselves around cluster centroids during training.
