@@ -7,16 +7,16 @@ Understanding their structure is therefore a key step toward understanding how n
 
 In classical machine learning approaches, practitioners had to manually design data representations in order to make them usable by simple models.
 Deep learning introduces a paradigm shift: rather than relying on hand-crafted features to meaningfully represent data, it automatically learns these representations.
-Through the successive activation of hidden layers, neural networks gradually construct representations that become increasingly relevant to the task under consideration.
+Through the successive activation of hidden layers, neural networks gradually construct representations that become increasingly relevant to the task under consideration \cite{rumelhart1986learning}.
 As discussed in Chapter~\ref{chap:deep_learning}, these representations are not meaningful at initialization, they emerge progressively during training as the model optimizes its objective.
 It is precisely through these learned representations that a trained network is able to map an input to an output, including for examples never encountered during training.
 
 These latent spaces are now at the core of a growing number of practical applications.
-Large language models and multimodal architectures rely on the quality of learned representations to align heterogeneous modalities such as text, images, and audio.
-Neural video compression exploits the compactness of latent spaces to encode information efficiently.
-Retrieval-augmented generation (RAG) systems index and query knowledge bases through latent embeddings.
-In reinforcement learning, exploration benefits from compact state representations that facilitate policy discovery.
-Finally, recommendation systems model users and content within a shared latent space to compute meaningful similarities.
+Neural video compression exploits the compactness of latent spaces to encode information efficiently \cite{lu2019dvcendtoenddeepvideo}.
+In reinforcement learning, agent internal representations are used for efficient exploration in extremely large or open environments \cite{burda2018largescalestudycuriositydrivenlearning}.
+Recommendation systems model users and content within a shared latent space to compute meaningful similarities \cite{he2017neuralcollaborativefiltering}.
+Similarly, retrieval-augmented generation systems index and query knowledge bases through latent embeddings \cite{lewis2021retrievalaugmentedgenerationknowledgeintensivenlp}.
+Finally, large language models and multimodal architectures rely on the quality of learned representations to align heterogeneous modalities such as text, images, and audio \cite{radford2021learningtransferablevisualmodels}.
 These examples represent only some of the most widespread applications of latent representations.
 
 Given their extensive use, the study of latent representations has become a central topic in deep learning research.
