@@ -26,13 +26,7 @@ In this chapter, we first make explicit the working hypothesis that underlies mu
 Throughout this manuscript, we refer to this assumption as the concept hypothesis \ref{sec:concept_hypothesis}.
 To motivate and formalize this hypothesis, we introduce the notions of abstraction, concept, latent space, and semantics.
 Once this conceptual framework has been established, we review the main approaches proposed in the literature to identify and extract concepts from latent representations.
-To the best of our knowledge, the main families of methods include:
-\begin{itemize}
-\item \textbf{Probing methods} (Section~\ref{sec:probing}), which aim to determine whether specific concepts are encoded in latent representations by evaluating the extent to which they can be recovered from learned features.
-\item \textbf{Semantic directions} (Section~\ref{sec:direction}), which investigate whether meaningful concepts correspond to particular directions, subspaces, or geometric structures within the latent space.
-\item \textbf{Sparse autoencoders} (Section~\ref{sec:sparse_autoencoder}), which seek to decompose dense latent representations into sparse and more interpretable features, often under the assumption that semantic concepts are superimposed within neural activations.
-\item \textbf{Clustering-based approaches} (Section~\ref{sec:clustering}), which treat latent representations as point clouds and exploit their geometric organization to identify groups of semantically related samples and uncover emergent concepts.
-\end{itemize}
+To the best of our knowledge, the main families of methods include probing methods (Section~\ref{sec:probing}), semantic directions (Section~\ref{sec:direction}), sparse autoencoders (Section~\ref{sec:sparse_autoencoder}), and clustering-based approaches (Section~\ref{sec:clustering}).
 
 \input{chapters/latent_space/hypothesis.tex}
 \input{chapters/latent_space/probing.tex}

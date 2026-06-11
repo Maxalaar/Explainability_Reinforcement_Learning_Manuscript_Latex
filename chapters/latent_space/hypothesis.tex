@@ -11,24 +11,25 @@ This hypothesis originates from the need to explain the generalization ability o
 Formally, a model is said to generalize when, for an input $x \in \mathcal{X}$ not seen during training, it still produces an output $\hat{y}$ close to the true output $y$.  
 Such behavior cannot be explained by simple memorization of training samples.  
 Instead, the model must extract and exploit underlying regularities in the target function.  
-This requires a process of abstraction, as defined in Definition~\ref{def:abstraction}, whereby raw inputs are transformed into internal structures that are meaningful for the task.  
+This requires a process of abstraction, as defined in Definition~\ref{def:abstraction}, whereby raw inputs are transformed into internal structures that are meaningful for the task \cite{bengio2014representationlearningreviewnew}.  
 
 \begin{definition}{Abstraction}{abstraction}
 Abstraction is the process by which a model transforms an input into a task-relevant internal form.  
 It captures and restructures information in order to represent relationships that are useful for prediction or decision-making.  
 \end{definition}
 
-Through this abstraction process, a neural network does not directly map $x$ to $y$.  
+The ability of neural networks to perform abstraction arises from their intermediate activations.
+Indeed, a neural network does not directly map $x$ to $y$.  
 Instead, as illustrated in Figure~\ref{fig:general_architecture_multilayer_perceptron}, it computes a sequence of intermediate activations across hidden layers.  
-These activations correspond to internal encodings of the input, which we refer to as representations in the sense of Definition~\ref{def:representation}.  
+These activations correspond to internal encodings of the input, which we refer to as representations in the sense of Definition~\ref{def:representation}.
 
 \begin{definition}{Representation}{representation}
 A representation is the internal encoding of an input produced by a trained neural network.  
 It corresponds to the activations of one or several layers and provides a transformed view of the input.  
 \end{definition}
 
-Each hidden layer refines the representation of the input.  
-It progressively transforms it into a structure more directly aligned with the output space.  
+Each hidden layer refines the representation of the previous layer.  
+Each transformation progressively reshapes the representation into a form more directly aligned with the output space \cite{rumelhart1986learning}.  
 This process can be described as a sequence of transformations where each $h^{(l)}$ is a representation:  
 \[
 x \rightarrow h^{(1)} \rightarrow h^{(2)} \rightarrow \dots \rightarrow h^{(L-1)} \rightarrow \hat{y}
@@ -41,27 +42,30 @@ The latent space is the set of all representations produced by a layer or model 
 It is shaped by learning and organizes representations according to task-relevant properties.  
 \end{definition}
 
-The existence of meaningful structure in the latent space is closely related to generalization.  
-Under the concept hypothesis, we assume that the neural network internally forms task-dependent abstractions, hereafter referred to as concepts and formally defined in Definition~\ref{def:concept}.
-These concepts are not directly observable, but are expected to manifest in the latent space as recurring and structured patterns in the learned representations.
-Under this view, a representation can be interpreted as a composition of multiple concepts, each contributing to the model’s prediction. 
+Under the concept hypothesis, the analysis of the latent space is assumed to provide access to higher-level abstract structures learned by the model, as illustrated by \ref{fig:latent_space}.
+These structures are referred to as concepts, understood here in a philosophically pragmatic sense.
+In this framing, concepts are not evaluated as true or false ideal entities, but rather as abstract tools whose validity depends on their usefulness for a given task \cite{NEWELL198287}.
+Our definition is given formally in Definition~\ref{def:concept}.
 
 \begin{definition}{Concept}{concept}
 A concept is a task-dependent abstraction that captures regularities in the input space relevant for predicting the target output.
 \end{definition} 
 
+This perspective is particularly well aligned with latent space analysis, where the objective is to uncover organizing principles that support the model’s behavior.
+From this perspective, a given representation can be interpreted as a composition of multiple such concepts, each contributing to the final prediction.
+
 Another property that can be considered when analyzing concepts is their relationship to human interpretation.  
-This relationship is captured by the notion of semantics, defined in Definition~\ref{def:semantics}.  
+This relationship is captured by the notion of semantics \cite{marconato2023interpretabilitymindbeholdercausal}, defined in Definition~\ref{def:semantics}.  
 Under this definition, concepts may exhibit varying degrees of semantic content.  
 Some concepts can be readily associated with human-interpretable notions, whereas others may contribute to task performance while remaining difficult to interpret.
 
 \begin{definition}{Semantics}{semantics}
-Semantics refers to the alignment between concepts in the latent space and concepts used by a human observer.  
+Semantics refers to the alignment between concepts in the model latent space and concepts used by a human observer.  
 A structure is semantic if it can be consistently associated with a human-interpretable concept.  
 \end{definition}
 
-It is important to note that this conceptual framework is not yet supported by a complete theoretical understanding of deep neural networks.  
+It is important to note that this conceptual framework is not supported by a complete theoretical understanding of deep neural networks.  
 Current mathematical tools do not provide a rigorous characterization of their internal representations and do not formally prove that concepts emerge as identifiable structures within latent spaces.
 Nevertheless, this perspective constitutes a widely adopted working hypothesis in the field of representation and latent space analysis.    
 
-The remainder of this chapter is devoted to reviewing methods for analyzing latent spaces and extracting the concepts they encode.  
+The remainder of this chapter is devoted to reviewing methods for analyzing latent spaces and extracting the concepts they encode. We begin with probing, one of the most direct approaches for assessing whether concepts are represented in the latent space.
