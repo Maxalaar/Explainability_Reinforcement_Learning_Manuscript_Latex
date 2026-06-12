@@ -28,12 +28,12 @@
     xmin=-7, xmax=8,
     ymin=-7, ymax=5.5,
   ]
-    \plotPoints[color=colorA]{figures/latent_space/cluster_a.data}
-    \plotPoints[color=colorB]{figures/latent_space/cluster_b.data}
-    \plotPoints[color=colorC]{figures/latent_space/cluster_c.data}
-  \end{axis}
-  \node[anchor=north, yshift=-6pt] at (axisLeft.south)
-    {\textbf{(a)} Dense latent space};
+    \plotPoints[color=colorA, mark=*]{figures/latent_space/cluster_a.data}
+    \plotPoints[color=colorB, mark=square*]{figures/latent_space/cluster_b.data}
+    \plotPoints[color=colorC, size=2pt, mark=triangle*]{figures/latent_space/cluster_c.data}
+    \end{axis}
+    \node[anchor=north, yshift=-6pt] at (axisLeft.south)
+      {\textbf{(a)} Dense latent space};
   \end{scope}
 
   % ================================================================
@@ -66,9 +66,9 @@
     \node[colorC, font=\small\bfseries, below right] at (axis cs:6.062,-3.8)
       {Feature $C$};
 
-    \plotPoints[color=colorA]{figures/latent_space/sae_right_a.data}
-    \plotPoints[color=colorB]{figures/latent_space/sae_right_b.data}
-    \plotPoints[color=colorC]{figures/latent_space/sae_right_c.data}
+    \plotPoints[color=colorA, mark=*]{figures/latent_space/sae_right_a.data}
+    \plotPoints[color=colorB, mark=square*]{figures/latent_space/sae_right_b.data}
+    \plotPoints[color=colorC, size=2pt, mark=triangle*]{figures/latent_space/sae_right_c.data}
 
   \end{axis}
   \node[anchor=north, yshift=-6pt] at (axisRight.south)

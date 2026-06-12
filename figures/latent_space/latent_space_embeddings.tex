@@ -38,9 +38,9 @@
   % ---- Panel (b) : under the concept hypothesis (coloured) ----
   \begin{scope}[xshift=\lsePanelGap]
     \begin{axis}[name=axis2, latent embed, width=\lsePanelWd, height=\lsePanelHt]
-      \plotPoints[color=colorA]{figures/latent_space/cluster_a.data}
-      \plotPoints[color=colorB]{figures/latent_space/cluster_b.data}
-      \plotPoints[color=colorC]{figures/latent_space/cluster_c.data}
+      \plotPoints[color=colorA, mark=*]{figures/latent_space/cluster_a.data}
+      \plotPoints[color=colorB, mark=square*]{figures/latent_space/cluster_b.data}
+      \plotPoints[color=colorC, size=2pt, mark=triangle*]{figures/latent_space/cluster_c.data}
     \end{axis}
     \node[anchor=north, yshift=-6pt] at (axis2.south)
       {\textbf{(b)} Under the concept hypothesis};

@@ -5,28 +5,22 @@
 %
 %  Options (all optional):
 %    color   : fill & stroke color of the markers  (default: black)
-%    size    : marker radius                        (default: 2pt)
+%    size    : marker radius                        (default: 1.5pt)
 %    opacity : fill opacity [0..1]                  (default: 0.85)
-%
-%  The data file must contain one "x  y" pair per line.
-%  Lines starting with % are ignored (comments).
-%
-%  WHY \edef ON THE WHOLE CALL:
-%    pgfplots defers ALL \addplot rendering until \end{axis}.
-%    Using intermediate macros fails because they are shared and
-%    overwritten by every subsequent \plotPoints call; by render
-%    time every plot sees the last call's values.
-%    \edef bakes the current color/size/opacity as literal strings
-%    directly into the \addplot token list.
+%    mark    : pgfplots marker shape                (default: *)
+%              Common values: * (circle), square*, triangle*, diamond*
 %
 %  Example:
 %    \plotPoints[color=blue!70!cyan, size=3pt]{cluster_a.data}
+%    \plotPoints[color=red, mark=square*]{cluster_b.data}
+%    \plotPoints[color=green, mark=triangle*]{cluster_c.data}
 % ================================================================
 \pgfkeys{
   /plotpoints/.is family, /plotpoints,
   color/.initial   = black,
   size/.initial    = 1.5pt,
   opacity/.initial = 0.85,
+  mark/.initial    = *,
 }
 
 \newcommand{\plotPoints}[2][]{%
@@ -34,9 +28,10 @@
   \pgfkeysgetvalue{/plotpoints/color}  {\ppColor}%
   \pgfkeysgetvalue{/plotpoints/size}   {\ppSize}%
   \pgfkeysgetvalue{/plotpoints/opacity}{\ppOpacity}%
+  \pgfkeysgetvalue{/plotpoints/mark}   {\ppMark}%
   \edef\ppAddPlot{%
     \noexpand\addplot[%
-      only marks, forget plot, mark=*,%
+      only marks, forget plot, mark=\ppMark,%
       mark size=\ppSize,%
       mark options={fill=\ppColor, draw=\ppColor, fill opacity=\ppOpacity}%
     ] file {#2};%
