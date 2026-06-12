@@ -1,5 +1,17 @@
 \input{figures/timeline.tex}
 
+\AddToShipoutPictureBG{%
+    \AtPageLowerLeft{%
+        \hspace{\dimexpr\oddsidemargin+1in\relax}%
+        \raisebox{0.8cm}{%
+            \parbox{\textwidth}{%
+                \centering\color{gray}
+                Compiled on \the\day/\the\month/\the\year\ at \currenttime
+            }%
+        }%
+    }%
+}
+
 \tcbset{
   mydefinition/.style={
     colback=gray!5,
