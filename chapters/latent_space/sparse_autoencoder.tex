@@ -69,31 +69,47 @@ Once this representation is obtained, it has been shown that many concept vector
 With such representations, it becomes possible to perform interventions directly in latent space.
 A well-known example is the Golden Gate Bridge concept direction, illustrated in Figure~\ref{fig:sparse_autoencoder_illustration}, which activates systematically whenever the input text or image refers to the Golden Gate Bridge, regardless of the language or modality.
 
-However, it is also possible to artificially activate this feature in a sparse representation even when the input does not contain any reference to it.
-After modifying the sparse representation, it is then projected back into the original activation space using the decoder function $f_{\text{dec}}(s)$.
-The model is then allowed to proceed with standard next-token generation.
+However, it is also possible to artificially activate this concept direction by directly modifying the sparse representation $z$, even when the input does not contain any reference to it.
+The edited representation is then projected back into the original activation space:
+\[
+h^* = f_{\text{dec}}(z^*), \quad \text{where} \quad z^* = z + \delta \, e_i,
+\]
+where:
+\begin{itemize}
+    \item $z$ is the original sparse representation of the input,
+    \item $z^*$ is the modified sparse representation,
+    \item $e_i$ is the basis vector of $\mathcal{Z}$ associated with the target concept direction,
+    \item $\delta$ controls the strength of the artificial activation,
+    \item $h^*$ is the resulting edited representation in the original activation space.
+\end{itemize}
+The model is then allowed to proceed with standard next-token generation from $h^*$.
 
 Empirically, it is observed that even when the prompt is unrelated to the Golden Gate Bridge, the model’s output shifts to discussing it.
 This provides evidence for the causal role of these learned features.
 This type of intervention has been used by Anthropic researchers to steer or suppress specific model behaviors, effectively enabling a form of behavior control through latent-space editing.
 
 Despite their empirical success, sparse autoencoders exhibit several important limitations that question some of their underlying assumptions. 
-hese limitations can be summarized as follows:
+These limitations can be summarized as follows:
 \begin{itemize}
-    \item \textbf{Non-identifiability of learned concepts.}
-    The learned concepts are not guaranteed to be identifiable: different training runs may produce different decompositions of the same latent space, even when achieving comparable reconstruction performance. 
-    This raises questions about the stability and uniqueness of the learned representations.
+    \item \textbf{Instability of the decomposition.}
+    Repeating the sparse autoencoder training process multiple times on the same model does not yield the same decomposition of the latent space.
+    Different runs produce different concept directions in $\mathcal{Z}$, even when achieving comparable reconstruction performance, which raises questions about the uniqueness and reliability of the discovered structure.
 
-    \item \textbf{Sparsity–semantics trade-off.}
-    Empirical studies show that enforcing excessive sparsity can degrade the semantic quality of the learned features. 
-    In particular, when the sparsity coefficient is increased beyond a certain threshold, the resulting representations tend to lose meaningful semantic structure, suggesting a trade-off between sparsity and interpretability.
+    \item \textbf{Lack of semantic coverage.}
+    In the high-dimensional space $\mathcal{Z}$, a large fraction of dimensions do not correspond to any interpretable semantic concept.
+    This abundance of semantically vacuous directions questions the extent to which the decomposition genuinely reflects the conceptual structure of the model.
+
+    \item \textbf{Sparsity--semantics trade-off.}
+    Increasing the sparsity coefficient $\lambda$ beyond a certain threshold degrades the semantic quality of the learned features.
+    The representations tend to lose meaningful structure, suggesting that enforcing excessive sparsity comes at the cost of interpretability.
 
     \item \textbf{Failure of scaling to remove superposition.}
-    The Superposition Hypothesis would suggest that increasing model capacity or latent dimensionality should systematically lead to more disentangled representations and improved performance. 
-    However, this is not consistently observed in practice. Even in very high-dimensional latent spaces, representations remain partially superposed, indicating that scaling alone does not fully resolve the entanglement of features.
+    Under the Superposition Hypothesis, increasing the dimensionality of the representation space should reduce superposition by providing more room for independent concept directions.
+    However, this is not consistently observed in practice: even in very high-dimensional latent spaces, representations remain partially superposed, indicating that scaling alone does not resolve the entanglement of features.
 \end{itemize}
 
 These limitations suggest that sparse autoencoders, while powerful, do not fully resolve the problem of representational structure. Although empirical results are often convincing in practice, they do not necessarily validate the underlying theoretical assumptions.
 
-From this perspective, probing methods, interpretable directions, and sparse autoencoders all rely on a shared assumption: that semantic structure can be recovered through linear or approximately linear decompositions of latent representations. While this assumption has led to significant empirical progress, it remains theoretically fragile.
-The following section therefore introduces a complementary approach that relaxes this constraint and does not require a globally linear feature decomposition of the latent space, namely deep clustering.
+The methods studied so far, namely probing (Section~\ref{sec:probing}), interpretable directions (Section~\ref{sec:direction}), and sparse autoencoders, all rest on a shared assumption: that semantic structure can be recovered through approximately linear decompositions of latent representations.
+While this assumption has led to significant empirical progress, it remains theoretically fragile and may not hold uniformly across all regions of the latent space.
+The following section therefore introduces a complementary approach that relaxes this constraint entirely, requiring no assumption about the linear organization of concepts in the latent space: deep clustering.
