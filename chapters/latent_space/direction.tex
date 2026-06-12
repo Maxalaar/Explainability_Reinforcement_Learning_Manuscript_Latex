@@ -6,8 +6,8 @@
 
 To overcome the limitations of binary concept detection in probing methods, several approaches have been proposed to analyze the geometric structure of latent representations.
 Among them, the notion of interpretable directions has emerged as a natural extension, aiming to capture the continuous nature of how concepts are encoded in representation spaces.
-Empirically, it has been observed that shifting a latent representation along a direction can induce coherent and semantically meaningful changes in the model’s output.
-Such transformations can be expressed as:
+Empirically, it has been observed that shifting a latent representation along a direction can induce coherent and semantically meaningful changes in the model’s output \cite{haas2024discovering, voynov2020unsuperviseddiscoveryinterpretabledirections}.
+Such transformations can be mathematically express as:
 \[
 h' = h + \alpha \mathbf{v}_i,
 \]
@@ -19,7 +19,7 @@ where:
     \item $h'$ is the resulting perturbed representation.
 \end{itemize}
 
-In many cases, the resulting change in the model’s output varies smoothly with \(\alpha\), suggesting an approximately linear structure of the latent space with respect to certain semantic factors.
+In many cases, the resulting change in the model's output varies smoothly with \(\alpha\), suggesting an approximately linear structure of the latent space with respect to certain semantic factors, as illustrated in Figure~\ref{fig:interpretable_direction_illustration}.
 This observation has led to the hypothesis that neural representations may organize concepts in a partially linear manner within the embedding space.
 Vectors of this form are referred to as interpretable directions, as they correspond to transformations that can be associated with specific semantic attributes.
 The objective of this line of work is therefore to identify directions in latent space that align with meaningful variations in the encoded concepts.
@@ -29,17 +29,14 @@ As illustrated in Figure~\ref{fig:interpretable_direction_illustration}, control
 These observations have led to the development of the field of latent space editing, whose objective is to manipulate generated content directly through modifications in latent space rather than through changes in the input prompt.
 
 However, a central challenge remains: identifying such interpretable directions is far from trivial.
-Most existing approaches rely on auxiliary models that encode human-defined semantics, such as CLIP, to relate latent variations to textual concepts.
-Consequently, these methods inherit a limitation similar to that of probing techniques, since concept discovery depends on a pre-existing semantic framework defined by humans.
+Most existing approaches rely on auxiliary models that encode human-defined semantics, such as CLIP \cite{haas2024discovering}, to relate latent variations to textual concepts.
+Consequently, these methods inherit a limitation similar to that of probing techniques \ref{sec:probing}, since concept discovery depends on a pre-existing semantic framework defined by humans.
 
 To overcome this limitation, a research direction known as unsupervised semantic discovery has emerged.
 Its goal is to uncover interpretable directions in latent spaces without explicit semantic supervision.
-In these approaches, one model applies perturbations along random directions in latent space, while a second model attempts to predict or recognize the applied transformation.
-If a stable correspondence emerges between the perturbation and its prediction, this suggests that the considered direction corresponds to a coherent structure in latent space.
-
+In these approaches, one model applies perturbations along random directions in latent space, while a second model attempts to recognize the applied transformation.
+If a stable correspondence emerges between the perturbation and its prediction, this suggests that the considered direction corresponds to a coherent structure in latent space \cite{voynov2020unsuperviseddiscoveryinterpretabledirections}.
 In this framework, human intervention occurs only a posteriori, to verify whether the discovered directions indeed correspond to interpretable semantic variations.
-This approach enables the capture of representations that go beyond the mere presence or absence of a concept, including notions such as the intensity or degree of an attribute.
-As such, it follows a philosophy similar to causal probing, while also enabling explicit interventions to assess the causal role of latent representations.
 
 However, despite these advances, several challenges remain.
 First, not all concepts encoded by neural networks appear to be linearly separable in latent space.
