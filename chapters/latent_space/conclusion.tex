@@ -1,10 +1,16 @@
 \section{Conclusion}
 
-The techniques presented in this chapter: clustering, linear probing, interpretable directions, and sparse autoencoders, do not individually constitute proof of the existence of concepts in the latent space.
-None of them allows us to assert with certainty that the internal representations of a model encode discrete and well-defined semantic entities.
-What these approaches offer, however, is a converging body of evidence: the geometric structure of the latent space is coherent, stable, and amenable to semantically meaningful interpretation across very different methods.
-In the absence of a credible alternative hypothesis to explain both the generalization capacity of deep learning and the richness of the representations it produces, the conceptual hypothesis remains the most parsimonious and best supported.
+\input{figures/latent_space/latent_space_overview.tex}
 
-However, the vast majority of these approaches rest, explicitly or implicitly, on a linearity assumption: semantic relationships are assumed to translate into linear operations in the latent space.
-Deep clustering stands as a notable exception, seeking structures that are not necessarily linear.
-It is precisely this linearity assumption that will be examined in the remainder of this work: our explainability method will build upon it as a geometric foundation, exploring the extent to which a model's decisions can be explained through linear decompositions of its latent space.
+The four families of methods reviewed in this chapter, namely probing, interpretable directions, sparse autoencoders, and clustering, are summarized in Figure~\ref{fig:latent_space_overview} and all build upon the concept hypothesis introduced in Section~\ref{sec:concept_hypothesis}.
+Each of them approaches the question from a different angle, but they share a common objective: to uncover how latent representations are structured and what semantic information can be extracted from them.
+
+However, a fundamental difficulty remains.
+There is currently no consensus on how to rigorously evaluate to what extent these methods genuinely provide access to the internal concepts of a model.
+Most existing metrics assess reconstruction quality or linear separability, but these do not directly measure whether the discovered structures correspond to meaningful abstractions from the model's perspective.
+This leaves open the question of what it means, formally, for a concept to be represented in a neural network.
+
+Addressing this question may require contributions from disciplines beyond computer science and mathematics.
+As the notion of semantics is inherently tied to human interpretation, a purely formal or computational account may be insufficient.
+Insights from philosophy, cognitive science, or psychology could prove valuable in grounding the notion of concept in a way that is both theoretically rigorous and empirically tractable.
+Despite these open questions, the methods studied in this chapter provide a practical foundation for analyzing the internal representations of neural networks.
