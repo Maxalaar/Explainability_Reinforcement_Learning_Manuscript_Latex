@@ -3,6 +3,7 @@
 
 \input{figures/latent_space/latent_space_directions.tex}
 \input{figures/latent_space/interpretable_direction_illustration.tex}
+\input{figures/latent_space/entanglement_illustration.tex}
 
 To overcome the limitations of binary concept detection in probing methods, several approaches have been proposed to analyze the geometric structure of latent representations.
 Among them, the notion of interpretable directions has emerged as a natural extension, aiming to capture the continuous nature of how concepts are encoded in representation spaces.
@@ -39,11 +40,11 @@ If a stable correspondence emerges between the perturbation and its prediction, 
 In this framework, human intervention occurs only a posteriori, to verify whether the discovered directions indeed correspond to interpretable semantic variations.
 
 However, despite these advances, several challenges remain.
-First, not all concepts encoded by neural networks appear to be linearly separable in latent space.
-While some directions align well with clear semantic factors, many others do not exhibit such a simple linear structure.
-In addition, latent representations often display a phenomenon known as entanglement, where multiple semantic attributes are mixed within the same directions of the representation space.
+First, it appears that not all concepts encoded by neural networks are linearly identifiable in latent space.
+In practice, interpretable direction methods typically discover only a few dozen directions per dataset, which intuitively seems insufficient to account for the full diversity of semantic variations that a generative model is capable of producing.
+In addition, latent representations often exhibit a phenomenon known as entanglement, illustrated in Figure~\ref{fig:entanglement_illustration}, where multiple semantic attributes are mixed within the same directions of the representation space.
 Ideally, one would like each semantic factor to vary independently along a specific direction, without affecting other attributes.
-In practice, this is rarely the case.
-A single direction in latent space often influences multiple semantic features at once, meaning that modifying one aspect of the representation can unintentionally alter several others.
-This lack of separability indicates that semantic information is not cleanly disentangled in the representation space.
+In practice, this is rarely the case: a single direction in latent space often influences multiple semantic features simultaneously, meaning that modifying one concept unintentionally alters several others.
+This lack of separability indicates that semantic information is not cleanly factored in the representation space, which motivates the search for more structured decompositions.
+
 Together with the difficulty of isolating independent factors, this observation has motivated a stronger hypothesis about how neural networks organize information: the superposition hypothesis.
