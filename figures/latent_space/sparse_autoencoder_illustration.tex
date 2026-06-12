@@ -3,9 +3,14 @@
     \includegraphics[width=0.85\textwidth]
         {figures/latent_space/sparse_autoencoder_illustration.png}
     \caption{
-        Example of a feature learned by a sparse autoencoder applied to a large language model \cite{templeton2024scaling}.
-        The highlighted tokens show the contexts in which the feature activates strongly, revealing a coherent semantic concept across English text, multiple languages, and images.
-        This multimodal consistency suggests that the learned feature corresponds to a meaningful and generalizable concept, here related to the Golden Gate Bridge, rather than a spurious statistical pattern.
+        A concept direction corresponding to the Golden Gate Bridge, discovered
+        by a sparse autoencoder applied to a large language model
+        \cite{templeton2024scaling}.
+        This direction activates strongly whenever the Golden Gate Bridge is
+        evoked in the input, whether through English text, other languages, or
+        even images, demonstrating that the learned concept is not tied to a
+        specific surface form but captures a deeper semantic abstraction shared
+        across modalities.
     }
     \label{fig:sparse_autoencoder_illustration}
 \end{figure}

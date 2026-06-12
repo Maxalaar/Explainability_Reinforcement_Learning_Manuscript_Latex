@@ -1,11 +1,11 @@
 \section{Sparse Autoencoder}
 \label{sec:sparse_autoencoder}
 
+As discussed previously, approaches based on latent directions face inherent limitations.
+Empirically, only a restricted subset of concepts appears to admit a linear representation, and even these directions are often affected by significant entanglement with other concepts, illustrated in Figure~\ref{fig:entanglement_illustration}.
+
 \input{figures/latent_space/latent_space_sparse_autoencoders.tex}
 \input{figures/latent_space/sparse_autoencoder_illustration.tex}
-
-As discussed previously, approaches based on latent directions face inherent limitations.
-Empirically, only a restricted subset of concepts appears to admit a linear representation, and even these directions are often affected by significant entanglement with other concepts.
 
 To explain this phenomenon, a complementary hypothesis has been introduced, extending the assumptions underlying the Concept Hypothesis (\autoref{sec:concept_hypothesis}).
 This hypothesis, known as the Superposition Hypothesis \cite{elhage2022superposition}, posits that concepts are preferentially represented in a linear fashion, with each concept ideally corresponding to a distinct direction in latent space.
@@ -14,55 +14,61 @@ Furthermore, only a small subset of the available concepts is expected to be act
 As a result, latent representations can be viewed as sparse combinations of concept directions.
 This idealized representation is referred to as a non-superposed representation and can be expressed as follows:
 \[
-\mathbf{h} = \sum_{i=1}^{m} a_i \mathbf{v}_i,
+\mathbf{h} = \sum_{i=1}^{n} \alpha_i \mathbf{v}_i,
 \qquad
 \forall i \neq j,\quad \mathbf{v}_i^\top \mathbf{v}_j \approx 0,
 \qquad
-\|\mathbf{a}\|_0 \ll m,
+\|\boldsymbol{\alpha}\|_0 \ll n,
 \]
 where:
 \begin{itemize}
     \item $\mathbf{h}$ denotes a latent representation,
+    \item $n$ is the total number of concepts in the dictionary,
     \item $\mathbf{v}_i$ represents the direction associated with concept $c_i$,
-    \item $a_i$ corresponds to the activation strength of concept $c_i$ in the representation $\mathbf{h}$,
-    \item $\|\mathbf{a}\|_0 \ll m$ indicates that only a small fraction of concepts are active for a given representation.
+    \item $\alpha_i$ corresponds to the activation strength of concept $c_i$ in the representation $\mathbf{h}$,
+    \item $\mathbf{v}_i^\top \mathbf{v}_j \approx 0$ indicates that concept directions are approximately orthogonal, meaning each concept independently controls a single factor of variation,
+    \item $\|\boldsymbol{\alpha}\|_0 \ll n$ indicates that only a small fraction of concepts are active for a given representation.
 \end{itemize}
 
 According to the Superposition Hypothesis, the reason why latent representations do not perfectly follow this idealized structure is that the representational capacity of neural networks is limited.
 For a given layer, the dimensionality of the representation space is finite, which constrains the number of concepts that can be encoded independently.
 As a result, the network cannot allocate a dedicated direction to every concept.
-Instead, multiple concepts are compressed into shared dimensions, a phenomenon referred to as superposition.
+Instead, multiple concepts are compressed into shared dimensions, a phenomenon referred to as superposition \cite{bricken2023monosemanticity}.
 This notion of superposition is closely related to the phenomenon of entanglement observed in latent space analyses.
-From the perspective both phenomena manifest themselves through the difficulty of isolating semantic factors into independent directions.
-However, while entanglement is an empirical observation about the structure of latent representations, superposition provides a theoretical explanation for why such mixing may emerge.
+Entanglement is an empirical observation about the structure of latent representations, superposition provides a theoretical explanation for why such mixing may emerge.
 
-If this hypothesis holds, then any attempt to analyze latent representations will inevitably be affected by the phenomenon of superposition.
+Under this hypothesis, the phenomenon of superposition becomes an unavoidable obstacle for any method that attempts to analyze latent representations directly in the original activation space.
 Motivated by this view, and with the goal of recovering the idealized non-superposed, a large body of work has focused on developing methods to desuperpose latent representations.
 To this end, a common strategy consists in projecting latent representations into a higher-dimensional space while imposing additional constraints designed to recover a non-superposed representation.
 A widely used implementation of this idea is the sparse autoencoder, which can be defined as follows:
 \[
-s = f_{\text{enc}}(h), \quad \hat{h} = f_{\text{dec}}(s)
+z = f_{\text{enc}}(h), \quad \hat{h} = f_{\text{dec}}(z)
 \]
 \[
-\mathcal{L} = \|h - \hat{h}\|_2^2 + \lambda \|s\|_1
+\mathcal{L}_{\text{auto}} = \gamma \|h - \hat{h}\|_2^2 + \lambda \|z\|_1
 \]
 where:
 \begin{itemize}
-    \item $f_{\text{enc}}(h)$ is the encoding function that projects the original representation space into a sparse latent space,
-    \item $f_{\text{dec}}(s)$ is the decoding function that reconstructs the original representation from the sparse code,
-    \item $s$ is the sparse representation of $h$,
-    \item $\|h - \hat{h}\|_2^2$ is the reconstruction loss ensuring that the original representation can be faithfully recovered,
-    \item $\lambda \|s\|_1$ is the sparsity regularization term that encourages most components of $s$ to be zero.
+    \item $f_{\text{enc}}(h)$ is the encoding function that projects the original representation $h$ into a higher-dimensional sparse space,
+    \item $f_{\text{dec}}(z)$ is the decoding function that reconstructs the original representation from the sparse code,
+    \item $z \in \mathcal{Z}$ is the sparse representation of $h$, with $\dim(z) \gg \dim(h)$,
+    \item $\hat{h}$ is the reconstructed representation,
+    \item $\gamma \|h - \hat{h}\|_2^2$ is the reconstruction loss ensuring that the original representation can be faithfully recovered,
+    \item $\lambda \|z\|_1$ is the sparsity regularization term that encourages most components of $z$ to be zero,
+    \item $\gamma, \lambda$ are weighting coefficients controlling the trade-off between reconstruction fidelity and sparsity.
 \end{itemize}
 
-The method proves to be powerful when successfully applied to real language models.
+In practice, both $f_{\text{enc}}$ and $f_{\text{dec}}$ are implemented as linear projections into the high-dimensional space $\mathcal{Z}$.
+This choice is motivated by the same reasoning as in probing methods \ref{sec:probing}: using overly expressive projection functions would introduce additional bias, making it difficult to attribute the structure of the learned representations to the model itself rather than to the projection.
+The parameters of these projection functions are learned by minimizing $\mathcal{L}_{\text{auto}}$ using gradient-based optimization, as introduced in Section~\ref{sec:learning}.
+Under this formulation, each dimension of $\mathcal{Z}$ is interpreted as a dedicated concept direction: the corresponding basis vector serves as the support for a distinct concept encoded by the model.
+
+The method proves to be powerful when successfully applied to real language models \cite{templeton2024scaling}.
 In these applications, the idea is to desuperpose latent representations using Sparse Autoencoders (SAEs) applied to LLM activations in order to recover a non-superposed representation.
 Once this representation is obtained, it has been shown that many concept vectors exhibit strong semantic properties.
-For instance, some features selectively activate on base64-encoded text or on Arabic script, and manually activating them can cause the model to generate outputs in the corresponding format.
-
 With such representations, it becomes possible to perform interventions directly in latent space.
-A well-known example is the “Golden Gate Bridge” feature.
-A concept vector in the non-superposed space activates systematically when the input text or image refers to the Golden Gate Bridge.
+A well-known example is the Golden Gate Bridge concept direction, illustrated in Figure~\ref{fig:sparse_autoencoder_illustration}, which activates systematically whenever the input text or image refers to the Golden Gate Bridge, regardless of the language or modality.
+
 However, it is also possible to artificially activate this feature in a sparse representation even when the input does not contain any reference to it.
 After modifying the sparse representation, it is then projected back into the original activation space using the decoder function $f_{\text{dec}}(s)$.
 The model is then allowed to proceed with standard next-token generation.
