@@ -3,7 +3,7 @@
 
 \input{figures/latent_space/latent_space_probing.tex}
 
-Probing methods aim to determine whether a given human-defined concept is encoded within the internal representations of a neural network.
+Probing methods aim to determine whether a given human-defined concept is encoded within the internal representations of a neural network \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
 More specifically, they investigate whether the presence or absence of a selected concept can be inferred from embeddings.
 The underlying assumption is that if a concept can be reliably decoded from these representations, then the network likely encodes information related to it in order to perform its task.
 
@@ -18,7 +18,8 @@ The dataset can therefore be written as follows:
 The data are subsequently projected into the latent space of the pretrained model.
 We denote by $h^{l}$ the representation vector obtained at layer $l$.
 From these latent representations, a classifier is trained in a supervised manner to predict the presence of the considered concept.
-This classifier is referred to as a probe, denoted $p$, since its role is to determine whether a concept is present or not.
+This classifier is referred to as a probe and is denoted by $p$.
+Its purpose is to determine whether a given concept is present in the representation.
 Its purpose is therefore to assess whether information associated with the concept is accessible from the network’s internal representations.
 This can be formalized as follows:
 \[

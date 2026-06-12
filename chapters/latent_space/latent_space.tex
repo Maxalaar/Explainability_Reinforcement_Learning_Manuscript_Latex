@@ -13,7 +13,7 @@ It is precisely through these learned representations that a trained network is 
 
 These latent spaces are now at the core of a growing number of practical applications.
 Neural video compression exploits the compactness of latent spaces to encode information efficiently \cite{lu2019dvcendtoenddeepvideo}.
-In reinforcement learning, agent internal representations are used for efficient exploration in extremely large or open environments \cite{burda2018largescalestudycuriositydrivenlearning}.
+In reinforcement learning, agent internal representations are used for efficient exploration in extremely open environments \cite{burda2018largescalestudycuriositydrivenlearning}.
 Recommendation systems model users and content within a shared latent space to compute meaningful similarities \cite{he2017neuralcollaborativefiltering}.
 Similarly, retrieval-augmented generation systems index and query knowledge bases through latent embeddings \cite{lewis2021retrievalaugmentedgenerationknowledgeintensivenlp}.
 Finally, large language models and multimodal architectures rely on the quality of learned representations to align heterogeneous modalities such as text, images, and audio \cite{radford2021learningtransferablevisualmodels}.
@@ -24,7 +24,6 @@ A major objective is to understand how information is organized within these spa
 
 In this chapter, we first make explicit the working hypothesis that underlies much of the research on latent space analysis.
 Throughout this manuscript, we refer to this assumption as the concept hypothesis \ref{sec:concept_hypothesis}.
-To motivate and formalize this hypothesis, we introduce the notions of abstraction, concept, latent space, and semantics.
 Once this conceptual framework has been established, we review the main approaches proposed in the literature to identify and extract concepts from latent representations.
 To the best of our knowledge, the main families of methods include probing methods (Section~\ref{sec:probing}), semantic directions (Section~\ref{sec:direction}), sparse autoencoders (Section~\ref{sec:sparse_autoencoder}), and clustering-based approaches (Section~\ref{sec:clustering}).
 
