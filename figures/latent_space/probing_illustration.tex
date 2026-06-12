@@ -1,0 +1,19 @@
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.85\textwidth]
+        {figures/latent_space/probing_illustration.png}
+    \caption{
+        Probing analysis of a large language model trained to play chess
+        \cite{karvonen2024emergentworldmodelslatent}.
+        Each row corresponds to a piece type: white pawns (top) and the black
+        king (bottom). The left column shows the ground truth board positions,
+        the middle column shows the positions predicted by the probe from the
+        model's internal representations, and the right column shows the
+        confidence gradient across board squares.
+        The close agreement between ground truth and predicted positions
+        suggests that the model internally maintains a structured
+        representation of the board state, even though it was only trained
+        on sequences of moves expressed in natural language.
+    }
+    \label{fig:probing_illustration}
+\end{figure}

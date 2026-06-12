@@ -2,6 +2,7 @@
 \label{sec:probing}
 
 \input{figures/latent_space/latent_space_probing.tex}
+\input{figures/latent_space/probing_illustration.tex}
 
 Probing methods aim to determine whether a given human-defined concept is encoded within the internal representations of a neural network \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
 More specifically, they investigate whether the presence or absence of a selected concept can be inferred from embeddings.
@@ -40,7 +41,7 @@ In these works, researchers train LLMs to play games such as chess or Othello in
 The model is only provided with sequences of moves and information about the actions it can take, all expressed in natural language.
 The central question is whether the LLM develops an internal representation of the game state.
 To address this question, the probed concepts correspond to the presence or absence of different game pieces on specific board positions.
-What these studies observe is that probes are able to reconstruct the full board state from the model’s hidden representations, even though the only available information to the model is a sequence of text.
+As illustrated in Figure~\ref{fig:probing_chess_illustration}, probes are able to reconstruct the full board state from the model's hidden representations, even though the only available information to the model is a sequence of text.
 
 However, the fact that a concept can be decoded from latent representations does not necessarily imply that the model actually uses this information to perform its task.
 To assess whether representations play a causal role in the model’s output, it is possible to perform interventions on the latent representations.
@@ -48,28 +49,32 @@ An intervention consists of modifying a latent representation in a controlled ma
 If the resulting change in the model’s output is consistent with the applied perturbation, this suggests that the representation had a causal role.
 
 To this end, we aim to minimally modify the latent representation $h^{l}$ such that the probe prediction for the target concept $c_j$ changes state, while leaving the predictions associated with other concepts unchanged.
-This leads to an optimization problem that can be formulated as follows.
-A common approach to solve this problem is to perform gradient-based optimization on the latent activation $h^{l}$, in order to directly optimize the target objective:
+This goal can be formulated as an optimization problem over the latent activation itself.
+RThe optimization is performed directly on the representation $h^{l'}$, using gradient-based optimization as introduced in Section~\ref{sec:learning}.
+The solution to this problem is the optimal modified representation $h^{l*}$, defined as:
 \[
 h^{l*} =
 \arg\min_{h^{l'}}
-\mathcal{L}_{\text{flip}}\big(p_{\theta}^{l,j}(h^{l'}), c_j\big)
+\underbrace{\gamma \, \mathcal{L}_{\text{flip}}\big(p_{\theta}^{l,j}(h^{l'}), c_j\big)}_{\text{flip target concept } c_j}
 +
-\lambda \sum_{k \neq j} \mathcal{L}_{\text{preserve}}\big(p_{\theta}^{l,k}(h^{l'}), c_k\big)
+\underbrace{\lambda \sum_{k \neq j} \mathcal{L}_{\text{preserve}}\big(p_{\theta}^{l,k}(h^{l'}), c_k\big)}_{\text{preserve other concepts } c_{k \neq j}}
 +
-\beta \|h^{l'} - h^{l}\|_2^2
+\underbrace{\beta \|h^{l'} - h^{l}\|_2^2}_{\text{minimality}}
 \]
 where:
 \begin{itemize}
+    \item $h^{l}$ is the original latent representation of the input at layer $l$,
+    \item $h^{l'}$ is the modified latent representation being optimized,
+    \item $h^{l*}$ is the optimal modified representation,
     \item $\mathcal{L}_{\text{flip}}$: loss encouraging the prediction of the target concept $c_j$ to change state (i.e., flipping the predicted label),
     \item $\mathcal{L}_{\text{preserve}}$: loss enforcing invariance of all non-target concepts $c_k$ for $k \neq j$,
     \item $\|h^{l'} - h^{l}\|_2^2$: regularization term ensuring the modified representation remains close to the original latent representation,
-    \item $\lambda, \beta$: weighting coefficients controlling the trade-off between preservation, intervention strength, and minimality of the perturbation.
+    \item $\gamma, \lambda, \beta$: weighting coefficients controlling the trade-off between the intervention strength, the preservation of other concepts, and the minimality of the perturbation.
 \end{itemize}
 
 In the context of LLMs studied previously, such interventions have been used to remove specific pieces from the model’s internal representation of the game state \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
 The main observation is that, in the vast majority of cases, the model behaves as if the piece had effectively disappeared.
-In other words, the LLM continues to generate legal moves while correctly accounting for the absence of the removed piece.
+The LLM continues to generate legal moves while correctly accounting for the absence of the removed piece.
 This provides evidence for the causal role of these internal representations in the model’s behavior.
 
 A main limitation of the probing approach is that the concepts under investigation must be predefined before any analysis can be performed.
@@ -77,6 +82,6 @@ This introduces a strong bias in what can be studied.
 Moreover, annotating a dataset for each concept is extremely time-consuming and requires significant human effort.
 Interventions in latent space are also difficult to interpret, as it is not always clear what constitutes a meaningful change in the network’s output under a given perturbation.
 
-Probing methods provide a binary view of concepts, focusing on whether a given concept is present or absent in a latent representation.
+Moreover, probing methods provide a binary view of concepts, focusing on whether a given concept is present or absent in a latent representation.
 However, this binary perspective can be overly restrictive, as concepts may be represented in a more continuous or graded manner, with varying degrees of presence.
 To obtain a more detailed characterization of these representations, other approaches have been proposed, such as the analysis of interpretable directions in latent spaces.
