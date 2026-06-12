@@ -3,14 +3,14 @@
 \input{figures/latent_space/latent_space_overview.tex}
 
 The four families of methods reviewed in this chapter, namely probing, interpretable directions, sparse autoencoders, and clustering, are summarized in Figure~\ref{fig:latent_space_overview} and all build upon the concept hypothesis introduced in Section~\ref{sec:concept_hypothesis}.
-Each of them approaches the question from a different angle, but they share a common objective: to uncover how latent representations are structured and what semantic information can be extracted from them.
+Each of them approaches the question from a different angle, but they share a common objective: to uncover how \gls{lr} are structured and what semantic information can be extracted from them.
 
 However, a fundamental difficulty remains.
 There is currently no consensus on how to rigorously evaluate to what extent these methods genuinely provide access to the internal concepts of a model.
 Most existing metrics assess reconstruction quality or linear separability, but these do not directly measure whether the discovered structures correspond to meaningful abstractions from the model's perspective.
-This leaves open the question of what it means, formally, for a concept to be represented in a neural network.
+This leaves open the question of what it means, formally, for a concept to be represented in a \gls{nn}.
 
 Addressing this question may require contributions from disciplines beyond computer science and mathematics.
 As the notion of semantics is inherently tied to human interpretation, a purely formal or computational account may be insufficient.
 Insights from philosophy, cognitive science, or psychology could prove valuable in grounding the notion of concept in a way that is both theoretically rigorous and empirically tractable.
-Despite these open questions, the methods studied in this chapter provide a practical foundation for analyzing the internal representations of neural networks.
+Despite these open questions, the methods studied in this chapter provide a practical foundation for analyzing the internal representations of \gls{nn}s.

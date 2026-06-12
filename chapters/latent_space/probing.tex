@@ -4,7 +4,7 @@
 \input{figures/latent_space/latent_space_probing.tex}
 \input{figures/latent_space/probing_illustration.tex}
 
-Probing methods aim to determine whether a given human-defined concept is encoded within the internal representations of a neural network \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
+Probing methods aim to determine whether a given human-defined concept is encoded within the \gls{ls} of a neural network \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
 More specifically, they investigate whether the presence or absence of a selected concept can be inferred from embeddings.
 The underlying assumption is that if a concept can be reliably decoded from these representations, then the network likely encodes information related to it in order to perform its task.
 
@@ -16,9 +16,9 @@ The dataset can therefore be written as follows:
 \mathcal{D} = \{(x^{(i)}, y^{(i)}, c^{(i)}_1, \dots, c^{(i)}_n)\}_{i=1}^{N}.
 \]
 
-The data are subsequently projected into the latent space of the pretrained model.
+The data are subsequently projected into the \gls{ls} of the pretrained model.
 We denote by $h^{l}$ the representation vector obtained at layer $l$.
-From these latent representations, a classifier is trained in a supervised manner to predict the presence of the considered concept.
+From these \gls{lr}, a classifier is trained in a supervised manner to predict the presence of the considered concept.
 This classifier is referred to as a probe and is denoted by $p$.
 Its purpose is to determine whether a given concept is present in the representation.
 Its purpose is therefore to assess whether information associated with the concept is accessible from the network’s internal representations.
@@ -30,27 +30,27 @@ p_{\theta}^{l, j} : h^{l} \mapsto c_j,
 \]
 
 The classifier used to detect the presence or absence of a concept must remain intentionally simple.
-Indeed, if the probe has too much capacity, it may reconstruct the target information from complex correlations that do not necessarily correspond to information explicitly encoded in the latent space.
+Indeed, if the probe has too much capacity, it may reconstruct the target information from complex correlations that do not necessarily correspond to information explicitly encoded in the \gls{ls}.
 In such a case, it becomes difficult to determine whether the concept is genuinely represented by the network or merely reconstructed through the expressive power of the classifier.
 For this reason, probing methods often rely on linear classifiers.
 A linear separation suggests that the information is easily accessible to the neural network and potentially usable during decision-making.
-If the classifier achieves performance significantly above chance level, this suggests that the latent space contains exploitable information related to the considered concept.
+If the classifier achieves performance significantly above chance level, this suggests that the \gls{ls} contains exploitable information related to the considered concept.
 
-An application of this technique can be found in studies investigating whether large language models (LLMs) develop internal representations of their environment \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
-In these works, researchers train LLMs to play games such as chess or Othello in a purely textual setting.
+An application of this technique can be found in studies investigating whether \gls{llm} develop internal representations of their environment \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
+In these works, researchers train \gls{llm} to play games such as chess or Othello in a purely textual setting.
 The model is only provided with sequences of moves and information about the actions it can take, all expressed in natural language.
-The central question is whether the LLM develops an internal representation of the game state.
+The central question is whether the \gls{llm} develops an internal representation of the game state.
 To address this question, the probed concepts correspond to the presence or absence of different game pieces on specific board positions.
 As illustrated in Figure~\ref{fig:probing_illustration}, probes are able to reconstruct the full board state from the model's hidden representations, even though the only available information to the model is a sequence of text.
 
-However, the fact that a concept can be decoded from latent representations does not necessarily imply that the model actually uses this information to perform its task.
-To assess whether representations play a causal role in the model’s output, it is possible to perform interventions on the latent representations.
-An intervention consists of modifying a latent representation in a controlled manner by activating or deactivating a given concept, and then studying its impact on the model’s output.
+However, the fact that a concept can be decoded from \gls{lr} does not necessarily imply that the model actually uses this information to perform its task.
+To assess whether representations play a causal role in the model’s output, it is possible to perform interventions on the \gls{lr}.
+An intervention consists of modifying a \gls{lr} in a controlled manner by activating or deactivating a given concept, and then studying its impact on the model’s output.
 If the resulting change in the model’s output is consistent with the applied perturbation, this suggests that the representation had a causal role.
 
-To this end, we aim to minimally modify the latent representation $h^{l}$ such that the probe prediction for the target concept $c_j$ changes state, while leaving the predictions associated with other concepts unchanged.
+To this end, we aim to minimally modify the \gls{lr} $h^{l}$ such that the probe prediction for the target concept $c_j$ changes state, while leaving the predictions associated with other concepts unchanged.
 This goal can be formulated as an optimization problem over the latent activation itself.
-RThe optimization is performed directly on the representation $h^{l'}$, using gradient-based optimization as introduced in Section~\ref{sec:learning}.
+The optimization is performed directly on the representation $h^{l'}$, using gradient-based optimization as introduced in Section~\ref{sec:learning}.
 The solution to this problem is the optimal modified representation $h^{l*}$, defined as:
 \[
 h^{l*} =
@@ -63,25 +63,25 @@ h^{l*} =
 \]
 where:
 \begin{itemize}
-    \item $h^{l}$ is the original latent representation of the input at layer $l$,
-    \item $h^{l'}$ is the modified latent representation being optimized,
+    \item $h^{l}$ is the original \gls{lr} of the input at layer $l$,
+    \item $h^{l'}$ is the modified \gls{lr} being optimized,
     \item $h^{l*}$ is the optimal modified representation,
     \item $\mathcal{L}_{\text{flip}}$: loss encouraging the prediction of the target concept $c_j$ to change state (i.e., flipping the predicted label),
     \item $\mathcal{L}_{\text{preserve}}$: loss enforcing invariance of all non-target concepts $c_k$ for $k \neq j$,
-    \item $\|h^{l'} - h^{l}\|_2^2$: regularization term ensuring the modified representation remains close to the original latent representation,
+    \item $\|h^{l'} - h^{l}\|_2^2$: regularization term ensuring the modified representation remains close to the original \gls{lr},
     \item $\gamma, \lambda, \beta$: weighting coefficients controlling the trade-off between the intervention strength, the preservation of other concepts, and the minimality of the perturbation.
 \end{itemize}
 
-In the context of LLMs studied previously, such interventions have been used to remove specific pieces from the model’s internal representation of the game state \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
+In the context of \gls{llm} studied previously, such interventions have been used to remove specific pieces from the model’s internal representation of the game state \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
 The main observation is that, in the vast majority of cases, the model behaves as if the piece had effectively disappeared.
-The LLM continues to generate legal moves while correctly accounting for the absence of the removed piece.
+The \gls{llm} continues to generate legal moves while correctly accounting for the absence of the removed piece.
 This provides evidence for the causal role of these internal representations in the model’s behavior.
 
 A main limitation of the probing approach is that the concepts under investigation must be predefined before any analysis can be performed.
 This introduces a strong bias in what can be studied.
 Moreover, annotating a dataset for each concept is extremely time-consuming and requires significant human effort.
-Interventions in latent space are also difficult to interpret, as it is not always clear what constitutes a meaningful change in the network’s output under a given perturbation.
+Interventions in \gls{ls} are also difficult to interpret, as it is not always clear what constitutes a meaningful change in the network’s output under a given perturbation.
 
-Moreover, probing methods provide a binary view of concepts, focusing on whether a given concept is present or absent in a latent representation.
+Moreover, probing methods provide a binary view of concepts, focusing on whether a given concept is present or absent in a \gls{lr}.
 However, this binary perspective can be overly restrictive, as concepts may be represented in a more continuous or graded manner, with varying degrees of presence.
-To obtain a more detailed characterization of these representations, other approaches have been proposed, such as the analysis of interpretable directions in latent spaces.
+To obtain a more detailed characterization of these representations, other approaches have been proposed, such as the analysis of interpretable directions in \gls{ls}s.

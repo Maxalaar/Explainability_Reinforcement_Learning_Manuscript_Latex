@@ -7,11 +7,11 @@ Empirically, only a restricted subset of concepts appears to admit a linear repr
 \input{figures/latent_space/latent_space_sparse_autoencoders.tex}
 \input{figures/latent_space/sparse_autoencoder_illustration.tex}
 
-To explain this phenomenon, a complementary hypothesis has been introduced, extending the assumptions underlying the Concept Hypothesis (\autoref{sec:concept_hypothesis}).
-This hypothesis, known as the Superposition Hypothesis \cite{elhage2022superposition}, posits that concepts are preferentially represented in a linear fashion, with each concept ideally corresponding to a distinct direction in latent space.
+To explain this phenomenon, a complementary hypothesis has been introduced, extending the assumptions underlying the Concept Hypothesis (\ref{sec:concept_hypothesis}).
+This hypothesis, known as the Superposition Hypothesis \cite{elhage2022superposition}, posits that concepts are preferentially represented in a linear fashion, with each concept ideally corresponding to a distinct direction in \gls{ls}.
 In this idealized setting, concept vectors would form an approximately orthogonal basis, where each direction independently controls a single factor of variation.
 Furthermore, only a small subset of the available concepts is expected to be active for a given representation.
-As a result, latent representations can be viewed as sparse combinations of concept directions.
+As a result, \gls{lr} can be viewed as sparse combinations of concept directions.
 This idealized representation is referred to as a non-superposed representation and can be expressed as follows:
 \[
 \mathbf{h} = \sum_{i=1}^{n} \alpha_i \mathbf{v}_i,
@@ -22,7 +22,7 @@ This idealized representation is referred to as a non-superposed representation 
 \]
 where:
 \begin{itemize}
-    \item $\mathbf{h}$ denotes a latent representation,
+    \item $\mathbf{h}$ denotes a \gls{lr},
     \item $n$ is the total number of concepts in the dictionary,
     \item $\mathbf{v}_i$ represents the direction associated with concept $c_i$,
     \item $\alpha_i$ corresponds to the activation strength of concept $c_i$ in the representation $\mathbf{h}$,
@@ -30,16 +30,16 @@ where:
     \item $\|\boldsymbol{\alpha}\|_0 \ll n$ indicates that only a small fraction of concepts are active for a given representation.
 \end{itemize}
 
-According to the Superposition Hypothesis, the reason why latent representations do not perfectly follow this idealized structure is that the representational capacity of neural networks is limited.
+According to the Superposition Hypothesis, the reason why \gls{lr} do not perfectly follow this idealized structure is that the representational capacity of neural networks is limited.
 For a given layer, the dimensionality of the representation space is finite, which constrains the number of concepts that can be encoded independently.
 As a result, the network cannot allocate a dedicated direction to every concept.
 Instead, multiple concepts are compressed into shared dimensions, a phenomenon referred to as superposition \cite{bricken2023monosemanticity}.
-This notion of superposition is closely related to the phenomenon of entanglement observed in latent space analyses.
-Entanglement is an empirical observation about the structure of latent representations, superposition provides a theoretical explanation for why such mixing may emerge.
+This notion of superposition is closely related to the phenomenon of entanglement observed in \gls{ls} analyses.
+Entanglement is an empirical observation about the structure of \gls{lr}, superposition provides a theoretical explanation for why such mixing may emerge.
 
-Under this hypothesis, the phenomenon of superposition becomes an unavoidable obstacle for any method that attempts to analyze latent representations directly in the original activation space.
-Motivated by this view, and with the goal of recovering the idealized non-superposed, a large body of work has focused on developing methods to desuperpose latent representations.
-To this end, a common strategy consists in projecting latent representations into a higher-dimensional space while imposing additional constraints designed to recover a non-superposed representation.
+Under this hypothesis, the phenomenon of superposition becomes an unavoidable obstacle for any method that attempts to analyze \gls{lr} directly in the original activation space.
+Motivated by this view, and with the goal of recovering the idealized non-superposed, a large body of work has focused on developing methods to desuperpose \gls{lr}.
+To this end, a common strategy consists in projecting \gls{lr} into a higher-dimensional space while imposing additional constraints designed to recover a non-superposed representation.
 A widely used implementation of this idea is the sparse autoencoder, which can be defined as follows:
 \[
 z = f_{\text{enc}}(h), \quad \hat{h} = f_{\text{dec}}(z)
@@ -64,9 +64,9 @@ The parameters of these projection functions are learned by minimizing $\mathcal
 Under this formulation, each dimension of $\mathcal{Z}$ is interpreted as a dedicated concept direction: the corresponding basis vector serves as the support for a distinct concept encoded by the model.
 
 The method proves to be powerful when successfully applied to real language models \cite{templeton2024scaling}.
-In these applications, the idea is to desuperpose latent representations using Sparse Autoencoders (SAEs) applied to LLM activations in order to recover a non-superposed representation.
+In these applications, the idea is to desuperpose \gls{lr} using \gls{sae} applied to \gls{llm} activations in order to recover a non-superposed representation.
 Once this representation is obtained, it has been shown that many concept vectors exhibit strong semantic properties.
-With such representations, it becomes possible to perform interventions directly in latent space.
+With such representations, it becomes possible to perform interventions directly in \gls{ls}.
 A well-known example is the Golden Gate Bridge concept direction, illustrated in Figure~\ref{fig:sparse_autoencoder_illustration}, which activates systematically whenever the input text or image refers to the Golden Gate Bridge, regardless of the language or modality.
 
 However, it is also possible to artificially activate this concept direction by directly modifying the sparse representation $z$, even when the input does not contain any reference to it.
@@ -88,11 +88,11 @@ Empirically, it is observed that even when the prompt is unrelated to the Golden
 This provides evidence for the causal role of these learned features.
 This type of intervention has been used by Anthropic researchers to steer or suppress specific model behaviors, effectively enabling a form of behavior control through latent-space editing.
 
-Despite their empirical success, sparse autoencoders exhibit several important limitations that question some of their underlying assumptions. 
+Despite their empirical success, \gls{sae} exhibit several important limitations that question some of their underlying assumptions. 
 These limitations can be summarized as follows:
 \begin{itemize}
     \item \textbf{Instability of the decomposition.}
-    Repeating the sparse autoencoder training process multiple times on the same model does not yield the same decomposition of the latent space.
+    Repeating the \gls{sae} training process multiple times on the same model does not yield the same decomposition of the \gls{ls}.
     Different runs produce different concept directions in $\mathcal{Z}$, even when achieving comparable reconstruction performance, which raises questions about the uniqueness and reliability of the discovered structure.
 
     \item \textbf{Lack of semantic coverage.}
@@ -105,11 +105,11 @@ These limitations can be summarized as follows:
 
     \item \textbf{Failure of scaling to remove superposition.}
     Under the Superposition Hypothesis, increasing the dimensionality of the representation space should reduce superposition by providing more room for independent concept directions.
-    However, this is not consistently observed in practice: even in very high-dimensional latent spaces, representations remain partially superposed, indicating that scaling alone does not resolve the entanglement of features.
+    However, this is not consistently observed in practice: even in very high-dimensional \gls{ls}s, representations remain partially superposed, indicating that scaling alone does not resolve the entanglement of features.
 \end{itemize}
 
-These limitations suggest that sparse autoencoders, while powerful, do not fully resolve the problem of representational structure. Although empirical results are often convincing in practice, they do not necessarily validate the underlying theoretical assumptions.
+These limitations suggest that \gls{sae}, while powerful, do not fully resolve the problem of representational structure. Although empirical results are often convincing in practice, they do not necessarily validate the underlying theoretical assumptions.
 
-The methods studied so far, namely probing (Section~\ref{sec:probing}), interpretable directions (Section~\ref{sec:direction}), and sparse autoencoders, all rest on a shared assumption: that semantic structure can be recovered through approximately linear decompositions of latent representations.
-While this assumption has led to significant empirical progress, it remains theoretically fragile and may not hold uniformly across all regions of the latent space.
-The following section therefore introduces a complementary approach that relaxes this constraint entirely, requiring no assumption about the linear organization of concepts in the latent space: deep clustering.
+The methods studied so far, namely probing (Section~\ref{sec:probing}), interpretable directions (Section~\ref{sec:direction}), and \gls{sae}, all rest on a shared assumption: that semantic structure can be recovered through approximately linear decompositions of \gls{lr}.
+While this assumption has led to significant empirical progress, it remains theoretically fragile and may not hold uniformly across all regions of the \gls{ls}.
+The following section therefore introduces a complementary approach that relaxes this constraint entirely, requiring no assumption about the linear organization of concepts in the \gls{ls}: deep clustering.

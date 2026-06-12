@@ -4,58 +4,58 @@
 \input{figures/latent_space/latent_space_clustering.tex}
 \input{figures/latent_space/deep_clustering_illustration.tex}
 
-The latent space analysis methods presented so far all rely, either explicitly or implicitly, on assumptions about the linear organization of concepts within the latent space.
+The \gls{ls} analysis methods presented so far all rely, either explicitly or implicitly, on assumptions about the linear organization of concepts within the \gls{ls}.
 For probing methods, concepts must be at least partially linearly separable for simple probes to succeed \ref{sec:probing}.
-Interpretability through latent directions assumes that variations associated with a concept can be captured by moving along a linear axis of the latent space \ref{sec:direction}.
+Interpretability through latent directions assumes that variations associated with a concept can be captured by moving along a linear axis of the \gls{ls} \ref{sec:direction}.
 Similarly, the superposition hypothesis assumes that concepts are represented through linear directions that become entangled because of representational capacity constraints \ref{sec:sparse_autoencoder}.
 Although these assumptions have led to numerous empirical successes, their theoretical justification remains limited.
-More importantly, several observations suggest that the linearity hypothesis may not fully capture the structure of latent representations.
+More importantly, several observations suggest that the linearity hypothesis may not fully capture the structure of \gls{lr}s.
 
 For instance, some concepts can only be recovered using non-linear probes.
 Likewise, methods based on interpretable directions typically identify only a limited number of semantic factors.
 Finally, in sparse autoencoder approaches, enforcing excessive sparsity often degrades reconstruction quality and interpretability, suggesting that the underlying representation may not be perfectly described by a sparse linear decomposition.
 
 Taken together, these observations indicate that semantic concepts may not always be organized according to a simple linear structure.
-This motivates the exploration of alternative approaches that rely on weaker assumptions regarding the geometry of latent spaces.
-To the best of our knowledge, clustering-based analysis is the only family of latent space analysis methods that does not rely on any assumption of linear structure, which is why the following section is devoted to its presentation \cite{ren_deep_2022, wei_overview_2024}.
-Rather than assuming that concepts correspond to directions or linear subspaces, clustering methods only assume that semantically similar inputs produce nearby latent representations.
-Conversely, inputs that differ significantly from a semantic perspective are expected to be located farther apart in the latent space.
+This motivates the exploration of alternative approaches that rely on weaker assumptions regarding the geometry of \gls{ls}s.
+To the best of our knowledge, clustering-based analysis is the only family of \gls{ls} analysis methods that does not rely on any assumption of linear structure, which is why the following section is devoted to its presentation \cite{ren_deep_2022, wei_overview_2024}.
+Rather than assuming that concepts correspond to directions or linear subspaces, clustering methods only assume that semantically similar inputs produce nearby \gls{lr}s.
+Conversely, inputs that differ significantly from a semantic perspective are expected to be located farther apart in the \gls{ls}.
 This is a considerably weaker assumption, in the sense that it is empirically verified in a wide range of settings.
 Moreover, it is implicitly endorsed by all the methods reviewed in this chapter, since probing, interpretable directions, and sparse autoencoders all require some degree of geometric proximity between representations of the same concept in order to function.
 
-Under this assumption, the discovery of concepts can be reformulated as the identification of groups of embeddings that occupy the same region of the latent space.
+Under this assumption, the discovery of concepts can be reformulated as the identification of groups of embeddings that occupy the same region of the \gls{ls}.
 Concepts are therefore no longer associated with directions, but with clusters of neighboring representations, as illustrated in Figure~\ref{fig:deep_clustering_illustration}.
 This idea forms the basis of the research field known as deep clustering.
-In these approaches, a collection of inputs is first projected into a latent space using a neural network.
+In these approaches, a collection of inputs is first projected into a \gls{ls} using a neural network.
 The resulting embeddings form a point cloud on which standard clustering algorithms can be applied.
 The obtained clusters are then interpreted as representing distinct semantic concepts.
 
-This methodology enables the discovery of semantic structure in the latent space in a fully unsupervised manner, without requiring concepts to be linearly encoded.
+This methodology enables the discovery of semantic structure in the \gls{ls} in a fully unsupervised manner, without requiring concepts to be linearly encoded.
 As a result, it can reveal forms of organization that would remain inaccessible to methods based solely on linear separability or interpretable directions.
 
 Deep clustering has been particularly successful in unsupervised image classification.
 Typically, an autoencoder is composed of an encoder $f_{\text{enc}}$ and a decoder $f_{\text{dec}}$.
-The encoder maps an input $x^{(i)} \in \mathcal{X}$ to a low-dimensional latent representation $z^{(i)} \in \mathbb{R}^d$:
+The encoder maps an input $x^{(i)} \in \mathcal{X}$ to a low-dimensional \gls{lr} $z^{(i)} \in \mathbb{R}^d$:
 \[
 z^{(i)} = f_{\text{enc}}(x^{(i)}), \quad d \ll \dim(\mathcal{X}).
 \]
 
-To ensure that this compressed representation does not discard essential information, the decoder reconstructs the input from the latent space:
+To ensure that this compressed representation does not discard essential information, the decoder reconstructs the input from the \gls{ls}:
 \[
 \hat{x}^{(i)} = f_{\text{dec}}(z^{(i)}) = f_{\text{dec}}(f_{\text{enc}}(x^{(i)})).
 \]
 
-The model is trained to minimize the reconstruction error between the original input and its reconstruction, typically using a mean squared error (MSE) loss:
+The model is trained to minimize the reconstruction error between the original input and its reconstruction, typically using a \gls{mse} loss:
 \[
 \mathcal{L}_{\text{rec}} = \frac{1}{N} \sum_{i=1}^N \left\| x^{(i)} - \hat{x}^{(i)} \right\|_2^2.
 \]
 
-This objective encourages the latent space to preserve the most informative features of the input while enforcing a compact representation.
+This objective encourages the \gls{ls} to preserve the most informative features of the input while enforcing a compact representation.
 
 Clustering algorithms are then applied to the learned embeddings.
 
 Let $\mathcal{D} = \{x^{(i)}\}_{i=1}^N$ denote a dataset of inputs.
-Through the encoder $f_{\text{enc}}$, this dataset induces a point cloud in the latent space:
+Through the encoder $f_{\text{enc}}$, this dataset induces a point cloud in the \gls{ls}:
 \[
 \mathcal{Z} = \{z^{(i)} \in \mathbb{R}^d \mid z^{(i)} = f_{\text{enc}}(x^{(i)}), \; x^{(i)} \in \mathcal{D} \}.
 \]
@@ -63,15 +63,15 @@ Through the encoder $f_{\text{enc}}$, this dataset induces a point cloud in the 
 Clustering algorithms are then applied to this set $\mathcal{Z}$ of embeddings in order to identify groups of semantically similar representations.
 
 An example of this methodology can be observed in Figure~\ref{fig:deep_clustering_illustration}, where the approach is applied to the STL-10 dataset \cite{coates2011analysis} using $k$-means \cite{macqueen1967multivariate} clustering with a number of clusters arbitrarily fixed to $K = 10$ \cite{xie_unsupervised_2016}.
-For each cluster, the corresponding line shows the $10$ samples closest to the associated centroid in the latent space.
+For each cluster, the corresponding line shows the $10$ samples closest to the associated centroid in the \gls{ls}.
 
 We observe that the method captures coherent semantic categories such as animals, vehicles, and flying entities.
 This result is particularly striking given that the only available information to the system consists of raw images.
-It suggests that the compression process induces a latent space in which semantically meaningful structures naturally emerge, and that these structures correspond to high-level concepts.
+It suggests that the compression process induces a \gls{ls} in which semantically meaningful structures naturally emerge, and that these structures correspond to high-level concepts.
 
 More advanced approaches combine representation learning and clustering objectives within a single optimization process.
 In this setting, additional loss terms encourage embeddings to organize themselves around cluster centroids during training.
-This often produces latent spaces that are easier to analyze and improves the quality of the discovered semantic structure \cite{guo_improved_2017, miklautz_breaking_2024}.
+This often produces \gls{ls}s that are easier to analyze and improves the quality of the discovered semantic structure \cite{guo_improved_2017, miklautz_breaking_2024}.
 
 Despite its effectiveness, clustering-based analysis also presents important limitations.
 First, as with most unsupervised semantic discovery techniques, the interpretation of the resulting clusters remains partially subjective.
@@ -81,4 +81,4 @@ Second, clustering methods are highly sensitive to design choices.
 The number of clusters, the distance metric, and the clustering algorithm itself can significantly influence the results.
 Selecting these parameters is often challenging and may require substantial empirical tuning.
 Finally, to the best of our knowledge, no intervention technique has yet been proposed in the context of clustering-based analysis.
-Unlike probing or sparse autoencoders, which allow targeted modifications of latent representations to study their causal role, clustering methods currently offer no mechanism to alter the model's behavior by acting directly on the discovered structure.
+Unlike probing or sparse autoencoders, which allow targeted modifications of \gls{lr}s to study their causal role, clustering methods currently offer no mechanism to alter the model's behavior by acting directly on the discovered structure.

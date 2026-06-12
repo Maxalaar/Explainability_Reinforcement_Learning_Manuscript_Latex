@@ -5,9 +5,9 @@
 \input{figures/latent_space/interpretable_direction_illustration.tex}
 \input{figures/latent_space/entanglement_illustration.tex}
 
-To overcome the limitations of binary concept detection in probing methods, several approaches have been proposed to analyze the geometric structure of latent representations.
+To overcome the limitations of binary concept detection in probing methods, several approaches have been proposed to analyze the geometric structure of \gls{lr}.
 Among them, the notion of interpretable directions has emerged as a natural extension, aiming to capture the continuous nature of how concepts are encoded in representation spaces.
-Empirically, it has been observed that shifting a latent representation along a direction can induce coherent and semantically meaningful changes in the model’s output \cite{haas2024discovering, voynov2020unsuperviseddiscoveryinterpretabledirections}.
+Empirically, it has been observed that shifting a \gls{lr} along a direction can induce coherent and semantically meaningful changes in the model’s output \cite{haas2024discovering, voynov2020unsuperviseddiscoveryinterpretabledirections}.
 Such transformations can be mathematically express as:
 \[
 h' = h + \alpha \mathbf{v}_i,
@@ -20,31 +20,31 @@ where:
     \item $h'$ is the resulting perturbed representation.
 \end{itemize}
 
-In many cases, the resulting change in the model's output varies smoothly with \(\alpha\), suggesting an approximately linear structure of the latent space with respect to certain semantic factors, as illustrated in Figure~\ref{fig:interpretable_direction_illustration}.
+In many cases, the resulting change in the model's output varies smoothly with \(\alpha\), suggesting an approximately linear structure of the \gls{ls} with respect to certain semantic factors, as illustrated in Figure~\ref{fig:interpretable_direction_illustration}.
 This observation has led to the hypothesis that neural representations may organize concepts in a partially linear manner within the embedding space.
 Vectors of this form are referred to as interpretable directions, as they correspond to transformations that can be associated with specific semantic attributes.
-The objective of this line of work is therefore to identify directions in latent space that align with meaningful variations in the encoded concepts.
+The objective of this line of work is therefore to identify directions in \gls{ls} that align with meaningful variations in the encoded concepts.
 
 This phenomenon has been extensively studied in generative image models.
-As illustrated in Figure~\ref{fig:interpretable_direction_illustration}, controlled perturbations of latent representations along interpretable directions can induce specific semantic transformations, such as stroke thickness modification in digit images, head rotation in facial images, or texture and background changes in natural images \cite{voynov2020unsuperviseddiscoveryinterpretabledirections}.
-These observations have led to the development of the field of latent space editing, whose objective is to manipulate generated content directly through modifications in latent space rather than through changes in the input prompt.
+As illustrated in Figure~\ref{fig:interpretable_direction_illustration}, controlled perturbations of \gls{lr}s along interpretable directions can induce specific semantic transformations, such as stroke thickness modification in digit images, head rotation in facial images, or texture and background changes in natural images \cite{voynov2020unsuperviseddiscoveryinterpretabledirections}.
+These observations have led to the development of the field of \gls{ls} editing, whose objective is to manipulate generated content directly through modifications in \gls{ls} rather than through changes in the input prompt.
 
 However, a central challenge remains: identifying such interpretable directions is far from trivial.
 Most existing approaches rely on auxiliary models that encode human-defined semantics, such as CLIP \cite{haas2024discovering}, to relate latent variations to textual concepts.
 Consequently, these methods inherit a limitation similar to that of probing techniques \ref{sec:probing}, since concept discovery depends on a pre-existing semantic framework defined by humans.
 
 To overcome this limitation, a research direction known as unsupervised semantic discovery has emerged.
-Its goal is to uncover interpretable directions in latent spaces without explicit semantic supervision.
-In these approaches, one model applies perturbations along random directions in latent space, while a second model attempts to recognize the applied transformation.
-If a stable correspondence emerges between the perturbation and its prediction, this suggests that the considered direction corresponds to a coherent structure in latent space \cite{voynov2020unsuperviseddiscoveryinterpretabledirections}.
+Its goal is to uncover interpretable directions in \gls{ls}s without explicit semantic supervision.
+In these approaches, one model applies perturbations along random directions in \gls{ls}, while a second model attempts to recognize the applied transformation.
+If a stable correspondence emerges between the perturbation and its prediction, this suggests that the considered direction corresponds to a coherent structure in \gls{ls} \cite{voynov2020unsuperviseddiscoveryinterpretabledirections}.
 In this framework, human intervention occurs only a posteriori, to verify whether the discovered directions indeed correspond to interpretable semantic variations.
 
 However, despite these advances, several challenges remain.
-First, it appears that not all concepts encoded by neural networks are linearly identifiable in latent space.
+First, it appears that not all concepts encoded by neural networks are linearly identifiable in \gls{ls}.
 In practice, interpretable direction methods typically discover only a few dozen directions per dataset, which intuitively seems insufficient to account for the full diversity of semantic variations that a generative model is capable of producing.
-In addition, latent representations often exhibit a phenomenon known as entanglement, illustrated in Figure~\ref{fig:entanglement_illustration}, where multiple semantic attributes are mixed within the same directions of the representation space.
+In addition, \gls{lr} often exhibit a phenomenon known as entanglement, illustrated in Figure~\ref{fig:entanglement_illustration}, where multiple semantic attributes are mixed within the same directions of the representation space.
 Ideally, one would like each semantic factor to vary independently along a specific direction, without affecting other attributes.
-In practice, this is rarely the case: a single direction in latent space often influences multiple semantic features simultaneously, meaning that modifying one concept unintentionally alters several others.
+In practice, this is rarely the case: a single direction in \gls{ls} often influences multiple semantic simultaneously, meaning that modifying one concept unintentionally alters several others.
 This lack of separability indicates that semantic information is not cleanly factored in the representation space, which motivates the search for more structured decompositions.
 
 Together with the difficulty of isolating independent factors, this observation has motivated a stronger hypothesis about how neural networks organize information: the superposition hypothesis.
