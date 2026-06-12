@@ -6,11 +6,11 @@
 The ability of a \gls{nn} to generalize provides evidence that the model has learned more than a simple memorization of the training examples \ref{sec:evaluation}.
 Instead, it must construct internal representations that capture regularities present in the data.
 These representations play a central role in the network's ability to solve a task.
-Understanding their structure is therefore a key step toward understanding how \gls{nn}s achieve generalization.
+Understanding their structure is therefore a key step toward understanding how \gls{nn} achieve generalization.
 
 In classical machine learning approaches, practitioners had to manually design data representations in order to make them usable by simple models.
 \gls{dl} introduces a paradigm shift: rather than relying on hand-crafted features to meaningfully represent data, it automatically learns these representations.
-Through the successive activation of hidden layers, \gls{nn}s gradually construct representations that become increasingly relevant to the task under consideration \cite{rumelhart1986learning}.
+Through the successive activation of hidden layers, \gls{nn} gradually construct representations that become increasingly relevant to the task under consideration \cite{rumelhart1986learning}.
 As discussed in Chapter~\ref{chap:deep_learning}, these representations are not meaningful at initialization, they emerge progressively during training as the model optimizes its objective.
 It is precisely through these learned representations that a trained network is able to map an input to an output, including for examples never encountered during training.
 
@@ -18,7 +18,7 @@ These \gls{ls} are now at the core of a growing number of practical applications
 Neural video compression exploits the compactness of \gls{ls} to encode information efficiently \cite{lu2019dvcendtoenddeepvideo}.
 In \gls{rl}, agent internal representations are used for efficient exploration in extremely open environments \cite{burda2018largescalestudycuriositydrivenlearning}.
 Recommendation systems model users and content within a shared latent space to compute meaningful similarities \cite{he2017neuralcollaborativefiltering}.
-Similarly, retrieval-augmented generation systems index and query knowledge bases through latent embeddings \cite{lewis2021retrievalaugmentedgenerationknowledgeintensivenlp}.
+Retrieval-augmented generation systems index and query knowledge bases through latent embeddings \cite{lewis2021retrievalaugmentedgenerationknowledgeintensivenlp}.
 Finally, \gls{llm} and multimodal architectures rely on the quality of learned representations to align heterogeneous modalities such as text, images, and audio \cite{radford2021learningtransferablevisualmodels}.
 These examples represent only some of the most widespread applications of \gls{lr}.
 
@@ -29,7 +29,7 @@ In this chapter, we first make explicit the working hypothesis that underlies mu
 Throughout this manuscript, we refer to this assumption as the concept hypothesis \ref{sec:concept_hypothesis}.
 Once this conceptual framework has been established, we review the main approaches proposed in the literature to identify and extract concepts from \gls{lr}.
 To the best of our knowledge, the main families of methods include probing methods (Section~\ref{sec:probing}), semantic directions (Section~\ref{sec:direction}), sparse autoencoders (Section~\ref{sec:sparse_autoencoder}), and clustering-based approaches (Section~\ref{sec:clustering}).
-Finally, Section~\ref{sec:conclusion} draws a comparative synthesis of these methods and discusses the open questions that remain.
+Finally, Section~\ref{sec:latent_space_conclusion} draws a comparative synthesis of these methods and discusses the open questions that remain.
 
 \input{chapters/latent_space/hypothesis.tex}
 \input{chapters/latent_space/probing.tex}

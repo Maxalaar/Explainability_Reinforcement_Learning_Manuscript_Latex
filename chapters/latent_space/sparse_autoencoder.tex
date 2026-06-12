@@ -12,7 +12,7 @@ This hypothesis, known as the Superposition Hypothesis \cite{elhage2022superposi
 In this idealized setting, concept vectors would form an approximately orthogonal basis, where each direction independently controls a single factor of variation.
 Furthermore, only a small subset of the available concepts is expected to be active for a given representation.
 As a result, \gls{lr} can be viewed as sparse combinations of concept directions.
-This idealized representation is referred to as a non-superposed representation and can be expressed as follows:
+This idealized representation is referred to as a non-superposed representation and can be mathematically expressed as follows:
 \[
 \mathbf{h} = \sum_{i=1}^{n} \alpha_i \mathbf{v}_i,
 \qquad
@@ -30,17 +30,15 @@ where:
     \item $\|\boldsymbol{\alpha}\|_0 \ll n$ indicates that only a small fraction of concepts are active for a given representation.
 \end{itemize}
 
-According to the Superposition Hypothesis, the reason why \gls{lr} do not perfectly follow this idealized structure is that the representational capacity of neural networks is limited.
+According to the Superposition Hypothesis, latent representations do not perfectly follow this idealized structure because the representational capacity of \gls{nn} is limited.
 For a given layer, the dimensionality of the representation space is finite, which constrains the number of concepts that can be encoded independently.
-As a result, the network cannot allocate a dedicated direction to every concept.
-Instead, multiple concepts are compressed into shared dimensions, a phenomenon referred to as superposition \cite{bricken2023monosemanticity}.
-This notion of superposition is closely related to the phenomenon of entanglement observed in \gls{ls} analyses.
-Entanglement is an empirical observation about the structure of \gls{lr}, superposition provides a theoretical explanation for why such mixing may emerge.
+As a result, the network cannot allocate a dedicated direction to every concept, and multiple concepts end up compressed into shared dimensions \cite{bricken2023monosemanticity}.
+This phenomenon is closely related to the entanglement observed in \gls{ls} analyses: where entanglement is an empirical observation about the mixing of semantic attributes, the Superposition Hypothesis provides a theoretical explanation for why such mixing emerges.
 
 Under this hypothesis, the phenomenon of superposition becomes an unavoidable obstacle for any method that attempts to analyze \gls{lr} directly in the original activation space.
 Motivated by this view, and with the goal of recovering the idealized non-superposed, a large body of work has focused on developing methods to desuperpose \gls{lr}.
 To this end, a common strategy consists in projecting \gls{lr} into a higher-dimensional space while imposing additional constraints designed to recover a non-superposed representation.
-A widely used implementation of this idea is the sparse autoencoder, which can be defined as follows:
+A widely used implementation of this idea is the \gls{sae}, which can be defined as follows:
 \[
 z = f_{\text{enc}}(h), \quad \hat{h} = f_{\text{dec}}(z)
 \]
@@ -59,18 +57,19 @@ where:
 \end{itemize}
 
 In practice, both $f_{\text{enc}}$ and $f_{\text{dec}}$ are implemented as linear projections into the high-dimensional space $\mathcal{Z}$.
-This choice is motivated by the same reasoning as in probing methods \ref{sec:probing}: using overly expressive projection functions would introduce additional bias, making it difficult to attribute the structure of the learned representations to the model itself rather than to the projection.
+This choice is motivated by the same reasoning as in probing methods (Section~\ref{sec:probing}).
+Using overly expressive projection functions would introduce additional bias, making it difficult to attribute the structure of the learned representations to the model itself rather than to the projection.
 The parameters of these projection functions are learned by minimizing $\mathcal{L}_{\text{auto}}$ using gradient-based optimization, as introduced in Section~\ref{sec:learning}.
-Under this formulation, each dimension of $\mathcal{Z}$ is interpreted as a dedicated concept direction: the corresponding basis vector serves as the support for a distinct concept encoded by the model.
+Under this formulation, each dimension of $\mathcal{Z}$ is interpreted as a dedicated concept direction.
+The corresponding basis vector serves as the support for a distinct concept encoded by the model.
 
 The method proves to be powerful when successfully applied to real language models \cite{templeton2024scaling}.
-In these applications, the idea is to desuperpose \gls{lr} using \gls{sae} applied to \gls{llm} activations in order to recover a non-superposed representation.
+In these applications, the idea is to desuperpose  \gls{llm} \gls{lr} using \gls{sae} in order to recover a non-superposed representation.
 Once this representation is obtained, it has been shown that many concept vectors exhibit strong semantic properties.
-With such representations, it becomes possible to perform interventions directly in \gls{ls}.
 A well-known example is the Golden Gate Bridge concept direction, illustrated in Figure~\ref{fig:sparse_autoencoder_illustration}, which activates systematically whenever the input text or image refers to the Golden Gate Bridge, regardless of the language or modality.
 
 However, it is also possible to artificially activate this concept direction by directly modifying the sparse representation $z$, even when the input does not contain any reference to it.
-The edited representation is then projected back into the original activation space:
+The edited representation is then projected back into the original activation space and the model proceeds with standard next-token generation from $h^*$:
 \[
 h^* = f_{\text{dec}}(z^*), \quad \text{where} \quad z^* = z + \delta \, e_i,
 \]
@@ -82,7 +81,6 @@ where:
     \item $\delta$ controls the strength of the artificial activation,
     \item $h^*$ is the resulting edited representation in the original activation space.
 \end{itemize}
-The model is then allowed to proceed with standard next-token generation from $h^*$.
 
 Empirically, it is observed that even when the prompt is unrelated to the Golden Gate Bridge, the model’s output shifts to discussing it.
 This provides evidence for the causal role of these learned features.
@@ -104,12 +102,12 @@ These limitations can be summarized as follows:
     The representations tend to lose meaningful structure, suggesting that enforcing excessive sparsity comes at the cost of interpretability.
 
     \item \textbf{Failure of scaling to remove superposition.}
-    Under the Superposition Hypothesis, increasing the dimensionality of the representation space should reduce superposition by providing more room for independent concept directions.
-    However, this is not consistently observed in practice: even in very high-dimensional \gls{ls}s, representations remain partially superposed, indicating that scaling alone does not resolve the entanglement of features.
+    Under the Superposition Hypothesis, increasing the dimensionality of the representation space should reduce superposition.
+    However, this is not observed in practice.
+    Even in very high-dimensional \gls{ls}, representations remain partially superposed, indicating that scaling alone does not resolve the entanglement of features.
 \end{itemize}
 
-These limitations suggest that \gls{sae}, while powerful, do not fully resolve the problem of representational structure. Although empirical results are often convincing in practice, they do not necessarily validate the underlying theoretical assumptions.
-
-The methods studied so far, namely probing (Section~\ref{sec:probing}), interpretable directions (Section~\ref{sec:direction}), and \gls{sae}, all rest on a shared assumption: that semantic structure can be recovered through approximately linear decompositions of \gls{lr}.
-While this assumption has led to significant empirical progress, it remains theoretically fragile and may not hold uniformly across all regions of the \gls{ls}.
-The following section therefore introduces a complementary approach that relaxes this constraint entirely, requiring no assumption about the linear organization of concepts in the \gls{ls}: deep clustering.
+These limitations suggest that \gls{sae}, while powerful, do not fully resolve the problem of representational structure, and that convincing empirical results do not necessarily validate the underlying theoretical assumptions.
+Indeed, probing (Section~\ref{sec:probing}), interpretable directions (Section~\ref{sec:direction}), and \gls{sae} all rest on a shared assumption: that semantic structure can be recovered through approximately linear decompositions of \gls{lr}.
+This assumption has driven significant empirical progress, yet it remains theoretically fragile.
+The following section therefore introduces a complementary approach that relaxes this constraint entirely, requiring no assumption about the linear organization of concepts: deep clustering (Section~\ref{sec:clustering}).

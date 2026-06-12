@@ -15,7 +15,7 @@ h' = h + \alpha \mathbf{v}_i,
 where:
 \begin{itemize}
     \item $h$ denotes the original embedding,
-    \item $\mathbf{v}_i$ is a unit vector associated with concept $c_i$,
+    \item $\mathbf{v}_i$ is a unit vector associated with concept $i$,
     \item $\alpha$ controls the strength of the intervention,
     \item $h'$ is the resulting perturbed representation.
 \end{itemize}
@@ -26,7 +26,7 @@ Vectors of this form are referred to as interpretable directions, as they corres
 The objective of this line of work is therefore to identify directions in \gls{ls} that align with meaningful variations in the encoded concepts.
 
 This phenomenon has been extensively studied in generative image models.
-As illustrated in Figure~\ref{fig:interpretable_direction_illustration}, controlled perturbations of \gls{lr}s along interpretable directions can induce specific semantic transformations, such as stroke thickness modification in digit images, head rotation in facial images, or texture and background changes in natural images \cite{voynov2020unsuperviseddiscoveryinterpretabledirections}.
+As illustrated in Figure~\ref{fig:interpretable_direction_illustration}, controlled perturbations of \gls{lr} along interpretable directions can induce specific semantic transformations, such as stroke thickness modification in digit images, head rotation in facial images, or texture and background changes in natural images \cite{voynov2020unsuperviseddiscoveryinterpretabledirections}.
 These observations have led to the development of the field of \gls{ls} editing, whose objective is to manipulate generated content directly through modifications in \gls{ls} rather than through changes in the input prompt.
 
 However, a central challenge remains: identifying such interpretable directions is far from trivial.
@@ -34,7 +34,7 @@ Most existing approaches rely on auxiliary models that encode human-defined sema
 Consequently, these methods inherit a limitation similar to that of probing techniques \ref{sec:probing}, since concept discovery depends on a pre-existing semantic framework defined by humans.
 
 To overcome this limitation, a research direction known as unsupervised semantic discovery has emerged.
-Its goal is to uncover interpretable directions in \gls{ls}s without explicit semantic supervision.
+Its goal is to uncover interpretable directions in \gls{ls} without explicit semantic supervision.
 In these approaches, one model applies perturbations along random directions in \gls{ls}, while a second model attempts to recognize the applied transformation.
 If a stable correspondence emerges between the perturbation and its prediction, this suggests that the considered direction corresponds to a coherent structure in \gls{ls} \cite{voynov2020unsuperviseddiscoveryinterpretabledirections}.
 In this framework, human intervention occurs only a posteriori, to verify whether the discovered directions indeed correspond to interpretable semantic variations.
@@ -47,4 +47,4 @@ Ideally, one would like each semantic factor to vary independently along a speci
 In practice, this is rarely the case: a single direction in \gls{ls} often influences multiple semantic simultaneously, meaning that modifying one concept unintentionally alters several others.
 This lack of separability indicates that semantic information is not cleanly factored in the representation space, which motivates the search for more structured decompositions.
 
-Together with the difficulty of isolating independent factors, this observation has motivated a stronger hypothesis about how neural networks organize information: the superposition hypothesis.
+The limited number of linearly identifiable concepts, combined with the difficulty of isolating independent semantic factors, has motivated a stronger hypothesis about how neural networks organize information internally: the superposition hypothesis.
