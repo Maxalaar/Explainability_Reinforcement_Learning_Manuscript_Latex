@@ -41,7 +41,7 @@ In these works, researchers train LLMs to play games such as chess or Othello in
 The model is only provided with sequences of moves and information about the actions it can take, all expressed in natural language.
 The central question is whether the LLM develops an internal representation of the game state.
 To address this question, the probed concepts correspond to the presence or absence of different game pieces on specific board positions.
-As illustrated in Figure~\ref{fig:probing_chess_illustration}, probes are able to reconstruct the full board state from the model's hidden representations, even though the only available information to the model is a sequence of text.
+As illustrated in Figure~\ref{fig:probing_illustration}, probes are able to reconstruct the full board state from the model's hidden representations, even though the only available information to the model is a sequence of text.
 
 However, the fact that a concept can be decoded from latent representations does not necessarily imply that the model actually uses this information to perform its task.
 To assess whether representations play a causal role in the model’s output, it is possible to perform interventions on the latent representations.

@@ -62,7 +62,7 @@ Through the encoder $f_{\text{enc}}$, this dataset induces a point cloud in the 
 
 Clustering algorithms are then applied to this set $\mathcal{Z}$ of embeddings in order to identify groups of semantically similar representations.
 
-An example of this methodology can be observed in Figure~\ref{fig:deep_clustering_illustration}, where the approach is applied to the STL-10 dataset \cite{coates2011analysis} using $k$-means \ref{macqueen1967multivariate} clustering with a number of clusters arbitrarily fixed to $K = 10$ \cite{xie_unsupervised_2016}.
+An example of this methodology can be observed in Figure~\ref{fig:deep_clustering_illustration}, where the approach is applied to the STL-10 dataset \cite{coates2011analysis} using $k$-means \cite{macqueen1967multivariate} clustering with a number of clusters arbitrarily fixed to $K = 10$ \cite{xie_unsupervised_2016}.
 For each cluster, the corresponding line shows the $10$ samples closest to the associated centroid in the latent space.
 
 We observe that the method captures coherent semantic categories such as animals, vehicles, and flying entities.
