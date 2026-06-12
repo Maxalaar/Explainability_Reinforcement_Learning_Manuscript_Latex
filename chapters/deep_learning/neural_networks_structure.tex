@@ -11,6 +11,8 @@ Indeed, most of the essential mechanisms of \gls{dl} are present in it, making i
 
 \subsection{Neurons}
 
+\input{figures/deepl_learning/artificiale_neurone.tex}
+
 The artificial neuron is the basic building block of \gls{nn}.
 It is through these units that all computations within the network are carried out.
 A neuron receives a set of input signals from other neurons and produces an output that is transmitted to subsequent neurons units.
@@ -38,8 +40,6 @@ where:
 \item $\sigma$ is the activation function.
 \end{itemize}
 
-\input{figures/deepl_learning/artificiale_neurone.tex}
-
 Figure~\ref{fig:artificiale_neurone} shows a schematic view of this basic unit.
 The set of weights $w_1, \dots, w_i$ with the bias $b$ constitute the parameters of the neuron, and they are the elements that evolve during training.
 The magnitude of a weight $w$ (relative to the others) indicates how strongly a neuron depends on the activation of the neurons to which it is connected.
@@ -64,7 +64,7 @@ Consequently, neurons within the same layer do not interact with each other.
 Three types of layers are distinguished:
 \begin{itemize}
 \item an \emph{input layer}, which directly receives input,
-\item one or more \emph{hidden layers}, which perform intermediate transformations,
+\item one or more \emph{hidden layers} (also referred to as intermediate layers), which perform intermediate transformations,
 \item an \emph{output layer}, which produces the final prediction.
 \end{itemize}
 
