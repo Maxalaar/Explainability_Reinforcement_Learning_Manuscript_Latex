@@ -1,6 +1,6 @@
 \section{Evaluation}\label{sec:evaluation}
 
-Now that we have described how to train a model, we must turn to the question of how to evaluate it.
+Now that the process of training a model has been described, the question of how to evaluate it must be addressed.
 In the supervised learning setting, this evaluation relies on two aspects:
 
 \begin{itemize}
@@ -21,7 +21,7 @@ In order to quantify these two aspects, the dataset is split into two subsets:
 \end{itemize}
 
 When training is completed, the first step is to verify that the model performs well on the data it was trained on.
-To do so, we study the average loss on the training set, denoted $\bar{\ell}_{\text{train}}$:
+To do so, the average loss on the training set, denoted $\bar{\ell}_{\text{train}}$, is studied:
 \[
 \bar{\ell}_{\text{train}} = \frac{1}{|\mathcal{D}_{\text{train}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{train}}} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})
 \]
@@ -29,7 +29,7 @@ To do so, we study the average loss on the training set, denoted $\bar{\ell}_{\t
 If $\bar{\ell}_{\text{train}}$ is not sufficiently low, this means that the model has not been able to learn the task.
 It is not necessary to go further in the analysis of the model's quality.
 Before restarting the training process, various design choices are then adjusted.
-Based on what we have discussed so far in this chapter, these include modifications to the number of layers, the number of neurons per layer, activation functions, the learning rate, or the initialization strategy.
+Based on what has been discussed so far in this chapter, these include modifications to the number of layers, the number of neurons per layer, activation functions, the learning rate, and the initialization strategy.
 However, in practice, there are many other possible variations.
 There is no universal rule for choosing the appropriate value for each of them.
 They are therefore chosen empirically, based on models that perform well on similar tasks, combined with intuition.
@@ -37,7 +37,7 @@ Their selection is often costly and remains a challenging problem in \gls{dl}.
 
 Assuming now that the model achieves satisfactory performance on the training dataset $\mathcal{D}_{\text{train}}$.
 We must now study its ability to generalize.
-To do so, we compute the corresponding average loss on $\mathcal{D}_{\text{test}}$:
+To do so, the corresponding average loss on $\mathcal{D}_{\text{test}}$ is computed:
 \[
 \bar{\ell}_{\text{test}} = \frac{1}{|\mathcal{D}_{\text{test}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{test}}} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})
 \]

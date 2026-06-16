@@ -5,7 +5,7 @@ Rather than modeling information processing through a set of explicit rules, the
 Their architecture is composed of a large number of simple computational units, which operate on partial representations and exchange signals across the network.
 A complex pattern of weighted connections between these units enables the transformation and propagation of information.
 
-To simplify the presentation throughout this chapter, we focus on the \gls{mlp} architecture.
+To simplify the presentation throughout this chapter, the focus is placed on the \gls{mlp} architecture.
 Although more specialized architectures exist, the \gls{mlp} forms a fundamental building block of modern \gls{dl}.
 Indeed, most of the essential mechanisms of \gls{dl} are present in it, making it a particularly suitable framework for introducing key concepts.
 
@@ -128,11 +128,11 @@ The model parameters are thus denoted by:
 \theta = \{\mathbf{W}^{(l)}, \mathbf{b}^{(l)}\}_{l=1}^{L}.
 \]
 
-In this manuscript, we consider $\theta$ as a vector in $\mathbb{R}^P$, where $P$ denotes the total number of parameters $\theta = [w_1, \dots, w_P]$.
+In this manuscript, $\theta$ is considered as a vector in $\mathbb{R}^P$, where $P$ denotes the total number of parameters, such that $\theta = [w_1, \dots, w_P]$.
 The notation $\hat{f}_{\theta}$ expresses the dependence of the \gls{nn} on its parameters.
 Increasing the number of parameters, either by adding more neurons per layer or by increasing the number of layers, enhances the expressive power of the model, allowing it to approximate more complex functions.
 However, this also increases computational cost and training time.
 
 It is important to distinguish between the architecture and the parameters of a \gls{nn}.
-When we refer to the architecture of $\hat{f}$, we mean the number of layers, the number of neurons per layer, and the choice of activation functions.
+When referring to the architecture of $\hat{f}$, the number of layers, the number of neurons per layer, and the choice of activation functions are considered.
 The parameters correspond to $\theta$, which controls the strength of the connections between neurons.

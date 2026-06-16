@@ -1,7 +1,7 @@
 \section{Learning}\label{sec:learning}
 
-Now that we have detailed the structure of a \gls{nn}, we must turn our attention to how it is modified in order to accomplish the task assigned to it.
-To do so, we need to focus on what lies at the very core of \gls{dl}: the learning process itself.
+Now that the structure of a \gls{nn} has been detailed, attention must be turned to how it is modified in order to accomplish the assigned task.
+To do so, attention must be focused on what lies at the very core of \gls{dl}: the learning process itself.
 As a reminder, the objective of a \gls{nn} is to adjust its parameters so that it becomes a good approximation of a target function.
 That is, for a given architecture $\hat{f}$, the goal is to find the set of parameters $\theta$ that best approximates the target function $f$.
 Mathematically, this objective is expressed as:
@@ -11,7 +11,7 @@ Mathematically, this objective is expressed as:
 
 However, the \gls{nn} $\hat{f}$ used to approximate the target function $f$ is highly complex.
 It involves a large number of parameters as well as many nonlinear components.
-As a result, we cannot find an exact solution by directly studying the properties of the function.
+As a result, an exact solution cannot be found by directly studying the properties of the function.
 So, one must therefore rely on approximate methods to optimize \gls{nn}s.
 
 The class of algorithms used for this optimization is known as gradient descent methods.
@@ -19,18 +19,18 @@ To develop an intuition, Figure~\ref{fig:simple_gradient_descent} illustrates gr
 
 \input{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
 
-For simplicity, we focus here on \gls{sgd} with a batch size of 1.
+For simplicity, the focus here is on \gls{sgd} with a batch size of 1.
 As in previous cases, this choice is made because this setting captures the essential intuition behind the training method.
 
 The first step of \gls{sgd} is to randomly initialize the parameter vector $\theta \in \mathbb{R}^P$ for a given network architecture $\hat{f}$.
 We denote this initial state by $\theta^{(1)}$.
 The goal is then to iteratively modify this vector in order to improve the network's ability to approximate the target function.
 
-To determine how to update the parameters, we study the effect of small variations in each parameter on the loss $\mathcal{L}$.
-To analyze how parameter variations affect the loss, we rely on a fundamental mathematical tool known as the gradient.
+To determine how to update the parameters, the effect of small variations in each parameter on the loss $\mathcal{L}$ is studied.
+To analyze how parameter variations affect the loss, a fundamental mathematical tool known as the gradient is used.
 It is defined as the collection of partial derivatives of a function with respect to its variables.
 In our setting, the objective is to understand, for a given example $(x^{(i)}, y^{(i)})$, how the parameters should be adjusted so that the \gls{nn} prediction $\hat{y}^{(i)}$ becomes closer to the true output $y^{(i)}$.
-To achieve this, we compute the partial derivatives of the loss function $\mathcal{L}$ with respect to each parameter vector $\theta$:
+To achieve this, the partial derivatives of the loss function $\mathcal{L}$ with respect to each parameter vector $\theta$ are computed:
 \[
 \nabla_{\theta} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}) = \left[ \frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_1}, \dots, \frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_P} \right].
 \]
@@ -45,9 +45,9 @@ Each component of the gradient $\frac{\partial \mathcal{L}(\dots)}{\partial w_k}
 More precisely, for a given parameter, a positive value in the corresponding gradient component indicates that increasing this parameter will locally increase the loss.
 Conversely, a negative value indicates that increasing it will locally decrease the loss.
 
-Now that we have information on how changes in the parameters affect the loss, we can aim to minimize it.
+Now that information is available on how changes in the parameters affect the loss, the objective is to minimize it.
 To do so, the parameters are updated in the direction opposite to the gradient.
-Indeed, we move against the gradient because it indicates the direction in which the loss increases, whereas our goal is to reduce it.
+Indeed, the gradient is followed in the opposite direction because it indicates the direction in which the loss increases, whereas the objective is to reduce it.
 This leads us to the gradient descent update rule:
 \[
 \theta^{(n+1)} = \theta^{(n)} - \eta \nabla_{\theta^{(n)}} \mathcal{L}(\hat{f}_{\theta^{(n)}}(x^{(i)}), y^{(i)}),
@@ -59,7 +59,7 @@ As a result, a single step is not sufficient to significantly reduce the loss, s
 Producing a sequence of parameter vectors $\theta_1, \theta_2, \dots$ that progressively improve the model.
 In practice, training is stopped when successive updates no longer produce a significant decrease in the loss.
 
-It is through this simple set of rules: random initialization, gradient computation, and iterative parameter updates, we are able to train highly complex \gls{nn}s.
+It is through this simple set of rules, consisting of random initialization, gradient computation, and iterative parameter updates, that highly complex \gls{nn}s can be trained.
 Of course, when using gradient descent to optimize the parameters of a non-convex function such as a \gls{nn}, there is no theoretical guarantee of convergence to a global, or even a local, minimum.
 However, in practice, this method often yields satisfactory results for the task.
 This success is often attributed to the high expressive power of \gls{nn}s, even though a complete theoretical understanding of this phenomenon remains an open question.
