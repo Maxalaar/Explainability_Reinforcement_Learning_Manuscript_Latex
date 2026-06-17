@@ -5,10 +5,10 @@
 
 In this section, we introduce the main working hypothesis underlying much of the literature on \gls{ls} analysis.  
 Although rarely stated explicitly, this hypothesis is implicitly present in the recurring use of notions such as abstraction, representation, \gls{ls}, concept, and semantics.   
-The goal of this section is to make this conceptual framework explicit by formally defining its main components.  
+The goal of this section is to make this conceptual framework explicit by defining its main components.  
 
 This hypothesis originates from the need to explain the generalization ability of deep \gls{nn} observed after training, as discussed in Section~\ref{sec:evaluation}.
-Formally, a model is said to generalize when, for an input $x \in \mathcal{X}$ not seen during training, it still produces an output $\hat{y}$ close to the true output $y$.  
+A model is said to generalize when, for an input $x \in \mathcal{X}$ not seen during training, it still produces an output $\hat{y}$ close to the true output $y$.  
 Such behavior cannot be explained by simple memorization of training samples.  
 Instead, the model must extract and exploit underlying regularities in the target function.  
 This requires a process of abstraction, as defined in Definition~\ref{def:abstraction}, whereby raw inputs are transformed into internal structures that are meaningful for the task \cite{bengio2014representationlearningreviewnew}.  
@@ -38,14 +38,14 @@ x \rightarrow h^{(1)} \rightarrow h^{(2)} \rightarrow \dots \rightarrow h^{(L-1)
 The set of all such representations produced by a layer or a model over a dataset defines its \gls{ls}, as defined in Definition~\ref{def:latent_space}.
 
 \begin{definition}{\gls{ls}}{latent_space}
-The \gls{ls} is the set of all representations produced by a layer or model over a dataset.  
+The \gls{ls} is the set of all representations produced by a layer over a dataset.  
 It is shaped by learning and organizes representations according to task-relevant properties.  
 \end{definition}
 
 Under the concept hypothesis, the analysis of the \gls{ls} is assumed to provide access to higher-level abstract structures learned by the model, as illustrated by \ref{fig:latent_space}.
 These structures are referred to as concepts, understood here in a philosophically pragmatic sense.
 In this framing, concepts are not evaluated as true or false ideal entities, but rather as abstract tools whose validity depends on their usefulness for a given task \cite{NEWELL198287}.
-Our definition is given formally in Definition~\ref{def:concept}.
+Our definition is given in Definition~\ref{def:concept}.
 
 \begin{definition}{Concept}{concept}
 A concept is a task-dependent abstraction that captures regularities in the input space relevant for predicting the target output.

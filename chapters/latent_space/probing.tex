@@ -38,7 +38,7 @@ If the classifier achieves performance significantly above chance level, this su
 
 An application of this technique can be found in studies investigating whether \gls{llm} develop internal representations of their environment \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
 In these works, researchers train \gls{llm} to play games such as chess or Othello in a purely textual setting.
-The model is only provided with sequences of moves and information about the actions it can take, all expressed in natural language.
+The model is provided only with sequences of moves and information about the actions it can take, all expressed in textual form.
 The central question is whether the \gls{llm} develops an internal representation of the game state.
 To address this question, the probed concepts correspond to the presence or absence of different game pieces on specific board positions.
 As illustrated in Figure~\ref{fig:probing_illustration}, probes are able to reconstruct the full board state from the model's hidden representations, even though the only available information to the model is a sequence of text.
@@ -48,7 +48,7 @@ To assess whether representations play a causal role in the model’s output, it
 An intervention consists of modifying a \gls{lr} in a controlled manner by activating or deactivating a given concept, and then studying its impact on the model’s output.
 If the resulting change in the model’s output is consistent with the applied perturbation, this suggests that the representation had a causal role.
 
-To this end, we aim to minimally modify the \gls{lr} $h^{l}$ such that the probe prediction for the target concept $c_j$ changes state, while leaving the predictions associated with other concepts unchanged.
+To this end, the \gls{lr} $h^{l}$ is minimally modified such that the probe prediction for the target concept $c_j$ changes state, while the predictions associated with other concepts remain unchanged.
 This goal can be formulated as an optimization problem over the latent activation itself.
 The optimization is performed directly on the representation $h^{l'}$, using gradient-based optimization as introduced in Section~\ref{sec:learning}.
 The solution to this problem is the optimal modified representation $h^{l*}$, defined as:

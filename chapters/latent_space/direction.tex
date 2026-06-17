@@ -40,7 +40,7 @@ If a stable correspondence emerges between the perturbation and its prediction, 
 In this framework, human intervention occurs only a posteriori, to verify whether the discovered directions indeed correspond to interpretable semantic variations.
 
 However, despite these advances, several challenges remain.
-First, it appears that not all concepts encoded by neural networks are linearly identifiable in \gls{ls}.
+It appears that not all concepts encoded by neural networks are linearly identifiable in \gls{ls}.
 In practice, interpretable direction methods typically discover only a few dozen directions per dataset, which intuitively seems insufficient to account for the full diversity of semantic variations that a generative model is capable of producing.
 In addition, \gls{lr} often exhibit a phenomenon known as entanglement, illustrated in Figure~\ref{fig:entanglement_illustration}, where multiple semantic attributes are mixed within the same directions of the representation space.
 Ideally, one would like each semantic factor to vary independently along a specific direction, without affecting other attributes.
@@ -48,3 +48,4 @@ In practice, this is rarely the case: a single direction in \gls{ls} often influ
 This lack of separability indicates that semantic information is not cleanly factored in the representation space, which motivates the search for more structured decompositions.
 
 The limited number of linearly identifiable concepts, combined with the difficulty of isolating independent semantic factors, has motivated a stronger hypothesis about how neural networks organize information internally: the superposition hypothesis.
+In this context, a preferred analytical tool for investigating this hypothesis is the use of autoencoders, which can extract concepts from neural representations.
