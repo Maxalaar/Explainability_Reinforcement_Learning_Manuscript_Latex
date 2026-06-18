@@ -36,7 +36,7 @@ Classical dynamic programming methods rely on the assumption that the environmen
 This requirement implies that the full state space and all transition relationships must be explicitly represented.
 This quickly becomes computationally intractable in realistic problems.
 
-\subsection{Reinforcement learning (1970--2000)}
+\subsection{Emergence of reinforcement learning (1970--2000)}
 
 In order to address this issue, temporal-difference (TD) learning methods were introduced \cite{sutton1988td}.  
 TD learning combines ideas from Monte Carlo methods \cite{citation_mc} and dynamic programming by updating predictions based on other learned estimates, rather than waiting for final outcomes.  
@@ -46,3 +46,16 @@ It can be interpreted as a sample-based approximation of the Bellman equations a
 
 Building on these ideas, Q-learning was introduced, showing that optimal action-value functions can be learned directly from interaction with the environment without requiring a model of its dynamics \cite{watkins1989qlearning,watkins1992qlearning}.  
 This period culminated in the formalization of reinforcement learning as a coherent field, through the publication of a foundational reference work \cite{suttonbarto2018}.
+
+\subsection{Consolidation of reinforcement learning (2000--2013)}
+
+A key limitation of early algorithms such as Q-learning is their reliance on explicit state–action tables. 
+Although these methods remove the need to know the full dynamics of the MDP, they still require storing a value for each possible state–action pair. 
+As a result, the agent must effectively visit and maintain estimates for a potentially enormous number of states in the environment. 
+This requirement becomes infeasible in large-scale MDPs, where the state space is too large to be exhaustively explored or stored in memory.
+
+To address this issue, research shifted toward more general representations of value functions and policies. 
+Instead of maintaining explicit tables, function approximation methods were introduced, allowing these quantities to be represented using parametric models such as linear approximators or perceptron-like architectures \cite{BartoSuttonAnderson1983, tsitsiklis1996analysis}. 
+This change enabled generalization across states, reducing the dependence on exhaustive exploration of the state space.
+
+The introduction of Deep Q-Networks (DQN), which demonstrated that deep neural networks could be used to approximate value functions at scale while maintaining stability. By combining Q-learning with deep neuralnetwor architectures, DQN successfully extended value-based reinforcement learning to high-dimensional input spaces such as raw pixels in Atari games \cite{mnih2013playingatarideepreinforcement}.
