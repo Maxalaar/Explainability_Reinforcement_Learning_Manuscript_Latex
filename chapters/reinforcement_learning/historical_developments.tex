@@ -3,20 +3,21 @@
 Reinforcement learning is today presented as a unified field within artificial intelligence.  
 However, it historically emerged from the gradual convergence of several initially independent research areas.  
 Modern reinforcement learning mainly arises from the meeting of three threads: trial-and-error learning, optimal control, and temporal-difference learning.  
-Each of these threads provided a different perspective on the problem of adaptation, but their combination progressively led to the theoretical and algorithmic framework used today.  
+Each of these threads provided a different perspective on the problem of adaptation, but their combination progressively led to the theoretical framework used today.  
 
-The fundamental intuition behind reinforcement learning is that of trial-and-error learning, historically inspired by the study of animal behavior.  
-The central idea is that an agent can learn without explicit supervision by interacting with its environment and gradually adapting its decisions based on observed consequences.  
-This view dates back to the work of Thorndike at the beginning of the 20th century with the Law of Effect, according to which actions that lead to favorable outcomes tend to be repeated.  
-This approach strongly influenced early thinking in artificial intelligence and introduced the modern notions of an agent, interaction with the environment, and learning from a reward signal.  
-These early approaches remain essentially descriptive and do not yet provide a sufficiently general mathematical framework to rigorously formalize the decision-making process and its optimization.  
+The fundamental intuition behind reinforcement learning is that of trial-and-error learning, historically inspired by the study of animal behavior.
+The central idea is that an agent can learn without explicit supervision by interacting with its environment and gradually adapting its decisions based on observed consequences.
+This view dates back to the beginning of the 20th century with the Law of Effect \cite{thorndike1911law}, according to which actions that lead to favorable outcomes tend to be repeated.
+This approach strongly influenced early thinking in artificial intelligence and introduced the modern notions of an agent, interaction with the environment, and learning from a reward signal.
+This idea appears in the speculation that a machine seeking to maximize a reward function could be guided by a pleasure–pain system \cite{turing1948}.
+These early approaches remain essentially descriptive and do not yet provide a sufficiently general mathematical framework to rigorously formalize decision-making and its optimization.
 
 The second thread comes from optimal control.  
 In this field of mathematics, the goal is to determine a sequence of actions that maximizes a performance function over time.  
-In the 1950s, Richard Bellman introduced dynamic programming, a mathematical formulation of sequential decision-making aimed at solving this type of problem.  
+In the 1950s, Richard Bellman introduced dynamic programming \cite{bellman1957dp}, a mathematical formulation of sequential decision-making aimed at solving this type of problem.  
 This approach relies on a recursive decomposition of the problem, allowing the quality of future decisions to be evaluated in order to construct an optimal policy.  
 
-This line of work gradually led to the development of Markov Decision Processes (MDPs) as a standard framework for modelling sequential decision-making under uncertainty.  
+This line of work gradually led to the development of Markov Decision Processes (MDPs) as a standard framework for modelling sequential decision-making under uncertainty \cite{howard1960mdp}.  
 MDPs provide a mathematical description of systems in which decisions influence future states and are associated with numerical rewards. 
 A policy then describes the agent’s behavior by mapping each state to an action, or to a distribution over actions, with the objective of maximizing cumulative reward.  
 The MDP framework remains today the standard mathematical formulation used to model reinforcement learning problems.
@@ -25,11 +26,11 @@ Methods derived from dynamic programming assume that the environment dynamics ar
 This assumption significantly limits their direct applicability to many real-world problems, as it requires an explicit representation of the transition model, often in the form of a complete state-transition graph.  
 Such a representation quickly becomes infeasible in large-scale or continuous environments.  
 
-The third thread is that of temporal-difference learning.
-Its central idea is to learn to evaluate states by gradually refining predictions over time using new experience.
+The third thread is that of temporal-difference learning.  
+Its central idea is to learn to evaluate states by gradually refining predictions over time using new experience \cite{sutton1988td}.  
 Unlike classical dynamic programming, which relies on explicit knowledge of the environment’s transition model, temporal-difference methods enable incremental learning directly from experience.  
 They thus provide an approximation of Bellman equations without requiring full access to the system dynamics.  
-This family of methods constitutes a fundamental basis of modern reinforcement learning and has notably led to actor–critic architectures as well as many learning-based control methods.  
+This family of methods constitutes a fundamental basis of modern reinforcement learning and has notably led to actor–critic architectures \cite{barto1983actorcritic} as well as many learning-based control methods.  
 
-The fusion of these three threads became fully explicit in the late 1980s with the introduction of algorithms such as Q-learning.  
+The fusion of these three threads became fully explicit in the late 1980s with the introduction of algorithms such as Q-learning \cite{watkins1989qlearning,watkins1992qlearning}.  
 These works demonstrated that it is possible to learn complex behaviors solely through interaction with the environment.  
