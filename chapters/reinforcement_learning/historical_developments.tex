@@ -1,36 +1,48 @@
-\section{Historical Developments}\label{sec:historical_developments}
+\section{Historical Developments}
+\label{sec:historical_developments}
 
-Reinforcement learning is today presented as a unified field within artificial intelligence.  
-However, it historically emerged from the gradual convergence of several initially independent research areas.  
-Modern reinforcement learning mainly arises from the meeting of three threads: trial-and-error learning, optimal control, and temporal-difference learning.  
-Each of these threads provided a different perspective on the problem of adaptation, but their combination progressively led to the theoretical framework used today.  
+Reinforcement learning is today presented as a major field within artificial intelligence.  
+However, it originates from several research traditions that progressively converged toward a common framework.  
+Its development can be understood as a chronological evolution from behavioral theories of learning, to mathematical optimal control, and finally to data-driven methods.  
 
-The fundamental intuition behind reinforcement learning is that of trial-and-error learning, historically inspired by the study of animal behavior.
-The central idea is that an agent can learn without explicit supervision by interacting with its environment and gradually adapting its decisions based on observed consequences.
-This view dates back to the beginning of the 20th century with the Law of Effect \cite{thorndike1911law}, according to which actions that lead to favorable outcomes tend to be repeated.
-This approach strongly influenced early thinking in artificial intelligence and introduced the modern notions of an agent, interaction with the environment, and learning from a reward signal.
-This idea appears in the speculation that a machine seeking to maximize a reward function could be guided by a pleasure–pain system \cite{turing1948}.
-These early approaches remain essentially descriptive and do not yet provide a sufficiently general mathematical framework to rigorously formalize decision-making and its optimization.
+In this section, we outline the main stages in the emergence of this field, highlighting the key ideas and milestones that shaped its evolution.
 
-The second thread comes from optimal control.  
-In this field of mathematics, the goal is to determine a sequence of actions that maximizes a performance function over time.  
-In the 1950s, Richard Bellman introduced dynamic programming \cite{bellman1957dp}, a mathematical formulation of sequential decision-making aimed at solving this type of problem.  
-This approach relies on a recursive decomposition of the problem, allowing the quality of future decisions to be evaluated in order to construct an optimal policy.  
+\subsection{Behavioral foundations (1900--1950)}
 
-This line of work gradually led to the development of Markov Decision Processes (MDPs) as a standard framework for modelling sequential decision-making under uncertainty \cite{howard1960mdp}.  
-MDPs provide a mathematical description of systems in which decisions influence future states and are associated with numerical rewards. 
-A policy then describes the agent’s behavior by mapping each state to an action, or to a distribution over actions, with the objective of maximizing cumulative reward.  
-The MDP framework remains today the standard mathematical formulation used to model reinforcement learning problems.
+The earliest roots of reinforcement learning can be traced back to psychological studies of learning behavior.  
+The foundational idea is the principle that actions followed by satisfying outcomes become more likely to be repeated, while those followed by negative outcomes tend to be avoided.  
+This establishes a basic mechanism of learning through interaction with consequences \cite{thorndike1911law}.  
 
-Methods derived from dynamic programming assume that the environment dynamics are known in advance.  
-This assumption significantly limits their direct applicability to many real-world problems, as it requires an explicit representation of the transition model, often in the form of a complete state-transition graph.  
-Such a representation quickly becomes infeasible in large-scale or continuous environments.  
+This perspective was later developed within behaviorism.  
+In this school of psychology, reinforcement and punishment are used to gradually shape behavior through repeated interaction with the environment \cite{skinner1938}.  
+The term "reinforcement" in the context of learning comes from this school of thought.
+This perspective in behaviorism influenced early thinking in computing and artificial intelligence.  
+It led to the suggestion that learning principles observed in living organisms could be transferred to artificial systems.  
+Machines were therefore envisioned as potentially learning through reward-like mechanisms, guided by evaluative feedback signals resembling a “pleasure–pain system” \cite{turing1948}.  
 
-The third thread is that of temporal-difference learning.  
-Its central idea is to learn to evaluate states by gradually refining predictions over time using new experience \cite{sutton1988td}.  
-Unlike classical dynamic programming, which relies on explicit knowledge of the environment’s transition model, temporal-difference methods enable incremental learning directly from experience.  
-They thus provide an approximation of Bellman equations without requiring full access to the system dynamics.  
-This family of methods constitutes a fundamental basis of modern reinforcement learning and has notably led to actor–critic architectures \cite{barto1983actorcritic} as well as many learning-based control methods.  
+Although these studies did not involve formal mathematical models, they introduced key ideas that later became central to reinforcement learning, including trial-and-error learning and adaptation driven by environmental feedback.
 
-The fusion of these three threads became fully explicit in the late 1980s with the introduction of algorithms such as Q-learning \cite{watkins1989qlearning,watkins1992qlearning}.  
-These works demonstrated that it is possible to learn complex behaviors solely through interaction with the environment.  
+\subsection{Sequential decision-making (1950--1970)}
+
+A second major foundation emerged from the field of optimal control theory.  
+This field studies how to determine sequences of decisions that optimize a cumulative performance criterion over time.  
+The problem is to choose actions over time in order to maximize long-term performance rather than immediate reward.  
+A breakthrough was introduced through dynamic programming \cite{bellman1957dp}, which provided a recursive decomposition of sequential decision problems via the principle of optimality.  
+
+This framework led to the formalization of Markov Decision Processes (MDPs), which provide a mathematical model for sequential decision-making under uncertainty \cite{howard1960mdp}.  
+MDPs explicitly combine states, actions, rewards, and environment dynamics into a unified stochastic process, where the goal is to maximize expected cumulative reward over time.
+
+Classical dynamic programming methods rely on the assumption that the environment dynamics are fully known.  
+This requirement implies that the full state space and all transition relationships must be explicitly represented.
+This quickly becomes computationally intractable in realistic problems.
+
+\subsection{Reinforcement learning (1970--2000)}
+
+In order to address this issue, temporal-difference (TD) learning methods were introduced \cite{sutton1988td}.  
+TD learning combines ideas from Monte Carlo methods \cite{citation_mc} and dynamic programming by updating predictions based on other learned estimates, rather than waiting for final outcomes.  
+
+This mechanism enables incremental learning directly from experience without requiring a complete model of the environment.  
+It can be interpreted as a sample-based approximation of the Bellman equations and forms a key building block of reinforcement learning algorithms.  
+
+Building on these ideas, Q-learning was introduced, showing that optimal action-value functions can be learned directly from interaction with the environment without requiring a model of its dynamics \cite{watkins1989qlearning,watkins1992qlearning}.  
+This period culminated in the formalization of reinforcement learning as a coherent field, through the publication of a foundational reference work \cite{suttonbarto1998}.
