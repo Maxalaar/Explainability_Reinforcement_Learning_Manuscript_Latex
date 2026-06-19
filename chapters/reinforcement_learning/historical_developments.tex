@@ -59,3 +59,20 @@ Instead of maintaining explicit tables, function approximation methods were intr
 This change enabled generalization across states, reducing the dependence on exhaustive exploration of the state space.
 
 The introduction of Deep Q-Networks (DQN), which demonstrated that deep neural networks could be used to approximate value functions at scale while maintaining stability. By combining Q-learning with deep neuralnetwor architectures, DQN successfully extended value-based reinforcement learning to high-dimensional input spaces such as raw pixels in Atari games \cite{mnih2013playingatarideepreinforcement}.
+
+\subsection{Deep reinforcement learning (2013--2026)}
+
+The introduction of deep neural networks into reinforcement learning marked a major turning point in the field.  
+Building on this idea, a series of algorithms significantly improved both performance and scalability.
+Deep Deterministic Policy Gradient (DDPG) extended actor–critic methods to continuous action spaces.  
+Proximal Policy Optimization (PPO) later became a standard algorithm in reinforcement learning due to its simplicity, stability, and ability to perform well in both continuous and discrete action spaces \cite{schulman2017ppo}.
+
+  
+Notably, AlphaGo demonstrated that the combination of deep neural networks, reinforcement learning, and tree search could reach superhuman performance in the game of Go \cite{silver2016alphago}.  
+This success was later extended to even more complex real-time strategy environments such as StarCraft II, where agents must handle long-term planning, partial observability, and large action spaces \cite{vinyals2019alphastar}.  
+Similarly, in Dota 2, large-scale multi-agent reinforcement learning systems such as OpenAI Five showed that self-play combined with deep policy optimization can achieve professional-level performance in highly dynamic and stochastic environments \cite{berner2019dota}.
+
+More recently, reinforcement learning has expanded beyond traditional control and game environments.  
+With the emergence of increasingly agentic views of large language models, it has become possible to train these models to perform specific tasks using reinforcement learning-based techniques.  
+In particular, reinforcement learning from human feedback (RLHF) has become a key method for aligning large language models with human preferences by combining reward modeling and policy optimization at scale \cite{christiano2017deep, ouyang2022instructgpt}.  
+Similarly, DeepSeekMath illustrates how reinforcement learning can enhance mathematical reasoning abilities in large language models \cite{shao2024deepseekmathpushinglimitsmathematical}.
