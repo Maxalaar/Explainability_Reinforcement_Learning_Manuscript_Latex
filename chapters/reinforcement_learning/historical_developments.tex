@@ -3,19 +3,18 @@
 
 Reinforcement learning is today presented as a major field within artificial intelligence.  
 However, it originates from several research traditions that progressively converged toward a common framework.  
-Its development can be understood as a chronological evolution from behavioral theories of learning, to mathematical optimal control, and finally to data-driven methods.  
-
 In this section, we outline the main stages in the emergence of this field, highlighting the key ideas and milestones that shaped its evolution.
 
 \subsection{Behavioral foundations (1900--1950)}
 
-The earliest roots of reinforcement learning can be traced back to psychological studies of learning behavior.  
-The foundational idea is the principle that actions followed by satisfying outcomes become more likely to be repeated, while those followed by negative outcomes tend to be avoided.  
-This establishes a basic mechanism of learning through interaction with consequences \cite{thorndike1911law}.  
+The origins of reinforcement learning can be traced back to 20th-century animal psychology studies.
+These studies aimed to understand how behaviors are formed and modified in animals.
+The central idea emerging from this work is that learning is driven by the consequences of actions.
+Behaviors followed by positive outcomes are more likely to be reinforced and repeated, whereas those associated with negative outcomes tend to gradually decrease in frequency \cite{thorndike1911law}.
 
 This perspective was later developed within behaviorism.  
 In this school of psychology, reinforcement and punishment are used to gradually shape behavior through repeated interaction with the environment \cite{skinner2019behavior}.  
-The term "reinforcement" in the context of learning comes from this school of thought.
+The term “reinforcement” in the context of learning comes from this school of thought.
 This perspective in behaviorism influenced early thinking in computing and artificial intelligence.  
 It led to the suggestion that learning principles observed in living organisms could be transferred to artificial systems.  
 Machines were therefore envisioned as potentially learning through reward-like mechanisms, guided by evaluative feedback signals resembling a “pleasure–pain system” \cite{turing2004intelligent}.  
@@ -24,28 +23,35 @@ Although these studies did not involve formal mathematical models, they introduc
 
 \subsection{Sequential decision-making (1950--1970)}
 
-A second major foundation emerged from the field of optimal control theory.  
-This field studies how to determine sequences of decisions that optimize a cumulative performance criterion over time.  
-The problem is to choose actions over time in order to maximize long-term performance rather than immediate reward.  
-A breakthrough was introduced through dynamic programming \cite{bellman1957dynamic}, which provided a recursive decomposition of sequential decision problems via the principle of optimality.  
+A second key foundation of reinforcement learning comes from optimal control theory.
+This field studies how to determine sequences of decisions that optimize a cumulative performance criterion over time.
+In this context, an agent is the decision-making entity that interacts with the environment by selecting actions.
+A policy is the function that maps an observed state to the action chosen by the agent.
+In this field, the objective is to find an optimal policy, in the sense that it maximizes the expected cumulative reward over time.
 
-This framework led to the formalization of Markov Decision Processes (MDPs), which provide a mathematical model for sequential decision-making under uncertainty \cite{howard1960mdp}.  
-MDPs explicitly combine states, actions, rewards, and environment dynamics into a unified stochastic process, where the goal is to maximize expected cumulative reward over time.
+This framework led to the formalization of Markov Decision Processes (MDPs), which provide a mathematical model for sequential decision-making under uncertainty \cite{howard1960mdp}.
+MDPs are defined by four main components: states, actions, rewards, and transition dynamics.
+A state represents the current situation of the environment at a given time.
+An action is a choice available to the policy in a given state.
+A reward is a scalar signal that provides feedback after each action.
+Transition dynamics describe how the environment evolves from one state to another.
 
-Classical dynamic programming methods rely on the assumption that the environment dynamics are fully known.  
-This requirement implies that the full state space and all transition relationships must be explicitly represented.
-This quickly becomes computationally intractable in realistic problems.
+One of the earliest approaches in this framework is dynamic programming \cite{bellman1957dynamic}.
+This method relies on a recursive decomposition of sequential decision problems via the principle of optimality.
+By solving each subproblem corresponding to a state, dynamic programming computes the optimal value function and, from it, derives the optimal policy.
+However, classical dynamic programming methods rely on the assumption that the environment dynamics are fully known.
+This means that the full state space and all transition relationships must be explicitly modeled, which quickly becomes computationally intractable in realistic problems.
 
 \subsection{Emergence of reinforcement learning (1970--2000)}
 
 In order to address this issue, temporal-difference (TD) learning methods were introduced \cite{sutton1988td}.  
-TD learning combines ideas from Monte Carlo methods \cite{citation_mc} and dynamic programming by updating predictions based on other learned estimates, rather than waiting for final outcomes.  
+TD learning combines ideas from Monte Carlo methods and dynamic programming by updating predictions based on other learned estimates, rather than waiting for final outcomes.  
 
 This mechanism enables incremental learning directly from experience without requiring a complete model of the environment.  
 It can be interpreted as a sample-based approximation of the Bellman equations and forms a key building block of reinforcement learning algorithms.  
 
-Building on these ideas, Q-learning was introduced, showing that optimal action-value functions can be learned directly from interaction with the environment without requiring a model of its dynamics \cite{watkins1989qlearning,watkins1992qlearning}.  
-This period culminated in the formalization of reinforcement learning as a coherent field, through the publication of a foundational reference work \cite{suttonbarto2018}.
+Building on these new ideas, Q-learning was introduced, showing that optimal action-value functions can be learned directly from interaction with the environment without requiring a model of its dynamics \cite{watkins1989qlearning,watkins1992qlearning}.  
+The publication of the foundational reference work \cite{suttonbarto2018} contributed to the formalization of reinforcement learning as a coherent field.
 
 \subsection{Consolidation of reinforcement learning (2000--2013)}
 
@@ -58,21 +64,22 @@ To address this issue, research shifted toward more general representations of v
 Instead of maintaining explicit tables, function approximation methods were introduced, allowing these quantities to be represented using parametric models such as linear approximators or perceptron-like architectures \cite{BartoSuttonAnderson1983, tsitsiklis1996analysis}. 
 This change enabled generalization across states, reducing the dependence on exhaustive exploration of the state space.
 
-The introduction of Deep Q-Networks (DQN), which demonstrated that deep neural networks could be used to approximate value functions at scale while maintaining stability. By combining Q-learning with deep neuralnetwor architectures, DQN successfully extended value-based reinforcement learning to high-dimensional input spaces such as raw pixels in Atari games \cite{mnih2013playingatarideepreinforcement}.
+The introduction of Deep Q-Networks (DQN), which demonstrated that deep \gls{nn} could be used to approximate value functions at scale while maintaining stability \cite{mnih2013playingatarideepreinforcement}.
+By combining Q-learning with deep \gls{nn} architectures, DQN successfully extended value-based reinforcement learning to high-dimensional input spaces such as raw pixels in Atari games.
 
 \subsection{Deep reinforcement learning (2013--2026)}
 
-The introduction of deep neural networks into reinforcement learning marked a major turning point in the field.  
-Building on this idea, a series of algorithms significantly improved both performance and scalability.
+The introduction of deep \gls{nn} into reinforcement learning marked a major turning point in the field.  
+Building on this idea, a series of algorithms significantly improved scalability.
 Deep Deterministic Policy Gradient (DDPG) extended actor–critic methods to continuous action spaces \cite{lillicrap2019continuouscontroldeepreinforcement}.  
-Proximal Policy Optimization (PPO) later became a standard algorithm in reinforcement learning due to its simplicity, stability, and ability to perform well in both continuous and discrete action spaces \cite{schulman2017proximalpolicyoptimizationalgorithms}.
+Proximal Policy Optimization (PPO) later became a standard algorithm in reinforcement learning due to its simplicity, stability, and ability to perform in both continuous and discrete action spaces \cite{schulman2017proximalpolicyoptimizationalgorithms}.
 
-  
-Notably, AlphaGo demonstrated that the combination of deep neural networks, reinforcement learning, and tree search could reach superhuman performance in the game of Go \cite{silver2017masteringchessshogiselfplay}.  
+These advances established a practical foundation for large-scale policy optimization.
+Notably, AlphaZero demonstrated that the combination of deep \gls{nn}, reinforcement learning, and tree search could reach superhuman performance in the game of Go \cite{silver2017masteringchessshogiselfplay}.  
 This success was later extended to even more complex real-time strategy environments such as StarCraft II, where agents must handle long-term planning, partial observability, and large action spaces \cite{samvelyan2019starcraftmultiagentchallenge}.  
 Similarly, in Dota 2, large-scale multi-agent reinforcement learning systems such as OpenAI Five showed that self-play combined with deep policy optimization can achieve professional-level performance in highly dynamic and stochastic environments \cite{openai2019dota2largescale}.
 
-More recently, reinforcement learning has expanded beyond traditional control and game environments.  
+More recently, reinforcement learning has expanded beyond its traditional application domains, such as robotics, video games, and combinatorial optimization. 
 With the emergence of increasingly agentic views of large language models, it has become possible to train these models to perform specific tasks using reinforcement learning-based techniques.  
-In particular, reinforcement learning from human feedback (RLHF) has become a key method for aligning large language models with human preferences by combining reward modeling and policy optimization at scale \cite{ouyang2022traininglanguagemodelsfollow}.  
+In particular, reinforcement learning from human feedback (RLHF) has become a key method for aligning large language models with human preferences by combining reward modeling and policy optimization \cite{ouyang2022traininglanguagemodelsfollow}.  
 Similarly, DeepSeekMath illustrates how reinforcement learning can enhance mathematical reasoning abilities in large language models \cite{shao2024deepseekmathpushinglimitsmathematical}.
