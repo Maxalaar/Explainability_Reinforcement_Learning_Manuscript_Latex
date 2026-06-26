@@ -1,36 +1,49 @@
 \section{Objective}
 \label{sec:objective}
 
-% MDP
-Now that the principal developments that have shaped the field of reinforcement learning have been described, it remains to formally define its core objective.
-To this end, this section is devoted to the formulation of a Markov Decision Process (MDP) and to the detailed description of its main components.
+Now that the main developments shaping reinforcement learning have been outlined, we turn to the formal definition of its objective.  
+In this section, we present how reinforcement learning is mathematically formalized.  
 
-Before proceeding with a more in-depth definition of what constitutes an MDP, it is useful to clarify the scope of the problems considered in this manuscript.
-We choose this scope for simplicity of exposition, though interested readers may refer to the literature for a more detailed treatment of this topic.
+To this end, we first define how problems are modeled using Markov Decision Processes (MDPs) in Subsection 1.  
+We then introduce the notion of policy, which formalizes the agent’s behavior, and describe how its interaction with the environment is characterized through trajectories and episodes in Subsection 2.  
+Finally, we present how policies are evaluated using value functions in Subsection 3.
 
-First, we restrict our attention to finite-horizon MDPs.
-In the finite-horizon setting, the number of interactions between the agent and the environment is finite, which means that there is a clear beginning and a clear end.
+\subsection{Markov Decision Processes}
 
-Second, we adopt the Partially Observable Markov Decision Process (POMDP) framework.
-This choice is motivated by practical considerations: in many real-world applications, the environment cannot be assumed to be strictly Markovian, and convergence guarantees are often less critical than empirical performance.
-In practice, we do not concern ourselves with whether the environment is Markovian or not.
-In the remainder of this manuscript, when we refer to MDPs, we are in fact referring to POMDPs, although we retain the MDP terminology for simplicity.
+In essence, reinforcement learning aims to build a system that makes sequential decisions in order to maximize a cumulative reward signal over the long term.
+This learning framework is grounded in the agent paradigm, where the decision-making entity is referred to as the agent.
+The agent is characterized by its ability to perceive its environment, process the information it receives, and, in turn, act upon the environment to influence future outcomes.
+To formally specify the agent’s task, we model it as a Markov Decision Process (MDP).  
 
-Third, we only consider the single-agent case, which is already sufficiently complex to present.
+Before providing a more detailed definition of MDPs, it is useful to clarify the scope of the problems considered in this manuscript.  
+The class of problems that can be expressed as MDPs is extremely broad, and the agent-based paradigm offers a high degree of flexibility.  
+We restrict our analysis to the following configuration:  
 
-Now that the scope has been defined, we can proceed to the formal definition itself.
-Formally, a POMDP is defined by the tuple \((\mathcal{S}, \mathcal{A}, \mathcal{O}, \mathcal{R}, p)\):
+\begin{enumerate}
+    \item We consider the single-agent learning setting.  
+    This means only one agent is actively learning, while the others agents are treated as part of the environment dynamics.  
 
+    \item We focus on finite-horizon MDPs, where interactions between the agent and the environment occur over episodes of fixed length, with a clear beginning and a clear termination.  
+    The number of interaction steps may vary, but it is always finite.  
+
+    \item We adopt the partially observable framework, where the agent does not have direct access to the true state of the system, but instead relies on limited observations that provide only partial information about the environment.  
+\end{enumerate}
+
+The resulting framework can be formally described as a single-agent finite-horizon partially observable markov decision process.  
+However, for the sake of simplicity, we will refer to this setting as an “MDP” throughout this manuscript, unless otherwise specified.  
+
+Now that the scope of the considered problems has been defined, we formally introduce the model.  
+A MDP is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, p)\):  
 \begin{itemize}
     \item \textbf{\(\mathcal{S}\)}: The set of states, representing all possible configurations of the environment.
     We denote by \(s^i \in \mathcal{S}\) the initial states, i.e., those in which the agent may begin its interaction, and by \(s^t \in \mathcal{S}\) the terminal states, where the interaction ends.
-
-    \item \textbf{\(\mathcal{A}\)}: The set of actions, that the agent may execute.
-
-    \item \textbf{\(\mathcal{O}\)}: The set of observations, that the agent can perceive from the environment.
+    
+    \item \textbf{\(\mathcal{O}\)}: The set of observations that the agent can perceive from the environment.
     Unlike the true state \(s \in \mathcal{S}\), which is hidden from the agent, the observation \(o \in \mathcal{O}\) provides partial information about the current state.
 
-    \item \textbf{\(\mathcal{R}\)}: The set of rewards, that the agent can receive from the environment.
+    \item \textbf{\(\mathcal{A}\)}: The set of actions that the agent may execute.
+
+    \item \textbf{\(\mathcal{R}\)}: The set of rewards that the agent can receive from the environment.
 
     \item \textbf{\(p\)}: The transition function, which defines the environment's dynamics.
     It is a conditional probability distribution over the next state, reward, and observation, given the current state and action.
@@ -38,64 +51,69 @@ Formally, a POMDP is defined by the tuple \((\mathcal{S}, \mathcal{A}, \mathcal{
     This function specifies the joint probability of transitioning to state \(s'\), receiving reward \(r\), and perceiving observation \(o\), after executing action \(a\) in state \(s\).
 \end{itemize}
 
-In the context of an MDP, the agent is defined by three characteristics: its observation capacity, its decision-making capacity, and its action capacity.
-The observations perceived by the agent correspond to the set \(\mathcal{O}\) of the MDP.
-The possible actions of the agent in the environment are represented by the set \(\mathcal{A}\).
-Its decision-making capacity is represented by the policy function, denoted \(\pi : \mathcal{O} \times \mathcal{A} \to [0,1]\).
-This function is the support of the agent's reasoning capacity.
-It is defined as the probability of selecting an action given an observation: \(\pi(a \mid o)\), for \(a \in \mathcal{A}\) and \(o \in \mathcal{O}\).
+\subsection{Policy}
+
+In a Markov Decision Process, the agent’s decision-making capability is modeled by a policy function.  
+The policy defines the mapping between observations and actions, and represents the mechanism through which the agent aims to maximize the cumulative reward over time.  
+
+It is defined as a probability distribution over actions conditioned on observations:
+\(\pi(a \mid o)\), for \(a \in \mathcal{A}\) and \(o \in \mathcal{O}\).  
 Since it is a probability distribution, \(\pi\) must satisfy the following constraint:
 \[
 \sum_{a \in \mathcal{A}} \pi(a \mid o) = 1, \quad \forall o \in \mathcal{O}.
 \]
 
-Now that the formalization of the MDP has been established, we need to define the objective.
-To do so, we must introduce two new notions: trajectory and return.
+Now that both the MDP and the policy have been defined, we can characterize the interaction between them.  
+A sequence of consecutive interactions between an environment and a policy is called a trajectory.  
 
-A trajectory in the context of reinforcement learning is a sequence of interactions between the policy and the environment, which is represented by the MDP.
-In practice, the MDP provides an observation to the policy.
-From this observation, the policy generates a probability distribution over actions, and an action is sampled accordingly.
-This action is then fed into the MDP, which transitions to a new state, producing a new observation, and so on.
-A sequence of such interactions is called a trajectory.
-For example, a trajectory \(\tau\) of length \(T\) can be represented as:
+A trajectory is generated through the repeated interaction between the policy and the environment, following the sequence below:
+\begin{enumerate}
+    \item The environment provides an observation to the policy.
+    
+    \item Based on this observation, the policy outputs a probability distribution over actions.
+    An action is sampled from this distribution.
+
+    \item The action is executed in the environment.
+    The environment transitions to a new state and returns a new observation and a reward.
+\end{enumerate}
+
+It is important to clearly distinguish between a trajectory as a random variable and its realizations.  
+We denote by \(\boldsymbol{\tau}\) the random trajectory.  
+For a given initial state \(s_0\), \(\boldsymbol{\tau}\) is a probability distribution over the set of all possible trajectories induced by the policy and the environment dynamics conditioned on \(s_0\).  
+
+A realization of this random variable, obtained by interacting with the environment, is denoted by \(\tau\).  
+In other words, \(\tau\) is a sample drawn from this conditional distribution:
+\(\tau \sim \boldsymbol{\tau} \mid s_0.\)
+For clarity, we use bold notation for the random variable and standard notation for its realizations.  
+A realized trajectory of length \(T\) can be written as:
 \[
-\tau = s_1, o_1, a_1, r_1, s_2, o_2, a_2, r_2, \ldots, s_{T-1}, o_{T-1}, a_{T-1}, r_{T-1}, s_T,
-\]
-where \(s_1^i \in \mathcal{S}\) denotes an initial state and \(s_T^t \in \mathcal{S}\) denotes a terminal state.
-
-When a trajectory starts from an initial state and ends at a terminal state, it is called an episode, denoted \(e\):
-\[
-e = s_1^i, o_1, a_1, r_1, s_2, o_2, a_2, r_2, \ldots, s_{T-1}, o_{T-1}, a_{T-1}, r_{T-1}, s_T^t,
-\]
-where \(s_1^i \in \mathcal{S}\) is the initial state and \(s_T^t \in \mathcal{S}\) is the terminal state.
-
-Now that the concepts of trajectory and episode have been established, we need to introduce the notion of return in reinforcement learning.
-The return of a trajectory \(\tau\) is defined as the cumulative sum of rewards along that trajectory:
-\[
-g(\tau) = \sum_{t=1}^{T} r_t = r_1 + r_2 + \cdots + r_T.
-\]
-
-Since the trajectory \(\tau\) is generated by the policy \(\pi\) and the environment dynamics \(p\), it is a random variable.
-We can therefore define the expected return conditioned on an observation and an action.
-
-To formalize the objective, we introduce the action-value function \(Q^\pi(o, a)\), which represents the expected return when starting from observation \(o\), taking action \(a\), and thereafter following policy \(\pi\):
-\[
-Q^\pi(o, a) = \mathbb{E}\left[g(\tau) \mid o, a, \pi\right].
+\tau = (s_1, o_1, a_1, r_1, s_2, o_2, a_2, r_2, \ldots, s_T).
 \]
 
-The goal of reinforcement learning is to find an optimal policy \(\pi^*\) that maximizes this expected return for every observation.
-Since \(\pi\) is a probability distribution over actions given an observation, i.e., \(\pi(a \mid o)\), the optimal policy is the one that assigns probability 1 to the action that maximizes \(Q^\pi\).
-Formally, the optimal deterministic policy is defined as:
+There exist two special types of trajectories.
+First, a trajectory that terminates in a terminal state is called a terminal trajectory.  
+It is denoted by \(\tau_t \sim \boldsymbol{\tau}_t \mid s_0\), where \(\boldsymbol{\tau}_t\) denotes the corresponding distribution over terminal trajectories conditioned on the initial state \(s_0\).
+Second, a trajectory that starts from an initial state and is considered as a complete interaction sequence is called an episode.  
+It is denoted by \(\tau_e \sim \boldsymbol{\tau}_e\), where \(\boldsymbol{\tau}_e\) represents the distribution over episodic trajectories.
+
+\subsection{Falues fonctions}
+
+Our objective is to learn a policy \(\pi\) that maximizes the cumulative reward within the MDP.  
+
+To evaluate this objective, we introduce the notion of return.  
+The return of a trajectory, denoted by \(g(\tau)\), is defined as the sum of rewards collected along the trajectory:
 \[
-\pi^*(a \mid o) = 
-\begin{cases}
-1, & \text{if } a = \arg\max_{a' \in \mathcal{A}} Q^*(o, a'), \\
-0, & \text{otherwise},
-\end{cases}
-\]
-where \(Q^*\) denotes the optimal action-value function:
-\[
-Q^*(o, a) = \max_{\pi} Q^\pi(o, a).
+g(\tau) = r_1 + r_2 + \cdots + r_T = \sum_{i=1}^{T} r_i
 \]
 
-In other words, the optimal policy \(\pi^*\) chooses, for each observation \(o \in \mathcal{O}\), the action that maximizes the expected cumulative return.
+In reinforcement learning, it is possible to define functions that estimate the expected return given the current state of the system.  
+These functions are called value functions.  
+
+The first one we introduce is the state-value function \(V\), defined as follows:
+\[
+V(s_0) = \mathbb{E}\left[g(\tau_t)\right], \quad \text{with } \tau_t \sim \boldsymbol{\tau}_t \mid s_0.
+\]
+
+Quand on decompose comment est calculers cette fonction on se rand coup qu'il saggie du fonction recusive
+
+V(s_0) = \mathbb{E}\left[g(\tau_t)\right]
