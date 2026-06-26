@@ -92,7 +92,7 @@ A trajectory is generated through the repeated interaction between the policy an
 
 A trajectory \(t\) of length \(T\) can be written as:
 \[
-t = (s_1, o_1, a_1, r_1, s_2, o_2, a_2, r_2, \ldots, s_T).
+t = (s_1, o_1, a_1, r_1, s_2, o_2, a_2, r_2, \ldots, s_T, o_T, a_T, r_T).
 \]
 
 It is important to clearly distinguish between a trajectory distribution and its realizations.  
@@ -117,5 +117,5 @@ From the notion of return, we can define functions that estimate the expected re
 These functions are called value functions.  
 The first one we introduce is the state-value function \(V\), defined as follows:
 \[
-V(s_0) = \mathbb{E}\left[g(t)\right], \quad \text{with } t \sim \tau_t(s_0, p, \pi).
+V(s) = \mathbb{E}\left[g(t)\right], \quad \text{with } t \sim \tau_t(s, p, \pi).
 \]
