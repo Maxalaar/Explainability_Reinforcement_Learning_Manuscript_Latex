@@ -2,32 +2,38 @@
 \label{sec:objective}
 
 Now that the main developments shaping reinforcement learning have been outlined, we turn to the formal definition of its objective.  
-In this section, we present how reinforcement learning is mathematically formalized.  
+In essence, reinforcement learning aims to build a system that makes sequential decisions in order to maximize a cumulative reward signal over the long term.  
+The purpose of this section is to translate this intuitive goal into a rigorous mathematical framework.
 
-To this end, we first define how problems are modeled using Markov Decision Processes (MDPs) in Subsection 1.  
-We then introduce the notion of policy, which formalizes the agent’s behavior, and describe how its interaction with the environment is characterized through trajectories and episodes in Subsection 2.  
-Finally, we present how policies are evaluated using value functions in Subsection 3.
+To this end, we proceed step by step:
+\begin{enumerate}
+    \item We define how problems are modeled using Markov Decision Processes in Subsection~\ref{subsec:markov_decision_processes}.
+    \item We introduce the notion of policy, which formalizes the agent's behavior, in Subsection~\ref{subsec:policy}.
+    \item We describe how the interaction between the agent and the environment is characterized through trajectories in Subsection~\ref{subsec:trajectory}.
+    \item We present how policies are evaluated using value functions in Subsection~\ref{subsec:value_functions}.
+    \item We define the ultimate objective of reinforcement learning: the optimal policy, in Subsection~\ref{subsec:optimal_policy}.
+\end{enumerate}
 
 \subsection{Markov Decision Processes}
+\label{subsec:markov_decision_processes}
 
-In essence, reinforcement learning aims to build a system that makes sequential decisions in order to maximize a cumulative reward signal over the long term.
-This learning framework is grounded in the agent paradigm, where the decision-making entity is referred to as the agent.
+The RL framework is grounded in the agent paradigm, where the decision-making entity is referred to as the agent.
 The agent is characterized by its ability to perceive its environment, process the information it receives, and, in turn, act upon the environment to influence future outcomes.
-To formally specify the agent’s task, we model it as a Markov Decision Process (MDP).  
+To formally specify the agent's task as well as its capacity to perceive and act, we model it as a Markov Decision Process (MDP).
 
 Before providing a more detailed definition, it is useful to clarify the scope of the MDP problems considered in this manuscript.   
 We restrict our analysis to the following configuration:  
 
-\begin{enumerate}
+\begin{itemize}
     \item We consider the single-agent learning setting.  
-    While any other agents present in the environment are treated as part of the environment dynamics.  
+    If any other agents are present in the environment, they are treated as part of the environment dynamics.
 
     \item We focus on finite-horizon MDPs.  
     Each interaction sequence has a defined beginning and a defined end.  
     Between these two points, the number of interaction steps may vary depending on the situation, but it always remains finite.  
 
     \item We adopt the partially observable framework, where the agent does not have direct access to the true state of the system, but instead relies on limited observations that provide only partial information about the environment.  
-\end{enumerate}
+\end{itemize}
 
 The resulting framework can be formally described as a single-agent finite-horizon partially observable markov decision process.  
 For simplicity, we will refer to this setting as an “MDP” throughout this manuscript.  
@@ -35,12 +41,11 @@ For simplicity, we will refer to this setting as an “MDP” throughout this ma
 Now that the scope of the considered problems has been defined, we formally introduce the model.  
 A MDP is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, p)\):  
 \begin{itemize}
-    \item \textbf{\(\mathcal{S}\)}: The set of states, representing all possible configurations of the environment.
-    A state belonging to this set is denoted by \(s \in \mathcal{S}\).
-    Among these states, some are special: initial states and terminal states.
-    Initial states are those from which an interaction can begin, while terminal states are those in which the interaction with the agent ends.
-    The set of initial states is denoted by \(\mathcal{S}^i\), and an initial state is written as \(s^i \in \mathcal{S}^i\).  
-    The set of terminal states is denoted by \(\mathcal{S}^t\), and a terminal state is written as \(s^t \in \mathcal{S}^t\).  
+    \item \textbf{\(\mathcal{S}\)}: The set of states, representing all possible configurations of the environment.  
+    A state belonging to this set is denoted by \(s \in \mathcal{S}\).  
+    Among these, we distinguish two special subsets: initial states, from which an interaction can begin, and terminal states, in which the interaction ends.  
+    The set of initial states is denoted by \(\mathcal{S}^i\), with an initial state written as \(s^i \in \mathcal{S}^i\).  
+    The set of terminal states is denoted by \(\mathcal{S}^t\), with a terminal state written as \(s^t \in \mathcal{S}^t\).
     
     \item \textbf{\(\mathcal{O}\)}: The set of observations that the agent can perceive from the environment.
     Unlike the true state \(s \in \mathcal{S}\), which is hidden from the agent, the observation \(o \in \mathcal{O}\) provides partial information about the current state.
@@ -60,11 +65,13 @@ A MDP is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal
 \end{itemize}
 
 \subsection{Policy}
+\label{subsec:policy}
 
 The agent’s decision-making capability is modeled by a policy function.  
-The policy defines the mapping between observations and actions, and represents the mechanism through which the agent aims to maximize the cumulative reward over time.  
+The policy defines the stochastic mapping between observations and actions.  
+It formalizes the agent's decision-making capability and represents the core function that reinforcement learning aims to optimize.
 
-We denote this function by \(\pi\), and it is defined as:
+We denote a policy function by \(\pi\), and it is defined as:
 \(
 \pi : \mathcal{O} \to \mathcal{P}(\mathcal{A}).
 \)
@@ -72,6 +79,7 @@ The notation \(a \sim \pi(o)\) means that the action \(a\) is sampled from the d
 The notation \(\pi(a \mid o)\) denotes the probability of selecting action \(a\) under the distribution \(\pi(\cdot \mid o)\).
 
 \subsection{Trajectory}
+\label{subsec:trajectory}
 
 Now that both the MDP and the policy have been defined, we can characterize the interaction between them.  
 A sequence of consecutive interactions between an environment and a policy is called a trajectory.  
@@ -97,15 +105,16 @@ t = (s_1, o_1, a_1, r_1, s_2, o_2, a_2, r_2, \ldots, s_T, o_T, a_T, r_T).
 
 It is important to clearly distinguish between a trajectory distribution and its realizations.  
 We denote by \(\tau\) the distribution over trajectories, and by \(t\) a particular trajectory.
-This distribution \(\tau\) is determined by the initial state \(s\), the environment dynamics \(p\), and the policy \(\pi\), and is written as \(\tau(s, p, \pi)\).
+The distribution \(\tau\) is determined by the initial state \(s\), the environment dynamics \(p\), and the policy \(\pi\), and is denoted by \(\tau(s, p, \pi)\).
 The notation \(t \sim \tau(s, p, \pi)\) means that the trajectory \(t\) is sampled from the distribution induced by \(s\), \(p\), and \(\pi\).
 Finally, \(\tau(t \mid s, p, \pi)\) denotes the probability of observing the specific trajectory \(t\) under this distribution.
 
 There exist two special types of trajectories.
 First, a trajectory that terminates in a terminal state is called a terminal trajectory, and is denoted by \(t_t \sim \tau_t(s, p, \pi)\).
-Second, a trajectory that starts from an initial state and is considered as a complete interaction sequence is called an episode, and is denoted by \(t_e \sim \tau(s^i, p, \pi)\).
+Second, a terminate trajectory that starts from an initial state is called an episode, and is denoted by \(t_e \sim \tau(s^i, p, \pi)\).
 
 \subsection{Value Functions}
+\label{subsec:value_functions}
 
 To evaluate a policy \(\pi\) in terms of its ability to collect rewards, we introduce the notion of return.  
 The return of a trajectory, denoted by \(g(t)\), is defined as the sum of rewards collected along the trajectory:
@@ -115,7 +124,55 @@ g(t) = r_1 + r_2 + \cdots + r_T = \sum_{i=1}^{T} r_i.
 
 From the notion of return, we can define functions that estimate the expected return of a policy given a state.  
 These functions are called value functions.  
-The first one we introduce is the state-value function \(V\), defined as follows:
+
+The first one we introduce is the \textbf{state-value function} \(V\), which estimates the expected return when starting from a state \(s\) and following the policy \(\pi\):
 \[
-V(s) = \mathbb{E}\left[g(t)\right], \quad \text{with } t \sim \tau_t(s, p, \pi).
+V(s) = \mathbb{E}\Big[g(t)\Big], \quad \text{with } t \sim \tau_t(s, p, \pi).
 \]
+
+The second is the \textbf{state-action value function} \(Q\), which estimates the expected return when starting from a state \(s\), taking an action \(a\), and then following the policy \(\pi\) for all subsequent steps. It is defined as:
+\[
+Q(s, a) = \mathbb{E}\Big[\, r + g(t) \,\Big], \quad \text{with } t \sim \tau_t(s', p, \pi), \quad (s', o, r) \sim p(s, a).
+\]
+
+Finally, the \textbf{advantage function} \(A\) measures the benefit of taking a specific action \(a\) in state \(s\), relative to the average performance of the policy \(\pi\) in that state. It is defined as the difference between the \(Q\)-value and the state value:
+\[
+A(s, a) = Q(s, a) - V(s).
+\]
+
+It is interesting to note that all these functions quantify the same underlying quantity and can be expressed in terms of one another.  
+For the advantage function \(A\), this relationship is immediate by definition.  
+For \(V\) and \(Q\), the link can be made explicit as follows:
+
+\[
+\begin{aligned}
+Q_\pi(s, a) &= \mathbb{E}\Big[\, r + g(t) \,\Big], \quad \text{with } (s', o, r) \sim p(\cdot \mid s, a), \quad t \sim \tau_t(s', p, \pi) \\[4pt]
+&= \mathbb{E}\big[\, r \,\big] + \mathbb{E}\big[\, g(t) \,\big] \\[4pt]
+&= \mathbb{E}\big[\, r \,\big] + V_\pi(s').
+\end{aligned}
+\]
+
+Since \(p\) is entirely determined by the MDP and cannot be altered by the learning process, the only component that varies during learning is the policy \(\pi\).  
+We therefore make this dependency explicit by adding the subscript \(\pi\) to the value functions.  
+This yields the notations \(V_\pi\), \(Q_\pi\), and \(A_\pi\), which denote the value, state-action value, and advantage functions under a given policy \(\pi\).
+
+\subsection{Optimal Policy}
+\label{subsec:optimal_policy}
+
+Now that all the elements needed to formalize the reinforcement learning objective have been introduced, we can state it explicitly.  
+The goal of a reinforcement learning agent is to find a policy that maximizes the expected cumulative reward in a given MDP.
+
+This optimal policy, denoted by \(\pi^*\), is defined as the policy that, for every observation \(o \in \mathcal{O}\), selects the action with the highest state-action value. Formally:
+
+\[
+\pi^*(a \mid o) =
+\begin{cases}
+1 & \text{if } a = \underset{a' \in \mathcal{A}}{\arg\max}\; Q_{\pi^*}(s, a'), \\[6pt]
+0 & \text{otherwise},
+\end{cases}
+\]
+
+where \(s\) is the true state underlying the observation \(o\).  
+
+Now that the objective of reinforcement learning has been formally stated, we turn to the question of how to actually obtain the optimal policy \(\pi^*\) or at least a policy that performs sufficiently well.  
+This is the subject of the next section.
