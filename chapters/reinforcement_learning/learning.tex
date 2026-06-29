@@ -70,7 +70,7 @@ To address this issue, another family of reinforcement learning algorithms exist
 \subsection{Actor-Critic Methods}
 \label{subsec:actor_critic}
 
-Two key modifications distinguish actor-critic methods from critic-only approaches.
+Two principal modifications distinguish actor-critic methods from critic-only approaches.
 First, instead of approximating the state-action value function \(Q\), we now aim to approximate the state-value function \(V\).
 Second, the policy \(\pi\) is given its own dedicated set of parameters.
 The policy must output, for a given observation, a probability distribution over the action space \(\mathcal{A}\).
@@ -81,11 +81,13 @@ For each step \(i\) along a trajectory, the input is the state-observation pair 
 The value function is thus trained to correct its predictions based on data collected by the current policy interacting with the environment.
 
 The key difference lies in how the policy \(\pi\) itself is optimized.
-Since the policy now has its own set of parameters \(\theta_2\), it can be updated directly, independently of the value function.
-The update proceeds as follows: when a taken action \(a\) in state \(s\) yields a return that exceeds the prediction of \(\hat{V}_{\theta_1}\), the policy is adjusted to increase the probability \(\pi_{\theta_2}(a \mid o)\) for that observation, because the action performed better than expected.
-Conversely, if the return falls short, the probability is decreased.
-Both \(\hat{V}_{\theta_1}\) and \(\pi_{\theta_2}\) are improved simultaneously, within the same learning loop.
-This joint optimization reduces the instability inherent to reinforcement learning, without fully eliminating it.
+Since the policy now has its own set of parameters \(\theta_2\), it can be updated directly via gradient ascent on the expected return.
+The update uses the notion of advantage: when a taken action \(a\) in state \(s\) yields a return \(g(t)\) that exceeds the predicted value \(\hat{V}_{\theta_1}(s, o)\), the advantage \(A(s, a) = g(t) - \hat{V}_{\theta_1}(s, o)\) is positive, and the policy parameters \(\theta_2\) are adjusted to increase the probability \(\pi_{\theta_2}(a \mid o)\).
+Conversely, if the return falls short, the advantage is negative and the probability is decreased.
+By using \(\hat{V}_{\theta_1}\) as a baseline, the updates enjoy lower variance without introducing bias, which stabilizes learning.
+
+Both \(\hat{V}_{\theta_1}\) and \(\pi_{\theta_2}\) are improved simultaneously within the same loop: the critic provides a learned baseline for the actor, and the actor generates the data used to train the critic.
+This interplay reduces the instability inherent to reinforcement learning, although it does not fully eliminate it.
 
 It is within this family of methods that the currently most widely used algorithm resides: PPO (Proximal Policy Optimization), which has become the standard and will be used throughout this manuscript for all subsequent reinforcement learning experiments.
 Now that we are capable of training highly performant policies, the question naturally arises of how to explain their behavior.
