@@ -29,8 +29,8 @@ We restrict our analysis to the following configuration:
     If any other agents are present in the environment, they are treated as part of the environment dynamics.
 
     \item We focus on finite-horizon MDPs.  
-    Each interaction sequence has a defined beginning and a defined end.  
-    Between these two points, the number of interaction steps may vary depending on the situation, but it always remains finite.  
+    Each interaction sequence between the MDP and the policy has a defined beginning and a defined end.  
+    Between these two points, the number of interaction steps may vary depending on the situation, but it always remains finite.
 
     \item We adopt the partially observable framework, where the agent does not have direct access to the true state of the system, but instead relies on limited observations that provide only partial information about the environment.  
 \end{itemize}
@@ -68,15 +68,17 @@ A MDP is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal
 \label{subsec:policy}
 
 The agent’s decision-making capability is modeled by a policy function.  
-The policy defines the stochastic mapping between observations and actions.  
-It formalizes the agent's decision-making capability and represents the core function that reinforcement learning aims to optimize.
-
+The policy defines the stochastic mapping between observations \(o \in \mathcal{O}\) and actions \(o \in \mathcal{A}\).  
 We denote a policy function by \(\pi\), and it is defined as:
 \(
 \pi : \mathcal{O} \to \mathcal{P}(\mathcal{A}).
 \)
 The notation \(a \sim \pi(o)\) means that the action \(a\) is sampled from the distribution induced by \(\pi(\cdot \mid o)\).  
 The notation \(\pi(a \mid o)\) denotes the probability of selecting action \(a\) under the distribution \(\pi(\cdot \mid o)\).
+
+The policy thus fully characterizes the agent's decision-making capacity: given what it perceives, it determines what the agent does.
+Solving an MDP precisely amounts to finding a policy \(\pi\) that maximizes the expected cumulative reward from any given state \(s\).
+In other words, among all possible policies, we seek the one that yields the highest long-term return.
 
 \subsection{Trajectory}
 \label{subsec:trajectory}
@@ -105,65 +107,102 @@ t = (s_1, o_1, a_1, r_1, s_2, o_2, a_2, r_2, \ldots, s_T, o_T, a_T, r_T).
 
 It is important to clearly distinguish between a trajectory distribution and its realizations.  
 We denote by \(\tau\) the distribution over trajectories, and by \(t\) a particular trajectory.
-The distribution \(\tau\) is determined by the initial state \(s\), the environment dynamics \(p\), and the policy \(\pi\), and is denoted by \(\tau(s, p, \pi)\).
-The notation \(t \sim \tau(s, p, \pi)\) means that the trajectory \(t\) is sampled from the distribution induced by \(s\), \(p\), and \(\pi\).
-Finally, \(\tau(t \mid s, p, \pi)\) denotes the probability of observing the specific trajectory \(t\) under this distribution.
+The distribution \(\tau\) is determined by the initial state \(s\), the initial observation \(o\), the environment dynamics \(p\), and the policy \(\pi\), and is denoted by \(\tau(s, o, p, \pi)\).
+The notation \(t \sim \tau(s, o, p, \pi)\) means that the trajectory \(t\) is sampled from the distribution induced by \(s\), \(o\), \(p\), and \(\pi\).
+Finally, \(\tau(t \mid s, o, p, \pi)\) denotes the probability of observing the specific trajectory \(t\) under this distribution.
+
+An important property of the trajectory distribution is its recursive structure.
+Since both the policy \(\pi\) and the transition function \(p\) are known, the distribution over trajectories starting from \(s_1\) with observation \(o_1\) can be expressed in terms of the distribution over trajectories starting from the next state \(s_2\) with observation \(o_2\).
+Specifically, the probability of a trajectory \(t = (s_1, o_1, a_1, r_1, s_2, o_2, a_2, r_2, \ldots, s_T, o_T, a_T, r_T)\) factorizes as:
+\[
+\tau(t \mid s_1, o_1, p, \pi) = \pi(a_1 \mid o_1) \; p(s_2, o_2, r_1 \mid s_1, a_1) \; \tau(t_{2:} \mid s_2, o_2, p, \pi),
+\]
+where \(t_{2:} = (s_2, o_2, a_2, r_2, \ldots, s_T, o_T, a_T, r_T)\) denotes the remaining trajectory from the second step onward.
+
+This recursive decomposition mirrors the recursive form of the return \(g(t) = r_1 + \gamma \, g(t_{2:})\) and is the fundamental reason why value functions themselves satisfy recursive Bellman equations.
 
 There exist two special types of trajectories.
-First, a trajectory that terminates in a terminal state is called a terminal trajectory, and is denoted by \(t_t \sim \tau_t(s, p, \pi)\).
-Second, a terminate trajectory that starts from an initial state is called an episode, and is denoted by \(t_e \sim \tau(s^i, p, \pi)\).
+First, a trajectory that terminates in a terminal state is called a terminal trajectory, and is denoted by \(t_t \sim \tau_t(s, o, p, \pi)\).
+Second, a terminal trajectory that starts from an initial state and an initial observation is called an episode, and is denoted by \(t_e \sim \tau(s^i, o^i, p, \pi)\).
 
 \subsection{Value Functions}
 \label{subsec:value_functions}
 
-To evaluate a policy \(\pi\) in terms of its ability to collect rewards, we introduce the notion of return.  
-The return of a trajectory, denoted by \(g(t)\), is defined as the sum of rewards collected along the trajectory:
+To evaluate the ability of a policy \(\pi\) to collect rewards, we introduce the notion of return.  
+The return of a trajectory \(g(t)\), is defined as the discounted sum of rewards collected along the trajectory:
 \[
-g(t) = r_1 + r_2 + \cdots + r_T = \sum_{i=1}^{T} r_i.
+g(t) = r_1 + \gamma r_2 + \gamma^2 r_3 + \cdots + \gamma^{T-1} r_T = \sum_{i=1}^{T} \gamma^{i-1} r_i,
 \]
+where \(\gamma \in [0, 1]\) is the discount factor.  
+This parameter controls the trade-off between immediate and future rewards: when \(\gamma = 0\), the agent cares only about the immediate reward \(r_1\); as \(\gamma\) approaches \(1\), future rewards are weighted almost equally to immediate ones, encouraging far-sighted behavior.
+
+The return also admits a recursive form, which is central to the dynamic programming and reinforcement learning algorithms presented later:
+\[
+g(t) = r_1 + \gamma \, g(t_{2:}),
+\]
+where \(t_{2:} = (s_2, o_2, a_2, r_2, \ldots, s_T, o_T, a_T, r_T)\) denotes the trajectory starting from the second step.
 
 From the notion of return, we can define functions that estimate the expected return of a policy given a state.  
-These functions are called value functions.  
+These functions are called value functions.
 
-The first one we introduce is the \textbf{state-value function} \(V\), which estimates the expected return when starting from a state \(s\) and following the policy \(\pi\):
+The first one we introduce is the \textbf{state-value function} \(V_\pi\), which estimates the expected return when starting from a state \(s\) and following the policy \(\pi\):
 \[
-V(s) = \mathbb{E}\Big[g(t)\Big], \quad \text{with } t \sim \tau_t(s, p, \pi).
+V_\pi(s, o) = \mathbb{E}\Big[g(t)\Big], \quad \text{with } t \sim \tau_t(s, o, p, \pi).
 \]
 
-The second is the \textbf{state-action value function} \(Q\), which estimates the expected return when starting from a state \(s\), taking an action \(a\), and then following the policy \(\pi\) for all subsequent steps. It is defined as:
-\[
-Q(s, a) = \mathbb{E}\Big[\, r + g(t) \,\Big], \quad \text{with } t \sim \tau_t(s', p, \pi), \quad (s', o, r) \sim p(s, a).
-\]
+The state-value function is particularly useful because it allows us to compare the desirability of different states under a given policy \(\pi\).  
+If \(V_\pi(s) > V_\pi(s')\), this means that, according to policy \(\pi\), it is preferable for the agent to be in state \(s\) rather than in state \(s'\).
 
-Finally, the \textbf{advantage function} \(A\) measures the benefit of taking a specific action \(a\) in state \(s\), relative to the average performance of the policy \(\pi\) in that state. It is defined as the difference between the \(Q\)-value and the state value:
+It is worth noting that the state-value function \(V_\pi\) is recursive, a property that follows directly from the recursive form of the return.  
+Using \(g(t) = r_1 + \gamma \, g(t_{2:})\), we can write:
 \[
-A(s, a) = Q(s, a) - V(s).
+\begin{aligned}
+V_\pi(s, o) 
+&= \mathbb{E}\Big[g(t)\Big], \quad \text{with } t \sim \tau_t(s, o p, \pi) \\[4pt]
+&= \mathbb{E}\Big[r_1 + \gamma \, g(t_{2:})\Big] \\[4pt]
+&= \mathbb{E}\Big[r_1 + \gamma \, V_\pi(s_2)\Big],
+\end{aligned}
 \]
+where \(r_1\) is the reward obtained after taking the first action from state \(s\) according to \(\pi\), and \(s_2\) is the resulting next state.
 
-It is interesting to note that all these functions quantify the same underlying quantity and can be expressed in terms of one another.  
-For the advantage function \(A\), this relationship is immediate by definition.  
-For \(V\) and \(Q\), the link can be made explicit as follows:
+If we express the expectation explicitly in terms of the distributions \(p\) and \(\pi\), we obtain the Bellman equation for \(V_\pi\):
 
 \[
 \begin{aligned}
-Q_\pi(s, a) &= \mathbb{E}\Big[\, r + g(t) \,\Big], \quad \text{with } (s', o, r) \sim p(\cdot \mid s, a), \quad t \sim \tau_t(s', p, \pi) \\[4pt]
-&= \mathbb{E}\big[\, r \,\big] + \mathbb{E}\big[\, g(t) \,\big] \\[4pt]
-&= \mathbb{E}\big[\, r \,\big] + V_\pi(s').
+V_\pi(s, o) 
+&= \mathbb{E}\Big[r_1 + \gamma \, V_\pi(s_2)\Big], \quad \text{with } t \sim \tau_t(s, o, p, \pi) \\[4pt]
+&= \sum_{a \in \mathcal{A}} \pi(a \mid o) 
+   \sum_{\substack{s' \in \mathcal{S} \\ o' \in \mathcal{O} \\ r \in \mathcal{R}}} 
+   p(s', o', r \mid s, a) \Big[\, r + \gamma \, V_\pi(s', o') \,\Big].
 \end{aligned}
 \]
 
-Since \(p\) is entirely determined by the MDP and cannot be altered by the learning process, the only component that varies during learning is the policy \(\pi\).  
-We therefore make this dependency explicit by adding the subscript \(\pi\) to the value functions.  
-This yields the notations \(V_\pi\), \(Q_\pi\), and \(A_\pi\), which denote the value, state-action value, and advantage functions under a given policy \(\pi\).
+Now that we have expressed the value of a state, we turn to the value of taking a specific action in a given state.
+Indeed, it is useful to estimate the expected future gain of an action \(a\) in state \(s\), in order to compare different actions and determine which one is the most promising under a given policy \(\pi\).
+
+The second value function we introduce is the \textbf{state-action value function} \(Q_\pi\), which estimates the expected return when starting from a state \(s\), taking an action \(a\), and then following the policy \(\pi\) for all subsequent steps. It is defined as:
+\[
+Q_\pi(s, a) = \mathbb{E}\Big[\, r + \gamma \, g(t) \,\Big], \quad \text{with } t \sim \tau_t(s', o, p, \pi), \quad (s', o, r) \sim p(\cdot \mid s, a).
+\]
+
+We can relate \(Q_\pi\) to \(V_\pi\) by recognizing that, after taking action \(a\) in state \(s\), the remaining return from the next state \(s'\) is precisely \(V_\pi(s')\). This yields:
+\[
+\begin{aligned}
+Q_\pi(s, a) 
+&= \mathbb{E}\Big[\, r + \gamma \, g(t) \,\Big], \quad \text{with } t \sim \tau_t(s', o, p, \pi), \quad (s', o, r) \sim p(\cdot \mid s, a) \\[4pt]
+&= \mathbb{E}\Big[\, r + \gamma \, V_\pi(s', o) \,\Big] \\[4pt]
+&= \sum_{\substack{s' \in \mathcal{S} \\ o' \in \mathcal{O} \\ r \in \mathcal{R}}} 
+   p(s', o', r \mid s, a) \Big[\, r + \gamma \, V_\pi(s', o) \,\Big] \\[4pt]
+\end{aligned}
+\]
 
 \subsection{Optimal Policy}
 \label{subsec:optimal_policy}
 
 Now that all the elements needed to formalize the reinforcement learning objective have been introduced, we can state it explicitly.  
-The goal of a reinforcement learning agent is to find a policy that maximizes the expected cumulative reward in a given MDP.
-
-This optimal policy, denoted by \(\pi^*\), is defined as the policy that, for every observation \(o \in \mathcal{O}\), selects the action with the highest state-action value. Formally:
-
+The goal of a reinforcement learning agent is to find a policy that, for every observation, maximizes the expected cumulative reward obtained until a terminal state is reached.  
+This policy is called the \textbf{optimal policy} and is denoted by \(\pi^*\).
+Formally, \(\pi^*\) is defined as the policy that, for every observation \(o \in \mathcal{O}\), selects the action with the highest state-action value:
 \[
 \pi^*(a \mid o) =
 \begin{cases}
@@ -174,5 +213,13 @@ This optimal policy, denoted by \(\pi^*\), is defined as the policy that, for ev
 
 where \(s\) is the true state underlying the observation \(o\).  
 
-Now that the objective of reinforcement learning has been formally stated, we turn to the question of how to actually obtain the optimal policy \(\pi^*\) or at least a policy that performs sufficiently well.  
+As we have just seen, both \(V_\pi\) and \(Q_\pi\) can be expressed explicitly in terms of the environment dynamics \(p\) and the policy \(\pi\).  
+If \(p\) and \(\pi\) are fully known, one can theoretically compute the optimal policy by unfolding the graph of all possible trajectories starting from a given state \(s\) and observation \(o\).  
+This is possible precisely because \(V_\pi\) and \(Q_\pi\) are recursive functions: their values can be propagated backward from terminal states through the entire state space.  
+Solving an MDP in this way is known as \textbf{dynamic programming}.
+
+In practice, however, most environments of interest have far too many states to allow an explicit representation of the dynamics \(p\).  
+Storing and computing over the full transition function becomes intractable.
+
+To overcome this limitation, instead of directly constructing the optimal policy, we adopt an iterative approach: starting from an initial policy, we progressively improve it so that it converges toward \(\pi^*\).  
 This is the subject of the next section.
