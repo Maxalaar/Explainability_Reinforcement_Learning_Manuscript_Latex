@@ -18,21 +18,23 @@ Although \(\hat{Q}_\pi\) is only an approximation of the true \(Q_\pi\), the pol
     0 & \text{otherwise}.
     \end{cases}
 \]
-It is precisely this way of modeling the policy that gives this family of methods its name: the policy is not represented explicitly as a standalone function, but simply emerges from scanning over the set of actions to maximize \(\hat{Q}_\pi\).
+It is precisely this way of modeling the policy that gives this family of methods its name.  
+The policy is not represented explicitly as a standalone function.  
+Rather, it simply emerges from scanning over the set of actions to maximize \(\hat{Q}_\pi\).
 In other words, the policy has no independent existence of its own.
 
 To give the reader a clear example of this family of methods, we present it in its simplest form: model-free, without temporal-dierence, replay buffer, bootstrapping, and using only \(\varepsilon\)-greedy exploration.
 Naturally, many variants and extensions of this basic scheme exist, but the core idea remains the same.
 
-The actual parametric form of \(\hat{Q}\) can be chosen freely, provided we have a rule to correct its predictions based on observed errors.
+Any parametric model can be used for \(\hat{Q}\), as long as we have a rule to correct its predictions based on observed errors.
 Since \(\hat{Q}\) aims to predict a scalar value in \(\mathbb{R}\), training it is a supervised regression task.
 Any machine learning model capable of handling regression can therefore be used to represent \(\hat{Q}\).
 We denote the set of parameters of the model by \(\theta\).
 In deep reinforcement learning implementations, a neural network is used to model this function, in which case \(\theta\) represents the weights and biases of the network.
 
-In this simple setting, the action selection rule is modified as follows.  
+In this setting, the action selection rule is modified as follows.  
 With probability \(1 - \varepsilon\), the policy selects the greedy action that maximizes \(\hat{Q}_\pi\), and with probability \(\varepsilon\) it selects an action uniformly at random.
-The resulting policy, which now depends on both \(\pi\) and \(\varepsilon\), induces a trajectory distribution denoted by \(t_t \sim \tau_t(s, o, p, \pi, \varepsilon)\).
+The resulting policy, which now depends on both \(\pi\) and \(\varepsilon\), induces a trajectory distribution denoted by \(t \sim \tau(s, o, p, \pi, \varepsilon)\).
 
 The parameter \(\varepsilon\) controls the degree of exploration: if the policy always chooses the action it currently believes to be optimal, it may miss better alternatives that \(\hat{Q}_\pi\) has not yet learned to value correctly.
 Exploring suboptimal actions from time to time is therefore essential to verify that \(\hat{Q}_\pi\) accurately reflects the true values, while still focusing most of the time on the most promising actions.
@@ -40,22 +42,27 @@ In more advanced implementations, \(\varepsilon\) can be adapted over the course
 
 The learning process consists of two steps that repeat until convergence:
 \begin{enumerate}
-    \item \textbf{Data collection.} The current policy \(\pi\) interacts with the MDP. For a given starting state \(s_1\) and observation \(o_1\), the interaction produces a terminal trajectory \(t_t\) sampled from \(\tau_t(s_1, o_1, p, \pi, \varepsilon)\). For each step \(i\) along the trajectory, the return from that step onward is \(g(t_{i:}) = \sum_{k=i}^{T} \gamma^{k-i} r_k\), which serves as the target value for the state-action pair \((s_i, a_i)\).
-    \item \textbf{Model update.} The tuples \((s_i, a_i, g(t_{i:}))\) obtained in the previous step serve as supervised training data: the state-action pair \((s_i, a_i)\) is the input \(x\), and the return \(g(t_{i:})\) is the associated target. These examples are used to train \(\hat{Q}_\theta\). We denote the improved approximation by \(\hat{Q}'_\theta\), which now predicts returns more accurately under \(\pi\). Since \(\hat{Q}'_\theta\) has changed, the greedy policy derived from it also changes; we denote this new policy by \(\pi'\).
+    \item \textbf{Data collection.} The current policy \(\pi\) interacts with the MDP. For a given starting state \(s^i_1\) and observation \(o_1\), the interaction produces a episode \(t_e\) sampled from \(\tau_e(s_1, o_1, p, \pi, \varepsilon)\). For each step \(i\) along the episode, the return from that step onward is \(g(t_{i:}) = \sum_{k=i}^{T} \gamma^{k-i} r_k\), which serves as the target value for the state-action pair \((s_i, a_i)\).
+    \item \textbf{Model update.} The tuples \((s_i, a_i, g(t_{i:}))\) obtained in the previous step serve as supervised training data: the state-action pair \((s_i, a_i)\) is the input \(x\), and the return \(g(t_{i:})\) is the associated target. These examples are used to train \(\hat{Q}_\theta\). We denote the improved approximation by \(\hat{Q}'_\theta\), which now predicts returns more accurately under \(\pi\). Since \(\hat{Q}'_\theta\) has changed, the greedy policy derived from it also changes.
+    we denote this new policy by \(\pi'\).
 \end{enumerate}
 
 Because the policy is now \(\pi'\), the approximation \(\hat{Q}'_\theta\) must be trained to predict returns under \(\pi'\). This requires returning to step 1 to collect fresh interaction data generated by \(\pi'\). The two steps thus alternate until the policy and the value approximation stabilize.
 
 Even this simple algorithm already illustrates a difficulty inherent to all forms of reinforcement learning: the instability of the learning process.
 Each update from \(\hat{Q}_\theta\) to \(\hat{Q}'_\theta\) causes the policy to shift from \(\pi\) to \(\pi'\).
-For the learning to remain stable, this change should be as small as possible, so that \(\hat{Q}'_\theta\), trained to predict returns under \(\pi\), remains reasonably accurate under \(\pi'\).
+For the learning to remain stable, the change from \(\hat{Q}_\theta\) to \(\hat{Q}'_\theta\) should be as small as possible.  
+This way, \(\hat{Q}'_\theta\), trained to predict returns under \(\pi\), remains reasonably accurate under \(\pi'\).
 However, the smaller the change, the slower the learning progresses.
 A trade-off must therefore be struck between stability and learning speed.
-Many improvements introduced later in the literature (e.g., target networks, experience replay) aim at stabilizing this learning loop.
+Many improvements introduced later in the literature aim at stabilizing this learning loop.
 
-Convergence guarantees for such algorithms have been proved in the strictly Markovian setting (fully observable MDP), where the value function is stored in a table and updated with a suitably decreasing learning rate.
-In modern implementations, however, the value function is approximated by a neural network, which offers far better generalization and makes the method applicable to large-scale problems where tabular representations are unthinkable.
-Although theoretical convergence proofs no longer hold in this approximate setting, deep critic-only methods (e.g., DQN) have demonstrated remarkable empirical success, making them the tool of choice for complex RL tasks.
+Convergence guarantees for such algorithms have been proved under a different set of assumptions than the setting presented here.
+For example, in the classical convergence results, the MDP is fully observable, the value function is stored in a table, and the learning rate is decreased at a suitable rate over time.
+In modern implementations, the value function is approximated by a neural network, which offers far better generalization and makes the method applicable to large-scale.
+Although theoretical convergence proofs no longer hold in this approximate setting, deep critic-only methods have demonstrated remarkable empirical success, making them the tool of choice for complex RL tasks.
 
-However, critic-only approaches suffer from several limitations. The main one is that they do not scale well to large action spaces, since they must scan over all possible actions at each decision step to select the maximum.
+Critic-only approaches suffer from several limitations.  
+The main limitation is scalability to large action spaces.  
+Since the policy must scan over all possible actions at each decision step to select the maximum, the computational cost grows with the size of the action set.
 To address this issue, another family of reinforcement learning algorithms exists: actor-critic methods.
