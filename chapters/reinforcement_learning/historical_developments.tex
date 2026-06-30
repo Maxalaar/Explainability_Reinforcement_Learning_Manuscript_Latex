@@ -29,15 +29,15 @@ The agent interacts with the environment by selecting actions.
 The function that maps an observed state to the chosen action is called a policy.
 The objective is to find an optimal policy, in the sense that it maximizes the expected cumulative reward over time.
 
-This framework led to the formalization of Markov Decision Processes (MDPs), which provide a mathematical model for sequential decision-making under uncertainty \cite{howard1960mdp}.
+This framework led to the formalization of Markov Decision Processes (MDPs), which provide a mathematical model for sequential decision-making \cite{howard1960mdp}.
 MDPs describe a decision-maker interacting with an environment through a set of states, actions, rewards, and transition rules.
 The earliest method proposed to solve MDPs is dynamic programming \cite{bellman1957dynamic}.
 It proceeds by breaking down a complex decision problem into smaller, more manageable subproblems, solving each one, and combining the results to obtain an overall solution.
-However, dynamic programming requires a complete and explicit description of the environment, which quickly becomes impractical for all but the smallest problems.
+However, dynamic programming requires a full and exact description of the environment, which is only feasible for small problems.
 
 \subsection{Emergence of reinforcement learning (1970--2000)}
 
-In order to address this issue, temporal-difference (TD) learning methods were introduced \cite{sutton1988td}.  
+In order to address this issue, temporal-difference learning methods were introduced \cite{sutton1988td}.  
 This mechanism enables incremental learning directly from experience without requiring a complete model of the environment.  
 It can be interpreted as a sample-based approximation of the Bellman equations.  
 
@@ -74,7 +74,7 @@ Notably, AlphaZero demonstrated that the combination of deep \gls{nn}, reinforce
 This success was later extended to even more complex real-time strategy environments such as StarCraft II, where agents must handle long-term planning, partial observability, and large action spaces \cite{samvelyan2019starcraftmultiagentchallenge}.  
 Similarly, in Dota 2, large-scale multi-agent reinforcement learning systems such as OpenAI Five showed that self-play combined with deep policy optimization can achieve professional-level performance in highly dynamic and stochastic environments \cite{openai2019dota2largescale}.
 
-More recently, reinforcement learning has expanded beyond its traditional application domains, such as robotics, video games, and combinatorial optimization. 
+More recently, reinforcement learning has expanded beyond its traditional application domains. 
 With the emergence of increasingly agentic views of large language models, it has become possible to train these models to perform specific tasks using reinforcement learning-based techniques.  
 In particular, reinforcement learning from human feedback has become a method for aligning large language models with human preferences.  
 It does so by formalizing the problem as an MDP and using reinforcement learning to solve it \cite{ouyang2022traininglanguagemodelsfollow}.

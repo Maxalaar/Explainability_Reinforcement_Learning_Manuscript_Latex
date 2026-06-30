@@ -1,15 +1,15 @@
 \section{Learning}
 \label{sec:rl_learning}
 
-Now that the optimal policy \(\pi^*\) has been defined, we face the practical question of how to obtain it.
+Now that the optimal policy \(\pi^*\) has been defined, the practical question of how to obtain it arises.
 The recursive Bellman equations for \(V_\pi\) and \(Q_\pi\) suggest dynamic programming approaches, but these scale poorly to large state spaces.
 Reinforcement learning offers an alternative: it seeks to solve the MDP iteratively, by generating a sequence of policies that progressively approach \(\pi^*\) through direct interaction with the environment.
-In this section, we introduce two major families of reinforcement learning methods used today: critic-only methods and actor-critic methods.
+In this section, two major families of reinforcement learning methods used today are introduced: critic-only methods and actor-critic methods.
 
 \subsection{Critic-Only Methods}
 \label{subsec:critic_only}
 
-The central idea behind all critic-only approaches is to iteratively construct an approximation of the state-action value function \(Q_\pi\), which we denote by \(\hat{Q}_\pi\).
+The central idea behind all critic-only approaches is to iteratively construct an approximation of the state-action value function \(Q_\pi\), denoted by \(\hat{Q}_\pi\).
 Although \(\hat{Q}_\pi\) is only an approximation of the true \(Q_\pi\), the policy always acts greedily with respect to this approximation:
 \[
     \pi(a \mid o) =
@@ -28,16 +28,16 @@ It must therefore be defined solely over observations, as a function \(\hat{Q}_\
 Its objective is to approximate the true \(Q_\pi\), which depends on the underlying states \(s\), using only the partial information available through \(o\).
 Once again, this poses no issue in practice, as it reflects how these algorithms are actually deployed in real-world applications.
 
-To give the reader a clear example of critic-only methods, we present them in their simplest form: model-free, without temporal-difference learning, without replay buffer, without bootstrapping, and using only \(\varepsilon\)-greedy exploration.
+To give a clear example of critic-only methods, they are presented in their simplest form: model-free, without temporal-difference learning, without replay buffer, without bootstrapping, and using only \(\varepsilon\)-greedy exploration.
 Naturally, many variants and extensions of this basic scheme exist, but the core idea remains the same.
 
-When implementing a reinforcement learning, one of the first questions that arises is how to represent the value function.  
-Concretely, this means choosing a suitable model for \(\hat{Q}_\pi\).
-Any machine learning model capable of handling a regression task can be used for this purpose.
-We denote the set of parameters of the model by \(\theta\).
-In deep reinforcement learning implementations, a neural network is used to model this function, in which case \(\theta\) represents the weights and biases of the network.
-
-In this setting, the action selection rule is modified as follows.  
+When implementing a reinforcement learning algorithm, one of the first questions is how to represent the value function.  
+In critic-only methods, this means choosing a model for \(\hat{Q}_\pi\).
+Any machine learning model capable of regression task can be used for this purpose.
+The set of parameters of the model is denoted by \(\theta\).
+In deep reinforcement learning, a neural network is used to model this function, in which case \(\theta\) represents the weights and biases of the network.
+ 
+In our simple setting, exploration is handled via \(\varepsilon\)-greedy selection.
 With probability \(1 - \varepsilon\), the policy selects the greedy action that maximizes \(\hat{Q}_\pi\), and with probability \(\varepsilon\) it selects an action uniformly at random.
 The trajectory distribution induced by the resulting policy now depends on both \(\pi\) and \(\varepsilon\), and is denoted by \(t \sim \tau(s, o, p, \pi, \varepsilon)\).
 The parameter \(\varepsilon\) controls the degree of exploration.
@@ -47,9 +47,13 @@ In more advanced implementations, \(\varepsilon\) can be adapted over the course
 
 The learning process consists of two steps that repeat until convergence:
 \begin{enumerate}
-    \item \textbf{Data collection.} The current policy \(\pi\) interacts with the MDP. For a given starting state \(s^i_1\) and observation \(o_1\), the interaction produces a episode \(t_e\) sampled from \(\tau_e(s^i_1, o_1, p, \pi, \varepsilon)\). For each step \(i\) along the episode, the return from that step onward is \(g(t_{i:}) = \sum_{k=i}^{T} \gamma^{k-i} r_k\), which serves as the target value for the state-action pair \((s_i, a_i)\).
-    \item \textbf{Model update.} The tuples \((s_i, a_i, g(t_{i:}))\) obtained in the previous step serve as supervised training data: the state-action pair \((s_i, a_i)\) is the input, and the return \(g(t_{i:})\) is the associated target. These examples are used to train \(\hat{Q}_\theta\). We denote the improved approximation by \(\hat{Q}'_\theta\), which now predicts returns more accurately under \(\pi\). Since \(\hat{Q}'_\theta\) has changed, the policy derived from it also changes.
-    we denote this new policy by \(\pi'\).
+    \item \textbf{Data collection.} The current policy \(\pi\) interacts with the MDP.
+    For a given starting state \(s^i_1\) and observation \(o_1\), the interaction produces a episode \(t_e\) sampled from \(\tau_t(s^i_1, o_1, p, \pi, \varepsilon)\).
+    For each step \(i\) along the episode, the return from that step onward is \(g(t_{i:}) = \sum_{k=i}^{T} \gamma^{k-i} r_k\), which serves as the target value for the state-action pair \((s_i, a_i)\).
+    \item \textbf{Model update.} The tuples \((s_i, a_i, g(t_{i:}))\) obtained in the previous step serve as supervised training data: the state-action pair \((s_i, a_i)\) is the input, and the return \(g(t_{i:})\) is the associated target.
+    These examples are used to train \(\hat{Q}_\theta\).
+    The improved approximation is denoted by \(\hat{Q}'_\theta\), which now predicts returns more accurately under \(\pi\). Since \(\hat{Q}'_\theta\) has changed, the policy derived from it also changes.
+    This new policy is denoted by \(\pi'\).
 \end{enumerate}
 
 Because the policy is now \(\pi'\), the approximation \(\hat{Q}'_\theta\) must be trained to predict returns under \(\pi'\). This requires returning to step 1 to collect fresh interaction data generated by \(\pi'\). The two steps thus alternate until the policy and the value approximation stabilize.
@@ -77,9 +81,9 @@ To address this issue, another family of reinforcement learning algorithms exist
 \label{subsec:actor_critic}
 
 Two principal modifications distinguish actor-critic methods from critic-only approaches.
-First, instead of approximating the state-action value function \(Q\), we now aim to approximate the state-value function \(V\).
+First, the objective is to approximate the state-value function \(V\), instead of the state-action value function \(Q\).
 Second, the policy \(\pi\) is given its own dedicated set of parameters.
-We thus have two separate components: a value function approximation \(\hat{V}_{\theta_1}\) and a parameterized policy \(\pi_{\theta_2}\).
+Two separate components are thus obtained: a value function approximation \(\hat{V}_{\theta_1}\) and a parameterized policy \(\pi_{\theta_2}\).
 
 Analogously to critic-only methods, \(\hat{V}_{\theta_1}\) is trained using supervised learning on pairs obtained from interaction with the MDP.
 For each step \(i\) along a trajectory, the input is the state-observation pair \((s_i, o_i)\) and the target is the observed return \(g(t_{i:})\).
@@ -102,5 +106,5 @@ This interplay reduces the instability inherent to reinforcement learning.
 PPO (Proximal Policy Optimization), which is the current standard in reinforcement learning, belongs to this family of actor-critic methods.  
 It will be used throughout this manuscript for all reinforcement learning experiments.
 
-Now that we are capable of training highly performant policies, which learn purely through interaction with their environment without any human supervision, the question arises of how to explain their behavior.
+Now that highly performant policies can be trained, learning purely through interaction with their environment without any human supervision, the question arises of how to explain their behavior.
 This is the subject of the next chapter: explainability in the context of reinforcement learning.
