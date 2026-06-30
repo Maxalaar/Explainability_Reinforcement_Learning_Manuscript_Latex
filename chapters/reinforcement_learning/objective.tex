@@ -1,7 +1,7 @@
 \section{Objective}
 \label{sec:objective}
 
-Now that the main developments shaping reinforcement learning have been outlined, we turn to the formal definition of its objective.  
+Now that the main developments shaping reinforcement learning have been outlined, we proceed to the formal definition of its objective.
 In essence, reinforcement learning aims to build a system that makes sequential decisions in order to maximize a cumulative reward signal over the long term.  
 The purpose of this section is to translate this intuitive goal into a rigorous mathematical framework.
 To this end, we proceed step by step:
@@ -10,7 +10,7 @@ To this end, we proceed step by step:
     \item We introduce the notion of policy, which formalizes the agent's behavior, in Subsection~\ref{subsec:policy}.
     \item We describe how the interaction between the agent and the environment is characterized through trajectories in Subsection~\ref{subsec:trajectory}.
     \item We present how policies are evaluated using value functions in Subsection~\ref{subsec:value_functions}.
-    \item We define the optimal policy in Subsection~\ref{subsec:optimal_policy}, which is exactly what we seek to obtain when applying reinforcement learning.
+    \item We define the optimal policy in Subsection~\ref{subsec:optimal_policy}, which is the ultimate goal of reinforcement learning.
 \end{enumerate}
 
 \subsection{Markov Decision Processes}
@@ -18,12 +18,12 @@ To this end, we proceed step by step:
 
 The RL framework is grounded in the agent paradigm: the decision-making entity is called the agent.  
 The agent perceives its environment, processes the information it receives, and acts upon the environment to influence future outcomes.  
-To formally specify both the task and the agent's capacity to perceive and act, we model the problem as a Markov Decision Process (MDP).
+To specify both the task and the agent's capacity to perceive and act, we model the problem as a Markov Decision Process (MDP).
 
 Before providing a more detailed definition, it is useful to clarify the scope of the MDP problems considered in this manuscript.
 The goal of this subsection is to introduce the notations and formalisms as they are used in modern RL practice.  
 Other formulations of MDPs exist that are better suited, for instance, to proving convergence guarantees.  
-However, our focus here is to represent reinforcement learning as it is applied empirically, even if this means sacrificing some mathematical proof capability.  
+Our focus here is to represent reinforcement learning as it is applied empirically, even if this means sacrificing some mathematical proof capability.  
 We therefore restrict our analysis to the following configuration:
 
 \begin{itemize}
@@ -38,9 +38,7 @@ We therefore restrict our analysis to the following configuration:
 \end{itemize}
 
 The resulting framework can be formally described as a single-agent finite-horizon partially observable markov decision process.  
-For simplicity, we will refer to this setting as an “MDP” throughout this manuscript.
-
-Now that the scope of the considered problems has been defined, we formally introduce the model.  
+For simplicity, we will refer to this setting as an “MDP” throughout this manuscript.  
 A MDP is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, p)\):  
 \begin{itemize}
     \item \textbf{\(\mathcal{S}\)}: The set of states, representing all possible configurations of the environment.  
@@ -85,7 +83,7 @@ The notation \(\pi(a \mid o)\) denotes the probability of selecting action \(a\)
 \subsection{Trajectory}
 \label{subsec:trajectory}
 
-Now that both the MDP and the policy have been defined, we can characterize the interaction between them.  
+Now that both the MDP and the policy \(\pi\) have been defined, we can characterize the interaction between them.  
 A sequence of consecutive interactions between an environment and a policy is called a trajectory.  
 A trajectory is generated through the repeated interaction between the policy and the environment, following the sequence below:
 \begin{enumerate}
@@ -114,14 +112,15 @@ The notation \(t \sim \tau(s, o, p, \pi)\) means that the trajectory \(t\) is sa
 
 An important property of the trajectory distribution is its recursive structure.
 Since both the policy \(\pi\) and the transition function \(p\) are known, the distribution over trajectories starting from \(s_1\) with observation \(o_1\) can be expressed in terms of the distribution over trajectories starting from the next state \(s_2\) with observation \(o_2\).
-Specifically, the probability of a trajectory \(t = (s_1, o_1, a_1, r_1, s_2, o_2, a_2, r_2, \ldots, s_T, o_T, a_T, r_T)\) factorizes as:
+Specifically, the probability of a trajectory \(t\) factorizes as:
 \[
 \tau(t \mid s_1, o_1, p, \pi) = \pi(a_1 \mid o_1) \; p(s_2, o_2, r_1 \mid s_1, a_1) \; \tau(t_{2:} \mid s_2, o_2, p, \pi),
 \]
+where \(t_{2:} = (s_2, o_2, a_2, r_2, \ldots, s_T, o_T, a_T, r_T)\) denotes the trajectory starting from the second step.
 
 There exist two special types of trajectories.
 First, a trajectory that terminates in a terminal state is called a terminal trajectory, and is denoted by \(t_t \sim \tau_t(s, o, p, \pi)\).
-Second, a terminal trajectory that starts from an initial state and an initial observation is called an episode, and is denoted by \(t_e \sim \tau(s^i, o, p, \pi)\).
+Second, a terminal trajectory that starts from an initial state and an initial observation is called an episode, and is denoted by \(t_e \sim \tau_t(s^i, o, p, \pi)\).
 
 \subsection{Value Functions}
 \label{subsec:value_functions}
@@ -137,22 +136,21 @@ When \(\gamma\) is close to \(0\), the agent focuses almost exclusively on immed
 As \(\gamma\) increases toward \(1\), future rewards gain more weight, and the agent adopts a more far-sighted strategy.  
 In theory, since the goal is to maximize long-term cumulative reward, we would like to set \(\gamma = 1\).  
 In practice, however, \(\gamma\) is often chosen slightly below \(1\) (e.g., \(0.99\)) to stabilize learning, and to reflect the fact that distant future rewards are inherently more uncertain.
+Throughout this manuscript, unless explicitly stated otherwise, we assume \(\gamma = 1\) to simplify notation.
 
 The return also admits a recursive form, which is central to the dynamic programming and reinforcement learning algorithms presented later:
 \[
 g(t, \gamma) = r_1 + \gamma \, g(t_{2:}),
 \]
-where \(t_{2:} = (s_2, o_2, a_2, r_2, \ldots, s_T, o_T, a_T, r_T)\) denotes the trajectory starting from the second step.
 
 From the notion of return, we can define functions that estimate the expected return of a policy from a given starting point.  
 These functions are called value functions.
-
 The first one we examine in detail is the state-value function.  
 It tells us how desirable a particular state is under a given policy \(\pi\), given an observation \(o\) and environment dynamics \(p\).  
 Strictly speaking, this function should be written as \(V(s, o, p, \pi)\) to reflect all its dependencies.  
 However, since the environment dynamics \(p\) are fixed throughout learning, we omit it from the notation.  
 To emphasize that the value is tied to a specific policy \(\pi\), we place \(\pi\) as a subscript.  
-This yields the compact notation \(V_\pi(s, o)\).
+This yields the compact notation \(V_\pi : \mathcal{S} \times \mathcal{O} \to \mathbb{R}\).
 
 If \(V_\pi(s, o) > V_\pi(s', o')\), then, under policy \(\pi\), the agent prefers being in state \(s\) with observation \(o\) over state \(s'\) with observation \(o'\).  
 Formally, the state-value function is defined as:
@@ -165,7 +163,7 @@ Using \(g(t) = r_1 + \gamma \, g(t_{2:})\), we can write:
 \[
 \begin{aligned}
 V_\pi(s, o) 
-&= \mathbb{E}\Big[g(t)\Big], \quad \text{with } t \sim \tau_t(s, o p, \pi) \\[4pt]
+&= \mathbb{E}\Big[g(t)\Big], \quad \text{with } t \sim \tau_t(s, o, p, \pi) \\[4pt]
 &= \mathbb{E}\Big[r_1 + \gamma \, g(t_{2:})\Big] \\[4pt]
 &= \mathbb{E}\Big[r_1 + \gamma \, V_\pi(s_2)\Big],
 \end{aligned}
@@ -185,7 +183,7 @@ V_\pi(s, o)
 
 Now that the value of a state has been expressed, the next step is to consider the value of taking a specific action in a given state.
 Indeed, it is useful to estimate the expected future gain of an action \(a\) in state \(s\), in order to compare different actions and determine which one is the most promising under a given policy \(\pi\).
-This function is called the state-action value function \(Q_\pi\), and it estimates the expected return when starting from a state \(s\), taking an action \(a\), and then following the policy \(\pi\) for all subsequent steps.
+This function is called the state-action value function \(Q_\pi : \mathcal{S} \times \mathcal{O} \times \mathcal{A} \to \mathbb{R}\).
 If \(Q_\pi(s, a) > Q_\pi(s, a')\), then, under policy \(\pi\), choosing action \(a\) in state \(s\) yields a higher expected return than choosing action \(a'\).
 It is defined as:
 \[
@@ -206,7 +204,7 @@ Q_\pi(s, a)
 \subsection{Optimal Policy}
 \label{subsec:optimal_policy}
 
-Recall that the goal of reinforcement learning is to find a policy that maximizes, for every observation, the expected cumulative reward until a terminal state is reached.  
+The goal of reinforcement learning is to find a policy that maximizes, for every observation, the expected cumulative reward until a terminal state is reached.  
 This policy is called the optimal policy and is denoted by \(\pi^*\).  
 Formally, \(\pi^*\) is a deterministic policy that always selects the action with the highest state-action value:
 \[
@@ -216,7 +214,13 @@ Formally, \(\pi^*\) is a deterministic policy that always selects the action wit
 0 & \text{otherwise},
 \end{cases}
 \]
-where \(s\) is the true state underlying the observation \(o\).  
+where \(s\) is the true state underlying the observation \(o\).
+
+It is worth noting that defining the optimal policy in a partially observable setting is more delicate than in the fully observable case.  
+Since the policy only has access to observations \(o\) rather than the true state \(s\), the observation must carry enough information to distinguish between states that require different optimal actions.  
+For the sake of simplicity, we assume throughout this manuscript that this condition holds.  
+The practical interest of a fully rigorous definition is limited here.  
+Our aim is simply to provide the reader with an intuition of what reinforcement learning ultimately seeks to achieve.
 
 As we have just seen, both \(V_\pi\) and \(Q_\pi\) can be expressed explicitly in terms of the environment dynamics \(p\) and the policy \(\pi\).  
 If \(p\) and \(\pi\) are fully known, one can theoretically compute the optimal policy by unfolding the graph of all possible trajectories starting from a given state \(s\) and observation \(o\).  
@@ -226,4 +230,4 @@ Solving an MDP in this way is known as dynamic programming.
 In practice, most environments of have too many states to allow an explicit representation of the dynamics \(p\).  
 Storing and computing over the full transition function becomes intractable.
 To overcome this limitation, instead of directly constructing the optimal policy, we adopt an iterative approach: starting from an initial policy, we progressively improve it so that it converges toward \(\pi^*\).  
-This is the subject of the next section.
+This iterative improvement through interaction with the environment is precisely what constitutes learning in reinforcement learning, and it is the subject of the next section.
