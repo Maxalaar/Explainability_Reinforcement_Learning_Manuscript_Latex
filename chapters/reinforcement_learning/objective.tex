@@ -1,8 +1,8 @@
 \section{Objective}
 \label{sec:rl_objective}
 
-Now that the main developments shaping reinforcement learning have been outlined, the formal definition of its objective can be introduced.
-In essence, reinforcement learning aims to build a system that makes sequential decisions in order to maximize a cumulative reward signal over the long term.
+Now that the main developments shaping \gls{rl} have been outlined, the formal definition of its objective can be introduced.
+In essence, \gls{rl} aims to build a system that makes sequential decisions in order to maximize a cumulative reward signal over the long term.
 The purpose of this section is to translate this intuitive goal into a rigorous mathematical framework.
 To this end, the presentation proceeds step by step:
 \begin{enumerate}
@@ -18,20 +18,20 @@ To this end, the presentation proceeds step by step:
 
 The RL framework is grounded in the agent paradigm: the decision-making entity is called the agent.  
 The agent perceives its environment, processes the information it receives, and acts upon the environment to influence future outcomes.  
-To specify the task and the agent's capacity to perceive and act, the problem is modeled as a Markov Decision Process (MDP).
+To specify the task and the agent's capacity to perceive and act, the problem is modeled as a \gls{mdp}.
 
-Before providing a more detailed definition, it is useful to clarify the scope of the MDP problems considered in this manuscript.
+Before providing a more detailed definition, it is useful to clarify the scope of the \gls{mdp} problems considered in this manuscript.
 The goal of this subsection is to introduce the notations and formalisms as they are used in modern RL practice.  
-Other formulations of MDPs exist that are better suited, for instance, to proving convergence guarantees.  
-Our focus here is to represent reinforcement learning as it is applied, even if this means sacrificing some mathematical proof capability.  
+Other formulations of \gls{mdp} exist that are better suited, for instance, to proving convergence guarantees.  
+Our focus here is to represent \gls{rl} as it is applied, even if this means sacrificing some mathematical proof capability.  
 We therefore restrict the analysis to the following configuration:
 
 \begin{itemize}
     \item The single-agent learning setting is considered.
     If any other agents are present in the environment, they are treated as part of the environment dynamics.
 
-    \item Finite-horizon MDPs are considered.  
-    Each interaction sequence between the MDP and the policy has a defined beginning and a defined end.  
+    \item Finite-horizon \gls{mdp} are considered.  
+    Each interaction sequence between the \gls{mdp} and the policy has a defined beginning and a defined end.  
     Between these two points, the number of interaction steps may vary depending on the situation, but it always remains finite.
 
     \item The partially observable framework is adopted, where the agent does not have direct access to the true state of the system, but instead relies on limited observations that provide only partial information about the environment.  
@@ -40,8 +40,8 @@ We therefore restrict the analysis to the following configuration:
 
 
 The resulting framework can be formally described as a single-agent finite-horizon partially observable markov decision process.  
-For simplicity, we will refer to this setting as an “MDP” throughout this manuscript.  
-A MDP is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, p)\):  
+For simplicity, we will refer to this setting as an “\gls{mdp}” throughout this manuscript.  
+A \gls{mdp} is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, p)\):  
 \begin{itemize}
     \item \textbf{\(\mathcal{S}\)}: The set of states, representing all possible configurations of the environment.  
     A state belonging to this set is denoted by \(s \in \mathcal{S}\).  
@@ -55,7 +55,7 @@ A MDP is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal
 
     \item \textbf{\(\mathcal{A}\)}: The set of actions that the agent may execute.
     A action belonging to this set is denoted by \(a \in \mathcal{A}\). 
-    Actions influence the dynamics of the MDP, thereby shaping its future course.  
+    Actions influence the dynamics of the \gls{mdp}, thereby shaping its future course.  
     They represent the agent's capacity to act upon its environment.
 
     \item \textbf{\(\mathcal{R}\)}: The set of rewards that the agent can receive from the environment.  
@@ -88,7 +88,7 @@ The notation \(\pi(a \mid o)\) denotes the probability of selecting action \(a\)
 \subsection{Trajectory}
 \label{subsec:trajectory}
 
-Now that both the MDP and the policy \(\pi\) have been defined, the interaction between them can be characterized.  
+Now that both the \gls{mdp} and the policy \(\pi\) have been defined, the interaction between them can be characterized.  
 A sequence of consecutive interactions between an environment and a policy is called a trajectory.  
 A trajectory is generated through the repeated interaction between the policy and the environment, following the sequence below:
 \begin{enumerate}
@@ -143,7 +143,7 @@ In theory, since the goal is to maximize long-term cumulative reward, the discou
 In practice, however, \(\gamma\) is often chosen slightly below \(1\) (e.g., \(0.99\)) to stabilize learning, and to reflect the fact that distant future rewards are inherently more uncertain.
 Throughout this manuscript, unless explicitly stated otherwise, the discount factor is assumed to be \(\gamma = 1\) to simplify notation.
 
-The return also admits a recursive form, which is central to the dynamic programming and reinforcement learning algorithms presented later:
+The return also admits a recursive form, which is central to the dynamic programming and \gls{rl} algorithms presented later:
 \[
 g(t, \gamma) = r_1 + \gamma \, g(t_{2:}),
 \]
@@ -209,7 +209,7 @@ Q_\pi(s, a)
 \subsection{Optimal Policy}
 \label{subsec:optimal_policy}
 
-The goal of reinforcement learning is to find a policy that maximizes, for every observation, the expected cumulative reward until a terminal state is reached.  
+The goal of \gls{rl} is to find a policy that maximizes, for every observation, the expected cumulative reward until a terminal state is reached.  
 This policy is called the optimal policy and is denoted by \(\pi^*\).  
 Formally, \(\pi^*\) is a deterministic policy that always selects the action with the highest state-action value:
 \[
@@ -229,9 +229,9 @@ This assumption is of interest when one seeks to establish mathematical proofs, 
 As just shown, both \(V_\pi\) and \(Q_\pi\) can be expressed explicitly in terms of the environment dynamics \(p\) and the policy \(\pi\).
 If \(p\) and \(\pi\) are fully known, one can theoretically compute the optimal policy by unfolding the graph of all possible trajectories starting from a given state \(s\) and observation \(o\).  
 This is possible precisely because \(V_\pi\) and \(Q_\pi\) are recursive functions.  
-Solving an MDP in this way is known as dynamic programming.
+Solving an \gls{mdp} in this way is known as dynamic programming.
 
 In practice, most environments of have too many states to allow an explicit representation of the dynamics \(p\).  
 Storing and computing over the full transition function becomes intractable.
 To overcome this limitation, instead of directly constructing the optimal policy, an iterative approach is adopted: starting from an initial policy, it is progressively improved so that it converges toward \(\pi^*\).
-This iterative improvement through interaction with the environment is precisely what constitutes learning in reinforcement learning, and it is the subject of the next section.
+This iterative improvement through interaction with the environment is precisely what constitutes learning in \gls{rl}, and it is the subject of the next section.
