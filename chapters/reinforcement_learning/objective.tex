@@ -1,5 +1,5 @@
 \section{Objective}
-\label{sec:objective}
+\label{sec:rl_objective}
 
 Now that the main developments shaping reinforcement learning have been outlined, we proceed to the formal definition of its objective.
 In essence, reinforcement learning aims to build a system that makes sequential decisions in order to maximize a cumulative reward signal over the long term.  
@@ -48,13 +48,16 @@ A MDP is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal
     The set of terminal states is denoted by \(\mathcal{S}^t\), with a terminal state written as \(s^t \in \mathcal{S}^t\).
     
     \item \textbf{\(\mathcal{O}\)}: The set of observations that the agent can perceive from the environment.
+    A observation belonging to this set is denoted by \(o \in \mathcal{O}\). 
     Unlike the true state \(s \in \mathcal{S}\), which is hidden from the agent, the observation \(o \in \mathcal{O}\) provides partial information about the current state.
 
-    \item \textbf{\(\mathcal{A}\)}: The set of actions that the agent may execute.  
+    \item \textbf{\(\mathcal{A}\)}: The set of actions that the agent may execute.
+    A action belonging to this set is denoted by \(a \in \mathcal{A}\). 
     Actions influence the dynamics of the MDP, thereby shaping its future course.  
     They represent the agent's capacity to act upon its environment.
 
     \item \textbf{\(\mathcal{R}\)}: The set of rewards that the agent can receive from the environment.  
+    \A reward belonging to this set is denoted by \(r \in \mathcal{R}\). 
     \(\mathcal{R}\) is a subset of \(\mathbb{R}\).  
     The agent's goal is to maximize the cumulative sum of these rewards over time.
 
@@ -87,7 +90,7 @@ Now that both the MDP and the policy \(\pi\) have been defined, we can character
 A sequence of consecutive interactions between an environment and a policy is called a trajectory.  
 A trajectory is generated through the repeated interaction between the policy and the environment, following the sequence below:
 \begin{enumerate}
-    \item The environment provides an observation \(o\) to the policy \(\pi\).
+    \item The environment, being in state \(s\), provides an observation \(o\) to the policy \(\pi\).
     Based on this observation, the policy outputs a probability distribution over actions \(\pi(\cdot \mid o)\), from which an action is sampled:
     \(
     a \sim \pi(\cdot \mid o).
@@ -145,7 +148,7 @@ g(t, \gamma) = r_1 + \gamma \, g(t_{2:}),
 
 From the notion of return, we can define functions that estimate the expected return of a policy from a given starting point.  
 These functions are called value functions.
-The first one we examine in detail is the state-value function.  
+The first one we examine in detail is the state-value function \(V\).  
 It tells us how desirable a particular state is under a given policy \(\pi\), given an observation \(o\) and environment dynamics \(p\).  
 Strictly speaking, this function should be written as \(V(s, o, p, \pi)\) to reflect all its dependencies.  
 However, since the environment dynamics \(p\) are fixed throughout learning, we omit it from the notation.  
@@ -183,7 +186,7 @@ V_\pi(s, o)
 
 Now that the value of a state has been expressed, the next step is to consider the value of taking a specific action in a given state.
 Indeed, it is useful to estimate the expected future gain of an action \(a\) in state \(s\), in order to compare different actions and determine which one is the most promising under a given policy \(\pi\).
-This function is called the state-action value function \(Q_\pi : \mathcal{S} \times \mathcal{O} \times \mathcal{A} \to \mathbb{R}\).
+This function is called the state-action value function \(Q_\pi : \mathcal{S} \times \mathcal{A} \to \mathbb{R}\).
 If \(Q_\pi(s, a) > Q_\pi(s, a')\), then, under policy \(\pi\), choosing action \(a\) in state \(s\) yields a higher expected return than choosing action \(a'\).
 It is defined as:
 \[
@@ -219,8 +222,7 @@ where \(s\) is the true state underlying the observation \(o\).
 It is worth noting that defining the optimal policy in a partially observable setting is more delicate than in the fully observable case.  
 Since the policy only has access to observations \(o\) rather than the true state \(s\), the observation must carry enough information to distinguish between states that require different optimal actions.  
 For the sake of simplicity, we assume throughout this manuscript that this condition holds.  
-The practical interest of a fully rigorous definition is limited here.  
-Our aim is simply to provide the reader with an intuition of what reinforcement learning ultimately seeks to achieve.
+This assumption is of interest when one seeks to establish mathematical proofs, but in real-world implementations it matters little.
 
 As we have just seen, both \(V_\pi\) and \(Q_\pi\) can be expressed explicitly in terms of the environment dynamics \(p\) and the policy \(\pi\).  
 If \(p\) and \(\pi\) are fully known, one can theoretically compute the optimal policy by unfolding the graph of all possible trajectories starting from a given state \(s\) and observation \(o\).  
