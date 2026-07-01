@@ -23,9 +23,9 @@ Indeed, a \gls{nn} does not directly map $x$ to $y$.
 Instead, as illustrated in Figure~\ref{fig:general_architecture_multilayer_perceptron}, it computes a sequence of intermediate activations across hidden layers.  
 These activations correspond to internal encodings of the input, which we refer to as representations in the sense of Definition~\ref{def:representation}.
 
-\begin{definition}{Representation}{representation}
-A representation is the internal encoding of an input produced by a trained \gls{nn}.  
-It corresponds to the activations of one or several layers and provides a transformed view of the input.  
+\begin{definition}{Latent Representation}{representation}
+A representation is the internal encoding of an input given by a single intermediate layer of a trained \gls{nn}.
+While embeddings may exist independently of learning, a representation is a learned embedding shaped by the training process and the task.
 \end{definition}
 
 Each hidden layer refines the representation of the previous layer.  
@@ -35,9 +35,9 @@ This process can be described as a sequence of transformations where each $h^{(l
 x \rightarrow h^{(1)} \rightarrow h^{(2)} \rightarrow \dots \rightarrow h^{(L-1)} \rightarrow \hat{y}
 \]
 
-The set of all such representations produced by a layer or a model over a dataset defines its \gls{ls}, as defined in Definition~\ref{def:latent_space}.
+The set of all such representations produced by a layer over a dataset defines its \gls{ls}, as defined in Definition~\ref{def:latent_space}.
 
-\begin{definition}{\gls{ls}}{latent_space}
+\begin{definition}{Latent Space}{latent_space}
 The \gls{ls} is the set of all representations produced by a layer over a dataset.  
 It is shaped by learning and organizes representations according to task-relevant properties.  
 \end{definition}

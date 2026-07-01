@@ -3,7 +3,7 @@
 
 \glsresetall
 
-The ability of a \gls{nn} to generalize provides evidence that the model has learned more than a simple memorization of the training examples (Section~\ref{sec:evaluation}).
+The ability of a \gls{nn} to generalize provides evidence that the model has learned more than a simple memorization of the training examples.
 Instead, it must construct internal representations that capture regularities present in the data.
 These representations play a central role in the network's ability to solve a task.
 Understanding their structure is therefore a key step toward understanding how \gls{nn} achieve generalization.
@@ -11,13 +11,15 @@ Understanding their structure is therefore a key step toward understanding how \
 In classical machine learning approaches, practitioners had to manually design data representations in order to make them usable by simple models.
 \gls{dl} introduces a paradigm shift: rather than relying on hand-crafted features to meaningfully represent data, it automatically learns these representations.
 Through the successive activation of hidden layers, \gls{nn} gradually construct representations that become increasingly relevant to the task under consideration \cite{rumelhart1986learning}.
-As discussed in Chapter~\ref{chap:deep_learning}, these representations are not meaningful at initialization, they emerge progressively during training as the model optimizes its objective.
+These representations are not meaningful at initialization, they emerge progressively during training as the model optimizes its objective.
 It is precisely through these learned representations that a trained network is able to map an input to an output, including for examples never encountered during training.
+Since these representations are learned internally by the network and are not directly observable from the input or output spaces, they are commonly referred to as \gls{lr}.
+The collection of these \gls{lr} learned throughout the network is commonly referred to as a \gls{ls}.
 
 These \gls{ls} are now at the core of a growing number of practical applications.
 Neural video compression exploits the compactness of \gls{ls} to encode information efficiently \cite{lu2019dvcendtoenddeepvideo}.
 In \gls{rl}, agent internal representations are used for efficient exploration in extremely open environments \cite{burda2018largescalestudycuriositydrivenlearning}.
-Recommendation systems model users and content within a shared latent space to compute meaningful similarities \cite{he2017neuralcollaborativefiltering}.
+Recommendation systems model users and content within a shared \gls{ls} to compute meaningful similarities \cite{he2017neuralcollaborativefiltering}.
 Retrieval-augmented generation systems index and query knowledge bases through latent embeddings \cite{lewis2021retrievalaugmentedgenerationknowledgeintensivenlp}.
 Finally, \gls{llm} and multimodal architectures rely on the quality of learned representations to align heterogeneous modalities such as text, images, and audio \cite{radford2021learningtransferablevisualmodels}.
 These examples represent only some of the most widespread applications of \gls{lr}.
@@ -25,7 +27,7 @@ These examples represent only some of the most widespread applications of \gls{l
 Given their extensive use, the study of \gls{lr} has become a central topic in \gls{dl} research.
 A major objective is to understand how information is organized within these spaces, which concepts are encoded, and how these representations influence model behavior.
 
-In this chapter, we first make explicit the working hypothesis that underlies much of the research on latent space analysis.
+In this chapter, we first make explicit the working hypothesis that underlies much of the research on \gls{ls} analysis.
 Throughout this manuscript, we refer to this assumption as the concept hypothesis \ref{sec:concept_hypothesis}.
 Once this conceptual framework has been established, we review the main approaches proposed in the literature to identify and extract concepts from \gls{lr}.
 To the best of our knowledge, the main families of methods include probing methods (Section~\ref{sec:probing}), semantic directions (Section~\ref{sec:direction}), sparse autoencoders (Section~\ref{sec:sparse_autoencoder}), and clustering-based approaches (Section~\ref{sec:clustering}).

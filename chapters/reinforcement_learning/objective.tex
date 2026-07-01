@@ -88,7 +88,7 @@ The notation \(\pi(a \mid o)\) denotes the probability of selecting action \(a\)
 \subsection{Trajectory}
 \label{subsec:trajectory}
 
-Now that both the \gls{mdp} and the policy \(\pi\) have been defined, the interaction between them can be characterized.  
+Now that both the \gls{mdp} \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, p)\) and the policy \(\pi\) have been defined, the interaction between them can be characterized.  
 A sequence of consecutive interactions between an environment and a policy is called a trajectory.  
 A trajectory is generated through the repeated interaction between the policy and the environment, following the sequence below:
 \begin{enumerate}
@@ -114,6 +114,7 @@ It is important to clearly distinguish between a trajectory distribution and its
 The distribution over trajectories is denoted by \(\tau\), and a particular trajectory is denoted by \(t\).
 The distribution \(\tau\) is determined by the initial state \(s\), the initial observation \(o\), the environment dynamics \(p\), and the policy \(\pi\), and is denoted by \(\tau(s, o, p, \pi)\).
 The notation \(t \sim \tau(s, o, p, \pi)\) means that the trajectory \(t\) is sampled from the distribution induced by \(s\), \(o\), \(p\), and \(\pi\).
+The notation \(\tau(t \mid s, o, p, \pi)\) denotes the probability of observing the trajectorie \(t\) under the distribution \(\tau(\cdot \mid s, o, p, \pi)\)
 
 An important property of the trajectory distribution is its recursive structure.
 Since both the policy \(\pi\) and the transition function \(p\) are known, the distribution over trajectories starting from \(s_1\) with observation \(o_1\) can be expressed in terms of the distribution over trajectories starting from the next state \(s_2\) with observation \(o_2\).

@@ -8,10 +8,15 @@ The first major milestone came in 1943 with the proposal of a mathematical model
 This work established the key idea that networks of simple units can give rise to complex computations.
 The focus was on representational power, not on the ability of such systems to learn.
 As a result, this work remained largely theoretical and had limited practical applications.
-A major step toward operationalizing the idea of networks with the perceptron algorithm in 1958 \cite{rosenblatt1958perceptron}.
-The perceptron was designed to adjusting its parameters based on input–output pairs in order to approximate a function.
-However, the perceptron’s fundamental limitations were exposed in 1969, revealing that the algorithm could not learn functions as simple as the exclusive-or \cite{minsky1969introduction}.
-To overcome this limitation, researchers in 1986 proposed using gradient descent optimization to train deep \glspl{nn} \cite{rumelhart1986learning}.
+
+A major step toward operationalizing the idea of \gls{nn}s was achieved with the perceptron algorithm in 1958 \cite{rosenblatt1958perceptron}.
+It was designed to adjust its parameters from input–output pairs in order to approximate a target function.
+However, its fundamental limitations were exposed in 1969, showing that it could not learn functions as simple as the exclusive-or (XOR) \cite{minsky1969introduction}.
+At the same time, it was demonstrated that stacking multiple perceptrons could in principle represent such functions.
+At the time, no effective training procedure existed for such multi-layer architectures, and it was not until 1986 that researchers proposed using gradient descent optimization to train deep \glspl{nn} \cite{rumelhart1986learning}.
+From this point onward, the emergence of \gls{dl} is retrospectively situated, even though the term itself appeared later.
+\gls{dl} is defined as the training of deep \glspl{nn} using gradient-based optimization methods.
+For simplicity, the term \gls{nn} will refer throughout this manuscript to deep \glspl{nn}.
 
 It took several decades before \gls{dl} reached the level of prominence it has today.
 One major obstacle was the absence of theoretical guarantees regarding the convergence of learning algorithms.
@@ -24,7 +29,7 @@ These empirical advances were made possible by two key developments: the availab
 At the same time, progress in hardware, particularly the use of graphics processing units, greatly increased computational capacity and made it feasible to train large-scale models \cite{krizhevsky2012imagenet}.
 
 These changes paved the way for the rise of \gls{dl} as we know it today.
-\gls{dl} has achieved remarkable success across a wide range of domains, including computer vision \cite{krizhevsky2012imagenet}, complex games \cite{silver2017mastering}, content recommendation \cite{covington2016deep}, bio-chemistry \cite{jumper2021highly}, as well as the now essential digital assistants based on large language models \cite{brown2020language}.
+\gls{dl} has achieved remarkable success across a wide range of domains, including computer vision \cite{krizhevsky2012imagenet}, complex games \cite{silver2017mastering}, content recommendation \cite{covington2016deep}, bio-chemistry \cite{jumper2021highly}, as well as the now essential digital assistants based on \gls{llm} \cite{brown2020language}.
 The diversity of these applications explains the enthusiasm for this technology, which continues to redefine the boundaries of what was once considered automatable.
 
 Figure~\ref{fig:evolution_deep_learning} provides a timeline of the key milestones that shaped deep learning.

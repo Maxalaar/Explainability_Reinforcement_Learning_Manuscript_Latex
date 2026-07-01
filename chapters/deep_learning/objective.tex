@@ -7,7 +7,8 @@ This framework serves as a standard reference in the field, as all building bloc
 
 In this setting, learning consists of progressively shaping a \gls{nn} that serves as an approximation of a target function.
 At initialization, the network does not yet provide a meaningful representation of this function.
-It gradually becomes capable of capturing the relationship between inputs and outputs through successive updates during training.
+Since a \gls{nn} is a parametric function, its parameters are progressively updated during training so as to make it a better approximation of the target function.
+It gradually becomes capable of capturing the relationship between inputs and outputs through successive parameter updates during training.
 For this reason, \gls{dl} is naturally situated within the framework of machine learning.
 A standard definition of machine learning is:
 \begin{quote}
@@ -43,8 +44,8 @@ This leads to the following formulation for a dataset $\mathcal{D}$ of size $N$,
 Now that the way the target function $f$ is represented has been made explicit, one can ask what it means for a function $\hat{f}$ to be a good approximation of this function.
 It means that, for a given input $x^{(i)}$, the \gls{nn} output $\hat{y}^{(i)}$ is close to the true output $y^{(i)}$.
 To quantify the quality of this approximation, a function $\mathcal{L}$ is introduced that measures the discrepancy between predictions and target values.
-In \gls{dl}, this function called the \emph{loss function} plays a central role as it guides the learning process.
-In regression settings, a common choice is the mean squared error, defined as:
+In \gls{dl}, this function called the loss function plays a central role as it guides the learning process.
+In regression settings, a common choice is the \gls{mse}, defined as:
 \[
     \mathcal{L}(\hat{y}, y) = (\hat{y} - y)^2.
 \]

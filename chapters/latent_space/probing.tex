@@ -4,7 +4,7 @@
 \input{figures/latent_space/latent_space_probing.tex}
 \input{figures/latent_space/probing_illustration.tex}
 
-Probing methods aim to determine whether a given human-defined concept is encoded within the \gls{ls} of a neural network \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
+Probing methods aim to determine whether a given semantic concept is encoded within the \gls{ls} of a \gls{nn} \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
 More specifically, they investigate whether the presence or absence of a selected concept can be inferred from embeddings.
 The underlying assumption is that if a concept can be reliably decoded from these representations, then the network likely encodes information related to it in order to perform its task.
 
@@ -33,7 +33,7 @@ The classifier used to detect the presence or absence of a concept must remain i
 Indeed, if the probe has too much capacity, it may reconstruct the target information from complex correlations that do not necessarily correspond to information explicitly encoded in the \gls{ls}.
 In such a case, it becomes difficult to determine whether the concept is genuinely represented by the network or merely reconstructed through the expressive power of the classifier.
 For this reason, probing methods often rely on linear classifiers.
-A linear separation suggests that the information is easily accessible to the neural network and potentially usable during decision-making.
+A linear separation suggests that the information is easily accessible to the \gls{nn} and potentially usable during decision-making.
 If the classifier achieves performance significantly above chance level, this suggests that the \gls{ls} contains exploitable information related to the considered concept.
 
 An application of this technique can be found in studies investigating whether \gls{llm} develop internal representations of their environment \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.

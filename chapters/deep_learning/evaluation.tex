@@ -49,12 +49,12 @@ This typically occurs when the number of parameters is too large relative to the
 The simplest remedy is therefore to reduce the number of parameters in the model.
 However, it is still necessary to ensure that the model remains sufficiently expressive to perform well on the data.
 
-If $\bar{\ell}_{\text{test}} \approx \bar{\ell}_{\text{train}}$, this indicates that the model generalizes well beyond the training data.
+If $\bar{\ell}_{\text{test}} \approx \bar{\ell}_{\text{train}}$, this indicates that the model generalizes well beyond the training data \cite{Kawaguchi_2022}.
 The model can therefore be used with confidence for the task on which it was trained.
 
 The ability of a neural network to generalize provides evidence that the model has learned more than a simple memorization of the training examples.
 Instead, it must construct internal representations that capture regularities present in the data.
 These representations emerge progressively through the hidden layers during training.
 Understanding their structure is therefore a key step toward understanding how neural networks generalize.
-The collection of these representations is referred as the latent space.
-The next chapter is devoted to the study of these latent spaces.
+The collection of these representations is referred as the \gls{ls}.
+The next chapter is devoted to the study of these \gls{ls}s.

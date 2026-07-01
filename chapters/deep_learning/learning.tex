@@ -29,14 +29,13 @@ The goal is then to iteratively modify this vector in order to improve the netwo
 To determine how to update the parameters, the effect of small variations in each parameter on the loss $\mathcal{L}$ is studied.
 To analyze how parameter variations affect the loss, a fundamental mathematical tool known as the gradient is used.
 It is defined as the collection of partial derivatives of a function with respect to its variables.
+The gradient measures the effect of a small variation of each parameter on the loss.
+
 In our setting, the objective is to understand, for a given example $(x^{(i)}, y^{(i)})$, how the parameters should be adjusted so that the \gls{nn} prediction $\hat{y}^{(i)}$ becomes closer to the true output $y^{(i)}$.
 To achieve this, the partial derivatives of the loss function $\mathcal{L}$ with respect to each parameter vector $\theta$ are computed:
 \[
 \nabla_{\theta} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}) = \left[ \frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_1}, \dots, \frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_P} \right].
 \]
-
-In neural network training, the loss surface is highly non‑convex, meaning that the optimization path depends strongly on the initialisation.
-Figure~\ref{fig:multiple_gradient_descents_non_convex} illustrates this behaviour for several well‑known non‑convex functions, showing how different starting points can lead to distinct local minima.
 
 \input{figures/deepl_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
 
@@ -59,7 +58,8 @@ As a result, a single step is not sufficient to significantly reduce the loss, s
 Producing a sequence of parameter vectors $\theta_1, \theta_2, \dots$ that progressively improve the model.
 In practice, training is stopped when successive updates no longer produce a significant decrease in the loss.
 
-It is through this simple set of rules, consisting of random initialization, gradient computation, and iterative parameter updates, that highly complex \gls{nn}s can be trained.
-Of course, when using gradient descent to optimize the parameters of a non-convex function such as a \gls{nn}, there is no theoretical guarantee of convergence to a global, or even a local, minimum.
-However, in practice, this method often yields satisfactory results for the task.
-This success is often attributed to the high expressive power of \gls{nn}s, even though a complete theoretical understanding of this phenomenon remains an open question.
+It has been mathematically shown that gradient descent applied to a convex loss with respect to the parameters converges to a global optimum, independently of the initialization.
+However, \gls{nn} training involves highly non-convex loss surfaces, so the optimization trajectory becomes strongly dependent on the initial conditions, as illustrated in Figure~\ref{fig:multiple_gradient_descents_non_convex}, where different starting points lead to distinct local minima on standard non-convex functions.
+
+Despite the lack of theoretical guarantees of convergence to a global optimum in this setting, the simple procedure of random initialization followed by iterative gradient-based updates is sufficient in practice to train highly complex \glspl{nn}.
+This empirical success is often attributed to the expressive power of \gls{nn}s, even though a complete theoretical understanding of this phenomenon remains an open question.

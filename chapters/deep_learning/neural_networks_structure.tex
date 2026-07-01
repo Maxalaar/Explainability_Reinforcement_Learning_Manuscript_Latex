@@ -15,7 +15,8 @@ Indeed, most of the essential mechanisms of \gls{dl} are present in it, making i
 
 The artificial neuron is the basic building block of \gls{nn}.
 It is through these units that all computations within the network are carried out.
-A neuron receives a set of input signals from other neurons and produces an output that is transmitted to subsequent neurons units.
+A neuron receives a set of input signals from other neurons, where these inputs are represented as real-valued numbers.
+It produces an output, also a real-valued number, which is transmitted to subsequent neural units.
 Its internal state, called the activation, reflects its level of response and encodes the information processed for a given input.
 This activation, or lack thereof, is then used as input information by other neurons to determine their own activations, thereby propagating information through the network.
 
@@ -101,9 +102,9 @@ This matrix-vector representation is visualised in Figure~\ref{fig:matrix_intera
 It is important to examine the role played by the intermediate layers of a \gls{nn}.
 At least one hidden layer is required to represent sufficiently complex functions.
 In practice, however, modern architectures often include many more.
-This depth is mainly motivated by empirical observations.
+Theoretical results have shown that, for a fixed number of parameters, increasing the number of layers enhances the expressive capacity of \gls{nn}s \cite{telgarsky2016benefits}.
 Each layer is seen as a processing step, and more complex target functions typically require more such steps to be well approximated.
-However, this interpretation is based on experimental findings rather than a theoretical justification \cite{goodfellow2016deep}.
+However, this interpretation is based on experimental findings rather than a theoretical justification.
 An entire chapter of this manuscript is devoted to studying the information that can be extracted from the activations of these intermediate layers (Chapter~\ref{chap:latent_space}).
 
 \subsection{Network}
@@ -130,7 +131,7 @@ The model parameters are thus denoted by:
 
 In this manuscript, $\theta$ is considered as a vector in $\mathbb{R}^P$, where $P$ denotes the total number of parameters, such that $\theta = [w_1, \dots, w_P]$.
 The notation $\hat{f}_{\theta}$ expresses the dependence of the \gls{nn} on its parameters.
-Increasing the number of parameters, either by adding more neurons per layer or by increasing the number of layers, enhances the expressive power of the model, allowing it to approximate more complex functions.
+Increasing the number of parameters, either by adding more neurons per layer or by increasing the number of layers, can enhances the expressive power of the model, allowing it to approximate more complex functions.
 However, this also increases computational cost and training time.
 
 It is important to distinguish between the architecture and the parameters of a \gls{nn}.

@@ -1,7 +1,7 @@
 \section{Sparse Autoencoder}
 \label{sec:sparse_autoencoder}
 
-As discussed previously, approaches based on latent directions face inherent limitations.
+Approaches based on latent directions face inherent limitations.
 Empirically, only a restricted subset of concepts appears to admit a linear representation, and even these directions are often affected by significant entanglement with other concepts, illustrated in Figure~\ref{fig:entanglement_illustration}.
 
 \input{figures/latent_space/latent_space_sparse_autoencoders.tex}
@@ -68,7 +68,8 @@ In these applications, the idea is to desuperpose  \gls{llm} \gls{lr} using \gls
 Once this representation is obtained, it has been shown that many concept vectors exhibit strong semantic properties.
 A well-known example is the Golden Gate Bridge concept direction, illustrated in Figure~\ref{fig:sparse_autoencoder_illustration}, which activates systematically whenever the input text or image refers to the Golden Gate Bridge, regardless of the language or modality.
 
-However, it is also possible to artificially activate this concept direction by directly modifying the sparse representation $z$, even when the input does not contain any reference to it.
+It is possible to artificially activate this concept direction by directly modifying the sparse representation $z$, even when the input does not contain any reference to it.
+This operation constitutes an explicit intervention on the model’s latent representations.
 The edited representation is then projected back into the original activation space and the model proceeds with standard next-token generation from $h^*$:
 \[
 h^* = f_{\text{dec}}(z^*), \quad \text{where} \quad z^* = z + \delta \, e_i,
@@ -98,7 +99,7 @@ These limitations can be summarized as follows:
     This abundance of semantically vacuous directions questions the extent to which the decomposition genuinely reflects the conceptual structure of the model.
 
     \item \textbf{Sparsity--semantics trade-off.}
-    Increasing the sparsity coefficient $\lambda$ beyond a certain threshold degrades the semantic quality of the learned features.
+    Increasing the sparsity coefficient $\lambda$ beyond a certain threshold degrades the semantic quality of the learned features \cite{tanhPenaltyDictionaryLearning}.
     The representations tend to lose meaningful structure, suggesting that enforcing excessive sparsity comes at the cost of interpretability.
 
     \item \textbf{Failure of scaling to remove superposition.}
