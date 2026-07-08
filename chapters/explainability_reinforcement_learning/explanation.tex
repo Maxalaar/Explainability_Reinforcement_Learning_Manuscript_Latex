@@ -2,9 +2,9 @@
 \label{sec:explanation}
 
 % Explanation
-Before anything else, it is necessary to establish what is meant by an explanation in the context of XAI.
+It is necessary to establish what is meant by an explanation in the context of XAI.
 The difficulty of this question lies in its fundamentally multidisciplinary nature.
-When we speak about explaining something, we are inherently referring to explaining it to a human.
+When we refer to explanation, we are inherently referring to an explanation provided to a human.
 As soon as humans are involved, the problem is no longer purely computational or mathematical.
 It involves several fields of research, such as philosophy, psychology, and sociology.
 So far, these disciplines have not converged on a unified definition of explanation that can be directly applied to XAI.
@@ -12,7 +12,7 @@ For this reason, we introduce here a working definition of explanation.
 
 An explanation involves two entities: the sujet being explained and the receiver of the explanation.
 The receiver of the explanation is a human, who will be referred to as the observer throughout this manuscript.
-In a very schematic view, a human builds a mental model of the system they are observing.
+The observer aims to understand how the subject works and, in doing so, builds a mental model of its functioning.
 In this context, an explanation is what allows the observer to refine and correct their mental model of how the system operates.
 
 \begin{definition}{Subject}{subject}
@@ -36,21 +36,11 @@ Intuitively, providing information about a very rare aspect of the system does n
 
 % XIA
 Now that a general definition of explanation has been established, we can focus on its meaning in the context of XAI.
-In the context of XAI, the subject of the explanation is an artificial intelligence system.
-We adopt the previous definition of an explanation because such definitions are rarely made fully explicit in the XAI literature.
-This definition is suitable for our purposes as it encompasses the range of research works on explainability presented in this manuscript, thereby providing an operational framework.
-
-In practice, XAI (Explainable Artificial Intelligence) primarily concerns the machine learning component of AI systems.
-More specifically, it emerged as a response to the rise of deep neural networks.
-Systems whose behavior is fully determined by human-designed rules are generally considered inherently interpretable.
-For this reason, XAI research does not typically focus on non-learning systems.
-Earlier connectionist models, such as perceptrons or support vector machines, did not achieve the same level of performance as modern deep learning methods.
-Consequently, the problem of explaining model behavior only became critical once deep neural networks started to dominate in terms of performance, despite their limited interpretability.
-
-It is widely accepted that, without additional information or techniques, such deep nn are not considered explainable.
-The central question is therefore how to make what is not explainable explainable.
-When referring to XAI, we generally encompass two types of approaches: methods that aim to reproduce the performance of deep learning systems without using deep learning itself, and methods that aim to make deep learning models themselves explainable.
-The philosophy behind these two approaches is fundamentally different.
+In this context, the subject of the explanation is an artificial intelligence system.
+More precisely, XAI aims at explaining deep neural network models.
+The fact that deep learning models encode knowledge through connectionist representations makes it impossible to understand their functioning simply by inspecting the model.
+As a result, they are universally regarded as not explainable in their raw form.
+From this starting point, two types of approaches emerge: methods that aim to reproduce the performance of deep learning systems without using deep learning itself, and methods that aim to make deep learning models themselves explainable.
 
 In the first approach, the idea is that there is nothing to explain in a trained neural network.
 It is seen as a simple composition of matrix multiplications followed by nonlinear functions, optimized through gradient descent.
@@ -58,19 +48,20 @@ There is no semantic meaning associated with each computational component, and t
 This corresponds to the so-called "black box" view of neural networks.
 Under this assumption, XAI consists of replacing as much of the deep learning system as possible with alternative AI methods.
 
-Another approach argues that neural networks can be explained and rejects the "black box" characterization.
-Claiming that there is nothing to understand in matrix multiplications is sometimes compared to saying that the human brain is merely a set of chemical reactions and therefore not worth studying.
-In this second approach, the focus is not on the substrate of intelligence but on the structures that support it.
-The generalization ability of neural networks, according to this philosophy, cannot be explained solely by statistical correlations.
+In the second approach, it is argued that neural networks can be explained.
+The generalization ability of neural networks, cannot be explained solely by statistical correlations.
 A neural network does not simply memorize a set of examples and replay them.
 Instead, it exhibits a capacity for generalization that suggests the emergence of abstraction.
 
+For the moment, both perspectives coexist under the umbrella of XAI, and because the field is still relatively young, neither approach has established clear dominance over the other.
+As a result, XAI is characterized by a wide diversity of methods and a high level of ongoing exploration.
+This richness reflects the fact that many possible directions are still open and actively being investigated.
+
 % XRL
 Now that we have established a definition of what an explanation in XIA, we can investigate what this means in the context of reinforcement learning.
-
-In reinforcement learning, explaining typically refers to explaining the decision-making process of the agent.
+In reinforcement learning, explaining refers to explaining the decision-making process of the agent.
 We assume that the structure of the environment as well as the agent’s perception and action capabilities are known to the observer and do not need to be explained.
-In most cases, these components are designed by humans and are therefore considered understandable by default.
+These components are designed by humans and are therefore considered understandable by default.
 
 The core element of interest is the agent’s decision-making process, which is represented by the policy, denoted $\pi$.
 The policy is a function that maps observations $\mathcal{O}$ to actions $\mathcal{A}$.
@@ -80,19 +71,3 @@ This setting makes the problem more difficult, since explaining a reinforcement 
 In standard XAI settings, explanations often focus on a single decision problem, such as determining whether an image contains a specific object.
 However, reinforcement learning introduces a temporal dimension.
 This means that when explaining the choice of an action under a given policy, one must take into account a sequence of states and actions, which may involve uncertainty over time.
-
-This temporal dimension in learning introduces a division in the notion of explanation within the reinforcement learning (RL) setting.
-It becomes necessary to distinguish between explaining an agent's decision and explaining its strategy.
-
-When we talk about explaining a decision, we generally refer to identifying which elements of the input led to a particular action distribution.
-The policy is a function, and as such it can be explained using standard explainability methods from AI, by temporarily ignoring the temporal dimension of decision-making.
-Since XAI is a broader field than XRL, many XAI methods can be directly applied to reinforcement learning without modification.
-This approach is limited in the RL setting, but since it still provides information about the function, it can be considered as explainability.
-
-When we talk about explaining a strategy, we refer to explaining the core of reinforcement learning itself.
-Indeed, a strategy corresponds to a sequence of actions over time aimed at achieving a goal.
-In RL, the objective is to maximize cumulative long-term rewards.
-To do so, the agent must construct intermediate sub-goals and perform forward-looking reasoning.
-This level of explanation is what is more specifically referred to as XRL.
-
-Now that the conceptual foundations of XRL have been established, we can describe how existing XRL techniques can be organized in order to build a clear taxonomy.
