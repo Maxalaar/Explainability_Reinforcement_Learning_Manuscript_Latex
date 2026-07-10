@@ -1,8 +1,8 @@
 \section{Taxonomy of XRL Methods}
 
-Now that the concept of XAI has been defined, we can focus on its application to reinforcement learning.
-In this section, we propose an organization of XRL methods based on the XAI perspective introduced previously, while taking into account the specificities of RL.
-For this purpose, we rely on a review of the XRL literature, which allows us to identify the different sources, forms, and subjects that explanations can take in reinforcement learning.
+Now that the concept of XAI has been defined, we turn to its application in reinforcement learning, known as XRL.
+As in XAI, explanations in XRL are produced by explainability methods and can be described in terms of their subject, source, and form.
+This section reviews the possible variations of these three aspects in the specific context of reinforcement learning.
 
 \subsection{Subject}
 
@@ -13,12 +13,11 @@ A reinforcement learning system can be described through two main components: th
 The environment defines the dynamics in which the agent evolves, including the possible states, actions, and transitions.
 Environments are simulations designed by humans, and their dynamics are explicitly defined.
 Therefore, it is assumed that the structure of the environment, as well as the agent's perception and action capabilities, are known to the observer and do not require explanation.
-These components are designed by humans and are therefore considered understandable by default.
 
 The main object of interest is therefore the agent's policy, denoted $\pi$.
 The policy represents the decision-making mechanism of the agent.
 It is a function that maps observations $\mathcal{O}$ to actions $\mathcal{A}$ and is learned through interaction with the environment in order to maximize the expected cumulative reward.
-The policy is the component in which the learning process is encoded and therefore corresponds to the artificial intelligence system that XRL aims to explain.
+The policy is the component that encodes the learning process and that XRL aims to explain.
 
 Explaining a policy introduces additional challenges compared with classical XAI settings.
 In traditional XAI problems, the objective is to explain an isolated decision, such as determining which features of an image led to a classification result.
@@ -37,9 +36,8 @@ This temporal dimension leads to a distinction between two objectives of explana
 \end{itemize}
 
 \subsection{Source}
-We identify three sources of explanation in reinforcement learning: policies, trajectories, and value functions.
-These sources are obtained during or after the learning process and contain information about the agent.
 
+We identify three sources of explanation in reinforcement learning, all obtained during or after the learning process and containing information about the agent:
 \begin{itemize}
     \item \textbf{Policies:} policies are functions that generate a distribution over the action space for a given observation.
     The objective of reinforcement learning is to learn a policy that maximizes the expected cumulative future rewards.
@@ -57,21 +55,22 @@ These sources are obtained during or after the learning process and contain info
 
 \subsection{Form}
 
-The form of an explanation is the aspect that varies the most between XRL methods.
-Based on our review of the literature, we identify six forms of explanation, although other forms may potentially exist:
+We identify six forms of explanation in the RL setting:
 \begin{itemize}
     \item \textbf{Policy Model:} an interpretable model of the agent's policy function.
     
-    \item \textbf{Interaction Model:} an interpretable model of the interactions between the agent and the environment.
+    \item \textbf{Saliency Map:} a weighting of the input features representing their influence on the output of the policy function.
+    
+    \item \textbf{Counterfactual:} a representation of a modified observation obtained by perturbing the original observation in order to produce a different action from the agent.
     
     \item \textbf{Agent Trajectory:} a representation of a sequence of successive interactions between the agent and the environment.
     
     \item \textbf{Trajectory Prediction:} a prediction about the future evolution of the trajectory produced by a value function.
     
-    \item \textbf{Counterfactual:} a representation of a modified observation obtained by perturbing the original observation in order to produce a different action from the agent.
-    
-    \item \textbf{Saliency Map:} a weighting of the input features representing their influence on the output of the policy function.
+    \item \textbf{Interaction Model:} an interpretable model of the interactions between the agent and the environment.
 \end{itemize}
 
-Among the different components characterizing an explanation, the form is the element that differs most significantly from one explainability technique to another.
-Therefore, the following section is organized according to the form of explanations and presents the existing explainability methods based on this criterion.
+Among the three components characterizing an explanation, the form is the one that varies most significantly across explainability methods.
+While subjects and sources tend to be relatively stable in the XRL literature, the diversity in how explanations are presented is considerably greater.
+The list above is by no means definitive and may evolve as new approaches emerge.
+For this reason, the following section is organized according to the form of explanations and presents existing explainability methods based on this criterion.

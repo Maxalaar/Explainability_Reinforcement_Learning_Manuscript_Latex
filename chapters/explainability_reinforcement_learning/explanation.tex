@@ -4,7 +4,7 @@
 In this section, we define what an explanation is in the context of XAI and how it can be obtained.
 We first introduce the concept of explanation in a general setting.
 We then describe how this concept applies to XAI.
-Finally, we present explainability methods and the properties that characterize an explanation in the context of XAI.
+Finally, we introduce the concept of explainability methods and describe the properties that characterize explanations in the context of XAI.
 
 \subsection{Explanation}
 Establishing what is meant by an explanation is challenging due to the fundamentally multidisciplinary nature of the concept.
@@ -12,12 +12,15 @@ When we refer to explanation, we are inherently referring to an explanation prov
 As soon as humans are involved, the problem is no longer purely computational or mathematical.
 It involves several fields of research, such as philosophy, psychology, and sociology.
 So far, these disciplines have not converged on a unified definition of explanation that can be directly applied to XAI.
-For this reason, we introduce here a working definition of explanation.
 
+For this reason, we propose in this manuscript a formalization of the concept of explanation.
 An explanation involves two entities: the object being explained and the receiver of the explanation.
-The receiver of the explanation is a human, who will be referred to as the observer throughout this manuscript.
-The observer aims to understand how the object works and, in doing so, builds a mental model of its functioning.
-In this context, an explanation is what allows the observer to refine and correct their mental model of how the system operates.
+The receiver is a human who aims to understand how the object operates and will be referred to as the observer throughout this manuscript.
+The observer seeks to understand the object and, in doing so, builds a mental model of its functioning.
+An explanation is therefore what allows the observer to refine and correct their mental model of how the object operates.
+
+For an observer to understand an explanation, the information it contains must be interpretable.
+Information is considered interpretable when it can be directly understood by a human without requiring any additional transformation process.
 
 \begin{definition}{Object}{object}
 The object of an explanation is the system is to be understood by an observer.
@@ -30,13 +33,25 @@ This mental model is an internal representation of how the observer believes the
 This representation may be incomplete or inaccurate.
 \end{definition}
 
-\begin{definition}{Explanation}{explanation}
-An explanation is any information that enables an observer to refine or correct their mental model of the object of the explanation.
+\begin{definition}{Interpretable}{interpretable}
+Information is interpretable when it can be directly understood by an observer without requiring any additional transformation process.
 \end{definition}
 
-This definition of explanation is intentionally broad, allowing it to encompass the different types of explainability methods considered so far.
-We adopt this minimal definition to provide a common framework for evaluating the effectiveness of explanations.
-Explanations do not all provide the same level of value: describing a marginal aspect of a system is fundamentally different from correcting an observer's misunderstanding of a key mechanism.
+\begin{definition}{Explanation}{explanation}
+An explanation is any interpretable information that enables an observer to refine or correct their mental model of the object of the explanation.
+\end{definition}
+
+This definition of explanation provides the foundation for the approach to explainability adopted throughout this manuscript.
+Its generality allow it to encompass the different explainability methods considered in the following sections.
+
+Moreover, it avoids a binary interpretation of explanation, where a system is considered either explainable or not explainable.
+From our perspective, the notion of non-explainable system is not meaningfule.
+Considering a system as impossible to explain would therefore contradict the general objective of scientific understanding and would correspond to an anti-scientific perspective.
+This quantitative perspective allows us to express an intuitive idea: not all explanations provide the same level of value.
+The effectiveness of an explanation depends on its ability to improve the observer's understanding of the system.
+For example, describing a marginal aspect of a system is different from correcting an observer's misunderstanding of a key mechanism.
+
+Having established the general framework of explanation, we can now examine how this concept applies in the context of artificial intelligence.
 
 \subsection{Explainable Artificial Intelligence}
 
@@ -49,45 +64,35 @@ The knowledge encoded by these models cannot be understood simply by inspecting 
 
 From this starting point, two types of approaches emerge:
 \begin{itemize}
-    \item \textbf{Substitutive explainability:} The idea is that there is nothing to explain in a trained neural network.
+    \item \textbf{Substitutive explainability:} In this approach, the underlying assumption is that there is nothing to explain within a neural network.
     There is no semantic meaning associated with each computational component, and therefore nothing to interpret.
     This corresponds to the so-called "black box" view of neural networks.
     Under this assumption, XAI consists of replacing as much of the deep learning system as possible with alternative AI methods.
 
-    \item \textbf{Intrinsic explainability:} It is argued that neural networks can be explained.
-    The limitation is not considered to be an lack of interpretability, but rather the absence of tools to analyze their functioning.
-    According to this perspective, neural networks contain structures and mechanisms that can be studied in order to understand how they operate.
+    \item \textbf{Intrinsic explainability:} In this approach, it is argued that neural networks contain elements and mechanisms that can be explained.
+    The limitation is not considered to be a lack of interpretability, but rather the absence of sufficiently developed tools to analyze their functioning.
+    According to this perspective, understanding neural networks requires developing methods capable of revealing the structures underlying their operation.
 \end{itemize}
 
-This manuscript follows the intrinsic explainability perspective.
-From this point of view, we define the meaning of the term explainable in the context of XAI.
-Taken literally, explainable refers to something that can be explained.
-However, according to the definition of explanation introduced previously, any system can be explained \ref{def:explanation}.
-Therefore, from our perspective, describing an AI system as either explainable or not explainable does not provide a meaningful distinction.
-For consistency with the existing literature, we continue to use the term XAI to refer to this research field.
-
-Having defined the term explainable, we now define the closely related notion of interpretable.
-In our view, interpretability is a property of information.
-Information is considered interpretable when it can be directly understood by a human without requiring any additional transformation process.
-Consequently, an interpretable AI system refers to a system whose functioning can be understood through direct analysis of its internal mechanisms.
+In this manuscript, we present methods stemming from both approaches to explainability.
+Both are indeed capable of generating explanations for AI systems.
+However, to be transparent with the reader, we state clearly that this manuscript follows the intrinsic explainability perspective.
+This choice shapes our vision and our approach to the problem of explainability throughout this work.
 
 \subsection{Explainability Method}
 
 Now that the general framework of XAI has been established, we need to further detail the properties of an explanation in this context.
-An explanation in the field of XAI can be characterized by three components: the source, the form, and the subject.
-These three aspects are determined by the explainability method used to generate the explanation.
-
-The characteristics of an explanation can be described through three aspects:
+An explanation in the field of XAI can be characterized by three components:
 \begin{itemize}
     \item \textbf{Source:} refers to the origin of the information used by the explainability method.
     By itself, this information is not necessarily interpretable by humans.
-    The explainability method transforms this raw source of information into an explanation that can be understood by an observer.
+    The explainability method transforms the raw information produced by the AI system into an explanation that can be understood by an observer.
 
     \item \textbf{Form:} refers to the representation through which the explanation is communicated.
-    An explanation can take different forms, such as text, images, computer code, mathematical equations, or statistical.
-    The form defines how the information is presented to the observer and must allow human interpretation.
-
-    \item \textbf{Subject:} refers to the component of the AI system that is being explained.
+    \item The form defines how the information is presented to the observer and must allow human interpretation.
+    An explanation can take different forms, such as text, images, computer code, mathematical equations.
+    
+    \item \textbf{Subject:} refers to the aspect of the AI system that is being explained.
     In XAI, this distinction is commonly associated with the difference between local and global explanations.
     A local explanation describes why an AI system produced a specific output in a given situation.
     A global explanation aims to describe the general functioning of the AI system.
