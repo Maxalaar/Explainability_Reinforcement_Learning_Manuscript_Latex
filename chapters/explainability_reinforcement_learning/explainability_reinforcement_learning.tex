@@ -9,24 +9,23 @@ Safety-critical applications integrating machine learning components are still r
 
 However, many potential high-impact applications such as drone control, autonomous delivery, autonomous vehicle driving, adaptive urban traffic management, optimization of smart power grids, or control of industrial robotic systems in real-world environments would require significantly higher levels of autonomy.
 Introducing autonomous agents in such environments, requires the establishment of strong guarantees.
-These include in particular:
+Without satisfying several essential requirements, deploying autonomous agents in the real world remains hardly feasible.
+These requirements include in particular:
 \begin{itemize}
-    \item validating the system’s behavior before deployment,
-    \item being able to identify the origin of a malfunction in case of failure,
-    \item and being able to certify that an observed error will not occur again.
+    \item validating the system's functioning before deployment,
+    \item identifying the origin of a malfunction in case of failure,
+    \item and certifying that an observed failure will not occur again.
 \end{itemize}
-Without satisfying these criteria, deploying autonomous agents in the real world remains hardly feasible.
 
-The main challenge lies in the fact that the most performant agents currently available rely on reinforcement learning methods.
-This learning process is carried out without explicit human supervision, and these agents are not able to provide explanations for the mechanisms that lead to their decisions.
+The main challenge lies in the fact that the performing agents currently available rely on both reinforcement learning and deep learning.
+As a result, these agents are unable to provide explanations of the mechanisms underlying their decisions.
 This lack of explainability makes their use difficult in safety-critical contexts.
 To address this limitation, a research field has emerged: Explainable Reinforcement Learning (XRL), a subfield of Explainable Artificial Intelligence (XAI).
 
-Although relatively recent, this field is rapidly growing and offers a wide variety of approaches.
 This chapter aims to present the main existing XRL techniques.
-To this end, we first define what is meant by an “explanation” in the context of reinforcement learning.
-We then propose a structuring of the XRL research field.
+To this end, we first define what is meant by an “explanation” in the context of XAI.
+We then propose a taxonomy for organizing the XRL research field.
 Finally, we review the state of the art following this organization.
 
 \input{chapters/explainability_reinforcement_learning/explanation.tex}
-% \input{chapters/explainability_reinforcement_learning/classification_method.tex}
+\input{chapters/explainability_reinforcement_learning/classification_method.tex}
