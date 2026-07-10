@@ -1,5 +1,7 @@
 \section{Explanation in Artificial Intelligence}
 \label{sec:explanation}
+\input{figures/explainability_reinforcement_learning/explanation_process_illustration.tex}
+
 
 In this section, we define what an explanation is in the context of XAI and how it can be obtained.
 We first introduce the concept of explanation in a general.
@@ -78,18 +80,19 @@ Both are indeed capable of generating explanations for AI systems.
 However, to be transparent with the reader, this manuscript follows the intrinsic explainability perspective.
 
 \subsection{Explainability Method}
+\label{subsec:explainability_method}
 
 Now that the general framework of XAI has been established, we need to further detail the properties of an explanation in this context.
 In our framework, an explanation in the field of XAI can be characterized by three components:
 \begin{itemize}
-    \item \textbf{Source:} refers to the origin of the information used by the explainability method.
+    \item \textbf{Source:}\label{item:source} refers to the origin of the information used by the explainability method.
     The explainability method transforms the raw information produced by the AI system into an explanation that can be understood by an observer.
 
-    \item \textbf{Form:} refers to the representation through which the explanation is communicated.
+    \item \textbf{Form:}\label{item:form} refers to the representation through which the explanation is communicated.
     The form defines how the information is presented to the observer and must allow human interpretation.
     An explanation can take different forms, such as text, images, computer code, mathematical equations.
-    
-    \item \textbf{Subject:} refers to the aspect of the AI system that is being explained.
+
+    \item \textbf{Subject:}\label{item:subject} refers to the aspect of the AI system that is being explained.
     In XAI, this distinction is commonly associated with the difference between local and global explanations.
     A local explanation describes why an AI system produced a specific output in a given situation.
     A global explanation aims to describe the general functioning of the AI system.

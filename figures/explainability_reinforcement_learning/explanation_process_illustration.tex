@@ -1,0 +1,54 @@
+\begin{figure}[t]
+    \centering
+
+    % --- Layout parameters --------------------------------------------
+    % Horizontal distance between the centers of two consecutive blocks.
+    \pgfmathsetmacro{\blockDistance}{8}
+    % Width/height of each block (keep in sync with the node styles below).
+    \pgfmathsetmacro{\blockSize}{3}
+
+    % Vertical offset of the legend row below the main diagram.
+    \pgfmathsetmacro{\legendYShift}{-2.5}
+    % Horizontal offset of the start of the legend row (position of its first icon).
+    \pgfmathsetmacro{\legendXShift}{-\blockSize/2 + 0}
+    % Horizontal gap between two consecutive legend entries.
+    \pgfmathsetmacro{\legendGap}{1.5}
+    % Horizontal gap between a legend icon and its own label.
+    \pgfmathsetmacro{\legendIconTextGap}{0.3}
+    % --------------------------------------------------------------------
+
+\resizebox{0.9\textwidth}{!}{
+\begin{tikzpicture}[]
+% Nodes
+\node[draw, rectangle, align=center, minimum width=\blockSize cm, minimum height=\blockSize cm] (box1) at (0, 0) {\hyperref[def:object]{\hl{\textbf{Object}}} \\ the system \\ the observer \\ seeks to understand};
+\node[draw, rectangle, right of=box1, align=center, minimum width=\blockSize cm, minimum height=\blockSize cm] (box2) at (\blockDistance, 0) {\hyperref[def:explanation]{\hl{\textbf{Explanation}}} \\ interpretable \\ information enabling \\ the observer to refine \\ their mental model};
+\node[draw, rectangle, right of=box2, align=center, minimum width=\blockSize cm, minimum height=\blockSize cm] (box3) at (2*\blockDistance, 0) {\textbf{Mental model} \\ of the observer \\ regarding the object};
+% Arrows
+\draw[-{Latex[length=3mm]}] (box1) -- node[midway, above, align=center] {Information \\ extraction \\ through the use \\ of an \\ \hyperref[subsec:explainability_method]{\hl{\textbf{explainability method}}}} node[midway, below, align=center] {} (box2);
+\draw[-{Latex[length=3mm]}] (box2) -- node[midway, above, align=center] {\textbf{Interpretation} \\ by \\ the observer} node[midway, below, align=center] {} (box3);
+
+% Legend: each entry is chained to the previous one via \legendGap /
+% \legendIconTextGap, so the whole row reflows consistently if a label
+% changes length or if the gaps are retuned.
+\node[draw, rectangle, minimum width=0.3cm, minimum height=0.3cm] (legendIcon1) at (\legendXShift, \legendYShift) {};
+\node[anchor=west, right=\legendIconTextGap of legendIcon1] (legendText1) {Information structures};
+
+\node[inner sep=0pt, anchor=west, right=\legendGap of legendText1] (legendArrowStart) {};
+\coordinate (legendArrowEnd) at ([xshift=0.4cm]legendArrowStart);
+\draw[-{Latex[length=1.5mm]}] (legendArrowStart) -- (legendArrowEnd);
+\node[anchor=west, right=\legendIconTextGap of legendArrowEnd] (legendText2) {Information transformation};
+
+\node[anchor=west, right=\legendGap of legendText2] (legendIcon3) {\hl{~~}};
+\node[anchor=west, right=\legendIconTextGap of legendIcon3] (legendText3) {Concepts discussed in more detail in this section};
+
+% Brace: spans from just past box2 to just past box3, so it automatically
+% follows \blockDistance and \blockSize instead of being retuned by hand.
+\coordinate (C) at (\blockDistance+\blockSize/2+1, 2);
+\coordinate (D) at (2*\blockDistance+\blockSize/2+1, 2);
+\draw [decorate, decoration={brace, amplitude=10pt}, thick]
+          (C) -- node[above=12pt, align=center] {Subjective analysis \\ by the observer} (D);
+\end{tikzpicture}
+    }
+\caption{Explanation process in explainable artificial intelligence.}
+\label{fig:explanation_process_illustration}
+\end{figure}
