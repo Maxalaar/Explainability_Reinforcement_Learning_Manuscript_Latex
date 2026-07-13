@@ -49,11 +49,13 @@ With this method, the \textit{interpretable policy function} itself is used to p
 \subsubsection{\textit{Policy Approximation via Interpretable Model}}
 \label{subsubsec:policy_approximation_via_interpretable_model}
 
-Using an interpretable model, it is possible to \textbf{approximate} a non-interpretable policy \cite{sieusahai2021explaining}.
-In this setting, the problem is cast as a \textbf{supervised learning} task, where the non-interpretable policy is used to label each observation with the action it selects.
-Using this dataset, supervised learning is then performed with the interpretable model.
-The resulting \textit{interpretable model} is subsequently used as an explanation for the observer.
-If this approximation is sufficiently faithful, it can be deployed in the environment in place of the original policy, thereby enabling a high degree of control over the agent.
+\input{figures/explainability_reinforcement_learning/policy_approximation_example.tex}
+
+Using an interpretable model, it is possible to approximate a policy represented by a deep neural network trained with deep reinforcement learning \cite{sieusahai2021explaining}.
+In this setting, the problem is formulated as a supervised learning task, where the original deep reinforcement learning policy is used to label each observation with the action it selects (see Figure~\ref{fig:policy_approximation_observation}).
+Using this dataset, the interpretable model is trained to reproduce the behavior of the original policy, yielding for instance the decision tree illustrated in Figure~\ref{fig:policy_approximation_decision_tree}.
+The resulting interpretable model is then used as an explanation for the observer.
+If this approximation is sufficiently faithful, it can also be deployed in the environment in place of the original policy, thereby providing a high degree of control over the agent.
 
 \subsection{Saliency Map}
 \label{subsec:saliency_map}

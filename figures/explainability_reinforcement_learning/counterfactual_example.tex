@@ -1,12 +1,26 @@
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.6\textwidth]
-        {figures/explainability_reinforcement_learning/contrefactuel.png}
+    \begin{subfigure}[b]{0.35\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]
+            {figures/explainability_reinforcement_learning/contrefactuel_1.png}
+        \caption{}
+        \label{fig:counterfactual_example_original}
+    \end{subfigure}
+    \hspace{0.02\textwidth}
+    \begin{subfigure}[b]{0.35\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]
+            {figures/explainability_reinforcement_learning/contrefactuel_2.png}
+        \caption{}
+        \label{fig:counterfactual_example_counterfactual}
+    \end{subfigure}
     \caption{
         Counterfactual explanation of the agent's behavior for the game
-        \textit{Space Invaders} \cite{olson2021counterfactual}. In the left
-        image, the observation leads to the action ``LEFT'', whereas in the
-        right image, the action selected by the agent is ``RIGHT\_FIRE''.
+        \textit{Space Invaders} \cite{olson2021counterfactual}. (a) is the
+        original observation, for which the agent selects the action
+        ``LEFT'', whereas (b) is the counterfactual observation, for which
+        the agent selects the action ``RIGHT\_FIRE''.
     }
     \label{fig:counterfactual_example}
 \end{figure}
