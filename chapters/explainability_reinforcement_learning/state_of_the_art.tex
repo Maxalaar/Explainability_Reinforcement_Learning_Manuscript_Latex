@@ -65,10 +65,14 @@ When applied to the reinforcement learning setting, they highlight the regions o
 By nature, this form of explanation provides information about the policy's decision-making process.
 The intuitive nature of this representation allows it to be used by a broad audience.
 
-A limitation of heatmap-based methods is that the resulting explanations can vary significantly depending on the method used to generate them.
-This highlights a critical challenge in XAI: determining whether the produced explanations are relevant and how to choose between different explanations that may appear contradictory.
-Rather than considering these differences as evidence that only one explanation can be valid, the definition of explanation adopted in this manuscript allows for multiple complementary perspectives.
-Different explanations may capture different aspects of the system and contribute to improving the observer's understanding from different viewpoints.
+A limitation of heatmap-based methods is that the resulting explanations are not always directly meaningful to the observer.
+As illustrated in Figure~X, interpreting which regions are important often requires human reasoning and involves a degree of subjectivity.
+This limitation becomes particularly relevant in reinforcement learning, where the objective is not only to explain a single decision but also to understand the factors influencing a sequence of decisions over time.
+
+More generally, heatmap-based methods highlight a fundamental challenge in XAI: determining the relevance of an explanation.
+Different methods can produce different heatmaps for the same decision, raising the question of how to compare and select among potentially conflicting explanations.
+Rather than assuming that only one explanation can be valid, the definition of explanation adopted in this manuscript allows for multiple complementary perspectives.
+Different explanations may reveal different aspects of the system and contribute to improving the observer's understanding.
 
 Three explainability methods can be used to obtain this type of explanation: \textit{observation perturbation}, \textit{observation gradient analysis}, and \textit{attention-based architectures}.
 
