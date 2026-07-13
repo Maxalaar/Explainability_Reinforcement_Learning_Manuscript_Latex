@@ -4,9 +4,9 @@
 \resizebox{\textwidth}{!}{
 \begin{tblr}{|Q[c,m]|Q[c,m,4cm]|Q[c,m,7cm]|Q[c,m]|Q[c,m]|Q[c,m]|}
     \hline
-    \SetCell[r=2]{c} \hyperref[subsec:subject]{\textbf{Explanation \\ Target}} & \SetCell[r=2]{c} \hyperref[subsec:form]{\textbf{Explanation \\ Form}} & \SetCell[r=2]{c} \hyperref[sec:state_of_the_art]{\textbf{Explainability \\ Method}} & \SetCell[c=3]{} \hyperref[subsec:source]{\textbf{Source of \\ Explanation}} & & \\
+    \SetCell[r=2]{c} \hyperref[subsec:subject]{\textbf{Explanation \\ Subject}} & \SetCell[r=2]{c} \hyperref[subsec:form]{\textbf{Explanation \\ Form}} & \SetCell[r=2]{c} \hyperref[sec:state_of_the_art]{\textbf{Explainability \\ Method Family}} & \SetCell[c=3]{} \hyperref[subsec:source]{\textbf{Source of \\ Explanation}} & & \\
     \hline
-    & & & \rotatebox{-90}{\shortstack{Policy}} & \rotatebox{-90}{\shortstack{Trajectories}} & \rotatebox{-90}{\shortstack{Value \\ functions}} \\
+    & & & \rotatebox{-90}{\shortstack{Policy}\hspace*{2mm}} & \rotatebox{-90}{\shortstack{Trajectories}\hspace*{2mm}} & \rotatebox{-90}{\shortstack{Value \\ functions}\hspace*{2mm}} \\
     \hline
     \hline
     \SetCell[r=6]{c} Decision & \SetCell[r=2]{c} \hyperref[subsec:policy_model]{{Policy Model}} & \hyperref[subsubsec:interpretable_policy_learning]{{\textit{Interpretable policy learning}}} & \scalebox{2}{\checkmark} & & \\
@@ -22,19 +22,19 @@
     & \hyperref[subsec:counterfactual]{{Counterfactual}} & \hyperref[subsubsec:latent_space_counterfactual_generation]{\textit{Latent space usage for counterfactual generation}} & \scalebox{2}{\checkmark} & & \\
     \hline
     \hline
-    \SetCell[r=7]{c} Strategy & \SetCell[r=2]{c} \hyperref[subsec:trajectory_prediction]{{Trajectory Prediction}} & \hyperref[subsubsec:value_functions_as_observations]{{\textit{Value functions as observations}}} & & & \scalebox{2}{\checkmark} \\
+    \SetCell[r=7]{c} Strategy & \SetCell[r=3]{c} \hyperref[subsec:agent_trajectory]{{Agent Trajectory}} & \hyperref[subsubsec:hierarchical_decomposition]{\textit{Hierarchical decomposition}} & \scalebox{2}{\checkmark} & \scalebox{2}{\checkmark} & \\
+    \hline
+    & & \hyperref[subsubsec:extraction_via_critic_analysis]{\textit{Extraction via critic analysis}} & & \scalebox{2}{\checkmark} & \scalebox{2}{\checkmark} \\
+    \hline
+    & & \hyperref[subsubsec:extraction_via_multi_critic_comparisons]{\textit{Extraction via multi-critic comparisons}} & & \scalebox{2}{\checkmark} & \scalebox{2}{\checkmark} \\
+    \hline
+    & \SetCell[r=2]{c} \hyperref[subsec:trajectory_prediction]{{Trajectory Prediction}} & \hyperref[subsubsec:value_functions_as_observations]{{\textit{Value functions as observations}}} & & & \scalebox{2}{\checkmark} \\
     \hline
     & & \hyperref[subsubsec:critic_enrichment]{\textit{Critic enrichment}} & & & \scalebox{2}{\checkmark} \\
     \hline
     & \SetCell[r=2]{c} \hyperref[subsec:interaction_model]{{Interaction Model}} & \hyperref[subsubsec:bayesian_network_learning]{\textit{Bayesian network learning}} & & \scalebox{2}{\checkmark} & \\
     \hline
     & & \hyperref[subsubsec:latent_space_mdp_generation]{{\textit{Latent space usage for MDP generation}}} & \scalebox{2}{\checkmark} & & \\
-    \hline
-    & \SetCell[r=3]{c} \hyperref[subsec:agent_trajectory]{{Agent Trajectory}} & \hyperref[subsubsec:hierarchical_decomposition]{\textit{Hierarchical decomposition}} & \scalebox{2}{\checkmark} & & \\
-    \hline
-    & & \hyperref[subsubsec:extraction_via_critic_analysis]{\textit{Extraction via critic analysis}} & & \scalebox{2}{\checkmark} & \scalebox{2}{\checkmark} \\
-    \hline
-    & & \hyperref[subsubsec:extraction_via_multi_critic_comparisons]{\textit{Extraction via multi-critic comparisons}} & & \scalebox{2}{\checkmark} & \scalebox{2}{\checkmark} \\
     \hline
 \end{tblr}
 }

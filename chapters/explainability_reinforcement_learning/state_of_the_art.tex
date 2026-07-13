@@ -3,21 +3,37 @@
 \input{figures/explainability_reinforcement_learning/taxonomy_table.tex}
 \input{figures/explainability_reinforcement_learning/xrl_methods_overview.tex}
 
-The purpose of this section is to detail the functioning of existing explainability methods (see Table~\ref{tab:taxonomy_methods} and Figure~\ref{fig:xrl_methods_overview}).
+The purpose of this section is to detail the functioning of existing explainability methods (see Table~\ref{tab:taxonomy_methods}).
 They are presented according to the form of explanation they produce, following the taxonomy introduced in Section~\ref{sec:taxonomy_xrl_methods}.
-Each subsection introduces one of the six forms of explanation identified in Section~\ref{subsec:form}, as well as the methods associated with it.
+
+Each subsection introduces one of the six forms of explanation identified in Section~\ref{subsec:form}.
+For each form, we identify the corresponding family of methods and organize the related approaches within the appropriate subsection.
+A family of methods is defined as a set of methods that share the same source, form, and subject of explanation, as well as a similar procedure for generating explanations.
+Methods belonging to the same family may differ slightly in their implementation or in the details of the generation process.
+They share a common underlying principle that allows them to be described as part of the same family.
 
 \subsection{Policy Model}
 \label{subsec:policy_model}
 
-There exists a category of models that can be understood through the simple analysis of their representation; such models are referred to as interpretable \cite{bellucci2021towards}.
-These models are used to represent the policy function.
-The main models considered interpretable include decision trees \cite{topin2021iterative}, algorithms \cite{trivedi2022learning}, formal logic \cite{payani2019inductive}, and linear models \cite{pmlr-v108-garreau20a}.
-The intrinsic interpretability of these models can be leveraged to provide explainability in the context of reinforcement learning (RL).
+The policy function can be represented by a wide variety of function classes.
+In modern reinforcement learning, neural networks is the most commonly used models for representing policies.
+Although these models achieve the highest performance, their connectionist nature makes their internal representations non-interpretable.
 
-This directly interpretable representation allows an observer to extract information.
+For this reason, a substitutive approach to XRL aims to replace these models with alternative models considered interpretable.
+Such models can be understood through direct analysis of their representations.
+The main classes of interpretable models used to represent policy functions include decision trees \cite{topin2021iterative}, algorithms \cite{trivedi2022learning}, formal logic \cite{payani2019inductive}, and linear models \cite{pmlr-v108-garreau20a}.
+
 Explanations derived from an interpretable model primarily provide insights into the decision-making process, since what is modeled is the mapping between an observation and an action.
 If the model is sufficiently simple or well structured, the observer can form a mental representation of a sequence of decisions across the environment and thus obtain information about the agent's strategy.
+
+The main limitation of these methods is that interpretable models rely on symbolic representations.
+When the policy to be represented is too complex, achieving comparable performance requires a large number of rules or conditions.
+The resulting model can quickly become difficult to analyze and lose its interpretability.
+
+
+For example, representing a policy capable of playing Go using a symbolic model would require considering a very large number of possible situations and specific cases.
+Even if such a representation were possible, the resulting model would likely become intractable for human analysis due to its complexity.
+This illustrates why neural network-based approaches have become dominant in such domains, as they can learn complex decision strategies without requiring an explicit enumeration of rules.
 
 To obtain an interpretable policy model, two explainability methods are available: \textit{interpretable policy learning} and \textit{policy approximation via interpretable model}.
 
