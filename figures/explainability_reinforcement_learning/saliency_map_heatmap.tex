@@ -1,11 +1,28 @@
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.35\textwidth]
-        {figures/explainability_reinforcement_learning/hit_map.png}
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]
+            {figures/explainability_reinforcement_learning/hit_map_1.png}
+        \caption{}
+        \label{fig:saliency_map_heatmap_perturbation}
+    \end{subfigure}
+    \hspace{0.02\textwidth}
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]
+            {figures/explainability_reinforcement_learning/hit_map_2.png}
+        \caption{}
+        \label{fig:saliency_map_heatmap_gradient}
+    \end{subfigure}
     \caption{
-        Perturbation-based heatmap for the Atari game ``Breakout''
-        \cite{greydanus2018visualizing}. Highlighted areas correspond to the
-        most influential regions for the policy function's decision.
+        Heatmaps obtained by \cite{greydanus2018visualizing} for the same
+        observation of the Atari game ``Breakout''. Highlighted areas
+        correspond to the most influential regions for the policy function's
+        decision. (a) is obtained via observation perturbation (see
+        Section~\ref{subsubsec:observation_perturbation}), whereas (b) is
+        obtained via observation gradient analysis (see
+        Section~\ref{subsubsec:observation_gradient_analysis}).
     }
     \label{fig:saliency_map_heatmap}
 \end{figure}

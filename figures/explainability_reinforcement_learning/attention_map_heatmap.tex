@@ -1,0 +1,27 @@
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]
+            {figures/explainability_reinforcement_learning/attention_map_1.png}
+        \caption{}
+        \label{fig:attention_map_heatmap_clear}
+    \end{subfigure}
+    \hspace{0.02\textwidth}
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]
+            {figures/explainability_reinforcement_learning/attention_map_2.png}
+        \caption{}
+        \label{fig:attention_map_heatmap_unclear}
+    \end{subfigure}
+    \caption{
+        Attention-based heatmaps obtained by \cite{mott2019towards} for the
+        Atari games ``Breakout'' and ``Ms. Pac-Man'' (see
+        Section~\ref{subsubsec:attention_based_architecture}). In (a), the
+        highlighted regions are easily interpretable, whereas in (b), the
+        attention is spread across many regions of the observation, making
+        the explanation much harder to interpret.
+    }
+    \label{fig:attention_map_heatmap}
+\end{figure}

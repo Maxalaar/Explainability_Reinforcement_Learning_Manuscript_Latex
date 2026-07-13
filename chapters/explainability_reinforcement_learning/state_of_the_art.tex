@@ -66,11 +66,12 @@ By nature, this form of explanation provides information about the policy's deci
 The intuitive nature of this representation allows it to be used by a broad audience.
 
 A limitation of heatmap-based methods is that the resulting explanations are not always directly meaningful to the observer.
-As illustrated in Figure~X, interpreting which regions are important often requires human reasoning and involves a degree of subjectivity.
+As illustrated in Figure~\ref{fig:saliency_map_heatmap_gradient}, interpreting which regions are important often requires human reasoning and involves a degree of subjectivity.
 This limitation becomes particularly relevant in reinforcement learning, where the objective is not only to explain a single decision but also to understand the factors influencing a sequence of decisions over time.
 
 More generally, heatmap-based methods highlight a fundamental challenge in XAI: determining the relevance of an explanation.
 Different methods can produce different heatmaps for the same decision, raising the question of how to compare and select among potentially conflicting explanations.
+This is illustrated in Figure~\ref{fig:saliency_map_heatmap}, where the perturbation-based method (Figure~\ref{fig:saliency_map_heatmap_perturbation}) and the gradient-based method (Figure~\ref{fig:saliency_map_heatmap_gradient}) produce different heatmaps for the same observation.
 Rather than assuming that only one explanation can be valid, the definition of explanation adopted in this manuscript allows for multiple complementary perspectives.
 Different explanations may reveal different aspects of the system and contribute to improving the observer's understanding.
 
@@ -82,7 +83,7 @@ Three explainability methods can be used to obtain this type of explanation: \te
 Perturbation analysis consists in applying various \textbf{modifications} to the observation in order to study their \textbf{impact} on the output of the \textbf{policy function} \cite{greydanus2018visualizing}.
 The greater the variation in the output caused by a perturbation applied to a given component of the input vector, the higher the \textbf{weight} assigned to that component.
 The magnitude of the perturbation is measured by computing the distance between the original output and the output obtained from the perturbed input.
-Using this set of weights, a \textit{heatmap} is constructed, enabling the observer to visualize which parts of the observation vector are most sensitive in the action-selection process.
+Using this set of weights, a \textit{heatmap} is constructed, enabling the observer to visualize which parts of the observation vector are most sensitive in the action-selection process (see Figure~\ref{fig:saliency_map_heatmap_perturbation}).
 
 \subsubsection{\textit{Observation Gradient Analysis}}
 \label{subsubsec:observation_gradient_analysis}
@@ -90,16 +91,19 @@ Using this set of weights, a \textit{heatmap} is constructed, enabling the obser
 Observation \textbf{gradient} analysis refers to a set of methods that require a differentiable policy function in order to extract information from it \cite{simonyan2014deep, weitkamp2019visual, huber2019enhancing}.
 To this end, the gradient of the policy function is computed with respect to all \textbf{components of the input vector}.
 For each input component, the resulting gradient provides a weighting that represents its importance in the output of the policy function.
-Based on these weightings, a \textit{heatmap} is constructed to allow the observer to visually identify the parts of the input vector that are the most influential in the policy function's output.
+Based on these weightings, a \textit{heatmap} is constructed to allow the observer to visually identify the parts of the input vector that are the most influential in the policy function's output (see Figure~\ref{fig:saliency_map_heatmap_gradient}).
 
 \subsubsection{\textit{Attention-Based Architecture}}
 \label{subsubsec:attention_based_architecture}
+
+\input{figures/explainability_reinforcement_learning/attention_map_heatmap.tex}
 
 \textbf{Attention} blocks constitute a neural network architecture that makes it possible to weight the relative importance of one part of a vector with respect to the other parts of the same vector \cite{vaswani2023attention}.
 These weights are computed as a function of the vector itself and are learned by the neural network during training.
 For a given observation, each component of the observation vector is assigned a scalar value.
 It can therefore be assumed that the components associated with the highest weights are the most influential in determining the output \cite{mott2019towards, itaya2021visual}.
-This attention-based \textit{heatmap} is then provided to the observer as the explanation.
+This attention-based \textit{heatmap} is then provided to the observer as the explanation (see Figure~\ref{fig:attention_map_heatmap_clear}).
+However, as shown in Figure~\ref{fig:attention_map_heatmap_unclear}, the attention weights are not always concentrated on a small, easily interpretable set of regions, which can make this type of explanation difficult to exploit.
 
 \subsection{Counterfactual}
 \label{subsec:counterfactual}
