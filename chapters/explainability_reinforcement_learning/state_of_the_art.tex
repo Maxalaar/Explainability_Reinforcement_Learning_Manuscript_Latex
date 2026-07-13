@@ -216,9 +216,15 @@ This \textit{Bayesian network}, representing the interactions between the agent 
 \subsubsection{\textit{Latent Space Usage for MDP Generation}}
 \label{subsubsec:latent_space_mdp_generation}
 
+\input{figures/explainability_reinforcement_learning/latent_space_tsne_example.tex}
+
 Each layer of a neural network can be viewed as a projection from one space to another \cite{zahavy2017graying}.
 As information propagates through successive layers of a neural network, it becomes increasingly abstract.
 It can therefore be assumed that two vectors that are close in this projected space are also close in terms of the agent's perception.
 Based on this observation, it is possible to \textbf{redefine an MDP} by leveraging the \textbf{abstract representations} produced by the final layers of a neural network.
 Once the new MDP has been constructed, a model of the interaction between the agent and its environment is obtained.
 This model, represented as a \textit{graph}, is then used as the explanation.
+
+Figure~\ref{fig:latent_space_tsne_example} illustrates this idea using a two-dimensional \textit{t-SNE} projection of the latent space, where each point is colored according to the value function's prediction for the corresponding state.
+An agreement can be observed between the structure of this projected space and the critic's predictions: states that are assigned similar values by the critic also tend to be located close to one another in the projection.
+This agreement makes it possible to manually identify clusters of states, which likely correspond to states that are perceived as similar by the agent.
