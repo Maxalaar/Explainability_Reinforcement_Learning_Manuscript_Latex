@@ -3,12 +3,18 @@
 
     % --- Layout parameters --------------------------------------------
     % Horizontal distance between the centers of two consecutive blocks.
-    \pgfmathsetmacro{\blockDistance}{8}
+    \pgfmathsetmacro{\blockDistance}{6.6}
     % Width/height of each block (keep in sync with the node styles below).
-    \pgfmathsetmacro{\blockSize}{3}
+    \pgfmathsetmacro{\blockSize}{3.6}
+    % Fixed text width inside each block, so that longer labels wrap onto
+    % extra lines (growing the block downward) instead of growing wider
+    % and colliding with the neighboring block.
+    \pgfmathsetmacro{\blockTextWidth}{3.1}
+    % Text width used for the labels placed above/below the arrows.
+    \pgfmathsetmacro{\arrowTextWidth}{2.6}
 
     % Vertical offset of the legend row below the main diagram.
-    \pgfmathsetmacro{\legendYShift}{-2.5}
+    \pgfmathsetmacro{\legendYShift}{-3.6}
     % Horizontal offset of the start of the legend row (position of its first icon).
     \pgfmathsetmacro{\legendXShift}{-\blockSize/2 + 0}
     % Horizontal gap between two consecutive legend entries.
@@ -20,12 +26,12 @@
 \resizebox{\textwidth}{!}{
 \begin{tikzpicture}[]
 % Nodes
-\node[draw, rectangle, align=center, minimum width=\blockSize cm, minimum height=\blockSize cm] (box1) at (0, 0) {\hyperref[def:object]{\hl{\textbf{Object}}} \\ the system \\ the observer \\ seeks to understand};
-\node[draw, rectangle, right of=box1, align=center, minimum width=\blockSize cm, minimum height=\blockSize cm] (box2) at (\blockDistance, 0) {\hyperref[def:explanation]{\hl{\textbf{Explanation}}} \\ interpretable \\ information enabling \\ the observer to refine \\ their mental model};
-\node[draw, rectangle, right of=box2, align=center, minimum width=\blockSize cm, minimum height=\blockSize cm] (box3) at (2*\blockDistance, 0) {\textbf{Mental model} \\ of the observer \\ regarding the object};
+\node[draw, rectangle, align=center, text width=\blockTextWidth cm, minimum width=\blockSize cm, minimum height=\blockSize cm] (box1) at (0, 0) {\hyperref[def:object]{\hl{\textbf{Object}}} \\ the system \\ the observer \\ seeks to understand};
+\node[draw, rectangle, right of=box1, align=center, text width=\blockTextWidth cm, minimum width=\blockSize cm, minimum height=\blockSize cm] (box2) at (\blockDistance, 0) {\hyperref[def:explanation]{\hl{\textbf{Explanation}}} \\ \hyperref[def:interpretable]{\hl{interpretable}} \\ information enabling \\ the observer to refine \\ their mental model};
+\node[draw, rectangle, right of=box2, align=center, text width=\blockTextWidth cm, minimum width=\blockSize cm, minimum height=\blockSize cm] (box3) at (2*\blockDistance, 0) {\textbf{Mental model} \\ of the observer \\ regarding the object};
 % Arrows
-\draw[-{Latex[length=3mm]}] (box1) -- node[midway, above, align=center] {Information \\ extraction \\ through the use \\ of an \\ \hyperref[subsec:explainability_method]{\hl{\textbf{explainability method}}}} node[midway, below, align=center] {} (box2);
-\draw[-{Latex[length=3mm]}] (box2) -- node[midway, above, align=center] {\textbf{Interpretation} \\ by \\ the observer} node[midway, below, align=center] {} (box3);
+\draw[-{Latex[length=3mm]}] (box1) -- node[midway, above, align=center, text width=\arrowTextWidth cm] {Information \\ extraction \\ through the use \\ of an \\ \hyperref[subsec:explainability_method]{\hl{\textbf{explainability}\\\textbf{method}}}} node[midway, below, align=center] {} (box2);
+\draw[-{Latex[length=3mm]}] (box2) -- node[midway, above, align=center, text width=\arrowTextWidth cm] {\textbf{Interpretation} \\ by \\ the observer} node[midway, below, align=center] {} (box3);
 
 % Legend: each entry is chained to the previous one via \legendGap /
 % \legendIconTextGap, so the whole row reflows consistently if a label
@@ -43,10 +49,10 @@
 
 % Brace: spans from just past box2 to just past box3, so it automatically
 % follows \blockDistance and \blockSize instead of being retuned by hand.
-\coordinate (C) at (\blockDistance+\blockSize/2+1, 2);
-\coordinate (D) at (2*\blockDistance+\blockSize/2+1, 2);
+\coordinate (C) at (\blockDistance+\blockSize/2+1, 2.6);
+\coordinate (D) at (2*\blockDistance+\blockSize/2+1, 2.6);
 \draw [decorate, decoration={brace, amplitude=10pt}, thick]
-          (C) -- node[above=12pt, align=center] {Subjective analysis \\ by the observer} (D);
+          (C) -- node[above=12pt, align=center] {Subjective analysis \\ by the \hyperref[def:observer]{\hl{observer}}} (D);
 \end{tikzpicture}
     }
 \caption{Explanation process in explainable artificial intelligence.}

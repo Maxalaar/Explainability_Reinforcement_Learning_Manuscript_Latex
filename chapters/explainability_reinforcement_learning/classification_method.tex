@@ -37,6 +37,10 @@ This temporal dimension leads to a distinction between two objectives of explana
     This type of explanation is specific to reinforcement learning, as it addresses the temporal and goal-oriented nature of the learning process.
 \end{itemize}
 
+These two objectives should not be considered as strictly separated categories, but rather as two extremes of a continuum.
+Indeed, understanding the elements of an observation that influence a specific decision can help the observer generalize this information to infer broader aspects of the agent's behavior.
+Conversely, understanding the agent's overall strategy can provide insights into the reasoning behind individual decisions.
+
 \subsection{Source}
 \label{subsec:source}
 
@@ -65,9 +69,9 @@ We identify six forms of explanation in the RL setting:
     
     \item \textbf{Saliency Map:} a weighting of the input features representing their influence on the output of the policy function.
     
-    \item \textbf{Counterfactual:} a representation of a modified observation obtained by perturbing the original observation in order to produce a different action from the agent.
+    \item \textbf{Counterfactual:} a modified observation obtained by perturbing the original observation in order to produce a different action from the agent.
     
-    \item \textbf{Agent Trajectory:} a representation of a sequence of successive interactions between the agent and the environment.
+    \item \textbf{Agent Trajectory:} a sequence of successive interactions between the agent and the environment.
     
     \item \textbf{Trajectory Prediction:} a prediction about the future evolution of the trajectory produced by a value function.
     
