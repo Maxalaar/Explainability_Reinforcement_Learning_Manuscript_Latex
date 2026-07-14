@@ -4,10 +4,10 @@
 \glsresetall
 
 Today, the majority of \gls{ai} agents with which humans interact are deployed in controlled or low-risk environments.
-For example, agents capable of playing games such as Go operate in settings where potential errors remain limited in terms of consequences.
-Even more autonomous systems, such as agents based on large language models, remain constrained by human supervision mechanisms and are often restricted to tasks such as code generation or information retrieval.
+For example, agents capable of playing games such as Go operate in settings where potential errors remain limited in terms of consequences \cite{silver2017mastering}.
+Even more autonomous systems, such as agents based on \glspl{llm}, remain constrained by human supervision mechanisms and are often restricted to tasks such as code generation or information retrieval \cite{chen2021evaluating, lewis2021retrievalaugmentedgenerationknowledgeintensivenlp}.
 Safety-critical applications integrating machine learning components are still rare.
-Introducing autonomous agents in such environments, requires the establishment of strong guarantees.
+Introducing autonomous agents in such environments, requires the establishment of strong guarantees \cite{seshia2022toward}.
 These requirements include in particular:
 \begin{itemize}
     \item validating the system's functioning before deployment,
@@ -15,7 +15,7 @@ These requirements include in particular:
     \item and certifying that an observed failure will not occur again.
 \end{itemize}
 
-The main challenge lies in the fact that the performing agents currently available rely on both \gls{rl} and \gls{dl}.
+The main challenge lies in the fact that the performing agents currently available rely on both \gls{rl} and \gls{dl} \cite{mnih2013playingatarideepreinforcement}.
 As a result, the mechanisms underlying their decisions cannot be understood directly from the learned model.
 This lack of explainability makes their use difficult in safety-critical contexts.
 To address this limitation, a research field has emerged: \gls{xrl}, a subfield of \gls{xai}.
