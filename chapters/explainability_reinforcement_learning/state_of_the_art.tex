@@ -6,10 +6,10 @@ The purpose of this section is to detail the functioning of existing explainabil
 They are presented according to the form of explanation they produce, following the taxonomy introduced in Section~\ref{sec:taxonomy_xrl_methods}.
 
 Each subsection introduces one of the six forms of explanation identified in Section~\ref{subsec:form}.
-For each form, we identify the corresponding family of methods and organize the related approaches within the appropriate subsection.
+Within each subsection, each subsubsection is dedicated to a family of methods capable of producing that form of explanation.
+
 A family of methods is defined as a set of methods that share the same source, form, and subject of explanation, as well as a similar procedure for generating explanations.
-Methods belonging to the same family may differ slightly in their implementation or in the details of the generation process.
-They share a common underlying principle that allows them to be described as part of the same family.
+Methods belonging to the same family may differ in their implementation or in the details of the generation process, while relying on the same underlying principle.
 
 \subsection{Policy Model}
 \label{subsec:policy_model}
@@ -51,7 +51,7 @@ With this method, the \textit{interpretable policy function} itself is used to p
 
 \input{figures/explainability_reinforcement_learning/policy_approximation_example.tex}
 
-Using an interpretable model, it is possible to approximate a policy represented by a deep neural network trained with deep reinforcement learning \cite{sieusahai2021explaining}.
+An interpretable model can be trained to approximate a policy learned through deep reinforcement learning \cite{sieusahai2021explaining}.
 In this setting, the problem is formulated as a supervised learning task, where the original deep reinforcement learning policy is used to label each observation with the action it selects (see Figure~\ref{fig:policy_approximation_observation}).
 Using this dataset, the interpretable model is trained to reproduce the behavior of the original policy, yielding for instance the decision tree illustrated in Figure~\ref{fig:policy_approximation_decision_tree}.
 The resulting interpretable model is then used as an explanation for the observer.
@@ -62,20 +62,14 @@ If this approximation is sufficiently faithful, it can also be deployed in the e
 
 \input{figures/explainability_reinforcement_learning/saliency_map_heatmap.tex}
 
-Heatmaps make it possible to identify which parts of the input vector are decisive in the selection of the output (as illustrated in Figure~\ref{fig:saliency_map_heatmap}).
-When applied to the reinforcement learning setting, they highlight the regions of the observation space that are critical in the action selection process.
-By nature, this form of explanation provides information about the policy's decision-making process.
-The intuitive nature of this representation allows it to be used by a broad audience.
+The influence of each part of the input on the action selected by the policy can be visualized using heatmaps (Figure~\ref{fig:saliency_map_heatmap}).
+In the reinforcement learning setting, the input corresponds to the observation received by the agent at a given time step.
+Heatmaps therefore highlight the regions of the observation that have the greatest influence on the action selection process.
+By providing this information, they allow the observer to identify which elements of the environment are considered important by the policy when making a decision.
 
 A limitation of heatmap-based methods is that the resulting explanations are not always directly meaningful to the observer.
 As illustrated in Figure~\ref{fig:saliency_map_heatmap_gradient}, interpreting which regions are important often requires human reasoning and involves a degree of subjectivity.
 This limitation becomes particularly relevant in reinforcement learning, where the objective is not only to explain a single decision but also to understand the factors influencing a sequence of decisions over time.
-
-More generally, heatmap-based methods highlight a fundamental challenge in XAI: determining the relevance of an explanation.
-Different methods can produce different heatmaps for the same decision, raising the question of how to compare and select among potentially conflicting explanations.
-This is illustrated in Figure~\ref{fig:saliency_map_heatmap}, where the perturbation-based method (Figure~\ref{fig:saliency_map_heatmap_perturbation}) and the gradient-based method (Figure~\ref{fig:saliency_map_heatmap_gradient}) produce different heatmaps for the same observation.
-Rather than assuming that only one explanation can be valid, the definition of explanation adopted in this manuscript allows for multiple complementary perspectives.
-Different explanations may reveal different aspects of the system and contribute to improving the observer's understanding.
 
 Three explainability methods can be used to obtain this type of explanation: \textit{observation perturbation}, \textit{observation gradient analysis}, and \textit{attention-based architectures}.
 
@@ -139,8 +133,7 @@ The most direct approach consists in visualizing agent trajectories, most common
 By analyzing these trajectories, the observer can infer the dynamics underlying the agent's behavior and how its decisions evolve through time.
 This type of visualization is not specific to XRL.
 In practice, visualizing agent episodes is a standard step in the development and evaluation of reinforcement learning.
-It provides a simple way to verify that the agent behaves as expected and to detect potential implementation errors, such as incorrect environment dynamics or reward functions.
-Furthermore, episode visualization provides an intuitive overview of the agent's strategy and often constitutes the first form of analysis performed by practitioners.
+It provides a simple way to verify that the agent behaves as expected and to detect potential implementation errors.
 
 This simple approach can be further enhanced using methods such as \textit{hierarchical decomposition} and \textit{extraction via critic analysis}.
 
@@ -174,15 +167,12 @@ Making predictions about the future of a trajectory allows one to form a represe
 These predictions are produced using value functions.
 Such functions provide insights into the future evolution of the agent's trajectory.
 By their nature, this form of explanation informs the observer about the strategy adopted by the agent.
+Value functions provide an estimate of the expected cumulative reward from a given state.
+Consequently, a value function maps an observation to a scalar value in $\mathbb{R}$.
 
-The main challenge of this type of approach lies in ensuring that the values predicted by these functions are truly decisive in the actions selected by the agent.
-To this end, the following methods are employed: \textit{value functions as observations} and \textit{critic enrichment}.
-
-\subsubsection{\textit{Value Functions as Observations}}
-\label{subsubsec:value_functions_as_observations}
-
-The objective is to train \textbf{interpretable value functions} to be used as observations for the agent.
-If the features predicted by these value functions are \textbf{meaningful} to the observer, they can determine which aspects the agent is attempting to maximize through its actions \cite{lin2021contrastive}.
+This aggregated prediction provides limited information about the underlying factors that contribute to this value.
+It does not directly reveal which aspects of the task are being optimized or how the predicted return is composed.
+To improve the interpretability of value-based explanations, a technique known as \textit{critic enrichment} can be employed.
 
 \subsubsection{\textit{Critic Enrichment}}
 \label{subsubsec:critic_enrichment}
@@ -225,6 +215,7 @@ Based on this observation, it is possible to \textbf{redefine an MDP} by leverag
 Once the new MDP has been constructed, a model of the interaction between the agent and its environment is obtained.
 This model, represented as a \textit{graph}, is then used as the explanation.
 
-Figure~\ref{fig:latent_space_tsne_example} illustrates this idea using a two-dimensional \textit{t-SNE} projection of the latent space, where each point is colored according to the value function's prediction for the corresponding state.
+Figure~\ref{fig:latent_space_tsne_example} illustrates this idea using a two-dimensional \textit{t-SNE} projection of the latent space of the neural network used to represent the policy.
+Each point is colored according to the value function's prediction for the corresponding state.
 An agreement can be observed between the structure of this projected space and the critic's predictions: states that are assigned similar values by the critic also tend to be located close to one another in the projection.
 This agreement makes it possible to manually identify clusters of states, which likely correspond to states that are perceived as similar by the agent.
