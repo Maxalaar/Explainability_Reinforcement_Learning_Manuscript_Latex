@@ -104,9 +104,7 @@ However, as shown in Figure~\ref{fig:attention_map_heatmap_unclear}, the attenti
 \subsection{Counterfactual}
 \label{subsec:counterfactual}
 
-\input{figures/explainability_reinforcement_learning/counterfactual_example.tex}
-
-In the context of \gls{rl}, counterfactual explanations are used to generate new observations (see Figure~\ref{fig:counterfactual_example}).
+In the context of \gls{rl}, counterfactual explanations are used to generate new observations.
 This new observation, distinct from the original one, leads the agent to adopt an alternative behavior.
 A counterfactual explanation aims to explain the agent's decision-making process.
 Modifying the observation informs the observer about the adjustments required for the agent to adopt a different behavior.
@@ -115,9 +113,11 @@ The method available to generate counterfactuals is the \textit{use of the \gls{
 \subsubsection{\textit{Latent Space Usage for Counterfactual Generation}}
 \label{subsubsec:latent_space_counterfactual_generation}
 
+\input{figures/explainability_reinforcement_learning/counterfactual_example.tex}
+
 In this method, \textbf{generative models} are used \cite{bond2021deep} to exploit the \gls{lr}.
 This type of model learns to generate new data by imitating the training data distribution.
-In this context, generative models aim to produce alternative observations that are likely to alter the agent's actions \cite{olson2021counterfactual}.
+In this context, generative models aim to produce alternative observations that are likely to alter the agent's actions (see Figure~\ref{fig:counterfactual_example}) \cite{olson2021counterfactual}.
 
 The main challenge of this approach lies in the fact that, to serve as explanations, counterfactuals must be both \textbf{close} and \textbf{feasible}.
 A close counterfactual refers to one that does not differ significantly from the original observation.
@@ -161,9 +161,7 @@ The agent's \textit{trajectory}, together with the \textit{sub-policy} selected 
 \subsection{Trajectory Prediction}
 \label{subsec:trajectory_prediction}
 
-\input{figures/explainability_reinforcement_learning/trajectory_prediction_values.tex}
-
-Making predictions about the future of a trajectory allows one to form a representation of what the system expects, based on its training experience (see Figure~\ref{fig:trajectory_prediction_values}).
+Making predictions about the future of a trajectory allows one to form a representation of what the system expects, based on its training experience.
 These predictions are produced using value functions.
 Such functions provide insights into the future evolution of the agent's trajectory.
 By their nature, this form of explanation informs the observer about the strategy adopted by the agent.
@@ -177,19 +175,19 @@ To improve the interpretability of value-based explanations, a technique known a
 \subsubsection{\textit{Critic Enrichment}}
 \label{subsubsec:critic_enrichment}
 
+\input{figures/explainability_reinforcement_learning/trajectory_prediction_values.tex}
+
 In order to obtain interpretable information from the predictions of the \textbf{critic}, it is possible to \textbf{decompose} the critic into multiple \textbf{sub-functions} \cite{juozapaitis2019explainable}.
 The reward function is thus decomposed into multiple sub-reward functions, each representing a \textbf{sub-objective} of the task to be accomplished.
 Similarly, for each of these sub-reward functions, corresponding sub-critic functions are defined, along with a function that combines their outputs.
 During training, the agent selects its actions so as to maximize this combination function of the sub-critics.
-Using this approach, for each observation and action, a prediction is obtained regarding the sub-objectives the agent is attempting to maximize.
+Using this approach, for each observation and action, a prediction is obtained regarding the sub-objectives the agent is attempting to maximize (see Figure~\ref{fig:trajectory_prediction_values}).
 This \textit{prediction} is then used as the explanation for the observer.
 
 \subsection{Interaction Model}
 \label{subsec:interaction_model}
 
-\input{figures/explainability_reinforcement_learning/interaction_model_causal_graph.tex}
-
-Modeling the interactions between an agent and its environment makes it possible to understand how the agent's decisions are made and what impact they have on the environment (see Figure~\ref{fig:interaction_model_causal_graph}).
+Modeling the interactions between an agent and its environment makes it possible to understand how the agent's decisions are made and what impact they have on the environment.
 By incorporating these interactions into an explanatory model, one can better grasp the complex relationships between the agent and its environment, thereby identifying the determining factors in the decision-making process.
 By explicitly handling the agent--environment interaction, this type of explanation aims to explain the agent's strategy.
 The methods used to obtain explanations in the form of agent--environment interactions are: \textit{Bayesian network learning} and \textit{\gls{ls} usage for \gls{mdp} generation}.
@@ -197,10 +195,12 @@ The methods used to obtain explanations in the form of agent--environment intera
 \subsubsection{\textit{Bayesian Network Learning}}
 \label{subsubsec:bayesian_network_learning}
 
+\input{figures/explainability_reinforcement_learning/interaction_model_causal_graph.tex}
+
 The evolution of an agent within an environment can be observed as a set of \textbf{random variables} connected through a \textbf{Bayesian network} \cite{madumal2020explainable}.
 Random variables are defined to represent both external aspects (the environment) and internal aspects of the agent (the actions).
 By analyzing trajectories, it becomes possible to infer causal relationships among these random variables.
-At the end of this process, a weighted causal graph is obtained, which serves as an explanation for the observer.
+At the end of this process, a weighted causal graph is obtained, which serves as an explanation for the observer (see Figure~\ref{fig:interaction_model_causal_graph}).
 This \textit{Bayesian network}, representing the interactions between the agent and the environment, is then used as the explanation.
 
 \subsubsection{\textit{Latent Space Usage for MDP Generation}}
