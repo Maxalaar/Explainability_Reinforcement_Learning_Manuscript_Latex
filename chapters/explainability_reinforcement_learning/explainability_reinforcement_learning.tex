@@ -1,7 +1,9 @@
 \chapter{Explainability in Reinforcement Learning}
 \label{chap:explainability_reinforcement_learning}
 
-Today, the majority of artificial intelligence agents with which humans interact are deployed in controlled or low-risk environments.
+\glsresetall
+
+Today, the majority of \gls{ai} agents with which humans interact are deployed in controlled or low-risk environments.
 For example, agents capable of playing games such as Go operate in settings where potential errors remain limited in terms of consequences.
 Even more autonomous systems, such as agents based on large language models, remain constrained by human supervision mechanisms and are often restricted to tasks such as code generation or information retrieval.
 Safety-critical applications integrating machine learning components are still rare.
@@ -13,15 +15,15 @@ These requirements include in particular:
     \item and certifying that an observed failure will not occur again.
 \end{itemize}
 
-The main challenge lies in the fact that the performing agents currently available rely on both reinforcement learning and deep learning.
+The main challenge lies in the fact that the performing agents currently available rely on both \gls{rl} and \gls{dl}.
 As a result, the mechanisms underlying their decisions cannot be understood directly from the learned model.
 This lack of explainability makes their use difficult in safety-critical contexts.
-To address this limitation, a research field has emerged: Explainable Reinforcement Learning (XRL), a subfield of Explainable Artificial Intelligence (XAI).
-The objective of XRL is to develop explainability methods that make it possible to obtain explanations of reinforcement learning agents.
+To address this limitation, a research field has emerged: \gls{xrl}, a subfield of \gls{xai}.
+The objective of \gls{xrl} is to develop explainability methods that make it possible to obtain explanations of \gls{rl} agents.
 
-This chapter presents the main existing XRL methods.
-We first define what is meant by an explanation in the context of XAI.
-We then propose a taxonomy for organizing existing XRL methods.
+This chapter presents the main existing \gls{xrl} methods.
+We first define what is meant by an explanation in the context of \gls{xai}.
+We then propose a taxonomy for organizing existing \gls{xrl} methods.
 This taxonomy serves as the basis for the state-of-the-art review presented in the remainder of the chapter.
 
 \input{chapters/explainability_reinforcement_learning/explanation.tex}

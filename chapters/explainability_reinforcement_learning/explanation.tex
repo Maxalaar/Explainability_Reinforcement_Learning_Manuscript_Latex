@@ -3,17 +3,17 @@
 \input{figures/explainability_reinforcement_learning/explanation_process_illustration.tex}
 
 
-In this section, we define what an explanation is in the context of XAI and how it can be obtained.
+In this section, we define what an explanation is in the context of \gls{xai} and how it can be obtained.
 We first introduce the concept of explanation in a general.
-We then describe how this concept applies to XAI.
-Finally, we introduce the concept of explainability methods and describe the properties that characterize explanations in the context of XAI.
+We then describe how this concept applies to \gls{xai}.
+Finally, we introduce the concept of explainability methods and describe the properties that characterize explanations in the context of \gls{xai}.
 
 \subsection{Explanation}
 Establishing what is meant by an explanation is challenging due to the fundamentally multidisciplinary nature of the concept.
 When we refer to explanation, we are inherently referring to an explanation provided to a human.
 As soon as humans are involved, the problem is no longer purely computational or mathematical.
 It involves several fields of research, such as philosophy, psychology, and sociology.
-So far, these disciplines have not converged on a unified definition of explanation that can be directly applied to XAI.
+So far, these disciplines have not converged on a unified definition of explanation that can be directly applied to \gls{xai}.
 
 For this reason, we propose the following definition of explanation.
 An explanation involves two entities: the object (Definition~\ref{def:object}) being explained and the receiver of the explanation.
@@ -58,47 +58,47 @@ Figure~\ref{fig:explanation_process_illustration} summarizes this whole explanat
 
 \subsection{Explainable Artificial Intelligence}
 
-Now that the general framework of explanation has been established, we can examine how this concept applies in the context of artificial intelligence.
-In the context of XAI, the object of explanation is an artificial intelligence system.
-More precisely, XAI emerged as a response to the success of deep learning models.
-These models achieve high performance through connectionist architectures based on deep neural networks.
+Now that the general framework of explanation has been established, we can examine how this concept applies in the context of \gls{ai}.
+In the context of \gls{xai}, the object of explanation is an \gls{ai} system.
+More precisely, \gls{xai} emerged as a response to the success of \gls{dl} models.
+These models achieve high performance through connectionist architectures based on deep \glspl{nn}.
 In these architectures, information is represented in a distributed manner across the network through patterns of activation and connections between computational units.
-Unlike symbolic approaches, individual components of neural networks cannot be directly associated with human-defined concepts.
+Unlike symbolic approaches, individual components of \glspl{nn} cannot be directly associated with human-defined concepts.
 From this starting point, we identify two types of approaches:
 \begin{itemize}
-    \item \textbf{Substitutive explainability:} In this approach, the underlying assumption is that there is nothing to explain within a neural network.
+    \item \textbf{Substitutive explainability:} In this approach, the underlying assumption is that there is nothing to explain within a \gls{nn}.
     There is no semantic meaning associated with each computational component, and therefore nothing to interpret.
-    This corresponds to the so-called ``black box'' view of neural networks.
-    Under this assumption, XAI consists of replacing as much of the deep learning system as possible with alternative AI methods.
+    This corresponds to the so-called ``black box'' view of \glspl{nn}.
+    Under this assumption, \gls{xai} consists of replacing as much of the \gls{dl} system as possible with alternative \gls{ai} methods.
 
-    \item \textbf{Intrinsic explainability:} In this approach, it is argued that neural networks inherently contain mechanisms that can be explained.
+    \item \textbf{Intrinsic explainability:} In this approach, it is argued that \glspl{nn} inherently contain mechanisms that can be explained.
     The limitation is considered to lie not in the networks themselves, but in the absence of adequate tools to analyze their functioning.
 \end{itemize}
 
-This manuscript considers methods from both approaches in order to provide a comprehensive overview of the XAI field.
+This manuscript considers methods from both approaches in order to provide a comprehensive overview of the \gls{xai} field.
 According to the definition of explanation adopted in this manuscript (Definition~\ref{def:explanation}), we consider that any system can be explained.
 As a consequence, the perspective adopted throughout this manuscript is that of intrinsic explainability.
 
-\subsection{Explainability Method in XIA}
+\subsection{Explainability Method in XAI}
 \label{subsec:explainability_method}
 
-Now that the general framework of XAI has been established, we need to further detail the properties of an explanation in this context.
-In our framework, an explanation in the field of XAI can be characterized by three components:
+Now that the general framework of \gls{xai} has been established, we need to further detail the properties of an explanation in this context.
+In our framework, an explanation in the field of \gls{xai} can be characterized by three components:
 \begin{itemize}
     \item \textbf{Source:}\label{item:source} refers to the origin of the information used by the explainability method.
-    The explainability method transforms the raw information produced by the AI system into an explanation that can be understood by an observer.
+    The explainability method transforms the raw information produced by the \gls{ai} system into an explanation that can be understood by an observer.
 
     \item \textbf{Form:}\label{item:form} refers to the representation through which the explanation is communicated.
     The form defines how the information is presented to the observer and must allow human interpretation.
     An explanation can take many different forms, including text, images, computer code, and mathematical equations.
 
-    \item \textbf{Subject:}\label{item:subject} refers to the aspect of the AI system that is being explained.
-    In XAI, this distinction is commonly associated with the difference between local and global explanations.
-    A local explanation describes why an AI system produced a specific output in a given situation.
-    A global explanation aims to describe the general functioning of the AI system.
+    \item \textbf{Subject:}\label{item:subject} refers to the aspect of the \gls{ai} system that is being explained.
+    In \gls{xai}, this distinction is commonly associated with the difference between local and global explanations.
+    A local explanation describes why an \gls{ai} system produced a specific output in a given situation.
+    A global explanation aims to describe the general functioning of the \gls{ai} system.
 \end{itemize}
 
 These three aspects of an explanation are entirely determined by the process used to produce it.
 We refer to this process as an explainability method.
 An explainability method is a transformation process that maps a source of information into an explanation characterized by a specific form and subject.
-Research in XAI focuses on developing new methods capable of performing this transformation in order to overcome the lack of interpretability associated with deep learning models.
+Research in \gls{xai} focuses on developing new methods capable of performing this transformation in order to overcome the lack of interpretability associated with \gls{dl} models.

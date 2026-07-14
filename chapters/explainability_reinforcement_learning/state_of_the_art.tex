@@ -15,10 +15,10 @@ Methods belonging to the same family may differ in their implementation or in th
 \label{subsec:policy_model}
 
 The policy function can be represented by a wide variety of function classes.
-In modern reinforcement learning, neural networks is the most commonly used models for representing policies.
+In modern \gls{rl}, \glspl{nn} is the most commonly used models for representing policies.
 Although these models achieve the highest performance, their connectionist nature makes their internal representations non-interpretable.
 
-For this reason, a substitutive approach to XRL aims to replace these models with alternative models considered interpretable.
+For this reason, a substitutive approach to \gls{xrl} aims to replace these models with alternative models considered interpretable.
 Such models can be understood through direct analysis of their representations.
 The main classes of interpretable models used to represent policy functions include decision trees \cite{topin2021iterative}, algorithms \cite{trivedi2022learning}, formal logic \cite{payani2019inductive}, and linear models \cite{pmlr-v108-garreau20a}.
 
@@ -32,7 +32,7 @@ The resulting model can quickly become difficult to analyze and lose its interpr
 
 For example, representing a policy capable of playing Go using a symbolic model would require considering a very large number of possible situations and specific cases.
 Even if such a representation were possible, the resulting model would likely become intractable for human analysis due to its complexity.
-This illustrates why neural network-based approaches have become dominant in such domains, as they can learn complex decision strategies without requiring an explicit enumeration of rules.
+This illustrates why \gls{nn}-based approaches have become dominant in such domains, as they can learn complex decision strategies without requiring an explicit enumeration of rules.
 
 To obtain an interpretable policy model, two explainability methods are available: \textit{interpretable policy learning} and \textit{policy approximation via interpretable model}.
 
@@ -40,8 +40,8 @@ To obtain an interpretable policy model, two explainability methods are availabl
 \label{subsubsec:interpretable_policy_learning}
 
 This method aims at learning a policy represented by an \textbf{interpretable} model \cite{topin2021iterative, trivedi2022learning}.
-It is the most direct approach to addressing the challenges posed by explainable reinforcement learning (XRL).
-This type of training requires modifying the MDP in order to adapt it to the search space and to the type of policy representation.
+It is the most direct approach to addressing the challenges posed by \gls{xrl}.
+This type of training requires modifying the \gls{mdp} in order to adapt it to the search space and to the type of policy representation.
 Moreover, this search space often needs to be reduced to make learning feasible.
 Such a \textbf{reduction} requires the integration of \textbf{expert knowledge} into the learning process.
 With this method, the \textit{interpretable policy function} itself is used to provide explanations to the observer.
@@ -51,8 +51,8 @@ With this method, the \textit{interpretable policy function} itself is used to p
 
 \input{figures/explainability_reinforcement_learning/policy_approximation_example.tex}
 
-An interpretable model can be trained to approximate a policy learned through deep reinforcement learning \cite{sieusahai2021explaining}.
-In this setting, the problem is formulated as a supervised learning task, where the original deep reinforcement learning policy is used to label each observation with the action it selects (see Figure~\ref{fig:policy_approximation_observation}).
+An interpretable model can be trained to approximate a policy learned through deep \gls{rl} \cite{sieusahai2021explaining}.
+In this setting, the problem is formulated as a supervised learning task, where the original deep \gls{rl} policy is used to label each observation with the action it selects (see Figure~\ref{fig:policy_approximation_observation}).
 Using this dataset, the interpretable model is trained to reproduce the behavior of the original policy, yielding for instance the decision tree illustrated in Figure~\ref{fig:policy_approximation_decision_tree}.
 The resulting interpretable model is then used as an explanation for the observer.
 If this approximation is sufficiently faithful, it can also be deployed in the environment in place of the original policy, thereby providing a high degree of control over the agent.
@@ -63,13 +63,13 @@ If this approximation is sufficiently faithful, it can also be deployed in the e
 \input{figures/explainability_reinforcement_learning/saliency_map_heatmap.tex}
 
 The influence of each part of the input on the action selected by the policy can be visualized using heatmaps (Figure~\ref{fig:saliency_map_heatmap}).
-In the reinforcement learning setting, the input corresponds to the observation received by the agent at a given time step.
+In the \gls{rl} setting, the input corresponds to the observation received by the agent at a given time step.
 Heatmaps therefore highlight the regions of the observation that have the greatest influence on the action selection process.
 By providing this information, they allow the observer to identify which elements of the environment are considered important by the policy when making a decision.
 
 A limitation of heatmap-based methods is that the resulting explanations are not always directly meaningful to the observer.
 As illustrated in Figure~\ref{fig:saliency_map_heatmap_gradient}, interpreting which regions are important often requires human reasoning and involves a degree of subjectivity.
-This limitation becomes particularly relevant in reinforcement learning, where the objective is not only to explain a single decision but also to understand the factors influencing a sequence of decisions over time.
+This limitation becomes particularly relevant in \gls{rl}, where the objective is not only to explain a single decision but also to understand the factors influencing a sequence of decisions over time.
 
 Three explainability methods can be used to obtain this type of explanation: \textit{observation perturbation}, \textit{observation gradient analysis}, and \textit{attention-based architectures}.
 
@@ -94,8 +94,8 @@ Based on these weightings, a \textit{heatmap} is constructed to allow the observ
 
 \input{figures/explainability_reinforcement_learning/attention_map_heatmap.tex}
 
-\textbf{Attention} blocks constitute a neural network architecture that makes it possible to weight the relative importance of one part of a vector with respect to the other parts of the same vector \cite{vaswani2023attention}.
-These weights are computed as a function of the vector itself and are learned by the neural network during training.
+\textbf{Attention} blocks constitute a \gls{nn} architecture that makes it possible to weight the relative importance of one part of a vector with respect to the other parts of the same vector \cite{vaswani2023attention}.
+These weights are computed as a function of the vector itself and are learned by the \gls{nn} during training.
 For a given observation, each component of the observation vector is assigned a scalar value.
 It can therefore be assumed that the components associated with the highest weights are the most influential in determining the output \cite{mott2019towards, itaya2021visual}.
 This attention-based \textit{heatmap} is then provided to the observer as the explanation (see Figure~\ref{fig:attention_map_heatmap_clear}).
@@ -106,16 +106,16 @@ However, as shown in Figure~\ref{fig:attention_map_heatmap_unclear}, the attenti
 
 \input{figures/explainability_reinforcement_learning/counterfactual_example.tex}
 
-In the context of reinforcement learning, counterfactual explanations are used to generate new observations (see Figure~\ref{fig:counterfactual_example}).
+In the context of \gls{rl}, counterfactual explanations are used to generate new observations (see Figure~\ref{fig:counterfactual_example}).
 This new observation, distinct from the original one, leads the agent to adopt an alternative behavior.
 A counterfactual explanation aims to explain the agent's decision-making process.
 Modifying the observation informs the observer about the adjustments required for the agent to adopt a different behavior.
-The method available to generate counterfactuals is the \textit{use of the latent space for counterfactual generation}.
+The method available to generate counterfactuals is the \textit{use of the \gls{ls} for counterfactual generation}.
 
 \subsubsection{\textit{Latent Space Usage for Counterfactual Generation}}
 \label{subsubsec:latent_space_counterfactual_generation}
 
-In this method, \textbf{generative models} are used \cite{bond2021deep} to exploit the latent representation.
+In this method, \textbf{generative models} are used \cite{bond2021deep} to exploit the \gls{lr}.
 This type of model learns to generate new data by imitating the training data distribution.
 In this context, generative models aim to produce alternative observations that are likely to alter the agent's actions \cite{olson2021counterfactual}.
 
@@ -131,8 +131,8 @@ We now consider methods that aim to provide insight into the agent's strategy by
 
 The most direct approach consists in visualizing agent trajectories, most commonly through complete episodes.
 By analyzing these trajectories, the observer can infer the dynamics underlying the agent's behavior and how its decisions evolve through time.
-This type of visualization is not specific to XRL.
-In practice, visualizing agent episodes is a standard step in the development and evaluation of reinforcement learning.
+This type of visualization is not specific to \gls{xrl}.
+In practice, visualizing agent episodes is a standard step in the development and evaluation of \gls{rl}.
 It provides a simple way to verify that the agent behaves as expected and to detect potential implementation errors.
 
 This simple approach can be further enhanced using methods such as \textit{hierarchical decomposition} and \textit{extraction via critic analysis}.
@@ -192,7 +192,7 @@ This \textit{prediction} is then used as the explanation for the observer.
 Modeling the interactions between an agent and its environment makes it possible to understand how the agent's decisions are made and what impact they have on the environment (see Figure~\ref{fig:interaction_model_causal_graph}).
 By incorporating these interactions into an explanatory model, one can better grasp the complex relationships between the agent and its environment, thereby identifying the determining factors in the decision-making process.
 By explicitly handling the agent--environment interaction, this type of explanation aims to explain the agent's strategy.
-The methods used to obtain explanations in the form of agent--environment interactions are: \textit{Bayesian network learning} and \textit{latent space usage for MDP generation}.
+The methods used to obtain explanations in the form of agent--environment interactions are: \textit{Bayesian network learning} and \textit{\gls{ls} usage for \gls{mdp} generation}.
 
 \subsubsection{\textit{Bayesian Network Learning}}
 \label{subsubsec:bayesian_network_learning}
@@ -208,14 +208,14 @@ This \textit{Bayesian network}, representing the interactions between the agent 
 
 \input{figures/explainability_reinforcement_learning/latent_space_tsne_example.tex}
 
-Each layer of a neural network can be viewed as a projection from one space to another \cite{zahavy2017graying}.
-As information propagates through successive layers of a neural network, it becomes increasingly abstract.
+Each layer of a \gls{nn} can be viewed as a projection from one space to another \cite{zahavy2017graying}.
+As information propagates through successive layers of a \gls{nn}, it becomes increasingly abstract.
 It can therefore be assumed that two vectors that are close in this projected space are also close in terms of the agent's perception.
-Based on this observation, it is possible to \textbf{redefine an MDP} by leveraging the \textbf{abstract representations} produced by the final layers of a neural network.
-Once the new MDP has been constructed, a model of the interaction between the agent and its environment is obtained.
+Based on this observation, it is possible to \textbf{redefine an \gls{mdp}} by leveraging the \textbf{abstract representations} produced by the final layers of a \gls{nn}.
+Once the new \gls{mdp} has been constructed, a model of the interaction between the agent and its environment is obtained.
 This model, represented as a \textit{graph}, is then used as the explanation.
 
-Figure~\ref{fig:latent_space_tsne_example} illustrates this idea using a two-dimensional \textit{t-SNE} projection of the latent space of the neural network used to represent the policy.
+Figure~\ref{fig:latent_space_tsne_example} illustrates this idea using a two-dimensional \textit{t-SNE} projection of the \gls{ls} of the \gls{nn} used to represent the policy.
 Each point is colored according to the value function's prediction for the corresponding state.
 An agreement can be observed between the structure of this projected space and the critic's predictions: states that are assigned similar values by the critic also tend to be located close to one another in the projection.
 This agreement makes it possible to manually identify clusters of states, which likely correspond to states that are perceived as similar by the agent.

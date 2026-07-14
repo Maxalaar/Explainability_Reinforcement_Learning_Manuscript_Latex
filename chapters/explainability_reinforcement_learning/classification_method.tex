@@ -1,16 +1,16 @@
 \section{Taxonomy of XRL Methods}
 \label{sec:taxonomy_xrl_methods}
 
-Now that the concept of XAI has been defined, we turn to its application in reinforcement learning, known as XRL.
-As in XAI, explanations in XRL are produced by explainability methods and can be described in terms of their subject, source, and form.
-This section reviews the possible variations of these three aspects in the specific context of reinforcement learning.
+Now that the concept of \gls{xai} has been defined, we turn to its application in \gls{rl}, known as \gls{xrl}.
+As in \gls{xai}, explanations in \gls{xrl} are produced by explainability methods and can be described in terms of their subject, source, and form.
+This section reviews the possible variations of these three aspects in the specific context of \gls{rl}.
 
 \subsection{Subject}
 \label{subsec:subject}
 
-The first question to address is the subject of explanation in the context of reinforcement learning.
-To answer this question, it is necessary to identify the different components involved in a reinforcement learning system and determine which of them constitutes the object of explanation.
-A reinforcement learning system can be described through two main components: the environment and the policy.
+The first question to address is the subject of explanation in the context of \gls{rl}.
+To answer this question, it is necessary to identify the different components involved in a \gls{rl} system and determine which of them constitutes the object of explanation.
+A \gls{rl} system can be described through two main components: the environment and the policy.
 
 The environment defines the dynamics in which the agent evolves, including the possible states, observations, actions, and transitions.
 Environments are simulations designed by humans, and their dynamics are explicitly defined.
@@ -19,22 +19,22 @@ Therefore, it is assumed that the environment is known to the observer and does 
 The main object of interest is therefore the agent's policy.
 The policy represents the decision-making mechanism of the agent.
 It is a function that maps observations to actions and is learned through interaction with the environment in order to maximize the expected cumulative reward.
-The policy is the component that encodes the learning process and that XRL aims to explain.
+The policy is the component that encodes the learning process and that \gls{xrl} aims to explain.
 
-Explaining a policy introduces additional challenges compared with classical XAI settings.
-In traditional XAI problems, the objective is to explain an isolated decision, such as determining which features of an image led to a classification result.
-In contrast, reinforcement learning introduces a temporal dimension into the decision-making process.
+Explaining a policy introduces additional challenges compared with classical \gls{xai} settings.
+In traditional \gls{xai} problems, the objective is to explain an isolated decision, such as determining which features of an image led to a classification result.
+In contrast, \gls{rl} introduces a temporal dimension into the decision-making process.
 An action is not only determined by the current observation but also influences future states and rewards.
 Therefore, understanding the behavior of an agent may require considering a sequence of interactions between the agent and its environment.
 
-This temporal dimension leads to a distinction between two objectives of explanation in XRL:
+This temporal dimension leads to a distinction between two objectives of explanation in \gls{xrl}:
 \begin{itemize}
     \item \textbf{Decision explanations:} focus on identifying the elements of the current observation that influenced the action selected by the policy.
-    This type of explanation is close to classical XAI approaches, as it analyzes the relationship between inputs and outputs while abstracting away the sequential nature of the decision process.
+    This type of explanation is close to classical \gls{xai} approaches, as it analyzes the relationship between inputs and outputs while abstracting away the sequential nature of the decision process.
 
     \item \textbf{Strategy explanations:} aim to characterize the agent's behavior over time.
     They focus on sequences of decisions and interactions with the environment in order to understand how the agent achieves its long-term objective.
-    This type of explanation is specific to reinforcement learning, as it addresses the temporal and goal-oriented nature of the learning process.
+    This type of explanation is specific to \gls{rl}, as it addresses the temporal and goal-oriented nature of the learning process.
 \end{itemize}
 
 These two objectives should not be considered as strictly separated categories, but rather as two extremes of a continuum.
@@ -44,10 +44,10 @@ Conversely, understanding the agent's overall strategy can provide insights into
 \subsection{Source}
 \label{subsec:source}
 
-We identify three sources of explanation in reinforcement learning, all obtained during or after the learning process and containing information about the agent:
+We identify three sources of explanation in \gls{rl}, all obtained during or after the learning process and containing information about the agent:
 \begin{itemize}
     \item \textbf{Policies:} policies are functions that generate a distribution over the action space for a given observation.
-    The objective of reinforcement learning is to learn a policy that maximizes the expected cumulative future rewards.
+    The objective of \gls{rl} is to learn a policy that maximizes the expected cumulative future rewards.
     During the learning phase, the policy is iteratively improved through interactions with the environment.
 
     \item \textbf{Trajectories:} trajectories represent sequences of successive interactions between the agent and the environment.
@@ -63,7 +63,7 @@ We identify three sources of explanation in reinforcement learning, all obtained
 \subsection{Form}
 \label{subsec:form}
 
-We identify six forms of explanation in the RL setting:
+We identify six forms of explanation in the \gls{rl} setting:
 \begin{itemize}
     \item \textbf{Policy Model:} an interpretable model of the agent's policy function.
     
@@ -79,6 +79,6 @@ We identify six forms of explanation in the RL setting:
 \end{itemize}
 
 Among the three components characterizing an explanation, the form is the one that varies most significantly across explainability methods.
-While subjects and sources tend to be relatively stable in the XRL literature, the diversity in how explanations are presented is considerably greater.
+While subjects and sources tend to be relatively stable in the \gls{xrl} literature, the diversity in how explanations are presented is considerably greater.
 The list above is by no means definitive and may evolve as new approaches emerge.
 For this reason, the following section is organized according to the form of explanations and presents existing explainability methods based on this criterion.
