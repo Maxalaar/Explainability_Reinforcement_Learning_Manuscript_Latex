@@ -34,17 +34,17 @@ For example, representing a policy capable of playing Go using a symbolic model 
 Even if such a representation were possible, the resulting model would likely become intractable for human analysis due to its complexity.
 This illustrates why \gls{nn}-based approaches have become dominant in such domains, as they can learn complex decision strategies without requiring an explicit enumeration of rules.
 
-To obtain an interpretable policy model, two explainability methods are available: \textit{interpretable policy learning} and \textit{policy approximation via interpretable model}.
+To obtain an interpretable policy model, two families of explainability methods are available: \textit{interpretable policy learning} and \textit{policy approximation via interpretable model}.
 
 \subsubsection{\textit{Interpretable Policy Learning}}
 \label{subsubsec:interpretable_policy_learning}
 
-This method aims at learning a policy represented by an \textbf{interpretable} model \cite{topin2021iterative, trivedi2022learning}.
+This family of methods aims at learning a policy represented by an \textbf{interpretable} model \cite{topin2021iterative, trivedi2022learning}.
 It is the most direct approach to addressing the challenges posed by \gls{xrl}.
 This type of training requires modifying the \gls{mdp} in order to adapt it to the search space and to the type of policy representation.
 Moreover, this search space often needs to be reduced to make learning feasible.
 Such a \textbf{reduction} requires the integration of \textbf{expert knowledge} into the learning process.
-With this method, the \textit{interpretable policy function} itself is used to provide explanations to the observer.
+With this family of methods, the \textit{interpretable policy function} itself is used to provide explanations to the observer.
 
 \subsubsection{\textit{Policy Approximation via Interpretable Model}}
 \label{subsubsec:policy_approximation_via_interpretable_model}
@@ -71,7 +71,7 @@ A limitation of heatmap-based methods is that the resulting explanations are not
 As illustrated in Figure~\ref{fig:saliency_map_heatmap_gradient}, interpreting which regions are important often requires human reasoning and involves a degree of subjectivity.
 This limitation becomes particularly relevant in \gls{rl}, where the objective is not only to explain a single decision but also to understand the factors influencing a sequence of decisions over time.
 
-Three explainability methods can be used to obtain this type of explanation: \textit{observation perturbation}, \textit{observation gradient analysis}, and \textit{attention-based architectures}.
+Three families of explainability methods can be used to obtain this type of explanation: \textit{observation perturbation}, \textit{observation gradient analysis}, and \textit{attention-based architectures}.
 
 \subsubsection{\textit{Observation Perturbation}}
 \label{subsubsec:observation_perturbation}
@@ -108,14 +108,14 @@ In the context of \gls{rl}, counterfactual explanations are used to generate new
 This new observation, distinct from the original one, leads the agent to adopt an alternative behavior.
 A counterfactual explanation aims to explain the agent's decision-making process.
 Modifying the observation informs the observer about the adjustments required for the agent to adopt a different behavior.
-The method available to generate counterfactuals is the \textit{use of the \gls{ls} for counterfactual generation}.
+The family of methods available to generate counterfactuals is the \textit{use of the \gls{ls} for counterfactual generation}.
 
 \subsubsection{\textit{Latent Space Usage for Counterfactual Generation}}
 \label{subsubsec:latent_space_counterfactual_generation}
 
 \input{figures/explainability_reinforcement_learning/counterfactual_example.tex}
 
-In this method, \textbf{generative models} are used \cite{bond2021deep} to exploit the \gls{lr}.
+In this family of methods, \textbf{generative models} are used \cite{bond2021deep} to exploit the \gls{lr}.
 This type of model learns to generate new data by imitating the training data distribution.
 In this context, generative models aim to produce alternative observations that are likely to alter the agent's actions (see Figure~\ref{fig:counterfactual_example}) \cite{olson2021counterfactual}.
 
@@ -135,24 +135,24 @@ This type of visualization is not specific to \gls{xrl}.
 In practice, visualizing agent episodes is a standard step in the development and evaluation of \gls{rl}.
 It provides a simple way to verify that the agent behaves as expected and to detect potential implementation errors.
 
-This simple approach can be further enhanced using methods such as \textit{hierarchical decomposition} and \textit{extraction via critic analysis}.
+This simple approach can be further enhanced using families of methods such as \textit{hierarchical decomposition} and \textit{extraction via critic analysis}.
 
 \subsubsection{\textit{Extraction via Critic Analysis}}
 \label{subsubsec:extraction_via_critic_analysis}
 
-In this method, the predictions of the critic are used to determine which \textbf{trajectories to present to the observer} \cite{Sequeira_2020}.
+In this family of methods, the predictions of the critic are used to determine which \textbf{trajectories to present to the observer} \cite{Sequeira_2020}.
 A set of states is selected from multiple trajectories.
 For a given state, all possible actions are examined.
 The state is assigned a value equal to the difference between the critic's prediction for the lowest-valued action and the prediction for the highest-valued action.
 Trajectories containing the states with the highest values according to this procedure are then chosen to be presented to the observer.
 These trajectories are considered \textbf{critical moments} of the agent and are therefore relevant for analysis.
-For this method, the \textit{selected trajectories} represent the interpretable information provided to the observer.
+For this family of methods, the \textit{selected trajectories} represent the interpretable information provided to the observer.
 
 \subsubsection{\textit{Hierarchical Decomposition}}
 \label{subsubsec:hierarchical_decomposition}
 
 Hierarchical agents are composed of a set of \textbf{sub-policies} specialized for specific tasks within subsets of the environment's states.
-This method distributes the optimization of the reward function across multiple models, significantly simplifying the learning process.
+This family of methods distributes the optimization of the reward function across multiple models, significantly simplifying the learning process.
 Moreover, this \textbf{decomposition} of the policy function can also provide explainability in the agent's strategy \cite{Beyret_2019}.
 If a sub-policy is selected, it indicates that the agent will execute a specialized behavior.
 This behavioral specialization provides insight into the strategy the agent employs to maximize the reward function.
@@ -170,7 +170,7 @@ Consequently, a value function maps an observation to a scalar value in $\mathbb
 
 This aggregated prediction provides limited information about the underlying factors that contribute to this value.
 It does not directly reveal which aspects of the task are being optimized or how the predicted return is composed.
-To improve the interpretability of value-based explanations, a technique known as \textit{critic enrichment} can be employed.
+To improve the interpretability of value-based explanations, a family of methods known as \textit{critic enrichment} can be employed.
 
 \subsubsection{\textit{Critic Enrichment}}
 \label{subsubsec:critic_enrichment}
@@ -190,7 +190,7 @@ This \textit{prediction} is then used as the explanation for the observer.
 Modeling the interactions between an agent and its environment makes it possible to understand how the agent's decisions are made and what impact they have on the environment.
 By incorporating these interactions into an explanatory model, one can better grasp the complex relationships between the agent and its environment, thereby identifying the determining factors in the decision-making process.
 By explicitly handling the agent--environment interaction, this type of explanation aims to explain the agent's strategy.
-The methods used to obtain explanations in the form of agent--environment interactions are: \textit{Bayesian network learning} and \textit{\gls{ls} usage for \gls{mdp} generation}.
+The families of methods used to obtain explanations in the form of agent--environment interactions are: \textit{Bayesian network learning} and \textit{\gls{ls} usage for \gls{mdp} generation}.
 
 \subsubsection{\textit{Bayesian Network Learning}}
 \label{subsubsec:bayesian_network_learning}
