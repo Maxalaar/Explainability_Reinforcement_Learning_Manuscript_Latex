@@ -1,0 +1,21 @@
+\section{Conclusion}
+\label{sec:explainability_reinforcement_learning_conclusion}
+
+The taxonomy and the state-of-the-art review presented in this chapter make it possible to draw three main observations.
+
+First, regarding the subject of explanation, Table~\ref{tab:taxonomy_methods} shows that every reviewed method targets either a \textbf{decision} or a \textbf{strategy}, and that none of them addresses the \textbf{learning process} itself, i.e., how the policy is progressively updated over the course of training.
+We identify two reasons for this absence.
+On the one hand, from a practical standpoint, this question is of limited interest: industrial applications generally deploy an already-trained policy, so the training procedure itself is rarely part of what needs to be explained once the agent is in production.
+On the other hand, training can itself be described as an iterative improvement of the policy.
+Explaining the learning process would therefore amount to explaining the sequence of policies produced across training iterations, which is conceptually close to explaining a strategy, only applied to the space of successive policies rather than to the space of successive states.
+Under this view, explaining a learning process does not constitute a fundamentally distinct problem but rather a variant of strategy explanation, which may account for why it has not emerged as a separate subject in the literature.
+
+Second, the diversity of explanation forms identified in this review (Table~\ref{tab:taxonomy_methods}) reveals a limitation shared by nearly all the presented families of methods: the absence of reliable metrics to assess the impact of an explanation on the observer.
+Most works instead rely on subjective satisfaction questionnaires administered to human participants.
+This evaluation protocol is not fully satisfactory, since self-reported satisfaction is subject to numerous biases and does not necessarily reflect an actual improvement of the observer's mental model, as required by Definition~\ref{def:explanation}.
+
+Third, among the methods reviewed, \textit{latent space usage for MDP generation} (Section~\ref{subsubsec:latent_space_mdp_generation}) appears, in our view, the most promising direction.
+This method establishes a direct bridge between the deep representations learned by the agent and the search for concepts investigated in Chapter~\ref{chap:latent_space}, applied here to the explanation of reinforcement learning agents.
+Rather than abstracting away or replacing the underlying deep learning support, as substitutive approaches do (Section~\ref{sec:explanation}), it exploits this support directly to produce an explanation, in line with the intrinsic explainability perspective adopted throughout this manuscript.
+However, as noted in Section~\ref{subsubsec:latent_space_mdp_generation}, this method still relies on an informal, largely manual analysis of the projected latent space to identify clusters of states, which limits its rigor and its ability to systematically produce reliable explanations.
+The next chapter builds on this approach and introduces a method designed to address this limitation.
