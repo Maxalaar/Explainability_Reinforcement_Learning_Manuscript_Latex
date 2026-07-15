@@ -19,14 +19,14 @@ Although \(\hat{Q}_\pi\) is only an approximation of the true \(Q_\pi\), the pol
     \end{cases}
 \]
 
-It is precisely this way of modeling the policy that gives this family of methods its name.  
-The policy is not represented explicitly as a standalone function.  
-Rather, it simply emerges from searching over the set of actions to maximize \(\hat{Q}_\pi\).
-
 Since \(\hat{Q}_\pi\) serves as the basis for the agent's decisions, it cannot rely on more information than the agent itself has access to.  
 It must therefore be defined solely over observations, as a function \(\hat{Q}_\pi : \mathcal{O} \times \mathcal{A} \to \mathbb{R}\).  
 Its objective is to approximate the true \(Q_\pi\), which depends on the underlying states \(s\), using only the partial information available through \(o\).
 Once again, this poses no issue in practice, as it reflects how these algorithms are actually deployed in real-world applications.
+
+It is precisely this way of modeling the policy that gives this family of methods its name.  
+The policy is not represented explicitly as a standalone function.  
+Rather, it simply emerges from searching over the set of actions to maximize \(\hat{Q}_\pi\).
 
 To give a clear example of critic-only methods, they are presented in their simplest form: model-free, without temporal-difference learning, without replay buffer, without bootstrapping, and using only \(\varepsilon\)-greedy exploration.
 Naturally, many variants and extensions of this basic scheme exist, but the core idea remains the same.

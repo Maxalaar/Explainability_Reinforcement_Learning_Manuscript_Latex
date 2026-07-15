@@ -6,12 +6,12 @@ In essence, \gls{rl} aims to build a system that makes sequential decisions in o
 The purpose of this section is to translate this intuitive goal into a rigorous mathematical framework.
 To this end, the presentation proceeds step by step:
 \begin{enumerate}
-    \item Problems are modeled using Markov Decision Processes.
-    \item The notion of policy, which formalizes the agent's behavior.
-    \item The interaction between the agent and the environment is characterized through trajectories.
-    \item Policies are evaluated using value functions.
-    \item The optimal policy.
-    \end{enumerate}
+    \item Modeling the reinforcement learning problem as a Markov Decision Process.
+    \item Defining the notion of a policy, which formalizes the agent's behavior.
+    \item Describing the interaction between the agent and the environment through trajectories.
+    \item Introducing value functions to evaluate policies.
+    \item Defining the notion of an optimal policy.
+\end{enumerate}
 
 \subsection{Markov Decision Processes}
 \label{subsec:markov_decision_processes}
@@ -21,7 +21,6 @@ The agent perceives its environment, processes the information it receives, and 
 To specify the task and the agent's capacity to perceive and act, the problem is modeled as a \gls{mdp}.
 
 Before providing a more detailed definition, it is useful to clarify the scope of the \gls{mdp} problems considered in this manuscript.
-The goal of this subsection is to introduce the notations and formalisms as they are used in modern \gls{rl} practice.  
 We therefore restrict the analysis to the following configuration:
 
 \begin{itemize}
@@ -39,7 +38,6 @@ The resulting framework can be formally described as a single-agent finite-horiz
 For simplicity, we will refer to this setting as an ``\gls{mdp}'' throughout this manuscript.
 
 The following section aims to provide a mathematical description of the \gls{rl} problem.
-Several formalisms can be used to describe a \gls{mdp}.
 The formulation adopted in this manuscript has been chosen to emphasize the main elements that will be used throughout the remainder of the manuscript.
 A \gls{mdp} is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, p)\):  
 \begin{itemize}
@@ -74,6 +72,15 @@ A \gls{mdp} is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \m
     The notation \(p(s', o, r \mid s, a)\) denotes the probability of observing the tuple \((s', o, r)\) under the distribution \(p(\cdot \mid s, a)\).
 \end{itemize}
 
+The two quantities, observation \(o\) and state \(s\), are not independent.
+They are jointly generated via \((s', o, r) \sim p(s, a)\), which implicitly defines the relationship between them.
+In our \gls{mdp} formalization, this relationship is left implicit because it is never manipulated directly during learning.
+
+However, to express mathematical equations, it is convenient to introduce the conditional distribution over states given an observation.
+We denote this distribution by
+\(b : \mathcal{O} \rightarrow \mathcal{P}(\mathcal{S}).\)
+The notation \(b(s \mid o)\) denotes the probability of state \(s\) given the observation \(o\), while \(s \sim b(\cdot \mid o)\) indicates that the state \(s\) is sampled from this distribution.
+
 \subsection{Policy}
 \label{subsec:policy}
 
@@ -85,6 +92,10 @@ A policy function is denoted by \(\pi\), and is defined as:
 \)
 The notation \(a \sim \pi(\cdot \mid o)\) means that the action \(a\) is sampled from the distribution induced by \(\pi(\cdot \mid o)\).  
 The notation \(\pi(a \mid o)\) denotes the probability of selecting action \(a\) under the distribution \(\pi(\cdot \mid o)\).
+
+It is important to note that this policy does not include any explicit state-estimation mechanism.
+Instead, the ability to infer information about the underlying state is entirely left to the policy itself, which must learn from experience how to compensate for the missing information.
+This reflects the design of many modern \gls{rl} implementations, where policies are often parameterized by architectures capable of summarizing past observations, such as recurrent or attention-based networks, without explicitly modeling the uncertainty over the underlying state.
 
 \subsection{Trajectory}
 \label{subsec:trajectory}
@@ -151,11 +162,11 @@ g(t, \gamma) = r_1 + \gamma \, g(t_{2:}, \gamma),
 
 From the notion of return, functions that estimate the expected return of a policy from a given starting point can be defined.  
 These functions are called value functions.
-The first one considered in detail is the state-value function \(V\).  
-It tells us how desirable a particular state is under a given policy \(\pi\), given an observation \(o\) and environment dynamics \(p\).  
-Strictly speaking, this function should be written as \(V(s, o, p, \pi)\) to reflect all its dependencies.  
-However, since the environment dynamics \(p\) are fixed throughout learning, they are omitted from the notation.
-To emphasize that the value is tied to a specific policy, \(\pi\) is placed as a subscript. 
+The first one considered is the state-value function \(V\).  
+It tells us how desirable a particular state is under a given policy \(\pi\), given an observation \(o\), the environment dynamics \(p\), and the discount factor \(\gamma\).
+Strictly speaking, this function should be written as \(V(s, o, p, \gamma, \pi)\) to reflect all its dependencies.
+However, since both the environment dynamics \(p\) and the discount factor \(\gamma\) are fixed throughout learning, they are omitted from the notation.
+To emphasize that the value is tied to a specific policy, \(\pi\) is placed as a subscript.
 This yields the compact notation \(V_\pi : \mathcal{S} \times \mathcal{O} \to \mathbb{R}\).
 
 If \(V_\pi(s, o) > V_\pi(s', o')\), then, under policy \(\pi\), the agent prefers being in state \(s\) with observation \(o\) over state \(s'\) with observation \(o'\).  
@@ -170,7 +181,7 @@ It is worth noting that the state-value function \(V_\pi\) is recursive, a prope
 V_\pi(s, o) 
 &= \mathbb{E}\Big[g(t, \gamma)\Big], \quad \text{with } t \sim \tau_t(s, o, p, \pi) \\[4pt]
 &= \mathbb{E}\Big[r_1 + \gamma \, g(t_{2:}, \gamma)\Big] \\[4pt]
-&= \mathbb{E}\Big[r_1 + \gamma \, V_\pi(s_2)\Big],
+&= \mathbb{E}\Big[r_1 + \gamma \, V_\pi(s_2)\Big]
 \end{aligned}
 \]
 
@@ -210,25 +221,20 @@ Q_\pi(s, a)
 \subsection{Optimal Policy}
 \label{subsec:optimal_policy}
 
-The goal of \gls{rl} is to find a policy that maximizes, for every observation, the expected cumulative reward until a terminal state is reached.  
-This policy is called the optimal policy and is denoted by \(\pi^*\).  
-Formally, \(\pi^*\) is a deterministic policy that always selects the action with the highest state-action value:
+The goal of \gls{rl} is to find a policy that maximizes the expected cumulative reward from any observation until the end of the trajectory.
+This policy is called the optimal policy and is denoted by \(\pi^*\).
+In a partially observable setting, the optimal action is the one that maximizes the expected state-action value over the distribution of possible states given the observation:
 \[
 \pi^*(a \mid o) =
 \begin{cases}
-1 & \text{if } a = \underset{a' \in \mathcal{A}}{\arg\max}\; Q_{\pi^*}(s, a'), \\[6pt]
-0 & \text{otherwise},
+1 & \text{if } a = \underset{a' \in \mathcal{A}}{\arg\max}\;
+\sum_{s \in \mathcal{S}} b(s \mid o)\, Q_{\pi^*}(s, a'), \\[6pt]
+0 & \text{otherwise}
 \end{cases}
 \]
-where \(s\) is the true state underlying the observation \(o\).
 
-It is worth noting that defining the optimal policy in a partially observable setting is more delicate than in the fully observable case.  
-Since the policy only has access to observations \(o\) rather than the true state \(s\), the observation must carry enough information to distinguish between states that require different optimal actions.  
-For the sake of simplicity, we assume throughout this manuscript that this condition holds.  
-This assumption is of interest when one seeks to establish mathematical proofs, but in real-world implementations it matters little.
-
-As just shown, both \(V_\pi\) and \(Q_\pi\) can be expressed explicitly in terms of the environment dynamics \(p\) and the policy \(\pi\).
-If \(p\) and \(\pi\) are fully known, one can theoretically compute the optimal policy by unfolding the graph of all possible trajectories starting from a given state \(s\) and observation \(o\).  
+As shown, both \(V_\pi\) and \(Q_\pi\) can be expressed explicitly in terms of the environment dynamics \(p\) and the policy \(\pi\).
+If \(p\), \(b\)  and \(\pi\) are fully known, one can theoretically compute the optimal policy by unfolding the graph of all possible trajectories starting from a given state \(s\) and observation \(o\).  
 This is possible precisely because \(V_\pi\) and \(Q_\pi\) are recursive functions.  
 Solving an \gls{mdp} in this way is known as dynamic programming.
 
