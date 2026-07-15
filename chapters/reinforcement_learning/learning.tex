@@ -91,7 +91,11 @@ The value function is thus trained to correct its predictions based on data coll
 
 The key difference lies in how the policy \(\pi\) itself is optimized.
 Since the policy now has its own set of parameters \(\theta_2\), it can be updated directly.
-The update uses the notion of advantage, defined as:
+The update uses the notion of advantage
+\(
+A : \mathcal{S} \times \mathcal{A} \to \mathcal{R}
+\)
+, defined as:
 \[
 A(s, a) = g(t) - \hat{V}_{\theta_1}(s, o),
 \]

@@ -6,24 +6,22 @@ In essence, \gls{rl} aims to build a system that makes sequential decisions in o
 The purpose of this section is to translate this intuitive goal into a rigorous mathematical framework.
 To this end, the presentation proceeds step by step:
 \begin{enumerate}
-    \item Problems are modeled using Markov Decision Processes in Subsection~\ref{subsec:markov_decision_processes}.
-    \item The notion of policy, which formalizes the agent's behavior, is introduced in Subsection~\ref{subsec:policy}.
-    \item The interaction between the agent and the environment is characterized through trajectories in Subsection~\ref{subsec:trajectory}.
-    \item Policies are evaluated using value functions in Subsection~\ref{subsec:value_functions}.
-    \item The optimal policy is defined in Subsection~\ref{subsec:optimal_policy}.
+    \item Problems are modeled using Markov Decision Processes.
+    \item The notion of policy, which formalizes the agent's behavior.
+    \item The interaction between the agent and the environment is characterized through trajectories.
+    \item Policies are evaluated using value functions.
+    \item The optimal policy.
     \end{enumerate}
 
 \subsection{Markov Decision Processes}
 \label{subsec:markov_decision_processes}
 
-The RL framework is grounded in the agent paradigm: the decision-making entity is called the agent.  
+The \gls{rl} framework is grounded in the agent paradigm: the decision-making entity is called the agent.  
 The agent perceives its environment, processes the information it receives, and acts upon the environment to influence future outcomes.  
 To specify the task and the agent's capacity to perceive and act, the problem is modeled as a \gls{mdp}.
 
 Before providing a more detailed definition, it is useful to clarify the scope of the \gls{mdp} problems considered in this manuscript.
-The goal of this subsection is to introduce the notations and formalisms as they are used in modern RL practice.  
-Other formulations of \gls{mdp} exist that are better suited, for instance, to proving convergence guarantees.  
-Our focus here is to represent \gls{rl} as it is applied, even if this means sacrificing some mathematical proof capability.  
+The goal of this subsection is to introduce the notations and formalisms as they are used in modern \gls{rl} practice.  
 We therefore restrict the analysis to the following configuration:
 
 \begin{itemize}
@@ -35,12 +33,14 @@ We therefore restrict the analysis to the following configuration:
     Between these two points, the number of interaction steps may vary depending on the situation, but it always remains finite.
 
     \item The partially observable framework is adopted, where the agent does not have direct access to the true state of the system, but instead relies on limited observations that provide only partial information about the environment.  
-
 \end{itemize}
 
+The resulting framework can be formally described as a single-agent finite-horizon partially observable Markov decision process.
+For simplicity, we will refer to this setting as an ``\gls{mdp}'' throughout this manuscript.
 
-The resulting framework can be formally described as a single-agent finite-horizon partially observable markov decision process.  
-For simplicity, we will refer to this setting as an “\gls{mdp}” throughout this manuscript.  
+The following section aims to provide a mathematical description of the \gls{rl} problem.
+Several formalisms can be used to describe a \gls{mdp}.
+The formulation adopted in this manuscript has been chosen to emphasize the main elements that will be used throughout the remainder of the manuscript.
 A \gls{mdp} is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, p)\):  
 \begin{itemize}
     \item \textbf{\(\mathcal{S}\)}: The set of states, representing all possible configurations of the environment.  
@@ -60,7 +60,8 @@ A \gls{mdp} is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \m
 
     \item \textbf{\(\mathcal{R}\)}: The set of rewards that the agent can receive from the environment.  
     A reward belonging to this set is denoted by \(r \in \mathcal{R}\). 
-    \(\mathcal{R}\) is a subset of \(\mathbb{R}\).  
+    \(\mathcal{R}\) is a subset of \(\mathbb{R}\).
+    Rewards can be either positive or negative, depending on whether the corresponding outcome is considered beneficial or detrimental for the agent.  
     The agent's goal is to maximize the cumulative sum of these rewards over time.
 
     \item \textbf{\(p\)}: The transition function, which defines the dynamics of the environment.  
@@ -77,7 +78,7 @@ A \gls{mdp} is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \m
 \label{subsec:policy}
 
 The agent’s decision-making capability is modeled by a policy function.  
-The policy defines the stochastic mapping between observations \(o \in \mathcal{O}\) and actions \(o \in \mathcal{A}\).  
+The policy defines the stochastic mapping between observations \(o \in \mathcal{O}\) and actions \(a \in \mathcal{A}\).  
 A policy function is denoted by \(\pi\), and is defined as:
 \(
 \pi : \mathcal{O} \to \mathcal{P}(\mathcal{A}).
@@ -142,11 +143,10 @@ When \(\gamma\) is close to \(0\), the agent focuses almost exclusively on immed
 As \(\gamma\) increases toward \(1\), future rewards gain more weight, and the agent adopts a more far-sighted strategy.  
 In theory, since the goal is to maximize long-term cumulative reward, the discount factor would ideally be set to \(\gamma = 1\).
 In practice, however, \(\gamma\) is often chosen slightly below \(1\) (e.g., \(0.99\)) to stabilize learning, and to reflect the fact that distant future rewards are inherently more uncertain.
-Throughout this manuscript, unless explicitly stated otherwise, the discount factor is assumed to be \(\gamma = 1\) to simplify notation.
 
 The return also admits a recursive form, which is central to the dynamic programming and \gls{rl} algorithms presented later:
 \[
-g(t, \gamma) = r_1 + \gamma \, g(t_{2:}),
+g(t, \gamma) = r_1 + \gamma \, g(t_{2:}, \gamma),
 \]
 
 From the notion of return, functions that estimate the expected return of a policy from a given starting point can be defined.  
@@ -161,15 +161,15 @@ This yields the compact notation \(V_\pi : \mathcal{S} \times \mathcal{O} \to \m
 If \(V_\pi(s, o) > V_\pi(s', o')\), then, under policy \(\pi\), the agent prefers being in state \(s\) with observation \(o\) over state \(s'\) with observation \(o'\).  
 Formally, the state-value function is defined as:
 \[
-V_\pi(s, o) = \mathbb{E}\Big[g(t)\Big], \quad \text{with } t \sim \tau_t(s, o, p, \pi).
+V_\pi(s, o) = \mathbb{E}\Big[g(t, \gamma)\Big], \quad \text{with } t \sim \tau_t(s, o, p, \pi).
 \]
 
 It is worth noting that the state-value function \(V_\pi\) is recursive, a property that follows directly from the recursive form of the return:
 \[
 \begin{aligned}
 V_\pi(s, o) 
-&= \mathbb{E}\Big[g(t)\Big], \quad \text{with } t \sim \tau_t(s, o, p, \pi) \\[4pt]
-&= \mathbb{E}\Big[r_1 + \gamma \, g(t_{2:})\Big] \\[4pt]
+&= \mathbb{E}\Big[g(t, \gamma)\Big], \quad \text{with } t \sim \tau_t(s, o, p, \pi) \\[4pt]
+&= \mathbb{E}\Big[r_1 + \gamma \, g(t_{2:}, \gamma)\Big] \\[4pt]
 &= \mathbb{E}\Big[r_1 + \gamma \, V_\pi(s_2)\Big],
 \end{aligned}
 \]
@@ -179,7 +179,7 @@ If the expectation is expressed explicitly in terms of the distributions \(p\) a
 \[
 \begin{aligned}
 V_\pi(s, o) 
-&= \mathbb{E}\Big[r_1 + \gamma \, V_\pi(s_2)\Big], \quad \text{with } t \sim \tau_t(s, o, p, \pi) \\[4pt]
+&= \mathbb{E}\Big[r_1 + \gamma \, V_\pi(s_2)\Big] \\[4pt]
 &= \sum_{a \in \mathcal{A}} \pi(a \mid o) 
    \sum_{\substack{s' \in \mathcal{S} \\ o' \in \mathcal{O} \\ r \in \mathcal{R}}} 
    p(s', o', r \mid s, a) \Big[\, r + \gamma \, V_\pi(s', o') \,\Big].
@@ -192,7 +192,7 @@ This function is called the state-action value function \(Q_\pi : \mathcal{S} \t
 If \(Q_\pi(s, a) > Q_\pi(s, a')\), then, under policy \(\pi\), choosing action \(a\) in state \(s\) yields a higher expected return than choosing action \(a'\).
 It is defined as:
 \[
-Q_\pi(s, a) = \mathbb{E}\Big[\, r + \gamma \, g(t) \,\Big], \quad \text{with } t \sim \tau_t(s', o, p, \pi), \quad (s', o, r) \sim p(\cdot \mid s, a).
+Q_\pi(s, a) = \mathbb{E}\Big[\, r + \gamma \, g(t, \gamma) \,\Big], \quad \text{with } t \sim \tau_t(s', o, p, \pi), \quad (s', o, r) \sim p(\cdot \mid s, a).
 \]
 
 The function \(Q_\pi\) can be related to \(V_\pi\) by recognizing that, after taking action \(a\) in state \(s\), the remaining return from the next state \(s'\) is precisely \(V_\pi(s')\).
@@ -200,7 +200,7 @@ This yields:
 \[
 \begin{aligned}
 Q_\pi(s, a) 
-&= \mathbb{E}\Big[\, r + \gamma \, g(t) \,\Big], \quad \text{with } t \sim \tau_t(s', o, p, \pi), \quad (s', o, r) \sim p(\cdot \mid s, a) \\[4pt]
+&= \mathbb{E}\Big[\, r + \gamma \, g(t, \gamma) \,\Big], \quad \text{with } t \sim \tau_t(s', o, p, \pi), \quad (s', o, r) \sim p(\cdot \mid s, a) \\[4pt]
 &= \mathbb{E}\Big[\, r + \gamma \, V_\pi(s', o) \,\Big] \\[4pt]
 &= \sum_{\substack{s' \in \mathcal{S} \\ o' \in \mathcal{O} \\ r \in \mathcal{R}}} 
    p(s', o', r \mid s, a) \Big[\, r + \gamma \, V_\pi(s', o) \,\Big] \\[4pt]
