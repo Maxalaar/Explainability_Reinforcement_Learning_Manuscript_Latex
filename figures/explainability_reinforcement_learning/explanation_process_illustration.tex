@@ -12,6 +12,8 @@
     \pgfmathsetmacro{\blockTextWidth}{3.1}
     % Text width used for the labels placed above/below the arrows.
     \pgfmathsetmacro{\arrowTextWidth}{2.6}
+    % Diameter of the step-number badges pinned to each block's corner.
+    \pgfmathsetmacro{\badgeSize}{0.65}
 
     % Vertical offset of the legend row below the main diagram.
     \pgfmathsetmacro{\legendYShift}{-3.6}
@@ -29,8 +31,13 @@
 \node[draw, rectangle, align=center, text width=\blockTextWidth cm, minimum width=\blockSize cm, minimum height=\blockSize cm] (box1) at (0, 0) {\hyperref[def:object]{\hl{\textbf{Object}}} \\ the system \\ the observer \\ seeks to understand};
 \node[draw, rectangle, right of=box1, align=center, text width=\blockTextWidth cm, minimum width=\blockSize cm, minimum height=\blockSize cm] (box2) at (\blockDistance, 0) {\hyperref[def:explanation]{\hl{\textbf{Explanation}}} \\ \hyperref[def:interpretable]{\hl{interpretable}} \\ information enabling \\ the observer to refine \\ their mental model};
 \node[draw, rectangle, right of=box2, align=center, text width=\blockTextWidth cm, minimum width=\blockSize cm, minimum height=\blockSize cm] (box3) at (2*\blockDistance, 0) {\textbf{Mental model} \\ of the observer \\ regarding the object};
+% Step numbers: small badges pinned to the top-left corner of each box, so
+% the figure can be referenced step by step from the surrounding text.
+\node[circle, draw, fill=white, font=\bfseries\large, inner sep=0pt, minimum size=\badgeSize cm] at (box1.north west) {1};
+\node[circle, draw, fill=white, font=\bfseries\large, inner sep=0pt, minimum size=\badgeSize cm] at (box2.north west) {2};
+\node[circle, draw, fill=white, font=\bfseries\large, inner sep=0pt, minimum size=\badgeSize cm] at (box3.north west) {3};
 % Arrows
-\draw[-{Latex[length=3mm]}] (box1) -- node[midway, above, align=center, text width=\arrowTextWidth cm] {Information \\ extraction \\ through the use \\ of an \\ \hyperref[subsec:explainability_method]{\hl{\textbf{explainability}\\\textbf{method}}}} node[midway, below, align=center] {} (box2);
+\draw[-{Latex[length=3mm]}] (box1) -- node[midway, above, align=center, text width=\arrowTextWidth cm] {Information \\ extraction \\ through the use \\ of an \\ \hyperref[def:explainability_method]{\hl{\textbf{explainability}\\\textbf{method}}}} node[midway, below, align=center] {} (box2);
 \draw[-{Latex[length=3mm]}] (box2) -- node[midway, above, align=center, text width=\arrowTextWidth cm] {\textbf{Interpretation} \\ by \\ the observer} node[midway, below, align=center] {} (box3);
 
 % Legend: each entry is chained to the previous one via \legendGap /
@@ -45,7 +52,7 @@
 \node[anchor=west, right=\legendIconTextGap of legendArrowEnd] (legendText2) {Information transformation};
 
 \node[anchor=west, right=\legendGap of legendText2] (legendIcon3) {\hl{~~}};
-\node[anchor=west, right=\legendIconTextGap of legendIcon3] (legendText3) {Concepts discussed in more detail in this section};
+\node[anchor=west, right=\legendIconTextGap of legendIcon3] (legendText3) {Concepts discussed in this section};
 
 % Brace: spans from just past box2 to just past box3, so it automatically
 % follows \blockDistance and \blockSize instead of being retuned by hand.
