@@ -50,9 +50,11 @@ An explainability method is a transformation process that produces an explanatio
 This definition of explanation provides the foundation for the approach to explainability adopted throughout this manuscript.
 Its generality allow it to encompass the different explainability methods considered in the following sections.
 
-Moreover, it avoids a binary interpretation of explanation, where a system is considered either explainable or not explainable.
-From our perspective, the notion of non-explainable system is not meaningfule.
-Considering a system as impossible to explain would therefore contradict the general objective of scientific understanding.
+Moreover, this perspective avoids a binary interpretation of explainability, in which a system is considered either explainable or non-explainable.
+The notion of a non-explainable system is difficult to justify from a scientific standpoint.
+Scientific inquiry is driven by the assumption that observed phenomena can be investigated through the development of increasingly accurate analytical tools.
+Declaring a system to be inherently impossible to explain would therefore conflict with this methodological principle.
+This approach aligns with the philosophical Principle of Sufficient Reason, which states that every phenomenon rests upon an explainable basis \cite{melamed2010sufficientreason}.
 
 This quantitative perspective allows us to express an intuitive idea: not all explanations provide the same level of value \cite{doshivelez2017rigorous}.
 The effectiveness of an explanation depends on its ability to improve the observer's understanding of the system.
@@ -75,7 +77,6 @@ A brace spanning boxes~(2) and~(3) indicates that this second half of the proces
 Now that the general framework of explanation has been established, we can examine how this concept applies in the context of \gls{ai}.
 In the context of \gls{xai}, the object of explanation is an \gls{ai} system.
 More precisely, \gls{xai} emerged as a response to the success of \gls{dl} models \cite{gunning2019darpa, arrieta2020explainable}.
-These models achieve high performance through connectionist architectures based on deep \glspl{nn}.
 In these architectures, information is represented in a distributed manner across the network through patterns of activation and connections between computational units.
 Unlike symbolic approaches, individual components of \glspl{nn} cannot be directly associated with human-defined concepts.
 From this starting point, we identify two types of approaches:
@@ -112,6 +113,6 @@ In our framework, an explanation in the field of \gls{xai} can be characterized 
     A global explanation aims to describe the general functioning of the \gls{ai} system.
 \end{itemize}
 
-These three aspects of an explanation are entirely determined by the explainability method (Definition~\ref{def:explainability_method}) used to produce it.
+These three properties of an explanation are entirely determined by the explainability method (Definition~\ref{def:explainability_method}) used to produce it.
 In this context, an explainability method is a transformation process that maps a source of information into an explanation characterized by a specific form and subject.
 Research in \gls{xai} focuses on developing new methods capable of performing this transformation in order to overcome the lack of interpretability associated with \gls{dl} models.
