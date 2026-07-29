@@ -42,34 +42,41 @@ The \gls{ls} is the set of all representations produced by a layer over a datase
 It is shaped by learning and organizes representations according to task-relevant properties.  
 \end{definition}
 
-Under the concept hypothesis, the analysis of the \gls{ls} is assumed to provide access to higher-level abstract structures learned by the model, as illustrated in \ref{fig}.
+Under the concept hypothesis, the analysis of the \gls{ls} is assumed to provide access to higher-level abstract structures learned by the model, as illustrated in Figure~\ref{fig:latent_space}.
 These structures are referred to as concepts.
-In this manuscript, the term is used in a pragmatic sense.
-Concepts are not assumed to correspond to objective or immutable entities.
-Instead, they are viewed as abstract representations that organize information and support reasoning.
-Their relevance is therefore not determined by whether they constitute the "true" representation of the system, but by whether they provide a useful and coherent description for the task under consideration \cite{NEWELL198287}.
-Our definition is given in Definition~\ref{def:concept}.
+In this manuscript, a concept is defined as an abstract representation that organizes information and supports reasoning.
+Its relevance is therefore determined not by whether it is "true," but by whether it provides a useful description for the task under consideration.
+Our formal definition is given in Definition~\ref{def:concept}.
+Such a conception of concepts brings us close to the pragmatic philosophical position.
+For pragmatists, concepts do not correspond to objective entities \cite{NEWELL198287}.
+
+The instantiation of a concept within a latent space is called the concept structure, or more simply, the structure.
+The definition of the structure is provided in Definition~\ref{def:concept_structure}.
+While the methods reviewed in this chapter all subscribe to the concept hypothesis, they do not agree on the kind of structure a concept should take, and consequently on the procedure required to extract the associated concepts.
+This divergence is the reason why several families of \gls{ls} analysis methods coexist in the literature.
 
 \begin{definition}{Concept}{concept}
 A concept is a task-dependent abstraction that captures regularities in the input space relevant for predicting the target output.
 \end{definition} 
 
-This perspective is particularly well aligned with \gls{ls} analysis, where the objective is to uncover organizing principles that support the model’s behavior.
-From this perspective, a given representation can be interpreted as a composition of multiple such concepts, each contributing to the final prediction.
+\begin{definition}{Concept Structure}{concept_structure}
+A concept structure is the specific form for how a concept is instantiated within the \gls{ls}.
+\end{definition}
 
-Another property that can be considered when analyzing concepts is their relationship to human interpretation.  
-This relationship is captured by the notion of semantics \cite{marconato2023interpretabilitymindbeholdercausal}, defined in Definition~\ref{def:semantics}.  
-Under this definition, concepts may exhibit varying degrees of semantic content.  
-Some concepts can be readily associated with human-interpretable notions, whereas others may contribute to task performance while remaining difficult to interpret.
+Now that the definition of a concept has been established, we can consider its relationship to human.
+According to our definition, we can imagine concepts that are useful for the machine but do not make sense to humans.
+This relationship is captured by the notion of semantics \cite{marconato2023interpretabilitymindbeholdercausal}, defined in Definition~\ref{def:semantics}.
+Some concepts developed in \gls{ls} can be readily associated with human concepts and are said to have high semantic value.
+Others may contribute to task performance while remaining difficult for humans to understand, and are said to have low semantic value.
 
 \begin{definition}{Semantics}{semantics}
 Semantics refers to the alignment between concepts in the model \gls{ls} and concepts used by a human observer.  
 A concept is semantic if it can be consistently associated with a human-interpretable concept.  
 \end{definition}
 
-It is important to note that this conceptual framework is not supported by a complete theoretical understanding of deep \gls{nn}.  
+It is important to note that this conceptual framework is not supported by a complete theoretical understanding of deep \gls{nn}.
 Current mathematical tools do not provide a rigorous characterization of their internal representations and do not formally prove that concepts emerge as identifiable structures within \gls{ls}.
-Nevertheless, this perspective constitutes a widely adopted working hypothesis in the field of representation and \gls{ls} analysis.    
+Nevertheless, this perspective constitutes a widely adopted working hypothesis in the field of representation and \gls{ls} analysis.
 
 The remainder of this chapter is devoted to reviewing methods for analyzing \gls{ls} and extracting the concepts they encode.
 We begin with probing, one of the most direct approaches for assessing whether concepts are represented in the \gls{ls}.
