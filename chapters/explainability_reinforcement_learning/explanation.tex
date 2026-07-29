@@ -19,7 +19,7 @@ The receiver is a human who aims to understand how the object operates and will 
 The observer seeks to understand the object and, in doing so, builds a mental model of its functioning.
 An explanation is therefore what allows the observer to refine and correct their mental model of how the object operates (Definition~\ref{def:explanation}).
 This refinement is obtained through a transformation process that produces an explanation from the object being explained.
-We refer to this process as an explainability method (Definition~\ref{def:explainability_method}).
+We refer to this process as an explainability method (Definition~\ref{def:explainability_method}), detailed further in Section~\ref{subsec:explainability_method}.
 
 For an observer to understand an explanation, the information it contains must be interpretable (Definition~\ref{def:interpretable}).
 Information is considered interpretable when it can be directly understood by a human without requiring any additional transformation process.
@@ -65,10 +65,9 @@ For example, describing a marginal aspect of a system is different from correcti
 Figure~\ref{fig:explanation_process_illustration} summarizes this whole explanation process, from the object of the explanation to the mental model refined by the observer, as a chain of three information structures, depicted as boxes and connected by arrows denoting a transformation of information:
 \begin{enumerate}
     \item[(1)] The \textbf{object} of the explanation, that is, the system the observer seeks to understand.
-    \item[(2)] The \textbf{explanation} itself, the interpretable information produced from the object.
-    This transformation is labeled information extraction, and is performed through the use of an explainability method (Definition~\ref{def:explainability_method}), detailed further in Section~\ref{subsec:explainability_method}.
+    \item[(2)] The \textbf{explanation}, the interpretable information produced from the object.
+    This transformation is performed through the use of an explainability method.
     \item[(3)] The \textbf{mental model} held by the observer regarding the object.
-    This transformation is labeled interpretation by the observer, corresponding to the cognitive step through which the observer refines their mental model upon receiving the explanation.
 \end{enumerate}
 A brace spanning boxes~(2) and~(3) indicates that this second half of the process, from the explanation to the resulting mental model, constitutes a subjective analysis carried out by the observer.
 

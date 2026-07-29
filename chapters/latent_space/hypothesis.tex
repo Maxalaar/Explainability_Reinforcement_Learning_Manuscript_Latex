@@ -19,13 +19,14 @@ It captures and restructures information in order to represent relationships tha
 \end{definition}
 
 The ability of \gls{nn} to perform abstraction arises from their intermediate activations.
-Indeed, a \gls{nn} does not directly map $x$ to $y$.  
-Instead, as illustrated in Figure~\ref{fig:general_architecture_multilayer_perceptron}, it computes a sequence of intermediate activations across hidden layers.  
-These activations correspond to internal encodings of the input, which we refer to as representations in the sense of Definition~\ref{def:representation}.
+Indeed, a \gls{nn} does not directly map $x$ to $y$.
+Instead, as illustrated in Figure~\ref{fig:general_architecture_multilayer_perceptron}, it computes a sequence of intermediate activations across hidden layers.
+These activations are numerical encodings of the input referred to as embeddings.
+Once training is complete, these embeddings have been structured so as to be capable of performing a specific task.
+To mark this distinction, we will refer to these trained embeddings as latent representations, as defined in Definition~\ref{def:representation}.
 
 \begin{definition}{Latent Representation}{representation}
-A representation is the internal encoding of an input given by a single intermediate layer of a trained \gls{nn}.
-While embeddings may exist independently of learning, a representation is a learned embedding shaped by the training process and the task.
+A representation is the internal encoding of an input given by a intermediate layer of a trained \gls{nn}.
 \end{definition}
 
 Each hidden layer refines the representation of the previous layer.  
@@ -44,16 +45,21 @@ It is shaped by learning and organizes representations according to task-relevan
 
 Under the concept hypothesis, the analysis of the \gls{ls} is assumed to provide access to higher-level abstract structures learned by the model, as illustrated in Figure~\ref{fig:latent_space}.
 These structures are referred to as concepts.
-In this manuscript, a concept is defined as an abstract representation that organizes information and supports reasoning.
-Its relevance is therefore determined not by whether it is "true," but by whether it provides a useful description for the task under consideration.
-Our formal definition is given in Definition~\ref{def:concept}.
-Such a conception of concepts brings us close to the pragmatic philosophical position.
-For pragmatists, concepts do not correspond to objective entities \cite{NEWELL198287}.
+In this manuscript, a concept is defined as an abstract representation that organizes information and supports reasoning (see Definition~\ref{def:concept}).
+Its relevance is therefore determined not by whether it is ``true,'' but by whether it provides a useful description for the task under consideration.
 
-The instantiation of a concept within a latent space is called the concept structure, or more simply, the structure.
+Our definition of concepts is consistent with both the pragmatic tradition in philosophy and the information-processing view of cognition.
+Within these frameworks, concepts arise from the need to simplify an otherwise intractable reality.
+Because the environment contains more information than any cognitive system can process, intelligent behavior relies on abstractions, called concepts, that discard irrelevant details while preserving the information required to achieve a given objective \cite{Peirce1878,Misak2013}.
+These concepts are realized as internal representations that reduce complexity and enable reasoning under limited computational resources \cite{Newell1980,Simon1996}.
+Although these theories were originally developed to explain human cognition, the concept hypothesis assumes that the same principles can be extended to deep \gls{nn}.
+
+
+In order to influence the model's computations, concepts must necessarily admit a concrete realization within the \gls{ls}.
+We refer to this realization as the concept structure, or simply the structure.
 The definition of the structure is provided in Definition~\ref{def:concept_structure}.
-While the methods reviewed in this chapter all subscribe to the concept hypothesis, they do not agree on the kind of structure a concept should take, and consequently on the procedure required to extract the associated concepts.
-This divergence is the reason why several families of \gls{ls} analysis methods coexist in the literature.
+The methods reviewed in this chapter all subscribe to the concept hypothesis, but they disagree on what structure a concept should take.
+This choice necessarily affects the extraction procedure, which is why several families of \gls{ls} analysis methods coexist in the literature.
 
 \begin{definition}{Concept}{concept}
 A concept is a task-dependent abstraction that captures regularities in the input space relevant for predicting the target output.
