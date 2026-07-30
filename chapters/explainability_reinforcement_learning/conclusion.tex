@@ -3,19 +3,61 @@
 
 The taxonomy and the state-of-the-art review presented in this chapter make it possible to draw three main observations.
 
-First, regarding the subject of explanation, Table~\ref{tab:taxonomy_methods} shows that every reviewed method targets either a \textbf{decision} or a \textbf{strategy}, and that none of them addresses the \textbf{learning process} itself, i.e., how the policy is progressively updated over the course of training.
-We identify two reasons for this absence.
-On the one hand, from a practical standpoint, this question is of limited interest: industrial applications generally deploy an already-trained policy, so the training procedure itself is rarely part of what needs to be explained once the agent is in production.
-On the other hand, training can itself be described as an iterative improvement of the policy.
-Explaining the learning process would therefore amount to explaining the sequence of policies produced across training iterations, which is conceptually close to explaining a strategy, only applied to the space of successive policies rather than to the space of successive states.
-Under this view, explaining a learning process does not constitute a fundamentally distinct problem but rather a variant of strategy explanation, which may account for why it has not emerged as a separate subject in the literature.
+\subsection{Absence of Explanation of the Learning Process}
 
-Second, the diversity of explanation forms identified in this review (Table~\ref{tab:taxonomy_methods}) reveals a limitation shared by nearly all the presented families of methods: the absence of reliable metrics to assess the impact of an explanation on the observer.
-Most works instead rely on subjective satisfaction questionnaires administered to human participants.
-This evaluation protocol is not fully satisfactory, since self-reported satisfaction is subject to numerous biases and does not necessarily reflect an actual improvement of the observer's mental model, as required by Definition~\ref{def:explanation}.
+First, regarding the subject of explanation, Table~\ref{tab:taxonomy_methods} shows that none of them addresses the learning process itself.
+An explanation of the learning process in \gls{rl} would concern how the policy is progressively updated throughout training.
+More specifically, it would aim to explain why the agent how this policy evolves over successive learning iterations and converges toward a particular policy.
+We identify several reasons for this absence.
 
-Third, among the methods reviewed, \textit{latent space usage for MDP generation} (Section~\ref{subsubsec:latent_space_mdp_generation}) appears, in our view, the most promising direction.
-This method establishes a direct bridge between the deep representations learned by the agent and the search for concepts investigated in Chapter~\ref{chap:latent_space}, applied here to the explanation of reinforcement learning agents.
-Rather than abstracting away or replacing the underlying deep learning support, as substitutive approaches do (Section~\ref{sec:explanation}), it exploits this support directly to produce an explanation, in line with the intrinsic explainability perspective adopted throughout this manuscript.
-However, as noted in Section~\ref{subsubsec:latent_space_mdp_generation}, this method still relies on an informal, largely manual analysis of the projected latent space to identify clusters of states, which limits its rigor and its ability to systematically produce reliable explanations.
-The next chapter builds on this approach and introduces a method designed to address this limitation.
+Among the different machine learning paradigms, \gls{rl} is the one that would benefit the most from explanations of the learning process.
+Unlike supervised or unsupervised learning, \gls{rl} relies on an explicit exploration--exploitation trade-off, making the learning trajectory itself an informative object of explanation.
+However, most \gls{xrl} methods are inherited from the XAI literature, where explanations almost exclusively focus on the behavior of already-trained models.
+As a result, this limitation has naturally carried over to \gls{xrl}.
+
+From a practical perspective, explaining the learning process is also of limited industrial interest.
+In most real-world applications, practitioners deploy an already-trained agent, while the training phase takes place offline.
+Users are generally interested in understanding the behavior of the final policy rather than the optimization process that produced it.
+
+Finally, explaining the learning process raises significant methodological challenges.
+Training in \gls{rl} can be viewed as the iterative improvement of a policy through repeated interactions with the environment.
+In this sense, explaining learning would amount to explaining the evolution of a sequence of policies rather than a single one.
+Given that current \gls{xrl} methods still struggle to provide comprehensive explanations of an individual policy, extending such explanations to an entire training trajectory appears considerably more difficult.
+This suggests that explanations of the learning process remain an open research direction rather than an immediate extension of existing \gls{xrl} methods.
+
+\subsection{Lack of Unified Metrics for Explainability}
+
+Second, the diversity of explanation forms identified in this review reveals another limitation shared by nearly all families of \gls{xrl} methods: the absence of reliable metrics for evaluating explainability.
+In many studies, explanations are not evaluated with human participants.
+Authors focus on the technical properties of the proposed method, such as fidelity, sparsity, or computational efficiency.
+When human evaluations are conducted, they usually rely on subjective satisfaction questionnaires.
+Although useful, self-reported satisfaction is prone to numerous biases and does not necessarily indicate that the explanation has improved the observer's mental model or understanding of the agent.
+
+This limitation is not specific to \gls{xrl} but instead reflects a broader challenge affecting \gls{xai} as a whole.
+In our view, it stems from the historical development of XAI, which has been largely driven by the computer science community.
+As a result, explainability has often been studied from an algorithmic or mathematical perspective, with less attention given to how humans benefit from explanations.
+
+Our definition of explanation explicitly places the observer at the center of the explanatory process.
+From this perspective, the value of an explanation should not only depend on its technical properties but also on its ability to improve the observer's understanding.
+However, the field still lacks objective and standardized metrics capable of measuring this aspect.
+
+Addressing this challenge will require stronger interdisciplinary collaboration between computer science and disciplines such as cognitive science, psychology, philosophy, and sociology.
+These fields provide the theoretical and experimental tools needed to study human understanding and to develop evaluation protocols that measure the actual effectiveness of explanations.
+The absence of such collaborations is likely a consequence of the relative youth of XAI as a research field, whose theoretical foundations and evaluation methodologies are still being established.
+
+\subsection{Toward Intrinsic Explainability in \gls{xrl}}
+
+Third, our review suggests that current \gls{xrl} research remains largely dominated by substitutive explainability approaches (Section~\ref{sec:explanation}).
+Most existing methods explain \gls{rl} agents through surrogate models or external explanations rather than by analyzing the neural network itself.
+While these approaches often improve interpretability, they inevitably discard part of the information contained in the learned representation.
+
+In contrast, we argue that explainability should progressively move toward intrinsic approaches that analyze the internal mechanisms of the agent rather than bypassing them.
+From this perspective, the neural network should not be regarded as an inherently opaque black box, but rather as a complex representation whose apparent opacity mainly reflects the current limitations of our analysis tools.
+This viewpoint is consistent with the discussion developed in Chapter~\ref{chap:latent_space}, where we argue that the notion of a black box is only temporary.
+
+Among the methods reviewed, \textit{latent space usage for MDP generation} (Section~\ref{subsubsec:latent_space_mdp_generation}) appears to be the closest to this intrinsic perspective.
+Instead of replacing the learned representation, it directly exploits the latent space to identify meaningful concepts that can support the explanation of the agent's behavior.
+However, this approach still relies on a largely manual and qualitative analysis of the latent space, limiting its reproducibility and its ability to produce systematic explanations.
+The next chapter builds upon this idea and proposes a mechanistic \gls{xrl} approach based on latent-space analysis.
+Rather than constructing a surrogate explanation, it aims to explain the agent by studying the internal representations learned during training.
+
