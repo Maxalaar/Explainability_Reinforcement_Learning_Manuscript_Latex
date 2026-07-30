@@ -97,6 +97,11 @@ It is important to note that this policy does not include any explicit state-est
 Instead, the ability to infer information about the underlying state is entirely left to the policy itself, which must learn from experience how to compensate for the missing information.
 This reflects the design of many modern \gls{rl} implementations, where policies are often parameterized by architectures capable of summarizing past observations, such as recurrent or attention-based networks, without explicitly modeling the uncertainty over the underlying state.
 
+Now that the \gls{mdp} and the policy have both been defined, Figure~\ref{fig:reinforcement_learning_loop} illustrates how they interact within the general \gls{rl} loop.
+As a reminder, the objective of \gls{rl} is to iteratively improve the policy so as to maximize the reward function.
+
+\input{figures/reinforcement_learning/reinforcement_learning_loop.tex}
+
 \subsection{Trajectory}
 \label{subsec:trajectory}
 
