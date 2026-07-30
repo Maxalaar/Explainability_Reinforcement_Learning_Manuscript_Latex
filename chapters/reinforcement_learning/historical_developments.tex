@@ -1,7 +1,9 @@
 \section{Historical Developments}
 \label{sec:rl_historical_developments}
 
-\gls{rl} is today presented as a major field within artificial intelligence.  
+\input{figures/reinforcement_learning/evolution_reinforcement_learning_classical.tex}
+
+\gls{rl} is today presented as a major field within artificial intelligence.
 However, it originates from several research traditions that progressively converged toward a common framework.  
 In this section, we outline the main stages in the emergence of this field, highlighting the key ideas and milestones that shaped its evolution.
 
@@ -13,11 +15,11 @@ The central idea emerging from this work is that learning is driven by the conse
 Behaviors followed by positive outcomes are more likely to be repeated, whereas those associated with negative outcomes tend to gradually decrease in frequency.
 
 This perspective was later developed within behaviorism.  
-In this school of psychology, rewards and punishments are used to gradually shape behavior through repeated interaction with the environment \cite{skinner2019behavior}.  
+In this school of psychology, rewards and punishments are used to gradually shape behavior through repeated interaction with the environment \cite{skinner1938behavior}.
 The term “reinforcement” in the context of learning comes from this school of thought, where it refers precisely to the process of strengthening a behavior through its consequences.
 
 This idea led to the suggestion that learning principles observed in living organisms could be transferred to artificial systems.
-Machines were therefore envisioned as potentially learning through reward-like mechanisms, guided by evaluative feedback signals resembling a “pleasure–pain system” \cite{turing2004intelligent}.  
+Machines were therefore envisioned as potentially learning through reward-like mechanisms, guided by evaluative feedback signals resembling a “pleasure–pain system” \cite{turing1948intelligent}.
 Although these studies did not involve formal mathematical models, they introduced the central idea of \gls{rl}, trial-and-error learning guided by environmental feedback.
 
 \subsection{Sequential decision-making (1950--1970)}
@@ -46,7 +48,7 @@ These functions assign a numerical score to states or state-action pairs, reflec
 They thus provide a compact way to evaluate and compare different courses of action.
 This line of work culminated in Q-learning, which showed that optimal action-value functions can be learned directly from interaction with the environment, without requiring a model of its dynamics \cite{watkins1989qlearning,watkins1992qlearning}. 
 
-The publication of the foundational reference work \cite{suttonbarto2018} contributed to the formalization of \gls{rl} as a coherent field.
+The publication of the foundational reference work \cite{suttonbarto1998} contributed to the formalization of \gls{rl} as a coherent field.
 From that point onward, the field can be considered well established and widely recognized as a distinct area of research.
 
 \subsection{Consolidation of reinforcement learning (2000--2013)}
@@ -62,11 +64,15 @@ These allowed value functions and policies to be represented using parametric mo
 This change enabled generalization across states, reducing the dependence on exhaustive exploration of the state space.
 The introduction of Deep Q-Networks (DQN), which demonstrated that deep \gls{nn} could be used to approximate value functions at scale \cite{mnih2013playingatarideepreinforcement}.
 
+Figure~\ref{fig:evolution_reinforcement_learning_classical} provides a timeline of the key milestones that shaped the development of reinforcement learning prior to its fusion with deep learning.
+
 \subsection{Deep reinforcement learning (2013--2026)}
 
-The introduction of \gls{dl} into \gls{rl} marked a major turning point in the field.  
+\input{figures/reinforcement_learning/evolution_deep_reinforcement_learning.tex}
+
+The introduction of \gls{dl} into \gls{rl} marked a major turning point in the field.
 A series of algorithms significantly improved scalability.
-Deep Deterministic Policy Gradient extended actor–critic methods to continuous action spaces \cite{lillicrap2019continuouscontroldeepreinforcement}.  
+Deep Deterministic Policy Gradient extended actor–critic methods to continuous action spaces \cite{lillicrap2015continuouscontroldeepreinforcement}.
 \gls{ppo} later became a standard algorithm in \gls{rl} due to its simplicity, stability, and ability to perform in both continuous and discrete action spaces \cite{schulman2017proximalpolicyoptimizationalgorithms}.
 
 These advances established a practical foundation for large-scale policy optimization.
@@ -87,3 +93,5 @@ Originally inspired by biological learning processes, \gls{rl} is now closer tha
 Agents learn through interaction, adapt via trial and error, and progressively improve their behavior based on experience.
 This behavior is governed by deep neural architectures, which are the closest computational analog to organic brains.
 More than ever, \gls{rl} stands as one of the core paradigms for achieving artificial general intelligence \cite{silver2021reward}.
+
+Figure~\ref{fig:evolution_deep_reinforcement_learning} provides a timeline of the key milestones that shaped the emergence of deep reinforcement learning.
