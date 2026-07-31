@@ -1,0 +1,61 @@
+\begin{algorithm}[t]
+\caption{Deep Actor-Critic Reinforcement Learning}
+\label{alg:actor_critic}
+
+\Input{
+\\
+\gls{mdp} $(\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, p)$\\
+Architecture $\hat{V}$ (critic)\\
+Architecture $\pi$ (actor)\\
+Discount factor $\gamma \in [0, 1]$\\
+Learning rate $\eta > 0$\\
+Initial parameters $\theta_1$ of the critic (optional)\\
+Initial parameters $\theta_2$ of the actor (optional)
+}
+
+\Output{
+\\
+Trained policy $\pi_{\theta_2}$
+}
+
+\AlgoRule
+
+\uIf{$\theta_1$ is not given}{
+    Initialize $\theta_1$ randomly\;
+}
+\uIf{$\theta_2$ is not given}{
+    Initialize $\theta_2$ randomly\;
+}
+
+\BlankLine
+\tcp{MSE loss function as defined in Equation~\eqref{eq:mse}}
+$\mathcal{L} \leftarrow$ \gls{mse}\;
+
+\BlankLine
+\While{stopping criterion not satisfied}{
+    \tcp{Data collection see Algorithm~\ref{alg:data_collection}}
+    $\mathcal{D} \leftarrow$ \FnDataCollection{\gls{mdp}, $\pi_{\theta_2}, \gamma$}
+
+    \BlankLine
+    \tcp{Advantage estimation: how much better/worse each action performed compared to the critic's expectation}
+    \For{$(s_i, o_i, a_i, g_i) \in \mathcal{D}$}{
+        $A(s_i, a_i) \leftarrow g_i - \hat{V}_{\theta_1}(s_i, o_i)$\;
+    }
+
+    \BlankLine
+    \tcp{state and their returns, from $\mathcal{D}$}
+    $\mathcal{D}' \leftarrow \big\{\big(s, g\big) \mid (s, o, a, g) \in \mathcal{D}\big\}$
+
+    \BlankLine
+    \tcp{Critic update with SGD see Algorithm~\ref{alg:stochastic_gradient_descent}}
+    $\theta_1 \leftarrow$ \FnSGD{$\mathcal{D}', \hat{V}, \mathcal{L}, \eta, \theta_1$}
+
+    \BlankLine
+    \tcp{Actor update: increase the probability of actions with positive advantage, decrease it for those with negative advantage}
+    $\theta_2 \leftarrow \theta_2 + \eta \displaystyle\sum_{(s_i, o_i, a_i, g_i) \in \mathcal{D}} A(s_i, a_i) \, \nabla_{\theta_2} \log \pi_{\theta_2}(a_i \mid o_i)$\;
+}
+
+\BlankLine
+\Return{$\pi_{\theta_2}$}
+
+\end{algorithm}

@@ -1,5 +1,7 @@
 \section{Learning}\label{sec:learning}
 
+\input{algorithms/deep_learning/stochastic_gradient_descent.tex}
+
 Now that the structure of a \gls{nn} has been detailed, attention must be turned to how it is modified in order to accomplish the assigned task.
 To do so, attention must be focused on what lies at the very core of \gls{dl}: the learning process itself.
 As a reminder, the objective of a \gls{nn} is to adjust its parameters so that it becomes a good approximation of a target function.
@@ -57,6 +59,7 @@ This parameter must remain small, as the gradient only provides reliable informa
 As a result, a single step is not sufficient to significantly reduce the loss, so the process is iterated many times.
 Producing a sequence of parameter vectors $\theta_1, \theta_2, \dots$ that progressively improve the model.
 In practice, training is stopped when successive updates no longer produce a significant decrease in the loss.
+Algorithm~\ref{alg:stochastic_gradient_descent} summarizes this whole training procedure.
 
 It has been mathematically shown that gradient descent applied to a convex loss with respect to the parameters converges to a global optimum, independently of the initialization.
 However, \gls{nn} training involves highly non-convex loss surfaces, so the optimization trajectory becomes strongly dependent on the initial conditions, as illustrated in Figure~\ref{fig:multiple_gradient_descents_non_convex}, where different starting points lead to distinct local minima on standard non-convex functions.

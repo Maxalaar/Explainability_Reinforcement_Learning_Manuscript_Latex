@@ -46,9 +46,10 @@ It means that, for a given input $x^{(i)}$, the \gls{nn} output $\hat{y}^{(i)}$ 
 To quantify the quality of this approximation, a function $\mathcal{L}$ is introduced that measures the discrepancy between predictions and target values.
 In \gls{dl}, this function called the loss function plays a central role as it guides the learning process.
 In regression settings, a common choice is the \gls{mse}, defined as:
-\[
+\begin{equation}
     \mathcal{L}(\hat{y}, y) = (\hat{y} - y)^2.
-\]
+    \label{eq:mse}
+\end{equation}
 Thanks to this loss, it is now possible to rigorously define the performance measure $P$.
 This performance measure corresponds to the average loss over the dataset and can therefore be written as:
 \[
