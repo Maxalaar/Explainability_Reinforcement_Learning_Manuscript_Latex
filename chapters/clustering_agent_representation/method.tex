@@ -40,6 +40,8 @@ The explanations are therefore still extracted directly from the internal repres
 
 \subsection{Training surrogate policies}
 
+\input{figures/clustering_agent_representation/illustration_method.tex}
+
 Throughout the remainder of this manuscript, the initial policy we aim to explain is denoted as $\textcolor{mygreen}{\pi}$ (represented in green in Figure~\ref{fig:illustration_method}).
 This initial policy is obtained without imposing any constraints on its origin.
 It may result from classical or deep reinforcement learning \cite{sutton2018reinforcement}, alpha-beta algorithm \cite{knuth1975analysis}, or even from demonstrations provided by humans \cite{pmlr-v9-ross10a}.
@@ -50,8 +52,11 @@ For any observation $O$, the distribution over the action space produced by $\te
 
 The surrogate policy $\textcolor{myred}{\pi'}$ is implemented as a \gls{nn} parameterized by $\Theta$.  
 This network is composed of two principal components: an encoder and a decoder.  
-The encoder, represented by the function $\textcolor{myblue}{f_{enc}}$, maps observations from $\mathcal{O}$ into a \gls{ls} $\textcolor{myblue}{\mathcal{Z}}$ (shown in blue in Figure~\ref{fig:illustration_method}).  
+The encoder, represented by the function $\textcolor{myblue}{f_{enc}}$, maps observations from $\mathcal{O}$ into a \gls{ls} $\textcolor{myblue}{\mathcal{Z}}$ (shown in blue in Figure~\ref{fig:illustration_method}).
 The decoder then reconstructs actions from this latent representation.
+Figure~\ref{fig:surrogate_policy_architecture} details this architecture, showing how the encoder layers progressively compress the observation into the embedding before the decoder reconstructs the action distribution parameters from it.
+
+\input{figures/clustering_agent_representation/surrogate_policy_architecture.tex}
 
 To train $\textcolor{myred}{\pi'}$ to accurately replicate the action distribution, we define a global loss function $\mathcal{L}$ optimized via gradient descent.
 This loss, defined in Equation~\eqref{eq:loss}, is computed as the Mean Squared Error (MSE) between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.

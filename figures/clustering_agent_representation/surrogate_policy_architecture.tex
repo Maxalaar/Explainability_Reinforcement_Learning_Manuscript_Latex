@@ -1,0 +1,98 @@
+\begin{figure}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tikzpicture}[x=3cm,y=1cm]
+    \large
+    \message{^^JDeep convolution neural network}
+    \readlist\Nnod{4,5,6,5,3}
+    \def\nstyle{1}
+    \tikzset{
+    node 1/.style={thick,circle,draw,minimum size=18,inner sep=0.5,outer sep=0.6},
+    }
+
+    \message{^^J  Layer}
+    \foreachitem \N \in \Nnod{
+        \def\lay{\Ncnt}
+        \pgfmathsetmacro\prev{int(\Ncnt-1)}
+        \message{\lay,}
+        \foreach \i [evaluate={\y=\N/2-\i+0.5; \x=\lay; \n=\nstyle;}] in {1,...,\N}{ % loop over nodes
+            \ifboolexpr{test {\ifnumcomp{\lay}{=}{3}}}
+            {
+                \node[node \n,outer sep=0.6] (N\lay-\i) at (\x,\y) {\textcolor{myblue}{$e_{\lay,\i}$}};
+            }
+            {
+                \node[node \n,outer sep=0.6] (N\lay-\i) at (\x,\y) {};
+            }
+
+            \ifnum\lay>1
+            \foreach \j in {1,...,\Nnod[\prev]}{ % loop over nodes in previous layer
+                \draw[] (N\prev-\j) -- (N\lay-\i);
+            }
+            \fi
+        }
+    }
+
+    \node[draw, rectangle, fit=(N1-1)(N3-6)(N3-1)(N5-1), inner sep=0.25cm, dashed, rounded corners=0.3cm, color=mygreen] (policy) {};
+      \node[] (policy_label) at ($(policy.north) + (0, 0.5cm)$) {\scalebox{2.5}{$\textcolor{mygreen}{\pi}$}};
+
+    % Observation
+    \node[minimum height=1cm, minimum width=1cm] (observation_1) at ($(N1-1) + (-1.75cm, 0)$) {\scalebox{1.25}{$o_1$}};
+    \node[minimum height=1cm, minimum width=1cm] (observation_2) at ($(N1-2) + (-1.75cm, 0)$) {\scalebox{1.25}{$o_2$}};
+    \node[minimum height=1cm, minimum width=1cm] (observation_3) at ($(N1-3) + (-1.75cm, 0)$) {\scalebox{1.25}{$o_3$}};
+    \node[minimum height=1cm, minimum width=1cm] (observation_4) at ($(N1-4) + (-1.75cm, 0)$) {\scalebox{1.25}{$o_4$}};
+
+    \node[minimum height=1cm, minimum width=1cm, align=center] (observation_label) at ($(observation_1) + (0, 1.25cm)$) {\hl{Observation}};
+
+    \draw[thick] (observation_1.north east) -- ($(observation_1.north east) + (-0.1cm, 0)$);
+    \draw[thick] (observation_1.north east) -- (observation_4.south east);
+    \draw[thick] (observation_4.south east) -- ($(observation_4.south east) + (-0.1cm, 0)$);
+
+    \draw[thick] (observation_1.north west) -- ($(observation_1.north west) + (0.1cm, 0)$);
+    \draw[thick] (observation_1.north west) -- (observation_4.south west);
+    \draw[thick] (observation_4.south west) -- ($(observation_4.south west) + (0.1cm, 0)$);
+
+    \draw[->] ($(observation_1.east) + (-0.15cm, 0)$) -- ($(N1-1.west) + (-0.0cm, 0)$);
+    \draw[->] ($(observation_2.east) + (-0.15cm, 0)$) -- ($(N1-2.west) + (-0.0cm, 0)$);
+    \draw[->] ($(observation_3.east) + (-0.15cm, 0)$) -- ($(N1-3.west) + (-0.0cm, 0)$);
+    \draw[->] ($(observation_4.east) + (-0.15cm, 0)$) -- ($(N1-4.west) + (-0.0cm, 0)$);
+
+    % Distribution
+    \node[minimum height=1cm, minimum width=1cm] (distribution_1) at ($(N5-1) + (1.75cm, 0)$) {\scalebox{1.25}{$d_1$}};
+    \node[minimum height=1cm, minimum width=1cm] (distribution_2) at ($(N5-2) + (1.75cm, 0)$) {\scalebox{1.25}{$d_2$}};
+    \node[minimum height=1cm, minimum width=1cm] (distribution_3) at ($(N5-3) + (1.75cm, 0)$) {\scalebox{1.25}{$d_3$}};
+
+    \draw[thick] (distribution_1.north east) -- ($(distribution_1.north east) + (-0.1cm, 0)$);
+    \draw[thick] (distribution_1.north east) -- (distribution_3.south east);
+    \draw[thick] (distribution_3.south east) -- ($(distribution_3.south east) + (-0.1cm, 0)$);
+
+    \draw[thick] (distribution_1.north west) -- ($(distribution_1.north west) + (0.1cm, 0)$);
+    \draw[thick] (distribution_1.north west) -- (distribution_3.south west);
+    \draw[thick] (distribution_3.south west) -- ($(distribution_3.south west) + (0.1cm, 0)$);
+
+    \draw[->] ($(N5-1.east) + (0.0cm, 0)$) -- ($(distribution_1.west) + (0.2cm, 0)$);
+    \draw[->] ($(N5-2.east) + (0.0cm, 0)$) -- ($(distribution_2.west) + (0.2cm, 0)$);
+    \draw[->] ($(N5-3.east) + (0.0cm, 0)$) -- ($(distribution_3.west) + (0.2cm, 0)$);
+
+    \node[minimum height=1cm, minimum width=1cm, align=center] (distribution_label) at ($(distribution_1) + (0, 1.5cm)$) {Parameters \\ for the \\ \hl{Distribution}};
+
+    % Embedding
+    \node[align=center] (embedding_label) at ($(N3-6) + (0cm, -2cm)$) {\hl{Embedding}};
+
+    \draw[thick, dashed, ->] ($(N3-6) + (0cm, -0.5cm)$) -- ($(embedding_label) + (0cm, 0.5cm)$);
+
+    \node[] (embedding) at ($(embedding_label) + (0, -2cm)$) {
+        $\begin{bmatrix}
+            \textcolor{myblue}{e_{3,1}} \\
+            \textcolor{myblue}{e_{3,2}} \\
+            \textcolor{myblue}{e_{3,3}} \\
+            \textcolor{myblue}{e_{3,4}} \\
+            \textcolor{myblue}{e_{3,5}} \\
+            \textcolor{myblue}{e_{3,6}}
+        \end{bmatrix}$
+    };
+
+    \end{tikzpicture}
+}
+    \caption{Architecture of the surrogate policy $\textcolor{mygreen}{\pi}$: the encoder maps the observation $O$ to the embedding $\textcolor{myblue}{\mathcal{Z}}$, from which the decoder reconstructs the action distribution parameters.}
+    \label{fig:surrogate_policy_architecture}
+\end{figure}

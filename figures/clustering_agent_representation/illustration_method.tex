@@ -1,0 +1,173 @@
+\begin{figure}[t]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tikzpicture}
+        \node (observation) [minimum height=1.5cm, minimum width=2.5cm, align=center] at (0, 0) {\hl{Observation} \\ \large $O$};
+
+        \node[draw, rectangle, text centered, minimum height=1cm, minimum width=2.5cm, align=center, rounded corners=0.2cm] (policy) at ($(observation) + (3cm, 1.35cm)$) {\scalebox{2}{$\textcolor{mygreen}{\pi}$}};
+
+        \node[align=center] (policy_text) at ($(policy) + (0, 1cm)$) {Initial Policy};
+
+        \node[draw, rectangle, text centered, minimum height=1cm, minimum width=2.5cm, align=center, rounded corners=0.2cm] (surrogate_policy) at ($(observation) + (3cm, -1.35cm)$) {\scalebox{2}{$\textcolor{myred}{\pi}^{\textcolor{myred}{'}}_{\textcolor{myred}{\Theta}}$}};
+
+        \node[align=center] (surrogate_policy_text) at ($(surrogate_policy) + (0, 1cm)$) {Surrogate Policy};
+
+        \draw[->] (observation) |- (policy);
+        \draw[->] (observation) |- (surrogate_policy);
+
+        \def\q{5};
+        \def\B{4};
+        \def\S{5};
+        \def\Bs{1.0};
+        \def\Ss{1.25};
+        \def\xmax{\S+3.2*\Ss};
+        \def\ymin{{-0.15*gauss(\B,\B,\Bs)}};
+
+        \begin{axis}[
+            name=policy_distribution,
+            at={($(policy) + (5cm, 0cm)$)},
+            anchor=center,
+            every axis plot post/.append style={
+                mark=none,domain={-0.05*(\xmax)}:{1.08*\xmax},samples=\numberOfSamplesToPlotCurve,smooth
+            },
+            xmin=0,
+            xmax=\xmax,
+            ymin=0,
+            ymax={1.1*gauss(\B,\B,\Bs)},
+            axis lines=middle,
+            axis line style=thick,
+            enlargelimits=upper, % extend the axes a bit to the right and top
+            ticks=none,
+            x=0.5cm,
+            y=5cm,
+            scale=0.7,
+            xlabel={$\mathcal{A}$},
+            xlabel style={at={(axis description cs:0.85,0.2)}, anchor=west},
+            % ylabel={probability},
+            ylabel style={at={(axis description cs:0,1.02)},anchor=south},
+            title={action distribution},
+            title style={at={(axis description cs:0.5,-0.15)},anchor=north},
+        ]
+
+        % PLOTS
+        \addplot[name path=A,thick, mygreen] {gauss(x,\B,\Bs)} node[pos=0.5, above, xshift=-0.8cm, yshift=-0.2cm] {$\pi\textcolor{black}{(O)}$};
+        \end{axis}
+
+        \begin{axis}[
+            name=surrogate_policy_distribution,
+            at={($(surrogate_policy) + (5cm, 0cm)$)},
+            anchor=center,
+            every axis plot post/.append style={
+                mark=none,domain={-0.05*(\xmax)}:{1.08*\xmax},samples=\numberOfSamplesToPlotCurve,smooth
+            },
+            xmin=0,
+            xmax=\xmax,
+            ymin=0,
+            ymax={1.1*gauss(\B,\B,\Bs)},
+            axis lines=middle,
+            axis line style=thick,
+            enlargelimits=upper, % extend the axes a bit to the right and top
+            ticks=none,
+            x=0.5cm,
+            y=5cm,
+            scale=0.7,
+            xlabel={$\mathcal{A}$},
+            xlabel style={at={(axis description cs:0.85,0.2)}, anchor=west},
+            % ylabel={probability},
+            ylabel style={at={(axis description cs:0,1.02)},anchor=south},
+            title={action distribution},
+            title style={at={(axis description cs:0.5,-0.15)},anchor=north},
+        ]
+
+        % PLOTS
+        \addplot[name path=B,thick,myred] {gauss(x,\S,\Ss)} node[pos=0.5, above, xshift=1.2cm, yshift=-0.3cm] {$\pi^{'}_{\Theta}\textcolor{black}{(O)}$};
+        \end{axis}
+
+        \draw[->] (policy) -- ($(policy_distribution.west) + (-0.2cm, 0)$);
+        \draw[->] (surrogate_policy) -- ($(surrogate_policy_distribution.west) + (-0.2cm, 0)$);
+
+        \begin{axis}[
+            name=distribution_match,
+            at={(13.5cm, 0cm)},
+            anchor=center,
+            every axis plot post/.append style={
+                mark=none,domain={-0.05*(\xmax)}:{1.08*\xmax},samples=\numberOfSamplesToPlotCurve,smooth
+            },
+            xmin=0,
+            xmax=\xmax,
+            ymin=0,
+            ymax={1.1*gauss(\B,\B,\Bs)},
+            axis lines=middle,
+            axis line style=thick,
+            enlargelimits=upper, % extend the axes a bit to the right and top
+            ticks=none,
+            x=0.5cm,
+            y=5cm,
+            scale=0.8,
+            xlabel={$\mathcal{A}$},
+            xlabel style={at={(axis description cs:0.85,0.2)}, anchor=west},
+            % ylabel={probability},
+            ylabel style={at={(axis description cs:0,1.02)},anchor=south},
+            title={\shortstack{difference between \\[0.08cm] distributions}},
+            title style={at={(axis description cs:0.5,-0.15)},anchor=north},
+        ]
+
+        % PLOTS
+        \addplot[name path=A,thick,mygreen] {gauss(x,\B,\Bs)} node[pos=0.5, above, xshift=-0.8cm, yshift=-0.2cm] {$\pi\textcolor{black}{(O)}$};
+        \addplot[name path=B,thick,myred] {gauss(x,\S,\Ss)} node[pos=0.5, above, xshift=1.2cm, yshift=-0.3cm] {$\pi^{'}_{\Theta}\textcolor{black}{(O)}$};
+
+        \addplot[opacity=0.2] fill between[of=A and B, soft clip={domain=0:15}];
+        \end{axis}
+
+        \node[align=center] at ($(distribution_match.north) + (0, 1.25cm)$) {$\textcolor{myred}{\pi}^{\textcolor{myred}{'}}_{\textcolor{myred}{\Theta}}$ is trained to be as close as \\ possible of $\textcolor{mygreen}{\pi}$ for all $O$ in  order \\ to reproduce its behavior.};
+
+        \draw[->] ($(policy_distribution.east) + (0.2cm, 0)$) -- ($(policy_distribution.east) + (0.5cm, 0)$) |- ($(distribution_match.west) + (-0.2cm, 0)$);
+        \draw[->] ($(surrogate_policy_distribution.east) + (0.2cm, 0)$) -- ($(surrogate_policy_distribution.east) + (0.5cm, 0)$) |- ($(distribution_match.west) + (-0.2cm, 0)$);
+
+        \begin{scope}[xshift=8cm, yshift=-5cm, scale=0.8, transform shape]
+            \node[draw, minimum width=4cm, minimum height=4cm] (box_2) at (0, 0) {};
+
+            \begin{scope}
+                \clip (box_2.south west) rectangle (box_2.north east);
+
+                \node[draw, dashed, minimum width=1.5cm, circle, minimum height=1.5cm] (circle_1) at (-1.25cm, -1.25cm) {};
+
+                \node[draw, dashed, minimum width=1.5cm, circle, minimum height=1.5cm] (circle_2) at (0cm, 1.75cm) {};
+
+                \node[draw, dashed, minimum width=1.5cm, circle, minimum height=1.5cm] (circle_3) at (1.75cm, 0cm) {};
+            \end{scope}
+
+            \foreach \x/\y in {
+                -1.5/-0.75,
+                -1.25/-1.5,
+                -1/-1.75,
+                -1.75/-1.25,
+                -0.75/-1.25,
+                -1/-1,
+                0.5/1.5,
+                -0.25/1.25,
+                0.0/1.50,
+                -0.5/1.5,
+                0/1.25,
+                1.5/-0.5,
+                1.5/0.5,
+                1.25/0.25,
+                1.5/0,
+                1.25/-0.25
+            }
+            {
+                \node[] (p1) at (\x cm,\y cm) {\textcolor{myblue}{$\times$}};
+            }
+        \end{scope}
+        \draw[->, dashed, preaction={draw=white,line width=6pt}] (surrogate_policy) |- ($(box_2.west) + (-0.2cm, 0)$);
+
+        \node[draw, rectangle, text centered, align=center, dashed, fill=white, inner sep=1.5mm] at ($(surrogate_policy) - (0, 2.0cm)$) {Projection obtained through \\ the function $\textcolor{myblue}{f_{enc}}$, which is \\ a subcomponent of $\textcolor{myred}{\pi}^{\textcolor{myred}{'}}_{\textcolor{myred}{\Theta}}$.};
+
+        \node[align=center] at ($(box_2.east) + (2.75cm, 0)$) {Once $\textcolor{myred}{\pi}^{\textcolor{myred}{'}}_{\textcolor{myred}{\Theta}}$ is trained,\\ observations are projected into $\textcolor{myblue}{\mathcal{Z}}$,\\ clustered automatically,\\ and interpreted for semantics.};
+
+        \node[align=center] at ($(box_2.south) + (0, -0.3cm)$) {latent space $\textcolor{myblue}{\mathcal{Z}}$ of $\textcolor{myred}{\pi}^{\textcolor{myred}{'}}_{\textcolor{myred}{\Theta}}$};
+    \end{tikzpicture}
+    }
+    \caption{Illustration of the \methodName method.}
+    \label{fig:illustration_method}
+\end{figure}
