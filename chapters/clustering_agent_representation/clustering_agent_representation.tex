@@ -1,0 +1,30 @@
+\chapter{Clustering Agent Representations}
+\label{chap:clustering_agent_representation}
+
+\glsresetall
+
+As discussed in the previou chapter, current explainability methods for Reinforcement Learning still face two major limitations.
+First, there is a lack of intrinsic approaches capable of explaining the internal mechanisms of deep neural policies.
+Second, methods are proposed generally lack objective metrics for evaluating the quality of the explanations they produce.
+
+To the best of our knowledge, only \cite{zahavy2017graying} have proposed exploiting the latent space learned by neural policies in order to identify the concepts used by the agent.
+Its main idea is to analyze the latent representations produced by the neural network and organize them into clusters that correspond to high-level concepts.
+This method falls squarely within the deep clustering approach presented in Section~\ref{sec:clustering}.
+
+While the core idea of this paper is innovative and closely aligned with our vision of explainability in RL, this approach suffers from two important limitations.
+First, the clusters are manually constructed.
+Such a procedure heavily depends on the user's expertise and neither guarantees reproducibility or scales.
+Second, no evaluation protocol is proposed to assess the quality of the obtained clusters.
+Their relevance is essentially determined through visual inspection.
+
+The Clustering Agent Representations (CAR) method proposed in this chapter addresses these two limitations.
+It automates concept discovery by relying on unsupervised clustering algorithms to identify the concept structure of the latent space.
+It introduces an objective evaluation metric based on the stability of the extracted representations across independently trained policy.
+
+The remainder of this chapter is organized as follows.
+The first section introduces the theoretical assumptions underlying the proposed CAR method, referred to as the representation convergence hypothesis.
+The second section describes the CAR method itself, with a detailed account of the extraction of latent representations using surrogate policies, along with the automatic detection of concept structures via clustering.
+The third section then presents the proposed evaluation metric.
+
+\input{chapters/clustering_agent_representation/representation_convergence_hypothesis.tex}
+\input{chapters/clustering_agent_representation/method.tex}
