@@ -1,0 +1,51 @@
+\begin{algorithm}[t]
+\caption{Data Collection}
+\label{alg:data_collection}
+
+\Input{
+\\
+\gls{mdp} $(\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, p)$\\
+Policy $\pi$\\
+Discount factor $\gamma \in [0, 1]$
+}
+
+\Output{
+\\
+Dataset $\mathcal{D}$
+}
+
+\AlgoRule
+
+\tcp{Sample an initial state.}
+$i \leftarrow 1$\;
+Sample $s_1 \in \mathcal{S}^i$\;
+Observe $o_1$\;
+
+\BlankLine
+\tcp{Episode generation by interaction with the \gls{mdp}.}
+\Repeat{$s_i \in \mathcal{S}^t$}{
+    \tcp{Action selection.}
+    Sample $a_i \sim \pi(\cdot \mid o_i)$\;
+
+    \BlankLine
+    \tcp{Environment transition.}
+    Sample $(s_{i+1}, o_{i+1}, r_i) \sim p(\cdot \mid s_i, a_i)$\;
+
+    $i \leftarrow i + 1$\;
+}
+
+\BlankLine
+\tcp{Return computation for each step of the trajectory.}
+$T \leftarrow i - 1$\;
+\For{$i = 1, \dots, T$}{
+    $g_i \leftarrow \sum_{k=i}^{T} \gamma^{k-i} r_k$\;
+}
+
+\BlankLine
+\tcp{Dataset construction}
+$\mathcal{D} \leftarrow \big\{\big(s_i, o_i, a_i, g_i\big)\big\}_{i=1}^{T}$\;
+
+\BlankLine
+\Return{$\mathcal{D}$}
+
+\end{algorithm}

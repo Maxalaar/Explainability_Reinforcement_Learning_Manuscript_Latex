@@ -45,6 +45,29 @@
 \usepackage{dblfloatfix}
 \usepackage{cuted}
 
+% Algorithms
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\SetKwInput{Input}{Input}
+\SetKwInput{Output}{Output}
+\SetKw{Return}{Return}
+\renewcommand{\CommentSty}[1]{\textcolor{gray}{\footnotesize\itshape #1}}
+\SetKwComment{tcp}{}{}
+\SetArgSty{textit} % \ArgSty (e.g. \Return's argument) defaults to \emph, which ulem redefines to underline
+\SetProgSty{textit} % \ProgSty (e.g. \While/\For/\If conditions) has the same issue
+\SetFuncArgSty{textit} % \FuncArgSty (arguments of \SetKwFunction calls) has the same issue
+\SetKwFunction{FnDataCollection}{DataCollection}
+\SetKwFunction{FnSGD}{SGD}
+\SetAlgoSkip{smallskip}
+\SetAlCapSkip{0.8em}
+\makeatletter
+\newcommand{\AlgoRule}{%
+    \par\begingroup
+    \algocf@seteveryparnl{\relax}% suppress line numbering for this rule only
+    \noindent\hrulefill\vspace{0.3em}\par
+    \endgroup
+}
+\makeatother
+
 % Graphics and plots
 \usepackage{graphicx}
 \usepackage{pgfplots}

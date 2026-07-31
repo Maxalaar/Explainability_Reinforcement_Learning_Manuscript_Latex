@@ -1,0 +1,55 @@
+\begin{algorithm}[t]
+\caption{Stochastic Gradient Descent}
+\label{alg:stochastic_gradient_descent}
+
+\Input{
+\\
+Dataset $\mathcal{D} = \{(x^{(i)}, y^{(i)})\}_{i=1}^{N}$\\
+Architecture $\hat{f}$\\
+Loss function $\mathcal{L}$\\
+Learning rate $\eta > 0$\\
+Initial parameters $\theta$ (optional)
+}
+
+\Output{
+\\
+Trained parameters $\theta$
+}
+
+\AlgoRule
+
+\uIf{$\theta$ is given}{
+    $\theta^{(1)} \leftarrow \theta$\;
+}\uElse{
+    Initialize $\theta^{(1)}$ randomly\;
+}
+
+\BlankLine
+$n \leftarrow 1$\;
+\While{stopping criterion not satisfied}{
+    Select a random example $(x^{(i)}, y^{(i)}) \in \mathcal{D}$\;
+
+    \BlankLine
+    \tcp{Model prediction for the selected example}
+    $\hat{y}^{(i)} \leftarrow \hat{f}_{\theta^{(n)}}(x^{(i)})$\;
+
+    \BlankLine
+    \tcp{Compute the error between the prediction and the ground truth}
+    $\ell \leftarrow \mathcal{L}(\hat{y}^{(i)}, y^{(i)})$\;
+
+    \BlankLine
+    \tcp{Compute the gradient of the error since the loss function is differentiable}
+    $g \leftarrow \nabla_{\theta^{(n)}} \ell$\;
+
+    \BlankLine
+    \tcp{Error minimization via a gradient descent step}
+    $\theta^{(n+1)} \leftarrow \theta^{(n)} - \eta \, g$\;
+
+    $n \leftarrow n + 1$\;
+}
+
+\BlankLine
+
+\Return{$\theta^{(n)}$}
+
+\end{algorithm}

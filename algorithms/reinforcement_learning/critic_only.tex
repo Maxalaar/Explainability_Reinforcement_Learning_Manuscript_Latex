@@ -1,0 +1,55 @@
+\begin{algorithm}[t]
+\caption{Deep Critic-Only Reinforcement Learning}
+\label{alg:critic_only}
+
+\Input{
+\\
+\gls{mdp} $(\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, p)$\\
+Architecture $\hat{Q}$\\
+Exploration rate $\varepsilon \in [0, 1]$\\
+Discount factor $\gamma \in [0, 1]$\\
+Learning rate $\eta > 0$\\
+Initial parameters $\theta$ (optional)
+}
+
+\Output{
+\\
+Trained policy $\pi_{\theta}$
+}
+
+\AlgoRule
+
+\uIf{$\theta$ is not given}{
+    Initialize $\theta$ randomly\;
+}
+
+\BlankLine
+\tcp{Exploration policy as defined in Equation~\eqref{eq:epsilon_greedy_policy}}
+$\pi_{\theta} \leftarrow$ $\varepsilon$-greedy policy with respect to $\hat{Q}_\theta$
+
+\BlankLine
+\tcp{MSE loss function as defined in Equation~\eqref{eq:mse}}
+$\mathcal{L} \leftarrow$ \gls{mse}\;
+
+\BlankLine
+\While{stopping criterion not satisfied}{
+    \tcp{Data collection see Algorithm~\ref{alg:data_collection}}
+    $\mathcal{D} \leftarrow$ \FnDataCollection{\gls{mdp}, $\pi_{\theta}, \gamma$}
+
+    \BlankLine
+    \tcp{observation-action pairs and their returns, from $\mathcal{D}$}
+    $\mathcal{D}' \leftarrow \big\{\big((o, a), g\big) \mid (s, o, a, g) \in \mathcal{D}\big\}$
+
+    \BlankLine
+    \tcp{Model update whith SGD see Algorithm~\ref{alg:stochastic_gradient_descent}}
+    $\theta \leftarrow$ \FnSGD{$\mathcal{D}', \hat{Q}, \mathcal{L}, \eta, \theta$}
+}
+
+\BlankLine
+\tcp{Final policy without exploration as defined in Equation~\eqref{eq:greedy_policy}}
+$\pi_{\theta} \leftarrow$ policy with respect to $\hat{Q}_\theta$\;
+
+\BlankLine
+\Return{$\pi_{\theta}$}
+
+\end{algorithm}
