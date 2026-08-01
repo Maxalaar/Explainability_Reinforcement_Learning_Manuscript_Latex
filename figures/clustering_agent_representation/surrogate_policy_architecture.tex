@@ -32,8 +32,17 @@
         }
     }
 
-    \node[draw, rectangle, fit=(N1-1)(N3-6)(N3-1)(N5-1), inner sep=0.25cm, dashed, rounded corners=0.3cm, color=mygreen] (policy) {};
-      \node[] (policy_label) at ($(policy.north) + (0, 0.5cm)$) {\scalebox{2.5}{$\textcolor{mygreen}{\pi}$}};
+    \coordinate (policy_top_margin) at ($(N3-1) + (0, 1.3cm)$);
+    \node[draw, rectangle, fit=(N1-1)(N3-6)(N5-1)(policy_top_margin), inner sep=0.25cm, dashed, rounded corners=0.3cm, color=myred] (policy) {};
+      \node[] (policy_label) at ($(policy.north) + (0, 0.5cm)$) {\scalebox{2.5}{$\SurrogatePolicy{}$}};
+
+    % Encoder box: encloses the layers up to and including the embedding
+    \node[draw, dashed, rounded corners=0.15cm, color=myblue, fit=(N1-1)(N1-4)(N3-1)(N3-6), inner sep=0.15cm] (encoder_box) {};
+    \node[align=center] (encoder_label) at ($(encoder_box.north) + (0, 0.5cm)$) {\scalebox{1.5}{$\textcolor{myblue}{f_{enc}}$}};
+
+    % Decoder box: encloses the embedding and the layers up to the output
+    \node[draw, dashed, rounded corners=0.15cm, color=black, fit=(N3-1)(N3-6)(N5-1), inner sep=0.15cm] (decoder_box) {};
+    \node[align=center] (decoder_label) at ($(decoder_box.north) + (0, 0.5cm)$) {Decoder};
 
     % Observation
     \node[minimum height=1cm, minimum width=1cm] (observation_1) at ($(N1-1) + (-1.75cm, 0)$) {\scalebox{1.25}{$o_1$}};
@@ -93,6 +102,6 @@
 
     \end{tikzpicture}
 }
-    \caption{Architecture of the surrogate policy $\textcolor{mygreen}{\pi}$. The encoder maps the observation $O$ to the embedding, from which the decoder reconstructs the action distribution parameters.}
+    \caption{Architecture of the surrogate policy $\SurrogatePolicy{}$. The blue dashed box denotes the encoder $\textcolor{myblue}{f_{enc}}$, which maps the observation $O$ to the embedding, and the black dashed box denotes the decoder, which reconstructs the action distribution parameters from it. Both boxes encapsulate the embedding layer, illustrating that the output of the encoder is the input of the decoder.}
     \label{fig:surrogate_policy_architecture}
 \end{figure}
