@@ -1,23 +1,23 @@
 \section{Representation Convergence Hypothesis}
 \label{sec:representation_convergence_hypothesis}
 
-The Clustering Agent Representations (CAR) method relies on a assumption, referred to as the Representation Convergence Hypothesis. 
+The \gls{car} method relies on a assumption, referred to as the Representation Convergence Hypothesis.
 This hypothesis follows the two assumptions established previously throughout this manuscript.
 
-The first assumption rejects the notion that deep neural networks constitute irreducible black boxes \ref{subsec:explanation}.
+The first assumption rejects the notion that deep \glspl{nn} constitute irreducible black boxes \ref{subsec:explanation}.
 Adopting a mechanistic perspective, we consider that every process results from a sequence of causal computations.
 Although these computations may be highly complex, they remain explainable through the analysis of the internal mechanisms.
 
-The second assumption states that neural networks achieve generalization by learning concepts \ref{sec:concept_hypothesis}.
-During optimization, the network progressively organizes its latent space into representations that capture the information required to solve the task.
+The second assumption states that \glspl{nn} achieve generalization by learning concepts \ref{sec:concept_hypothesis}.
+During optimization, the network progressively organizes its \gls{ls} into representations that capture the information required to solve the task.
 
-Following these hypotheses, it becomes possible to explain the \gls{nn}'s process by understanding the organization of its latent space.
+Following these hypotheses, it becomes possible to explain the \gls{nn}'s process by understanding the organization of its \gls{ls}.
 This family of approaches is commonly referred to as mechanistic interpretability.
 
 In mechanistic interpretability, universality refers to the consistency with which a concept is recovered across different models or independent extraction processes \cite{templeton2024scaling}.
 
 The Representation Convergence Hypothesis provides a theoretical explanation for this phenomenon.
-We hypothesize that, for a given task and a given neural network architecture, there exists a privileged conceptual organization.
+We hypothesize that, for a given task and a given \gls{nn} architecture, there exists a privileged conceptual organization.
 This organization naturally emerges because it constitutes an efficient representation required to solve the task.
 Under this assumption, the universality of a concept is not merely an empirical observation but the expected consequence of a common underlying conceptual structure shared by independently learned representations.
 

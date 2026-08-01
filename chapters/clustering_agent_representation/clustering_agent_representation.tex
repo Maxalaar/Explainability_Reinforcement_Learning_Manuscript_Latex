@@ -3,24 +3,24 @@
 
 \glsresetall
 
-As discussed in the previous chapter, current explainability methods for Reinforcement Learning still lack intrinsic approaches capable of explaining the internal mechanisms of deep neural policies.
-To the best of our knowledge, only \cite{zahavy2017graying} have proposed exploiting the latent space learned by neural policies in order to identify the concepts used by the agent.
-Its main idea is to analyze the latent representations produced by the neural network and organize them into clusters that correspond to high-level concepts.
+As discussed in the previous chapter, current explainability methods for \gls{rl} still lack intrinsic approaches capable of explaining the internal mechanisms of deep neural policies.
+To the best of our knowledge, only \cite{zahavy2017graying} have proposed exploiting the \gls{ls} learned by neural policies in order to identify the concepts used by the agent.
+Its main idea is to analyze the \glspl{lr} produced by the \gls{nn} and organize them into clusters that correspond to high-level concepts.
 
-While the core idea of this paper is closely aligned with our vision of explainability in RL, this approach suffers from two important limitations.
+While the core idea of this paper is closely aligned with our vision of explainability in \gls{rl}, this approach suffers from two important limitations.
 First, the clusters are manually constructed.
 Such a procedure heavily depends on the user's expertise and neither guarantees reproducibility or scales.
 Second, no evaluation protocol is proposed to assess the quality of the obtained clusters.
 Their relevance is essentially determined through visual inspection.
 
-The Clustering Agent Representations (CAR) method proposed in this chapter addresses these two limitations.
-It automates concept discovery by relying on unsupervised clustering algorithms to identify the concept structure of the latent space.
+The \gls{car} method proposed in this chapter addresses these two limitations.
+It automates concept discovery by relying on unsupervised clustering algorithms to identify the concept structure of the \gls{ls}.
 It introduces an objective evaluation metric based on the stability of the extracted representations across independently trained policy.
 
 This chapter is organized as follows:
 \begin{itemize}
-    \item Section~\ref{sec:representation_convergence_hypothesis} lays out the theoretical assumptions underlying the proposed CAR method, which we term the representation convergence hypothesis.
-    \item Section~\ref{sec:clustering_agent_representation_method} then details the CAR method itself, covering both the extraction of latent representations using surrogate policies and the automatic detection of concept structures through clustering.
+    \item Section~\ref{sec:representation_convergence_hypothesis} lays out the theoretical assumptions underlying the proposed \gls{car} method, which we term the representation convergence hypothesis.
+    \item Section~\ref{sec:clustering_agent_representation_method} then details the \gls{car} method itself, covering both the extraction of \glspl{lr} using surrogate policies and the automatic detection of concept structures through clustering.
     \item Section~\ref{sec:clustering_agent_representation_metrics} finally introduces the metrics we propose for evaluation.
 \end{itemize}
 

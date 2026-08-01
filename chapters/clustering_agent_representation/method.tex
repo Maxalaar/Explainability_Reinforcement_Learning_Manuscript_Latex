@@ -1,13 +1,13 @@
 \section{Method}
 \label{sec:clustering_agent_representation_method}
 
-As developed in Chapter~\ref{chap:latent_space}, several hypotheses have been proposed regarding the organization of latent representations in deep neural networks.
-Following the work of \cite{zahavy2017graying}, we analyze the latent space through clustering techniques, placing our approach within the broader field of Deep Clustering.
+As developed in Chapter~\ref{chap:latent_space}, several hypotheses have been proposed regarding the organization of \glspl{lr} in deep \glspl{nn}.
+Following the work of \cite{zahavy2017graying}, we analyze the \gls{ls} through clustering techniques, placing our approach within the broader field of Deep Clustering.
 This design choice is motivated by our rejection of the superposition hypothesis and, more generally, of any view that assumes a linearly organized concept structure, as discussed in Section~\ref{sec:clustering}.
 
-The CAR methodology is composed of two main stages.
-The first stage trains multiple independent neural networks, called surrogate policies, which implement the same decision policy.
-The second stage clusters their latent representations in order to identify the underlying conceptual organization.
+The \gls{car} methodology is composed of two main stages.
+The first stage trains multiple independent \glspl{nn}, called surrogate policies, which implement the same decision policy.
+The second stage clusters their \glspl{lr} in order to identify the underlying conceptual organization.
 
 This section is organized as follows.
 In the first subsection, we justify the use of multiple surrogate policies in order to study the stability of representations.
@@ -15,26 +15,26 @@ In the second subsection, we detail how these surrogate policies are trained so 
 
 \subsection{Multiple surrogate policies}
 
-The CAR method was developed with the aim of verifying the representation convergence hypothesis presented in Section \ref{sec:representation_convergence_hypothesis}.
-To test this hypothesis, several neural networks must be trained independently and their latent representations compared.
+The \gls{car} method was developed with the aim of verifying the representation convergence hypothesis presented in Section \ref{sec:representation_convergence_hypothesis}.
+To test this hypothesis, several \glspl{nn} must be trained independently and their \glspl{lr} compared.
 If similar conceptual structures consistently emerge, this provides empirical evidence supporting the Representation Convergence Hypothesis.
 
 In supervised learning, this protocol is straightforward since several models can be independently trained on the same target function.
-Reinforcement learning, introduces an additional difficulty.
+\Gls{rl} introduces an additional difficulty.
 Because of stochastic exploration, independently trained agents are not guaranteed to converge toward the same policy.
 Even if they achieve comparable performance, they may solve the task using different strategies.
-Making it impossible to determine whether differences observed in the latent space originate from the learning dynamics or from genuine differences between the learned policies.
+Making it impossible to determine whether differences observed in the \gls{ls} originate from the learning dynamics or from genuine differences between the learned policies.
 
 To overcome this limitation, we consider an already trained initial policy.
 This policy is then imitated using supervised behavioral cloning.
-To this end, we independently train several surrogate neural networks.
+To this end, we independently train several surrogate \glspl{nn}.
 Since all surrogate models approximate the same target function, they are converge toward equivalent decision policies.
 This makes it possible to investigate whether equivalent policies also exhibit equivalent conceptual organizations.
 
-It is important to emphasize that the use of surrogate policies does not make CAR a surrogate explainability method, as defined in Subsection~\ref{subsec:explainable_artificial_intelligence}.
-The surrogate policies remain deep neural networks.
+It is important to emphasize that the use of surrogate policies does not make \gls{car} a surrogate explainability method, as defined in Subsection~\ref{subsec:explainable_artificial_intelligence}.
+The surrogate policies remain deep \glspl{nn}.
 Their role is not to simplify the decision process but to provide multiple independent realizations of the same policy function, enabling the study of representation convergence.
-The explanations are therefore still extracted directly from the internal representations of deep neural networks, making CAR a fully intrinsic and mechanistic explainability approach.
+The explanations are therefore still extracted directly from the internal representations of deep \glspl{nn}, making \gls{car} a fully intrinsic and mechanistic explainability approach.
 
 \subsection{Training surrogate policies}
 
@@ -49,18 +49,18 @@ For any observation $O$, the distribution over the action space produced by $\te
 The surrogate policy $\textcolor{myred}{\pi'}$ is implemented as a \gls{nn} parameterized by $\Theta$.
 This network is composed of two principal components: an encoder and a decoder, respectively highlighted by the blue and black dashed rectangles in Figure~\ref{fig:surrogate_policy_architecture}.
 The encoder, represented by the function $\textcolor{myblue}{f_{enc}}$ and delimited by the blue rectangle, maps observations from $\mathcal{O}$ into a \gls{ls} $\textcolor{myblue}{\mathcal{Z}}$.
-The decoder, delimited by the black rectangle, then reconstructs actions from this latent representation.
+The decoder, delimited by the black rectangle, then reconstructs actions from this \gls{lr}.
 Both rectangles encapsulate the embedding layer in the figure, illustrating that the output of the encoder is the input of the decoder.
 
 \input{figures/clustering_agent_representation/surrogate_policy_architecture.tex}
 
 Figure~\ref{fig:illustration_method} summarizes this overall procedure: the initial policy $\textcolor{mygreen}{\pi}$ is shown as the green box, and the surrogate policy $\textcolor{myred}{\pi'}$ as the red box, each producing a distribution over the action space $\mathcal{A}$ from the same observation $O$.
-The projection performed by $\textcolor{myblue}{f_{enc}}$ into the latent space is shown as the blue crosses.
+The projection performed by $\textcolor{myblue}{f_{enc}}$ into the \gls{ls} is shown as the blue crosses.
 
 \input{figures/clustering_agent_representation/illustration_method.tex}
 
 To train $\textcolor{myred}{\pi'}$ to accurately replicate the action distribution, we define a global loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
-This loss, defined in Equation~\eqref{eq:loss}, is computed as the Mean Squared Error (MSE) between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.
+This loss, defined in Equation~\eqref{eq:loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.
 In practice, this function does not need to be explicitly defined, as neural policies directly output the parameters of the action distribution.
 Once training is complete, this loss ensures that $\textcolor{myred}{\pi'}$ closely approximates the behavior of the original policy $\textcolor{mygreen}{\pi}$.
 
@@ -78,7 +78,7 @@ We denote by $\textcolor{myblue}{\mathcal{E}}$ the set of embeddings obtained by
 
 On the set $\textcolor{myblue}{\mathcal{E}}$, we use a clustering function $f_{\mathrm{clust}}$ to partition the point cloud of embedded observations into distinct clusters.
 Each observation is assigned a cluster label based on its proximity in the \gls{ls}, resulting in the clustering $\mathcal{C}$.
-Algorithm~\ref{alg:car} summarizes the complete CAR procedure, from the behavioral cloning of the surrogate policies to the clustering of their latent representations.
+Algorithm~\ref{alg:car} summarizes the complete \gls{car} procedure, from the behavioral cloning of the surrogate policies to the clustering of their \glspl{lr}.
 
 \input{algorithms/clustering_agent_representation/car.tex}
 
