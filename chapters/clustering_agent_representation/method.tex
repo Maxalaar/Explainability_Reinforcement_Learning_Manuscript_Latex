@@ -1,7 +1,6 @@
 \section{Method}
 \label{sec:clustering_agent_representation_method}
 
-As developed in Chapter~\ref{chap:latent_space}, several hypotheses have been proposed regarding the organization of \glspl{lr} in deep \glspl{nn}.
 Following the work of \cite{zahavy2017graying}, we analyze the \gls{ls} through clustering techniques, placing our approach within the broader field of Deep Clustering.
 This design choice is motivated by our rejection of the superposition hypothesis and, more generally, of any view that assumes a linearly organized concept structure, as discussed in Section~\ref{sec:clustering}.
 
@@ -26,15 +25,14 @@ Even if they achieve comparable performance, they may solve the task using diffe
 Making it impossible to determine whether differences observed in the \gls{ls} originate from the learning dynamics or from genuine differences between the learned policies.
 
 To overcome this limitation, we consider an already trained initial policy.
-This policy is then imitated using supervised behavioral cloning.
-To this end, we independently train several surrogate \glspl{nn}.
+This policy is then imitated using imitation learning \cite{pmlr-v15-ross11a}.
+To this end, we independently train several surrogate \glspl{nn} in a supervised manner.
 Since all surrogate models approximate the same target function, they are converge toward equivalent decision policies.
 This makes it possible to investigate whether equivalent policies also exhibit equivalent conceptual organizations.
 
 It is important to emphasize that the use of surrogate policies does not make \gls{car} a surrogate explainability method, as defined in Subsection~\ref{subsec:explainable_artificial_intelligence}.
 The surrogate policies remain deep \glspl{nn}.
 Their role is not to simplify the decision process but to provide multiple independent realizations of the same policy function, enabling the study of representation convergence.
-The explanations are therefore still extracted directly from the internal representations of deep \glspl{nn}, making \gls{car} a fully intrinsic and mechanistic explainability approach.
 
 \subsection{Training surrogate policies}
 
@@ -46,23 +44,20 @@ The crucial requirement is the availability of a dataset containing a sufficient
 The replicated policies are referred to as surrogate policies, denoted by $\textcolor{myred}{\pi'}$.
 For any observation $O$, the distribution over the action space produced by $\textcolor{myred}{\pi'}$ should approximate that of $\textcolor{mygreen}{\pi}$ as closely as possible.
 
-The surrogate policy $\textcolor{myred}{\pi'}$ is implemented as a \gls{nn} parameterized by $\Theta$.
-This network is composed of two principal components: an encoder and a decoder, respectively highlighted by the blue and black dashed rectangles in Figure~\ref{fig:surrogate_policy_architecture}.
-The encoder, represented by the function $\textcolor{myblue}{f_{enc}}$ and delimited by the blue rectangle, maps observations from $\mathcal{O}$ into a \gls{ls} $\textcolor{myblue}{\mathcal{Z}}$.
-The decoder, delimited by the black rectangle, then reconstructs actions from this \gls{lr}.
-Both rectangles encapsulate the embedding layer in the figure, illustrating that the output of the encoder is the input of the decoder.
-
 \input{figures/clustering_agent_representation/surrogate_policy_architecture.tex}
 
-Figure~\ref{fig:illustration_method} summarizes this overall procedure: the initial policy $\textcolor{mygreen}{\pi}$ is shown as the green box, and the surrogate policy $\textcolor{myred}{\pi'}$ as the red box, each producing a distribution over the action space $\mathcal{A}$ from the same observation $O$.
-The projection performed by $\textcolor{myblue}{f_{enc}}$ into the \gls{ls} is shown as the blue crosses.
+The surrogate policy $\textcolor{myred}{\pi'}$ is implemented as a \gls{nn} parameterized by $\Theta$.
+This network is composed of two components: an encoder and a decoder, respectively highlighted by the blue and black dashed rectangles in Figure~\ref{fig:surrogate_policy_architecture}.
+The encoder $\textcolor{myblue}{f_{enc}}$ maps the observation $O$ to the embedding.
+The decoder, which reconstructs the action distribution parameters from the embedding.
 
 \input{figures/clustering_agent_representation/illustration_method.tex}
 
 To train $\textcolor{myred}{\pi'}$ to accurately replicate the action distribution, we define a global loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
-This loss, defined in Equation~\eqref{eq:loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.
+This loss, defined in Equation~\eqref{eq:car_loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.
 In practice, this function does not need to be explicitly defined, as neural policies directly output the parameters of the action distribution.
 Once training is complete, this loss ensures that $\textcolor{myred}{\pi'}$ closely approximates the behavior of the original policy $\textcolor{mygreen}{\pi}$.
+Figure~\ref{fig:illustration_method} summarizes this overall procedure.
 
 \begin{align}
     \min_{\Theta} \sum_{O \in \mathcal{O}} \mathcal{L} \left( O \right) 
@@ -71,14 +66,14 @@ Once training is complete, this loss ensures that $\textcolor{myred}{\pi'}$ clos
         p \, \!\big(\textcolor{mygreen}{\pi}\left(O\right)\big),
         p \, \!\big(\textcolor{myred}{\pi'_{\Theta}}\left(O\right)\big)
     \Big)
-    \label{eq:loss}
+    \label{eq:car_loss}
 \end{align}
 
 We denote by $\textcolor{myblue}{\mathcal{E}}$ the set of embeddings obtained by applying $\textcolor{myblue}{f_{enc}}$ to a subset of observations $\mathbb{O} \subseteq \mathcal{O}$.
 
 On the set $\textcolor{myblue}{\mathcal{E}}$, we use a clustering function $f_{\mathrm{clust}}$ to partition the point cloud of embedded observations into distinct clusters.
 Each observation is assigned a cluster label based on its proximity in the \gls{ls}, resulting in the clustering $\mathcal{C}$.
-Algorithm~\ref{alg:car} summarizes the complete \gls{car} procedure, from the behavioral cloning of the surrogate policies to the clustering of their \glspl{lr}.
+Algorithm~\ref{alg:car} summarizes the complete \gls{car} procedure.
 
 \input{algorithms/clustering_agent_representation/car.tex}
 

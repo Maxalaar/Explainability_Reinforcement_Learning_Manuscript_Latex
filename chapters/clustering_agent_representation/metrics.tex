@@ -47,13 +47,13 @@ Within \gls{car}, concepts are assumed to correspond to clusters in the \gls{ls}
 Combined with the Representation Convergence Hypothesis, this leads to a direct experimental prediction: if independently trained surrogate policies converge toward the same conceptual organization, then clustering their \glspl{lr} should produce similar partitions.
 
 When a particular observation is processed by the network, it is expected to activate the same concept regardless of the specific neural implementation of the policy.
-If independently trained policies converge toward the same conceptual organization, then a given observation should activate the same concept across all models.
+If independently trained policies converge toward the same conceptual organization, a given observation should activate the same concept across all models.
 As a consequence, observations grouped together within a cluster for one policy should also be grouped together for another independently trained policy.
 
 In the clustering literature, the most used measures for comparing two partitions is the \gls{ari}~\cite{hubert1985comparing}.
 This measure quantifies the agreement between cluster assignments independently of the spatial organization of the clusters.
 Both metrics introduced later in this chapter, namely \ClusteringUniversalityName{} and \AbstractionScoreName{}, rely on the \gls{ari}.
-Since the \gls{ari} is a complex measure, we review its definition and discuss its main properties before introducing our proposed metrics.
+Since the \gls{ari} is a complex measure, we review its definition and discuss its main properties.
 
 The \gls{ari} is derived from the \gls{ri}~\cite{rand1971objective}, which measures the agreement between two partitions by considering every possible pair of point cloud.
 For each pair, four situations are possible: the point may belong to the same cluster in both partitions, to different clusters in both partitions, or they may disagree by being grouped together in only one of the two partitions.
@@ -107,21 +107,13 @@ With these definitions, the \gls{ari} can be computed as:
 }
 \]
 
-\input{figures/clustering_agent_representation/clustering_universality_illustration.tex}
-
-Figure~\ref{fig:clustering_universality_illustration} illustrates this property of the \gls{ari}.
-It shows three point clouds obtained by projecting the same seven observations, labeled 1 to 7, through three independently trained surrogate policies.
-Although the numbered points occupy different positions within each point cloud, the dashed clusters group exactly the same elements in the three cases: the partitioning is therefore identical.
-In particular, point 1 represents the same object in the three point clouds, but appears at a different location because it is projected differently by each surrogate policy.
-This spatial discrepancy has no effect on the \gls{ari}, since the measure only depends on which cluster each point is assigned to, regardless of where the points are placed in space.
-
 \subsection{Clustering Universality}
 \label{subsec:clustering_universality}
 
 Having introduced the \gls{ari}, we can now define the \ClusteringUniversalityName metric.
 While the \gls{ari} quantifies the similarity between two conceptual partitions, the objective of \gls{car} is to assess the consistency of conceptual organizations across an entire set of independently trained surrogate policies.
 
-To this end, the same set of observations is projected into the \gls{ls} of each surrogate policy and clustered independently.
+To this end, the same set of observations is projected into the \gls{ls} of each surrogate policy and clustered.
 Under the Representation Convergence Hypothesis, these independently obtained partitions are expected to be similar.
 \ClusteringUniversalityName{} quantifies this by computing the mean pairwise \gls{ari}:
 
@@ -138,6 +130,12 @@ This metric takes values in $[-1, 1]$.
 A value close to $1$ indicates that surrogate policies produce highly similar partitions, suggesting that the clusters reflect intrinsic properties of the policy.
 Conversely, a value near $0$ implies that the similarity between partitions is no better than that of two randomly generated clusterings, meaning that the clustering fails to capture any meaningful structure in the policy.
 A negative value, on the other hand, signals that the agreement between partitions is worse than what would be expected by chance, indicating a systematic disagreement between the clusterings.
+
+Figure~\ref{fig:clustering_universality_illustration} illustrates \ClusteringUniversalityName{} in the ideal case.
+It shows three \gls{ls} obtained by projecting the same seven observations, labeled 1 to 7, through three independently trained surrogate policies.
+Although the embeddings occupy different positions, the clusters group exactly the same elements in all three cases: the partitioning is therefore identical.
+
+\input{figures/clustering_agent_representation/clustering_universality_illustration.tex}
 
 \subsection{Abstraction Score}
 

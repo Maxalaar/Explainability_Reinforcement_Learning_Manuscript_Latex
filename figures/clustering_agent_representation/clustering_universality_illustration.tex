@@ -91,12 +91,12 @@
 
     \node[below=0.75cm] at (0, -6) {
         \scalebox{1.5}{$\displaystyle
-        \text{\ClusteringUniversalityName} = \frac{1}{\binom{n}{2}} \sum_{i=1}^{n} \sum_{j=0}^{i-1} \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{j})
+        \text{\ClusteringUniversalityName} = 1
         $}
     };
 
     \end{tikzpicture}
     }
-    \caption{Three point clouds obtained by projecting the same observations through three independently trained surrogate policies $\textcolor{myred}{\pi'_1}$, $\textcolor{myred}{\pi'_2}$, and $\textcolor{myred}{\pi'_3}$. The numbered circles 1 to 7 denote the same seven observations across the three point clouds, and the dashed contours denote the clusters recovered in each latent space.}
+    \caption{Illustration of \ClusteringUniversalityName{} in the ideal case where projections of the same observations are grouped within the same clusters across all surrogate policies.}
     \label{fig:clustering_universality_illustration}
 \end{figure}

@@ -5,11 +5,10 @@
 \Input{
 \\
 Original policy $\textcolor{mygreen}{\pi}$\\
-Observation dataset $\mathcal{O}$\\
+Observation dataset $\mathbb{O}$\\
 Number of surrogate policies $n$\\
 Surrogate policy architecture $\textcolor{myred}{\pi'}$ (encoder $\textcolor{myblue}{f_{enc}}$, decoder)\\
-Learning rate $\eta > 0$\\
-Subset of observations $\mathbb{O} \subseteq \mathcal{O}$\\
+Learning rate $\eta$\\
 Clustering function $f_{\mathrm{clust}}$
 }
 
@@ -22,14 +21,14 @@ Clusterings $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$
 \AlgoRule
 
 \tcp{Behavioral cloning dataset built from the target policy $\textcolor{mygreen}{\pi}$}
-$\mathcal{D} \leftarrow \big\{ \big(O, p(\textcolor{mygreen}{\pi}(O))\big) \mid O \in \mathcal{O} \big\}$\;
+$\mathcal{D} \leftarrow \big\{ \big(O, p(\textcolor{mygreen}{\pi}(O))\big) \mid O \in \mathbb{O} \big\}$\;
 
 \BlankLine
 \tcp{MSE loss between action-distribution parameters, as defined in Equation~\eqref{eq:loss}}
 $\mathcal{L} \leftarrow$ \gls{mse}\;
 
 \BlankLine
-\tcp{Stage 1: independently train $n$ surrogate policies by behavioral cloning}
+\tcp{Independently train $n$ surrogate policies by behavioral cloning}
 \For{$i = 1, \dots, n$}{
     Initialize $\Theta_i$ randomly\;
 
@@ -39,7 +38,7 @@ $\mathcal{L} \leftarrow$ \gls{mse}\;
 }
 
 \BlankLine
-\tcp{Stage 2: cluster the latent representations of each surrogate policy}
+\tcp{Cluster the latent representations of each surrogate policy}
 \For{$i = 1, \dots, n$}{
     \tcp{Embeddings produced by the encoder of $\textcolor{myred}{\pi'_{\Theta_i}}$}
     $\textcolor{myblue}{\mathcal{E}_{i}} \leftarrow \big\{ \textcolor{myblue}{f_{enc_i}}(O) \mid O \in \mathbb{O} \big\}$\;
