@@ -1,8 +1,6 @@
 \section{Method}
 \label{sec:clustering_agent_representation_method}
 
-\input{figures/clustering_agent_representation/illustration_method.tex}
-
 As developed in Chapter~\ref{chap:latent_space}, several hypotheses have been proposed regarding the organization of latent representations in deep neural networks.
 Following the work of \cite{zahavy2017graying}, we analyze the latent space through clustering techniques, placing our approach within the broader field of Deep Clustering.
 This design choice is motivated by our rejection of the superposition hypothesis and, more generally, of any view that assumes a linearly organized concept structure, as discussed in Section~\ref{sec:clustering}.
@@ -40,21 +38,26 @@ The explanations are therefore still extracted directly from the internal repres
 
 \subsection{Training surrogate policies}
 
-Throughout the remainder of this manuscript, the initial policy we aim to explain is denoted as $\textcolor{mygreen}{\pi}$ (represented in green in Figure~\ref{fig:illustration_method}).
+Throughout the remainder of this manuscript, the initial policy we aim to explain is denoted as $\textcolor{mygreen}{\pi}$.
 This initial policy is obtained without imposing any constraints on its origin.
 It may result from classical or deep reinforcement learning \cite{sutton2018reinforcement}, alpha-beta algorithm \cite{knuth1975analysis}, or even from demonstrations provided by humans \cite{pmlr-v9-ross10a}.
 The crucial requirement is the availability of a dataset containing a sufficient number of projections from the observation space $\mathcal{O}$ to the action space $\mathcal{A}$ induced by $\textcolor{mygreen}{\pi}$.
 
-The replicated policies are referred to as surrogate policies, denoted by $\textcolor{myred}{\pi'}$ (shown in red in Figure~\ref{fig:illustration_method}).  
+The replicated policies are referred to as surrogate policies, denoted by $\textcolor{myred}{\pi'}$.
 For any observation $O$, the distribution over the action space produced by $\textcolor{myred}{\pi'}$ should approximate that of $\textcolor{mygreen}{\pi}$ as closely as possible.
+
+The surrogate policy $\textcolor{myred}{\pi'}$ is implemented as a \gls{nn} parameterized by $\Theta$.
+This network is composed of two principal components: an encoder and a decoder, respectively highlighted by the blue and black dashed rectangles in Figure~\ref{fig:surrogate_policy_architecture}.
+The encoder, represented by the function $\textcolor{myblue}{f_{enc}}$ and delimited by the blue rectangle, maps observations from $\mathcal{O}$ into a \gls{ls} $\textcolor{myblue}{\mathcal{Z}}$.
+The decoder, delimited by the black rectangle, then reconstructs actions from this latent representation.
+Both rectangles encapsulate the embedding layer in the figure, illustrating that the output of the encoder is the input of the decoder.
 
 \input{figures/clustering_agent_representation/surrogate_policy_architecture.tex}
 
-The surrogate policy $\textcolor{myred}{\pi'}$ is implemented as a \gls{nn} parameterized by $\Theta$.  
-This network is composed of two principal components: an encoder and a decoder.  
-The encoder, represented by the function $\textcolor{myblue}{f_{enc}}$, maps observations from $\mathcal{O}$ into a \gls{ls} $\textcolor{myblue}{\mathcal{Z}}$ (shown in blue in Figure~\ref{fig:illustration_method}).
-The decoder then reconstructs actions from this latent representation.
-Figure~\ref{fig:surrogate_policy_architecture} details this architecture, showing how the encoder layers progressively shape the observation into the embedding before the decoder reconstructs the action distribution parameters from it.
+Figure~\ref{fig:illustration_method} summarizes this overall procedure: the initial policy $\textcolor{mygreen}{\pi}$ is shown as the green box, and the surrogate policy $\textcolor{myred}{\pi'}$ as the red box, each producing a distribution over the action space $\mathcal{A}$ from the same observation $O$.
+The projection performed by $\textcolor{myblue}{f_{enc}}$ into the latent space is shown as the blue crosses.
+
+\input{figures/clustering_agent_representation/illustration_method.tex}
 
 To train $\textcolor{myred}{\pi'}$ to accurately replicate the action distribution, we define a global loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
 This loss, defined in Equation~\eqref{eq:loss}, is computed as the Mean Squared Error (MSE) between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.
