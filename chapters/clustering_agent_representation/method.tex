@@ -75,6 +75,9 @@ We denote by $\textcolor{myblue}{\mathcal{E}}$ the set of embeddings obtained by
 
 On the set $\textcolor{myblue}{\mathcal{E}}$, we use a clustering function $f_{\mathrm{clust}}$ to partition the point cloud of embedded observations into distinct clusters.
 Each observation is assigned a cluster label based on its proximity in the \gls{ls}, resulting in the clustering $\mathcal{C}$.
+Algorithm~\ref{alg:car} summarizes the complete CAR procedure, from the behavioral cloning of the surrogate policies to the clustering of their latent representations.
+
+\input{algorithms/clustering_agent_representation/car.tex}
 
 To demonstrate this clustering faithfully reflects the agent’s internal decision-making process, we introduce a set of evaluation metrics, which will be detailed in the following section.
 

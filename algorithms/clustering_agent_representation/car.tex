@@ -1,0 +1,55 @@
+\begin{algorithm}[t]
+\caption{Clustering Agent Representation (CAR)}
+\label{alg:car}
+
+\Input{
+\\
+Original policy $\textcolor{mygreen}{\pi}$\\
+Observation dataset $\mathcal{O}$\\
+Number of surrogate policies $n$\\
+Surrogate policy architecture $\textcolor{myred}{\pi'}$ (encoder $\textcolor{myblue}{f_{enc}}$, decoder)\\
+Learning rate $\eta > 0$\\
+Subset of observations $\mathbb{O} \subseteq \mathcal{O}$\\
+Clustering function $f_{\mathrm{clust}}$
+}
+
+\Output{
+\\
+Trained surrogate policies $\textcolor{myred}{\pi'_{\Theta_1}}, \dots, \textcolor{myred}{\pi'_{\Theta_n}}$\\
+Clusterings $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$
+}
+
+\AlgoRule
+
+\tcp{Behavioral cloning dataset built from the target policy $\textcolor{mygreen}{\pi}$}
+$\mathcal{D} \leftarrow \big\{ \big(O, p(\textcolor{mygreen}{\pi}(O))\big) \mid O \in \mathcal{O} \big\}$\;
+
+\BlankLine
+\tcp{MSE loss between action-distribution parameters, as defined in Equation~\eqref{eq:loss}}
+$\mathcal{L} \leftarrow$ \gls{mse}\;
+
+\BlankLine
+\tcp{Stage 1: independently train $n$ surrogate policies by behavioral cloning}
+\For{$i = 1, \dots, n$}{
+    Initialize $\Theta_i$ randomly\;
+
+    \BlankLine
+    \tcp{Behavioral cloning of $\textcolor{mygreen}{\pi}$ via SGD, see Algorithm~\ref{alg:stochastic_gradient_descent}}
+    $\Theta_i \leftarrow$ \FnSGD{$\mathcal{D}, \textcolor{myred}{\pi'}, \mathcal{L}, \eta, \Theta_i$}\;
+}
+
+\BlankLine
+\tcp{Stage 2: cluster the latent representations of each surrogate policy}
+\For{$i = 1, \dots, n$}{
+    \tcp{Embeddings produced by the encoder of $\textcolor{myred}{\pi'_{\Theta_i}}$}
+    $\textcolor{myblue}{\mathcal{E}_{i}} \leftarrow \big\{ \textcolor{myblue}{f_{enc_i}}(O) \mid O \in \mathbb{O} \big\}$\;
+
+    \BlankLine
+    \tcp{Partition of the embedded observations into clusters}
+    $\mathcal{C}_{i} \leftarrow f_{\mathrm{clust}}(\textcolor{myblue}{\mathcal{E}_{i}})$\;
+}
+
+\BlankLine
+\Return{$\big(\textcolor{myred}{\pi'_{\Theta_1}}, \dots, \textcolor{myred}{\pi'_{\Theta_n}}\big), \big(\mathcal{C}_{1}, \dots, \mathcal{C}_{n}\big)$}
+
+\end{algorithm}

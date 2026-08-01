@@ -107,6 +107,14 @@ With these definitions, the \gls{ari} can be computed as:
 }
 \]
 
+\input{figures/clustering_agent_representation/clustering_universality_illustration.tex}
+
+Figure~\ref{fig:clustering_universality_illustration} illustrates this property of the ARI.
+It shows three point clouds obtained by projecting the same seven observations, labeled 1 to 7, through three independently trained surrogate policies.
+Although the numbered points occupy different positions within each point cloud, the dashed clusters group exactly the same elements in the three cases: the partitioning is therefore identical.
+In particular, point 1 represents the same object in the three point clouds, but appears at a different location because it is projected differently by each surrogate policy.
+This spatial discrepancy has no effect on the ARI, since the measure only depends on which cluster each point is assigned to, regardless of where the points are placed in space.
+
 \subsection{Clustering Universality}
 \label{subsec:clustering_universality}
 

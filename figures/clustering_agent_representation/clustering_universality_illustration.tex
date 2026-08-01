@@ -1,0 +1,102 @@
+% --- Macro pour une surrogate policy + son ensemble ---
+\newcommand{\surrogatepolicy}[7]{%
+    % #1 : xshift
+    % #2 : index (1,2,3,…)
+    % #3 : liste des coordonnées X des points
+    % #4 : liste des coordonnées Y des points
+    % #5 : liste des coordonnées X des circlepattern
+    % #6 : liste des coordonnées Y des circlepattern
+    % #7 : liste des diamètres des circlepattern
+    \node[policybox] (policy#2) at (#1,0)
+        {\scalebox{2}{$\textcolor{myred}{\pi}^{\textcolor{myred}{'}}_{\textcolor{myred}{#2}}$}};
+
+    \begin{scope}[xshift=#1, yshift=-4cm, scale=0.8, transform shape]
+        \node[pointset] (box#2) at (0,0) {};
+        \begin{scope}
+            \clip (box#2.south west) rectangle (box#2.north east);
+            % Circlepattern avec diamètres spécifiques
+            \foreach \cx/\cy [count=\i] in {#5} {
+                \pgfmathsetmacro{\currentcy}{{#6}[\i-1]}
+                \pgfmathsetmacro{\diameter}{{#7}[\i-1]}
+                \node[draw, dashed, circle, minimum size=\diameter] at (\cx cm, \currentcy cm) {};
+            }
+        \end{scope}
+
+        % Points avec E_i dans un cercle bleu
+        \foreach \x/\y [count=\i] in {#3} {
+            \pgfmathsetmacro{\currenty}{{#4}[\i-1]}
+            \node[draw=myblue, circle, inner sep=2pt, fill=white] at (\x cm, \currenty cm) {\scalebox{0.8}{\textcolor{myblue}{\small $\i$}}};
+        }
+    \end{scope}
+    \draw[->, dashed, preaction={draw=white,line width=6pt}] (policy#2) -- ($(box#2.north)+(0,0)$);
+}
+
+\begin{figure}[t]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tikzpicture}[
+        policybox/.style={
+            draw, rectangle, text centered,
+            minimum height=1cm, minimum width=2.5cm,
+            align=center, rounded corners=0.2cm
+        },
+        pointset/.style={
+            draw, minimum width=4cm, minimum height=4cm
+        },
+        circlepattern/.style={
+            draw, dashed, circle, minimum width=1.5cm, minimum height=1.5cm
+        }
+    ]
+
+    % --- Utilisation de la macro pour les trois policies ---
+    \surrogatepolicy
+    {-6cm}
+    {1}
+    {-1.5, -1.25, -1, 1.35, 1.0, -0.25, 0.25}
+    {-0.75, -1.5, -1, 0.5, 0.0, 1.6, 1.6}
+    {-1.25, 1.2, 0}
+    {-1.1, 0.2, 1.75}
+    {1.5cm, 1.25cm, 1.25cm}
+
+    \surrogatepolicy
+    {0cm}
+    {2}
+    {1, 1.3, 1.5, 0.1, 0.25, 0.45, 1.2}
+    {1.5, 1, 1.5, 0.75, 0.2, -1.5, -1}
+    {1.25, 0.1, 0.8}
+    {1.3, 0.4, -1.2}
+    {1.3cm, 1.2cm, 1.6cm}
+
+    \surrogatepolicy
+    {6cm}
+    {3}
+    {0.0, -0.5, 0.25, -1, -1.5, 1.6, 1.2}
+    {0.0, 0.5, 0.5, -1.5, -1, 1.2, 1.6}
+    {-1.25, -0.15, 1.5}
+    {-1.25, 0.3, 1.5}
+    {1.3cm, 1.5cm, 1.3cm}
+
+    % --- Acolade et équation en dessous ---
+    \draw[
+        line width=1pt,  % Épaisseur du trait
+        decorate,
+        decoration={
+            brace,
+            amplitude=20pt,  % Hauteur de l'acolade
+            mirror,          % Acolade sous la ligne
+            raise=10pt       % Décalage vertical
+        }
+    ]
+        (-8.5, -5.5) -- (8.5, -5.5);
+
+    \node[below=0.75cm] at (0, -6) {
+        \scalebox{1.5}{$\displaystyle
+        \text{\ClusteringUniversalityName} = \frac{1}{\binom{n}{2}} \sum_{i=1}^{n} \sum_{j=0}^{i-1} \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{j})
+        $}
+    };
+
+    \end{tikzpicture}
+    }
+    \caption{Three point clouds obtained by projecting the same observations through three independently trained surrogate policies $\textcolor{myred}{\pi'_1}$, $\textcolor{myred}{\pi'_2}$, and $\textcolor{myred}{\pi'_3}$. The numbered circles 1 to 7 denote the same seven observations across the three point clouds, and the dashed contours denote the clusters recovered in each latent space.}
+    \label{fig:clustering_universality_illustration}
+\end{figure}
