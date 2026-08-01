@@ -1,0 +1,96 @@
+\section{Evaluation Metrics}
+\label{sec:car_metrics}
+
+A key contribution of this work is the development of three evaluation metrics, designed to assess the effectiveness of CAR:
+
+\begin{itemize}
+    \item \textbf{\gls{behavior-reconstruction}} : it measures how well a surrogate policy faithfully reproduces the behavior of the original policy by comparing their cumulative rewards.
+    \item \textbf{\gls{clustering-universality}} : it evaluates the stability of clusterings by measuring the similarity of clusters obtained from independently trained surrogate policies.
+    \item \textbf{\gls{abstraction-score}} : it quantifies the extent to which \gls{ls} clusters capture behavioral abstractions rather than directly reflecting the structure of observations or actions.
+\end{itemize}
+
+The remainder of this section details the motivation for each metric and describes how they are calculated.
+
+The following notations will be adopted for the rest of the manuscript:
+we consider $n$ surrogate policies, denoted as $\SurrogatePolicy{1}, \dots, \SurrogatePolicy{n}$, trained as described in Section~\ref{sec:car_method}. 
+Each surrogate policy is associated with a projection function $\textcolor{myblue}{f_{enc_{1}}}, \dots, \textcolor{myblue}{f_{enc_{n}}}$, which is applied to the set of observations $\mathbb{O}$, yielding embeddings $\textcolor{myblue}{\mathcal{E}_{1}}, \dots, \textcolor{myblue}{\mathcal{E}_{n}}$. 
+A clustering function is then applied to each embedding set, producing partitions $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$.
+
+\subsection{Behavior Reconstruction} 
+
+We argue that explaining a function $b$ that closely approximates another function $a$ is essentially the same as explaining $a$.
+In other words, if $b$ accurately captures the key decision patterns of $a$, understanding $b$ provides meaningful insights into how $a$ works \cite{guidotti2018surveymethodsexplainingblack}.
+In our setting, this means that generating explanations for $\SurrogatePolicy{}$ that faithfully reproduce $\OriginalPolicy$ amounts to explaining $\OriginalPolicy$ directly.
+To verify that $\SurrogatePolicy{}$ is indeed a faithful copy, we introduce the \gls{behavior-reconstruction} metric.
+
+This metric is computed by comparing the cumulative rewards obtained by the original policy $\OriginalPolicy$ and the surrogate policies $\SurrogatePolicy{}$ over $m$ evaluation episodes.
+The behavior reconstruction metric is then defined as:
+
+\begin{align}
+    \text{\gls{behavior-reconstruction}} = \frac{1}{n \sum_{i=1}^{m} g_{\OriginalPolicy}^{i}} \sum_{j=1}^{n} \sum_{k=1}^{m} g_{\SurrogatePolicy{j}}^{k}
+\end{align}
+
+In imitation learning, it is unlikely to expect the surrogate policy $\SurrogatePolicy{}$ to outperform the initial policy $\OriginalPolicy$ it aims to approximate through supervised learning \cite{pmlr-v9-ross10a}.
+Consequently this metric ranges in $[0,1]$.
+Values approaching 1 indicate minimal loss in reproducing $\OriginalPolicy$, while values close to 0 indicate poor reproduction.  
+
+We deliberately adopt a reward-based definition rather than alternatives based on actions or action distributions (e.g., training loss, accuracy, KL divergence \cite{shlens2014noteskullbackleiblerdivergencelikelihood}, or optimal transport \cite{peyré2020computationaloptimaltransport}).
+Since surrogate policies are trained in a supervised manner, they cannot develop strategies beyond those demonstrated by the initial policy.
+This means that if the rewards achieved are comparable, the surrogate policy is effectively copying the original policy's behavior.
+
+\subsection{Clustering Universality}
+
+Our methodology involves analyzing the representations of an agent.  
+For these representations to serve as a valid object of study in explainable artificial intelligence, they must demonstrate consistency across independent training runs.
+Indeed, if each surrogate $\SurrogatePolicy{}$ produces substantially different representations, it is meaningless to search for recurring structures to interpret.
+Conversely, if independently trained surrogates yield consistent representations, the resulting structures are more likely to reflect intrinsic properties of the original policy rather than artifacts of training.  
+This stability of discovered representations across runs is referred to as \emphasize{Universality} in mechanistic interpretability \cite{templeton2024scaling}.  
+
+In our study, agent representations take the form of clusters in the latent space.
+To assess the stability of these representations, we measure the similarity of clusters produced by different surrogate policies $\SurrogatePolicy{}$ using the \gls{ari} \cite{hubert1985comparing}.
+For this reason, we refer to our metric as \gls{clustering-universality}, which evaluates the similarity between clusterings as follows:
+
+\begin{align}
+    \text{\gls{clustering-universality}} = \frac{1}{\binom{n}{2}} \sum_{i=1}^{n} \sum_{j=0}^{i-1} \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{j})
+\end{align}
+
+This metric takes values in $[-1, 1]$.
+A value close to $1$ indicates that surrogate policies produce highly similar partitions, suggesting that the clusters reflect intrinsic properties of the policy. Conversely, a value near $0$ implies that the similarity between partitions is no better than that of two randomly generated clusterings, meaning that the clustering fails to capture any meaningful structure in the policy. A negative value, on the other hand, signals that the agreement between partitions is worse than what would be expected by chance, indicating a systematic disagreement between the clusterings.
+
+For further details on the properties of the \gls{ari}, we refer the reader to~\cite{hubert1985comparing, warrens2022understanding} and to Appendix~\ref{sec:adjusted_rand_index}. Nevertheless, it is generally accepted that an ARI score above $0.5$ indicates a reasonably strong agreement between two clusterings~\cite{amezquita2020orchestrating}.
+
+\subsection{Abstraction Score}
+
+If \gls{clustering-universality} is high, it becomes important to determine what underlies this stability.
+Two possibilities arise:
+\begin{enumerate}[label=(\roman*), ref=(\roman*)]
+    \item \label{i} the \gls{ls} merely reproduces the structure of the observation space or action distribution, offering no abstraction;
+    \item \label{ii} the \gls{ls} captures similarities in decision-making processes, yielding behaviorally meaningful clusters.
+\end{enumerate}
+
+
+To distinguish among these cases, we introduce the \gls{abstraction-score}.
+This metric contextualizes latent clusterings by examining how their patterns align with reference structures derived from the raw observation and action data.
+We consider : $\mathcal{C}_{obs}$, the clustering in the observation space $\mathbb{O}$, and $\mathcal{C}_{act}$, the clustering in the action-space distribution parameters.
+The clusterings $\mathcal{C}_{obs}$ and $\mathcal{C}_{act}$ are performed using the same algorithm, distance metric, and hyperparameters as those used for $\mathcal{C}_{i}$ in the \gls{ls}, ensuring that any biases introduced by the clustering procedure itself are minimized.
+
+For each latent clustering $\mathcal{C}_{i}$, we define its similarity to these baselines using the \gls{ari}:
+
+\begin{align*}
+A^{obs}_{i} &= \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{obs}) \\
+A^{act}_{i} &= \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{act})
+\end{align*}
+
+The \gls{abstraction-score} is subsequently calculated as one minus the average of the maximum absolute similarity values across these two reference baselines:
+
+\begin{align}
+\scalebox{0.96}{%
+$\text{\gls{abstraction-score}} = 1 - \frac{1}{n} \sum_{i=1}^{n} \max \left( \left|A^{obs}_{i}\right|, \left|A^{act}_{i}\right| \right)$%
+}
+\end{align}
+
+The \gls{abstraction-score} ranges from $[0, 1]$.
+A score around $0$ means that the latent clusters are strongly aligned with either the observation or the action space, reflecting minimal abstraction, cases~\ref{i}.
+A score close to $1$ indicates that the latent clusters are independent of both the observation and action spaces, capturing abstractions that meaningfully reflect the agent's behavior, case~\ref{ii}.
+
+The following chapter presents the results of applying these metrics to specific examples.

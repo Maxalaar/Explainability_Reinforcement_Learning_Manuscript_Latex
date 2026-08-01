@@ -1,32 +1,29 @@
 \section{Representation Convergence Hypothesis}
 \label{sec:representation_convergence_hypothesis}
 
-The Clustering Agent Representations (CAR) method relies on a fundamental assumption, referred to as the Representation Convergence Hypothesis. 
-This hypothesis follows the two foundational assumptions established throughout this manuscript.
+The Clustering Agent Representations (CAR) method relies on a assumption, referred to as the Representation Convergence Hypothesis. 
+This hypothesis follows the two assumptions established previously throughout this manuscript.
 
 The first assumption rejects the notion that deep neural networks constitute irreducible black boxes \ref{subsec:explanation}.
-Adopting a materialist and mechanistic perspective, we consider that every cognitive process results from a sequence of causal computations.
+Adopting a mechanistic perspective, we consider that every process results from a sequence of causal computations.
 Although these computations may be highly complex, they remain explainable through the analysis of the internal mechanisms.
-Consequently, the opacity of deep neural networks should be understood as an epistemic limitation rather than an ontological one.
 
 The second assumption states that neural networks achieve generalization by learning concepts \ref{sec:concept_hypothesis}.
 During optimization, the network progressively organizes its latent space into representations that capture the information required to solve the task.
-These concepts are not explicitly specified during training but emerge naturally from the interaction between the learning algorithm.
 
-These two assumptions naturally motivate an intrinsic approach to explainability.
-If the reasoning process of a neural network is encoded within its latent representations, then explaining the behavior of the agent amounts to understanding the organization of its latent space.
+Following these hypotheses, it becomes possible to explain the \gls{nn}'s process by understanding the organization of its latent space.
 This family of approaches is commonly referred to as mechanistic interpretability.
-We define mechanistic interpretability as the study of the internal organization of latent representations with the objective of identifying the concept structures (Definition~\ref{def:concept_structure}) responsible for a model's decisions.
 
 The Representation Convergence Hypothesis extends this mechanistic perspective by introducing an assumption regarding concepts that arise from learning.
-We hypothesize that, for a given task and a given cognitive process, there exists a privileged conceptual organization that naturally emerges because it constitutes an efficient representation for solving the task.
-While independently trained neural networks may converge toward different parameter values, they are nevertheless expected to learn conceptually similar representations.
+We hypothesize that, for a given task and a given neural network architecture, there exists a privileged conceptual organization.
+This organization naturally emerges because it constitutes an efficient representation for solving the task.
+Under this hypothesis, this means that independently trained neural networks converge toward the same concept structure.
 
-The optimization process is not assumed to converge toward identical weights but toward equivalent organizations of the latent space.
-Neural network parameters are known to be highly non-identifiable, and multiple parameter configurations may implement the same function.
-However, then independently trained agents should repeatedly discover comparable conceptual organizations.
-Representation convergence should be observable at the level of latent concepts, even when the corresponding network parameters differ.
+It is important to clarify that this hypothesis does not imply convergence at the parameter level.
+Independently trained models are expected to converge toward different sets of weights.
+The proposed hypothesis concerns a more abstract level of representation.
+We assume that, although the numerical implementation of the networks may differ, the conceptual organization induced by their \gls{lr} converges toward an equivalent conceptual structure.
+Consequently, the objective is not to compare neural parameters or latent activations directly, but compare the underlying conceptual structure encoded within the latent space.
 
 The remainder of this chapter builds upon this hypothesis.
-In particular, we propose that the degree of convergence between independently learned conceptual organizations provides an objective criterion for assessing the quality of the extracted representations.
-This principle forms the theoretical foundation of the Clustering Universality metric introduced later in this chapter.
+This principle forms the theoretical foundation of the Clustering Universality metric introduced later.

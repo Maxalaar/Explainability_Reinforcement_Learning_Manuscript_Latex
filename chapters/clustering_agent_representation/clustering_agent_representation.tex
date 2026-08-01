@@ -3,13 +3,9 @@
 
 \glsresetall
 
-As discussed in the previou chapter, current explainability methods for Reinforcement Learning still face two major limitations.
-First, there is a lack of intrinsic approaches capable of explaining the internal mechanisms of deep neural policies.
-Second, methods are proposed generally lack objective metrics for evaluating the quality of the explanations they produce.
-
+As discussed in the previous chapter, current explainability methods for Reinforcement Learning still lack intrinsic approaches capable of explaining the internal mechanisms of deep neural policies.
 To the best of our knowledge, only \cite{zahavy2017graying} have proposed exploiting the latent space learned by neural policies in order to identify the concepts used by the agent.
 Its main idea is to analyze the latent representations produced by the neural network and organize them into clusters that correspond to high-level concepts.
-This method falls squarely within the deep clustering approach presented in Section~\ref{sec:clustering}.
 
 While the core idea of this paper is innovative and closely aligned with our vision of explainability in RL, this approach suffers from two important limitations.
 First, the clusters are manually constructed.
@@ -28,3 +24,4 @@ The third section then presents the proposed evaluation metric.
 
 \input{chapters/clustering_agent_representation/representation_convergence_hypothesis.tex}
 \input{chapters/clustering_agent_representation/method.tex}
+\input{chapters/clustering_agent_representation/metrics.tex}

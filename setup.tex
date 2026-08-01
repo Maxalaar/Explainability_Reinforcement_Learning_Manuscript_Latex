@@ -54,11 +54,31 @@
 \newacronym{mdp}{MDP}{Markov Decision Processes}
 \newacronym{ari}{ARI}{Adjusted Rand Index}
 
+\newglossaryentry{behavior-reconstruction}{
+  name={Behavior Reconstruction},
+  text={\textit{Behavior Reconstruction}},
+  description={Metric that measures how well a surrogate policy faithfully reproduces the behavior of the original policy by comparing their cumulative rewards}
+}
+\newglossaryentry{clustering-universality}{
+  name={Clustering Universality},
+  text={\textit{Clustering Universality}},
+  description={Metric that evaluates the stability of clusterings by measuring the similarity of clusters obtained from independently trained surrogate policies}
+}
+\newglossaryentry{abstraction-score}{
+  name={Abstraction Score},
+  text={\textit{Abstraction Score}},
+  description={Metric that quantifies the extent to which latent space clusters capture behavioral abstractions rather than directly reflecting the structure of observations or actions}
+}
+
 \colorlet{myred}{red!60!black}
 \colorlet{mygreen}{green!50!black}
 \colorlet{myblue}{blue!80!black}
 
 \newcommand{\methodName}{Clustering Agent Representation\xspace}
+\newcommand{\emphasize}[1]{\textbf{#1}}
+
+\newcommand{\OriginalPolicy}{\textcolor{mygreen}{\pi}}
+\newcommand{\SurrogatePolicy}[1]{\textcolor{myred}{\pi'_{#1}}}
 
 \def\numberOfSamplesToPlotCurve{50}
 % define gaussian pdf

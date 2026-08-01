@@ -73,6 +73,8 @@ Once training is complete, this loss ensures that $\textcolor{myred}{\pi'}$ clos
     \label{eq:loss}
 \end{align}
 
+We denote by $\textcolor{myblue}{\mathcal{E}}$ the set of embeddings obtained by applying $\textcolor{myblue}{f_{enc}}$ to a subset of observations $\mathbb{O} \subseteq \mathcal{O}$.
+
 On the set $\textcolor{myblue}{\mathcal{E}}$, we use a clustering function $f_{\mathrm{clust}}$ to partition the point cloud of embedded observations into distinct clusters.
 Each observation is assigned a cluster label based on its proximity in the \gls{ls}, resulting in the clustering $\mathcal{C}$.
 This process produces a structured representation of the groups of observations encountered by the agent, effectively simplifying the environment's representation through the lens of the policy's \gls{ls}.
