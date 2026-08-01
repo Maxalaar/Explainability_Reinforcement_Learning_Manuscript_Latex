@@ -14,12 +14,13 @@ During optimization, the network progressively organizes its latent space into r
 Following these hypotheses, it becomes possible to explain the \gls{nn}'s process by understanding the organization of its latent space.
 This family of approaches is commonly referred to as mechanistic interpretability.
 
-This stability of discovered representations across runs is referred to as \emphasize{Universality} in mechanistic interpretability \cite{templeton2024scaling}.  
+In mechanistic interpretability, the consistency with which a concept is recovered across different models or independent extractions is referred to as its universality \cite{templeton2024scaling}.
+A concept is said to be universal if it repeatedly emerges despite variations in model initialization, optimization, or training conditions.
 
-The Representation Convergence Hypothesis extends this mechanistic perspective by introducing an assumption regarding concepts that arise from learning.
+The Representation Convergence Hypothesis provides a theoretical explanation for this phenomenon.
 We hypothesize that, for a given task and a given neural network architecture, there exists a privileged conceptual organization.
-This organization naturally emerges because it constitutes an efficient representation for solving the task.
-Under this hypothesis, this means that independently trained neural networks converge toward the same concept structure.
+This organization naturally emerges because it constitutes an efficient representation of the information required to solve the task.
+Under this assumption, the universality of a concept is not merely an empirical observation but rather the expected consequence of a common underlying conceptual structure shared by independently learned representations.
 
 It is important to clarify that this hypothesis does not imply convergence at the parameter level.
 Independently trained models are expected to converge toward different sets of weights.
@@ -28,4 +29,4 @@ We assume that, although the numerical implementation of the networks may differ
 Consequently, the objective is not to compare neural parameters or latent activations directly, but compare the underlying conceptual structure encoded within the latent space.
 
 The remainder of this chapter builds upon this hypothesis.
-This principle forms the theoretical foundation of the Clustering Universality metric introduced later.
+This principle forms the theoretical foundation of the \ClusteringUniversalityName metric introduced later in Subsecstion~\ref{subsec:clustering_universality}.

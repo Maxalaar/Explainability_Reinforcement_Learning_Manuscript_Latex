@@ -14,7 +14,7 @@ The first stage consists of generating multiple independent neural networks that
 The second stage clusters their latent representations in order to identify the underlying conceptual organization.
 
 This section is organized as follows.
-In the first subsection, building on the previous section, we justify the use of multiple surrogate policies in order to study the stability of representations.
+In the first subsection, we justify the use of multiple surrogate policies in order to study the stability of representations.
 In the second subsection, we detail how these surrogate policies are trained so as to best match the original policy.
 
 \subsection{Multiple surrogate policies}
@@ -59,7 +59,7 @@ Figure~\ref{fig:surrogate_policy_architecture} details this architecture, showin
 
 To train $\textcolor{myred}{\pi'}$ to accurately replicate the action distribution, we define a global loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
 This loss, defined in Equation~\eqref{eq:loss}, is computed as the Mean Squared Error (MSE) between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.
-In practice, this function does not need to be explicitly defined, as modern neural policies directly output the parameters of the action distribution.
+In practice, this function does not need to be explicitly defined, as neural policies directly output the parameters of the action distribution.
 Once training is complete, this loss ensures that $\textcolor{myred}{\pi'}$ closely approximates the behavior of the original policy $\textcolor{mygreen}{\pi}$.
 
 \begin{align}
