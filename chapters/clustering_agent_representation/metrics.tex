@@ -1,25 +1,27 @@
 \section{Evaluation Metrics}
-\label{sec:car_metrics}
+\label{sec:clustering_agent_representation_metrics}
 
 A key contribution of this work is the development of three evaluation metrics, designed to assess the effectiveness of CAR:
 
 \begin{itemize}
     \item \textbf{\BehaviorReconstructionName} : it measures how well a surrogate policy faithfully reproduces the behavior of the original policy by comparing their cumulative rewards.
     \item \textbf{\ClusteringUniversalityName} : it evaluates the stability of clusterings by measuring the similarity of clusters obtained from independently trained surrogate policies.
-    \item \textbf{\AbstractionScoreName} : it quantifies the extent to which \gls{ls} clusters capture behavioral abstractions rather than directly reflecting the structure of observations or actions.
+    \item \textbf{\AbstractionScoreName} : it quantifies the extent to which \gls{ls} clusters capture abstractions rather than directly reflecting the structure of observations or actions.
 \end{itemize}
 
 The remainder of this section details the motivation for each metric and describes how they are calculated.
+In the first subsection, we develop the \BehaviorReconstructionName{}.
+We then introduce the ARI measure, which serves as the foundation for the two other metrics introduced in the subsequent subsections, namely \ClusteringUniversalityName{} and \AbstractionScoreName{}.
 
 The following notations will be adopted for the rest of the manuscript:
-we consider $n$ surrogate policies, denoted as $\SurrogatePolicy{1}, \dots, \SurrogatePolicy{n}$, trained as described in Section~\ref{sec:car_method}. 
+we consider $n$ surrogate policies, denoted as $\SurrogatePolicy{1}, \dots, \SurrogatePolicy{n}$, trained as described in Section~\ref{sec:clustering_agent_representation_method}. 
 Each surrogate policy is associated with a projection function $\textcolor{myblue}{f_{enc_{1}}}, \dots, \textcolor{myblue}{f_{enc_{n}}}$, which is applied to the set of observations $\mathbb{O}$, yielding embeddings $\textcolor{myblue}{\mathcal{E}_{1}}, \dots, \textcolor{myblue}{\mathcal{E}_{n}}$. 
 A clustering function is then applied to each embedding set, producing partitions $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$.
 
 \subsection{Behavior Reconstruction} 
 
 We argue that explaining a function $b$ that closely approximates another function $a$ is essentially the same as explaining $a$.
-In other words, if $b$ accurately captures the key decision patterns of $a$, understanding $b$ provides meaningful insights into how $a$ works \cite{guidotti2018surveymethodsexplainingblack}.
+If $b$ accurately captures the key decision patterns of $a$, understanding $b$ provides meaningful insights into how $a$ works \cite{guidotti2018surveymethodsexplainingblack}.
 In our setting, this means that generating explanations for $\SurrogatePolicy{}$ that faithfully reproduce $\OriginalPolicy$ amounts to explaining $\OriginalPolicy$ directly.
 To verify that $\SurrogatePolicy{}$ is indeed a faithful copy, we introduce the \BehaviorReconstructionName metric.
 
@@ -41,50 +43,38 @@ This means that if the rewards achieved are comparable, the surrogate policy is 
 \subsection{Adjusted Rand Index}
 \label{subsec:adjusted_rand_index}
 
-The previous section established that the surrogate policies $\SurrogatePolicy{}$ faithfully reproduce the behavior of the original policy $\OriginalPolicy$ through the \BehaviorReconstructionName{} procedure.
-Having controlled for behavioral differences, we can now focus on the internal organization of their latent representations.
+Within CAR, concepts are assumed to correspond to clusters in the latent space.
+Combined with the Representation Convergence Hypothesis, this leads to a direct experimental prediction: if independently trained surrogate policies converge toward the same conceptual organization, then clustering their latent representations should produce similar partitions.
 
-As discussed in Chapter~\ref{chap:latent_space}, CAR assumes that latent concepts are organized as clusters within the representation space.
-Under the Representation Convergence Hypothesis, independently trained surrogate policies implementing the same decision function are expected to develop similar conceptual organizations.
-Importantly, this similarity is not expected at the level of the latent coordinates themselves, since independently trained neural networks may learn different embeddings of the same concepts.
-Instead, the similarity should be observed at the level of the partition induced by the clustering process: observations corresponding to the same underlying concept should consistently be assigned to the same cluster across independent models.
+When a particular observation is processed by the network, it is expected to activate the same concept regardless of the specific neural implementation of the policy.
+If independently trained policies converge toward the same conceptual organization, then a given observation should activate the same concept across all models.
+As a consequence, observations grouped together within a cluster for one policy should also be grouped together for another independently trained policy.
 
-Comparing two clusterings therefore becomes a central operation in the proposed methodology.
-This comparison should be independent of the geometric arrangement of the latent space and depend only on the grouping of observations into concepts.
-In the clustering literature, one of the most widely used measures for comparing two partitions is the Adjusted Rand Index (ARI).
-The ARI quantifies the agreement between two clusterings solely based on their assignments, irrespective of the spatial position of the clusters.
+In the clustering literature, the most used measures for comparing two partitions is the Adjusted Rand Index (ARI)~\cite{hubert1985comparing}.
+This measure quantifies the agreement between cluster assignments independently of the spatial organization of the clusters.
+Both metrics introduced later in this chapter, namely \ClusteringUniversalityName{} and \AbstractionScoreName{}, rely on the Adjusted Rand Index.
+Since the ARI is a complex measure, we review its definition and discuss its main properties before introducing our proposed metrics.
 
-Both metrics introduced in this chapter, namely \ClusteringUniversalityName{} and \AbstractionScoreName{}, are built upon the Adjusted Rand Index.
-Since the behavior of the ARI is often non-intuitive, we first review its definition and discuss its main properties before introducing our proposed metrics.
-
-The \gls{ari}~\cite{hubert1985comparing} measures the similarity between two partitions of the same dataset.
-Unlike geometric clustering metrics, which compare the spatial arrangement of clusters, the ARI evaluates only whether pairs of observations are assigned consistently across two clusterings.
-As such, it is particularly well suited to our objective, since CAR aims to compare conceptual partitions rather than the geometry of latent representations.
-
-The ARI is derived from the \gls{ri}~\cite{rand1971objective}, which measures the agreement between two partitions by considering every possible pair of observations.
-For each pair, four situations are possible: the observations may belong to the same cluster in both partitions, to different clusters in both partitions, or they may disagree by being grouped together in only one of the two partitions.
-The Rand Index simply measures the proportion of pairs for which the two partitions agree.
-Formally, it is defined as:
-
+The ARI is derived from the \gls{ri}~\cite{rand1971objective}, which measures the agreement between two partitions by considering every possible pair of point cloud.
+For each pair, four situations are possible: the point may belong to the same cluster in both partitions, to different clusters in both partitions, or they may disagree by being grouped together in only one of the two partitions.
+The Rand Index measures the proportion of pairs for which the two partitions agree:
 \[
 \text{RI} = \frac{\text{number of agreeing pairs}}{\text{total number of pairs}}.
 \]
 
-Although the Rand Index is intuitive, it suffers from an important limitation. 
-In most clustering problems, the vast majority of pairs of observations belong to different clusters.
-Consequently, even two completely unrelated partitions will agree on a large number of pairs simply because both assign them to different clusters.
-As the number of observations increases, this effect becomes more pronounced, causing the Rand Index to report relatively high similarity scores even when the clusterings are essentially independent.
+Although the Rand Index is intuitive, it suffers from an important limitation.
+In most clustering problems, the majority of pairs of points belong to different clusters.
+Consequently, even two completely independent partitions will agree on a large number of pairs, simply because both assign them to different clusters.
+This effect becomes more pronounced as the number of points or clusters increases.
 
 The Adjusted Rand Index (ARI) addresses this issue by accounting for the agreement that would be expected purely by chance.
-Rather than measuring the raw proportion of agreeing pairs, it compares the observed agreement to the agreement obtained by random partitions having the same cluster size distribution.
-The score is then normalized by the maximum agreement achievable beyond this random baseline.
-As a result, an ARI of (0) corresponds to the level of agreement expected from random clusterings, while an ARI of (1) indicates perfect agreement between the two partitions:
-
+It compares the observed agreement $\text{RI}$ to the expected agreement under random partitions $\mathbb{E}[\text{RI}]$.
+The score is then normalized by the maximum agreement achievable beyond this random baseline, $\max(\text{RI}) - \mathbb{E}[\text{RI}]$.
+As a result, an ARI of $0$ corresponds to the level of agreement expected from random clusterings, while an ARI of $1$ indicates perfect agreement between the two partitions:
 \[
 \text{ARI} = \frac{\text{RI} - \mathbb{E}[\text{RI}]}{\max(\text{RI}) - \mathbb{E}[\text{RI}]}
 \]
 
-The previous equations provide an intuitive understanding of the Adjusted Rand Index.
 In practice, the ARI is computed directly from the cluster assignments of the two partitions.
 Let clustering \(A\) be composed of partitions \(\{A_i\}\) and clustering \(B\) of partitions \(\{B_j\}\).
 Let \(a_i = |A_i|\) denote the number of samples in partition \(i\) of clustering \(A\), and \(b_j = |B_j|\) the number of samples in partition \(j\) of clustering \(B\).
@@ -117,45 +107,29 @@ With these definitions, the \gls{ari} can be computed as:
 }
 \]
 
-The \gls{ari} is a widely used metric, but it presents several non-intuitive properties that complicate its interpretation:
-\begin{itemize}
-    \item \textbf{Non-Linearity:} The \gls{ari} does not scale linearly with perceived clustering quality. An increase from 0.2 to 0.4 does not represent the same improvement as an increase from 0.7 to 0.9. Its scale is compressed in the middle range, making differences near 0 or 1 more significant than they appear.
-
-    \item \textbf{Dependence on Number of Clusters:} The range of \textit{achievable} \gls{ari} values is constrained by the number of clusters in the two partitions being compared. For a fixed number of true classes, an algorithm that proposes a very different number of clusters is mathematically capped from achieving a high \gls{ari}, regardless of how semantically meaningful the subdivision might be.
-
-    \item \textbf{Asymmetry in Penalties:} The \gls{ari} penalizes false splits (splitting a true cluster into multiple parts) and false merges (merging multiple true clusters into one) asymmetrically. The exact penalty structure is complex and not easily intuited from the formula, making it difficult to diagnose what specific type of error is driving a low score.
-
-    \item \textbf{Lack of Intuitive Baseline:} While an \gls{ari} of 0 corresponds to the expected similarity of random label assignments, this ``random'' baseline is itself a function of the number and sizes of clusters. Therefore, the meaning of ``0'' is context-dependent.
-\end{itemize}
-
-The \gls{ari} is best used for comparative assessment (e.g., Algorithm A vs. Algorithm B on the same data) rather than as an absolute measure of quality.
-A score of 0.5 should be interpreted as ``substantially better than random and often pragmatically useful,'' not as ``halfway to perfect''~\cite{amezquita2020orchestrating}.
-Care should be taken when comparing \gls{ari} values across different datasets or problems, as the feasible upper bound and the meaning of a given score are highly context-dependent.
-Now that the ARI has been introduced, we can present the two other metrics based on it.
-
 \subsection{Clustering Universality}
 \label{subsec:clustering_universality}
 
-Our methodology involves analyzing the representations of an agent.
-Following the representation convergence hypothesis introduced in Section \ref{sec:representation_convergence_hypothesis}, for these representations to serve as a valid object of study in explainable artificial intelligence, they must demonstrate consistency across independent training runs.
-Indeed, if each surrogate $\SurrogatePolicy{}$ produces substantially different representations, it is meaningless to search for recurring structures to interpret.
-Conversely, if independently trained surrogates yield consistent representations, the resulting structures are more likely to reflect intrinsic properties of the original policy rather than artifacts of training.  
+Having introduced the Adjusted Rand Index, we can now define the \ClusteringUniversalityName metric.
+While the ARI quantifies the similarity between two conceptual partitions, the objective of CAR is to assess the consistency of conceptual organizations across an entire set of independently trained surrogate policies.
 
-In our study, agent representations take the form of clusters in the latent space.
-To assess the stability of these representations, we measure the similarity of clusters produced by different surrogate policies $\SurrogatePolicy{}$ using the \gls{ari} \cite{hubert1985comparing}.
-For this reason, we refer to our metric as \ClusteringUniversalityName, which evaluates the similarity between clusterings as follows:
+To this end, the same set of observations is projected into the latent space of each surrogate policy and clustered independently.
+Under the Representation Convergence Hypothesis, these independently obtained partitions are expected to be similar.
+\ClusteringUniversalityName{} quantifies this by computing the mean pairwise Adjusted Rand Index:
 
 \begin{align}
-    \text{\ClusteringUniversalityName} = \frac{1}{\binom{n}{2}} \sum_{i=1}^{n} \sum_{j=0}^{i-1} \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{j})
+    \text{\ClusteringUniversalityName}
+    =
+    \frac{1}{\binom{n}{2}}
+    \sum_{i=1}^{n}
+    \sum_{j=0}^{i-1}
+    \operatorname{ARI}(\mathcal{C}{i}, \mathcal{C}{j}).
 \end{align}
 
 This metric takes values in $[-1, 1]$.
 A value close to $1$ indicates that surrogate policies produce highly similar partitions, suggesting that the clusters reflect intrinsic properties of the policy.
 Conversely, a value near $0$ implies that the similarity between partitions is no better than that of two randomly generated clusterings, meaning that the clustering fails to capture any meaningful structure in the policy.
 A negative value, on the other hand, signals that the agreement between partitions is worse than what would be expected by chance, indicating a systematic disagreement between the clusterings.
-
-For further details on the properties of the \gls{ari}, we refer the reader to~\cite{hubert1985comparing, warrens2022understanding} and to Section~\ref{sec:adjusted_rand_index}.
-Nevertheless, it is generally accepted that an ARI score above $0.5$ indicates a reasonably strong agreement between two clusterings~\cite{amezquita2020orchestrating}.
 
 \subsection{Abstraction Score}
 

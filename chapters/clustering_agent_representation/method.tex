@@ -1,16 +1,14 @@
 \section{Method}
-\label{sec:car_method}
+\label{sec:clustering_agent_representation_method}
 
 \input{figures/clustering_agent_representation/illustration_method.tex}
 
-As discussed in Chapter~\ref{chap:latent_space}, several hypotheses have been proposed regarding the organization of latent representations in deep neural networks.
-Following the work of \cite{zahavy2017graying}, we therefore analyze the latent space through clustering techniques, placing our approach within the broader field of Deep Clustering (Section~\ref{sec:clustering}).
-
-This design choice is motivated by our rejection of the superposition hypothesis and, more generally, of any view that assumes a linearly organized concept structure.
-We consider this premise unnecessarily restrictive.
+As developed in Chapter~\ref{chap:latent_space}, several hypotheses have been proposed regarding the organization of latent representations in deep neural networks.
+Following the work of \cite{zahavy2017graying}, we analyze the latent space through clustering techniques, placing our approach within the broader field of Deep Clustering.
+This design choice is motivated by our rejection of the superposition hypothesis and, more generally, of any view that assumes a linearly organized concept structure, as discussed in Section~\ref{sec:clustering}.
 
 The CAR methodology is composed of two main stages.
-The first stage consists of generating multiple independent neural networks that implement the same decision policy, referred to as surrogate policies.
+The first stage trains multiple independent neural networks, called surrogate policies, which implement the same decision policy.
 The second stage clusters their latent representations in order to identify the underlying conceptual organization.
 
 This section is organized as follows.
@@ -26,13 +24,14 @@ If similar conceptual structures consistently emerge, this provides empirical ev
 In supervised learning, this protocol is straightforward since several models can be independently trained on the same target function.
 Reinforcement learning, introduces an additional difficulty.
 Because of stochastic exploration, independently trained agents are not guaranteed to converge toward the same policy.
-Even if they achieve comparable performance, they may solve the task using different strategies. Making it impossible to determine whether differences observed in the latent space originate from the learning dynamics or from genuine differences between the learned policies.
+Even if they achieve comparable performance, they may solve the task using different strategies.
+Making it impossible to determine whether differences observed in the latent space originate from the learning dynamics or from genuine differences between the learned policies.
 
-To overcome this limitation, we do not directly compare independently trained reinforcement learning agents.
-Instead, we first consider a initial policy that has already been trained.
-This policy is then imitated using several independently initialized surrogate neural networks trained through supervised behavioral cloning.
-Since all surrogate models approximate the same target function, they are expected to converge toward equivalent decision policies while preserving independent internal parameterizations.
-It becomes possible to investigate whether equivalent policies also exhibit equivalent conceptual organizations.
+To overcome this limitation, we consider an already trained initial policy.
+This policy is then imitated using supervised behavioral cloning.
+To this end, we independently train several surrogate neural networks.
+Since all surrogate models approximate the same target function, they are converge toward equivalent decision policies.
+This makes it possible to investigate whether equivalent policies also exhibit equivalent conceptual organizations.
 
 It is important to emphasize that the use of surrogate policies does not make CAR a surrogate explainability method, as defined in Subsection~\ref{subsec:explainable_artificial_intelligence}.
 The surrogate policies remain deep neural networks.
