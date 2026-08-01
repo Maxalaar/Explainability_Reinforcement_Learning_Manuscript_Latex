@@ -1,20 +1,25 @@
 \section{Method}
 \label{sec:car_method}
 
+\input{figures/clustering_agent_representation/illustration_method.tex}
+
 As discussed in Chapter~\ref{chap:latent_space}, several hypotheses have been proposed regarding the organization of latent representations in deep neural networks.
 Following the work of \cite{zahavy2017graying}, we therefore analyze the latent space through clustering techniques, placing our approach within the broader field of Deep Clustering (Section~\ref{sec:clustering}).
 
 This design choice is motivated by our rejection of the superposition hypothesis and, more generally, of any view that assumes a linearly organized concept structure.
 We consider this premise unnecessarily restrictive.
-We only assume that concept representations induce a geometric structure that can be recovered through unsupervised clustering.
 
 The CAR methodology is composed of two main stages.
 The first stage consists of generating multiple independent neural networks that implement the same decision policy, referred to as surrogate policies.
 The second stage clusters their latent representations in order to identify the underlying conceptual organization.
 
+This section is organized as follows.
+In the first subsection, building on the previous section, we justify the use of multiple surrogate policies in order to study the stability of representations.
+In the second subsection, we detail how these surrogate policies are trained so as to best match the original policy.
+
 \subsection{Multiple surrogate policies}
 
-The core idea of CAR is to evaluate whether independently trained neural networks converge toward similar conceptual organizations.
+The CAR method was developed with the aim of verifying the representation convergence hypothesis presented in Section \ref{sec:representation_convergence_hypothesis}.
 To test this hypothesis, several neural networks must be trained independently and their latent representations compared.
 If similar conceptual structures consistently emerge, this provides empirical evidence supporting the Representation Convergence Hypothesis.
 
@@ -24,23 +29,17 @@ Because of stochastic exploration, independently trained agents are not guarante
 Even if they achieve comparable performance, they may solve the task using different strategies. Making it impossible to determine whether differences observed in the latent space originate from the learning dynamics or from genuine differences between the learned policies.
 
 To overcome this limitation, we do not directly compare independently trained reinforcement learning agents.
-Instead, we first consider a reference policy $\pi$ that has already been trained.
+Instead, we first consider a initial policy that has already been trained.
 This policy is then imitated using several independently initialized surrogate neural networks trained through supervised behavioral cloning.
 Since all surrogate models approximate the same target function, they are expected to converge toward equivalent decision policies while preserving independent internal parameterizations.
-
-This protocol provides an experimental setting in which differences between latent representations can be interpreted as resulting from the internal organization learned by each neural network rather than from differences in the underlying policy itself.
 It becomes possible to investigate whether equivalent policies also exhibit equivalent conceptual organizations.
 
-It is important to emphasize that the use of surrogate policies does not make CAR a surrogate explainability method.
-In the explainability literature, surrogate approaches replace a complex model with a simpler and inherently interpretable model, such as a decision tree or a linear classifier.
-This is not the case here.
+It is important to emphasize that the use of surrogate policies does not make CAR a surrogate explainability method, as defined in Subsection~\ref{subsec:explainable_artificial_intelligence}.
 The surrogate policies remain deep neural networks.
 Their role is not to simplify the decision process but to provide multiple independent realizations of the same policy function, enabling the study of representation convergence.
 The explanations are therefore still extracted directly from the internal representations of deep neural networks, making CAR a fully intrinsic and mechanistic explainability approach.
 
 \subsection{Training surrogate policies}
-
-\input{figures/clustering_agent_representation/illustration_method.tex}
 
 Throughout the remainder of this manuscript, the initial policy we aim to explain is denoted as $\textcolor{mygreen}{\pi}$ (represented in green in Figure~\ref{fig:illustration_method}).
 This initial policy is obtained without imposing any constraints on its origin.
@@ -50,15 +49,15 @@ The crucial requirement is the availability of a dataset containing a sufficient
 The replicated policies are referred to as surrogate policies, denoted by $\textcolor{myred}{\pi'}$ (shown in red in Figure~\ref{fig:illustration_method}).  
 For any observation $O$, the distribution over the action space produced by $\textcolor{myred}{\pi'}$ should approximate that of $\textcolor{mygreen}{\pi}$ as closely as possible.
 
+\input{figures/clustering_agent_representation/surrogate_policy_architecture.tex}
+
 The surrogate policy $\textcolor{myred}{\pi'}$ is implemented as a \gls{nn} parameterized by $\Theta$.  
 This network is composed of two principal components: an encoder and a decoder.  
 The encoder, represented by the function $\textcolor{myblue}{f_{enc}}$, maps observations from $\mathcal{O}$ into a \gls{ls} $\textcolor{myblue}{\mathcal{Z}}$ (shown in blue in Figure~\ref{fig:illustration_method}).
 The decoder then reconstructs actions from this latent representation.
-Figure~\ref{fig:surrogate_policy_architecture} details this architecture, showing how the encoder layers progressively compress the observation into the embedding before the decoder reconstructs the action distribution parameters from it.
+Figure~\ref{fig:surrogate_policy_architecture} details this architecture, showing how the encoder layers progressively shape the observation into the embedding before the decoder reconstructs the action distribution parameters from it.
 
-\input{figures/clustering_agent_representation/surrogate_policy_architecture.tex}
-
-To train $\textcolor{myred}{\pi'}$ to accurately replicate the action distribution, we define a global loss function $\mathcal{L}$ optimized via gradient descent.
+To train $\textcolor{myred}{\pi'}$ to accurately replicate the action distribution, we define a global loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
 This loss, defined in Equation~\eqref{eq:loss}, is computed as the Mean Squared Error (MSE) between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.
 In practice, this function does not need to be explicitly defined, as modern neural policies directly output the parameters of the action distribution.
 Once training is complete, this loss ensures that $\textcolor{myred}{\pi'}$ closely approximates the behavior of the original policy $\textcolor{mygreen}{\pi}$.
@@ -77,7 +76,6 @@ We denote by $\textcolor{myblue}{\mathcal{E}}$ the set of embeddings obtained by
 
 On the set $\textcolor{myblue}{\mathcal{E}}$, we use a clustering function $f_{\mathrm{clust}}$ to partition the point cloud of embedded observations into distinct clusters.
 Each observation is assigned a cluster label based on its proximity in the \gls{ls}, resulting in the clustering $\mathcal{C}$.
-This process produces a structured representation of the groups of observations encountered by the agent, effectively simplifying the environment's representation through the lens of the policy's \gls{ls}.
 
 To demonstrate this clustering faithfully reflects the agent’s internal decision-making process, we introduce a set of evaluation metrics, which will be detailed in the following section.
 
