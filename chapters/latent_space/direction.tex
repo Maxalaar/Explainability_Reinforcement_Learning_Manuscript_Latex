@@ -20,7 +20,7 @@ where:
     \item $h'$ is the resulting perturbed representation.
 \end{itemize}
 
-In many cases, the resulting change in the model's output varies smoothly with \(\alpha\), suggesting an approximately linear structure of the \gls{ls} with respect to certain semantic factors, as illustrated in Figure~\ref{fig:interpretable_direction_illustration}.
+In many cases, the resulting change in the model's output varies smoothly with \(\alpha\), suggesting an approximately linear \gls{cs} with respect to certain semantic factors, as illustrated in Figure~\ref{fig:interpretable_direction_illustration}.
 This observation has led to the hypothesis that neural representations may organize concepts in a partially linear manner within the embedding space.
 Vectors of this form are referred to as interpretable directions, as they correspond to transformations that can be associated with specific semantic attributes.
 The objective of this line of work is therefore to identify directions in \gls{ls} that align with meaningful variations in the encoded concepts.
@@ -36,7 +36,7 @@ Consequently, these methods inherit a limitation similar to that of probing tech
 To overcome this limitation, a research direction known as unsupervised semantic discovery has emerged.
 Its goal is to uncover interpretable directions in \gls{ls} without explicit semantic supervision.
 In these approaches, one model applies perturbations along random directions in \gls{ls}, while a second model attempts to recognize the applied transformation.
-If a stable correspondence emerges between the perturbation and its prediction, this suggests that the considered direction corresponds to a coherent structure in \gls{ls} \cite{voynov2020unsuperviseddiscoveryinterpretabledirections}.
+If a stable correspondence emerges between the perturbation and its prediction, this suggests that the considered direction corresponds to a coherent \gls{cs} \cite{voynov2020unsuperviseddiscoveryinterpretabledirections}.
 In this framework, human intervention occurs only a posteriori, to verify whether the discovered directions indeed correspond to interpretable semantic variations.
 
 However, despite these advances, several challenges remain.

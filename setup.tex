@@ -31,6 +31,25 @@
   mydefinition
 }{def}
 
+\tcbset{
+  myhypothesis/.style={
+    colback=orange!5,
+    colframe=orange!70!black,
+    boxrule=0.5pt,
+    arc=3pt,
+    left=6pt,
+    right=6pt,
+    top=4pt,
+    bottom=6pt,
+    fonttitle=\bfseries,
+    coltitle=black
+  }
+}
+
+\newtcbtheorem{hypothesis}{Hypothesis}{
+  myhypothesis
+}{hyp}
+
 \makeglossaries
 \setglossarystyle{index}
 \setabbreviationstyle[acronym]{long-short}
@@ -42,6 +61,7 @@
 \newacronym{nn}{NN}{Neural Network}
 \newacronym{ls}{LS}{Latent Space}
 \newacronym{lr}{LR}{Latent Representation}
+\newacronym{cs}{CS}{Concept Structure}
 \newacronym{llm}{LLM}{Large Language Model}
 \newacronym{car}{CAR}{Clustering Agent Representation}
 \newacronym{me}{ME}{Mechanistic Explainability}

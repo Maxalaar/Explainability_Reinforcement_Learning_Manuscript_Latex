@@ -2,7 +2,7 @@
 \label{sec:clustering_agent_representation_method}
 
 Following the work of \cite{zahavy2017graying}, we analyze the \gls{ls} through clustering techniques, placing our approach within the broader field of Deep Clustering.
-This design choice is motivated by our rejection of the superposition hypothesis and, more generally, of any view that assumes a linearly organized concept structure, as discussed in Section~\ref{sec:clustering}.
+This design choice is motivated by our rejection of the superposition hypothesis and, more generally, of any view that assumes a linearly organized \gls{cs}, as discussed in Section~\ref{sec:clustering}.
 
 The \gls{car} methodology is composed of two main stages.
 The first stage trains multiple independent \glspl{nn}, called surrogate policies, which implement the same decision policy.
@@ -16,7 +16,7 @@ In the second subsection, we detail how these surrogate policies are trained so 
 
 The \gls{car} method was developed with the aim of verifying the representation convergence hypothesis presented in Section \ref{sec:representation_convergence_hypothesis}.
 To test this hypothesis, several \glspl{nn} must be trained independently and their \glspl{lr} compared.
-If similar conceptual structures consistently emerge, this provides empirical evidence supporting the Representation Convergence Hypothesis.
+If similar \glspl{cs} consistently emerge, this provides empirical evidence supporting the Representation Convergence Hypothesis.
 
 In supervised learning, this protocol is straightforward since several models can be independently trained on the same target function.
 \Gls{rl} introduces an additional difficulty.

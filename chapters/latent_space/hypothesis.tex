@@ -56,9 +56,9 @@ Although these theories were originally developed to explain human cognition, th
 
 
 In order to influence the model's computations, concepts must necessarily admit a concrete realization within the \gls{ls}.
-We refer to this realization as the concept structure, or simply the structure.
-The definition of the structure is provided in Definition~\ref{def:concept_structure}.
-The methods reviewed in this chapter all subscribe to the concept hypothesis, but they disagree on what structure a concept should take.
+We refer to this realization as the \gls{cs}.
+The definition of the \gls{cs} is provided in Definition~\ref{def:concept_structure}.
+The methods reviewed in this chapter all subscribe to the concept hypothesis, but they disagree on the \gls{cs} a concept should take.
 This choice necessarily affects the extraction procedure, which is why several families of \gls{ls} analysis methods coexist in the literature.
 
 \begin{definition}{Concept}{concept}
@@ -66,7 +66,7 @@ A concept is a task-dependent abstraction that captures regularities in the inpu
 \end{definition} 
 
 \begin{definition}{Concept Structure}{concept_structure}
-A concept structure is the specific form for how a concept is instantiated within the \gls{ls}.
+A \gls{cs} is the specific form for how a concept is instantiated within the \gls{ls}.
 \end{definition}
 
 Now that the definition of a concept has been established, we can consider its relationship to human.
@@ -77,11 +77,11 @@ Others may contribute to task performance while remaining difficult for humans t
 
 \begin{definition}{Semantics}{semantics}
 Semantics refers to the alignment between concepts in the model \gls{ls} and concepts used by a human observer.  
-A concept is semantic if it can be consistently associated with a human-interpretable concept.  
+A concept is semantic if it can be associated with a human-interpretable concept.  
 \end{definition}
 
 It is important to note that this conceptual framework is not supported by a complete theoretical understanding of deep \gls{nn}.
-Current mathematical tools do not provide a rigorous characterization of their internal representations and do not formally prove that concepts emerge as identifiable structures within \gls{ls}.
+Current mathematical tools do not provide a rigorous characterization of their internal representations and do not formally prove that concepts emerge as identifiable \glspl{cs} within \gls{ls}.
 Nevertheless, this perspective constitutes a widely adopted working hypothesis in the field of representation and \gls{ls} analysis.
 
 The remainder of this chapter is devoted to reviewing methods for analyzing \gls{ls} and extracting the concepts they encode.
