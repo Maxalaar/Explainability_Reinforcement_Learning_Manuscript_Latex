@@ -42,6 +42,7 @@ The model is provided only with sequences of moves and information about the act
 The central question is whether the \gls{llm} develops an internal representation of the game state.
 To address this question, the probed concepts correspond to the presence or absence of different game pieces on specific board positions.
 As illustrated in Figure~\ref{fig:probing_illustration}, probes are able to reconstruct the full board state from the model's hidden representations, even though the only available information to the model is a sequence of text.
+This suggests that the model does not merely learn statistical associations from the training data, but instead develops a structured representation of the underlying environment in which the data are generated.
 
 However, the fact that a concept can be decoded from \gls{lr} does not necessarily imply that the model actually uses this information to perform its task.
 To assess whether representations play a causal role in the model’s output, it is possible to perform interventions on the \gls{lr}.
