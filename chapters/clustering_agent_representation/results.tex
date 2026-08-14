@@ -1,7 +1,11 @@
 \section{Results}
 \label{sec:clustering_agent_representation_results}
 
-We now evaluate \gls{car} across several Atari benchmark environments \cite{Bellemare_2013}, which are widely used in \gls{rl} research \cite{mnih2013playingatarideepreinforcement, schulman2017proximalpolicyoptimizationalgorithms, zahavy2017graying}.
+\input{figures/clustering_agent_representation/illustration_paper.tex}
+
+Figure~\ref{fig:illustration_paper} previews the kind of explanation produced by \gls{car}: a two-dimensional projection of the \gls{ls} of a surrogate policy trained on Space Invaders, together with the resulting clusters and their corresponding observations.
+Each cluster corresponds to a distinct, human-interpretable stage of the game, from ``few or no invaders have been neutralized'' to ``invaders descend, but their numbers are reduced.''
+The remainder of this section quantitatively evaluates this behavior across several Atari benchmark environments \cite{Bellemare_2013}, which are widely used in \gls{rl} research \cite{mnih2013playingatarideepreinforcement, schulman2017proximalpolicyoptimizationalgorithms, zahavy2017graying}.
 The environments considered in this study are:
 
 \begin{itemize}
