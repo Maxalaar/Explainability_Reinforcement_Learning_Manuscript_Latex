@@ -76,6 +76,12 @@ Algorithm~\ref{alg:car} summarizes the complete \gls{car} procedure.
 
 \input{algorithms/clustering_agent_representation/car.tex}
 
-To demonstrate this clustering faithfully reflects the agent’s internal decision-making process, we introduce a set of evaluation metrics, which will be detailed in the following section.
+Figure~\ref{fig:space_invaders_projection} provides an illustration of the \gls{car} method.
+The point cloud shows a two-dimensional projection of the \gls{ls} of a surrogate policy trained on Space Invaders.
+The two-dimensional projection is used only for visualization, while the clusters are computed in the original high-dimensional \gls{ls}.
+Colors indicate the resulting clusters and their corresponding observations.
+Each cluster corresponds to a distinct, human-interpretable stage of the game, ranging from few or no invaders have been neutralized'' to invaders descend, but their numbers are reduced.''
+The resulting organization suggests a correspondence between the position of observations in the \gls{ls} and the semantic properties of the corresponding game states.
+To objectively assess this correspondence and determine whether the observed clustering reflects the agent's internal decision-making process, we introduce a set of evaluation metrics detailed in the following section.
 
-
+\input{figures/clustering_agent_representation/space_invaders_projection.tex}
