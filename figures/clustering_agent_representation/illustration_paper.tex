@@ -4,16 +4,20 @@
     };
 }
 
+\definecolor{custom_blue}{HTML}{40568d}
+\definecolor{custom_yellow}{HTML}{fee826}
+\definecolor{custom_purple}{HTML}{440053}
+\definecolor{custom_light_green}{HTML}{5eca61}
+\definecolor{custom_dark_green}{HTML}{22928d}
+
 \begin{figure}[t]
     \centering
-    \resizebox{1\textwidth}{!}{
-        \begin{tikzpicture}
-            \definecolor{custom_blue}{HTML}{40568d}
-            \definecolor{custom_yellow}{HTML}{fee826}
-            \definecolor{custom_purple}{HTML}{440053}
-            \definecolor{custom_light_green}{HTML}{5eca61}
-            \definecolor{custom_dark_green}{HTML}{22928d}
 
+    % --- Point cloud + cluster thumbnails, resized to \textwidth independently. ---
+    % No longer tied to the legend's own scale factor, so it uses the full page
+    % width on its own instead of being capped by the (wider) legend drawing.
+    \resizebox{\textwidth}{!}{
+        \begin{tikzpicture}
             \begin{pgfonlayer}{background}
                 \node[anchor=south west,inner sep=0] (image) at (0,0) {
                     \includegraphics[]{figures/clustering_agent_representation/resources/projection_2d.pdf}
@@ -41,8 +45,19 @@
                 \insertImageWithLine{image_1}{0.075}{0.50}{figures/clustering_agent_representation/pictures/space_invaders/5_clusters/mid_game/image_1.png}{custom_dark_green}
                 \insertImageWithLine{image_1}{0.175}{0.20}{figures/clustering_agent_representation/pictures/space_invaders/5_clusters/mid_game/image_2.png}{custom_dark_green}
             \end{scope}
+        \end{tikzpicture}
+    }
 
-            \node (element_1) at ($(image.south) + (-7cm, -1.5cm)$) {:};
+    \vspace{0.2cm}
+
+    % --- Legend, resized to \textwidth on its own. ---
+    % Spacing between and within the two columns is untouched: same offsets, same
+    % single-line entries, only the reference point moved from (image.south) to (0,0).
+    % Since this legend was already the widest element in the original combined
+    % figure, resizing it alone to \textwidth reproduces its original on-page size.
+    \resizebox{\textwidth}{!}{
+        \begin{tikzpicture}
+            \node (element_1) at (-7cm, -1.5cm) {:};
             \node[anchor=west] (element_1_text) at ($(element_1) + (0.1cm, 0cm)$) {Projection of observations into the latent space.};
             \node[anchor=east] (element_1_symbol) at ($(element_1) + (-0.1cm, 0cm)$) {
                 \tikz \fill[custom_blue] (0,0) circle (3pt);
@@ -55,7 +70,7 @@
 
             \node (element_2) at ($(element_1) + (0cm, -0.35cm)$) {:};
             \node[anchor=west] (element_2_text) at ($(element_2) + (0.1cm, 0cm)$) {Corresponding observations to the clusters.};
-            \node[anchor=east] (element_1_symbol) at ($(element_2) + (-0.1cm, 0cm)$) {
+            \node[anchor=east] (element_2_symbol) at ($(element_2) + (-0.1cm, 0cm)$) {
                 \tikz \draw[draw=custom_blue, fill=white, line width=0.5mm] (0,0) rectangle (2mm,2mm);
                 \tikz \draw[draw=custom_yellow, fill=white, line width=0.5mm] (0,0) rectangle (2mm,2mm);
                 \tikz \draw[draw=custom_purple, fill=white, line width=0.5mm] (0,0) rectangle (2mm,2mm);
@@ -63,37 +78,38 @@
                 \tikz \draw[draw=custom_dark_green, fill=white, line width=0.5mm] (0,0) rectangle (2mm,2mm);
             };
 
-            \node (element_3) at ($(image.south) + (3.4cm, -1cm)$) {:};
-            \node[anchor=east] (element_1_symbol) at ($(element_3) + (-0.1cm, 0cm)$) {
+            \node (element_3) at (3.4cm, -1cm) {:};
+            \node[anchor=east] (element_3_symbol) at ($(element_3) + (-0.1cm, 0cm)$) {
                 \textbf{Cluster 1} \tikz \fill[custom_blue] (0,0) circle (3pt);
             };
-            \node[anchor=west] (element_2_text) at ($(element_3) + (0.1cm, 0cm)$) {Few or no invaders have been neutralized.};
+            \node[anchor=west] (element_3_text) at ($(element_3) + (0.1cm, 0cm)$) {Few or no invaders have been neutralized.};
 
             \node (element_4) at ($(element_3) + (0cm, -0.35cm)$) {:};
-            \node[anchor=east] (element_1_symbol) at ($(element_4) + (-0.1cm, 0cm)$) {
+            \node[anchor=east] (element_4_symbol) at ($(element_4) + (-0.1cm, 0cm)$) {
                 \textbf{Cluster 2} \tikz \fill[custom_yellow] (0,0) circle (3pt);
             };
-            \node[anchor=west] (element_2_text) at ($(element_4) + (0.1cm, 0cm)$) {The invaders on the right side are eliminated.};
+            \node[anchor=west] (element_4_text) at ($(element_4) + (0.1cm, 0cm)$) {The invaders on the right side are eliminated.};
 
             \node (element_5) at ($(element_4) + (0cm, -0.35cm)$) {:};
-            \node[anchor=east] (element_1_symbol) at ($(element_5) + (-0.1cm, 0cm)$) {
+            \node[anchor=east] (element_5_symbol) at ($(element_5) + (-0.1cm, 0cm)$) {
                 \textbf{Cluster 3} \tikz \fill[custom_purple] (0,0) circle (3pt);
             };
-            \node[anchor=west] (element_2_text) at ($(element_5) + (0.1cm, 0cm)$) {Try to catch the saucer that occasionally flies.};
+            \node[anchor=west] (element_5_text) at ($(element_5) + (0.1cm, 0cm)$) {Try to catch the saucer that occasionally flies.};
 
             \node (element_6) at ($(element_5) + (0cm, -0.35cm)$) {:};
-            \node[anchor=east] (element_1_symbol) at ($(element_6) + (-0.1cm, 0cm)$) {
+            \node[anchor=east] (element_6_symbol) at ($(element_6) + (-0.1cm, 0cm)$) {
                 \textbf{Cluster 4} \tikz \fill[custom_light_green] (0,0) circle (3pt);
             };
-            \node[anchor=west] (element_2_text) at ($(element_6) + (0.1cm, 0cm)$) {Few invaders remain, moving fast near ground.};
+            \node[anchor=west] (element_6_text) at ($(element_6) + (0.1cm, 0cm)$) {Few invaders remain, moving fast near ground.};
 
             \node (element_7) at ($(element_6) + (0cm, -0.35cm)$) {:};
-            \node[anchor=east] (element_1_symbol) at ($(element_7) + (-0.1cm, 0cm)$) {
+            \node[anchor=east] (element_7_symbol) at ($(element_7) + (-0.1cm, 0cm)$) {
                 \textbf{Cluster 5} \tikz \fill[custom_dark_green] (0,0) circle (3pt);
             };
-            \node[anchor=west] (element_2_text) at ($(element_7) + (0.1cm, 0cm)$) {Invaders descend, but their numbers are reduced.};
+            \node[anchor=west] (element_7_text) at ($(element_7) + (0.1cm, 0cm)$) {Invaders descend, but their numbers are reduced.};
         \end{tikzpicture}
     }
+
     \caption{Two-dimensional projection of the \gls{ls} embeddings of a surrogate policy trained on Space Invaders, together with the \gls{car} clusters and their corresponding observations.}
     \label{fig:illustration_paper}
 \end{figure}
