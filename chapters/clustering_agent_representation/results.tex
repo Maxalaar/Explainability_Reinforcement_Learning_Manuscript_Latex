@@ -25,6 +25,7 @@ For each initial policy, three surrogate policies $\SurrogatePolicy{}$ sharing t
 These surrogate policies are randomly initialized and trained on approximately one million observation-action pairs each.
 
 \input{figures/clustering_agent_representation/environments_metrics.tex}
+\FloatBarrier
 
 We first evaluate the ability of the surrogate policies to replicate the behavior of the initial policies (\BehaviorReconstructionName, Table~\ref{tab:environments_metrics}).
 Across all environments, the surrogate policies achieve an average \BehaviorReconstructionName of $0.94 \pm 0.02$, indicating that they reliably reproduce the decisions of the initial policies over 100 evaluation episodes.
