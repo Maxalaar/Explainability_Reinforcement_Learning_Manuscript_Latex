@@ -44,7 +44,7 @@ This means that if the rewards achieved are comparable, the surrogate policy is 
 \label{subsec:adjusted_rand_index}
 
 Within \gls{car}, concepts are assumed to correspond to clusters in the \gls{ls}.
-Combined with the \RepresentationConvergenceHypothesisName, this leads to a direct experimental prediction: if independently trained surrogate policies converge toward the same conceptual organization, then clustering their \glspl{lr} should produce similar partitions.
+Combined with the \RepresentationConvergenceHypothesisName, this leads to a direct experimental prediction: if independently trained surrogate policies converge toward the same conceptual organization, then clustering their \gls{lr} should produce similar partitions.
 
 When a particular observation is processed by the network, it is expected to activate the same concept regardless of the specific neural implementation of the policy.
 If independently trained policies converge toward the same conceptual organization, a given observation should activate the same concept across all models.
@@ -52,7 +52,7 @@ As a consequence, observations grouped together within a cluster for one policy 
 
 In the clustering literature, the most used measures for comparing two partitions is the \gls{ari}~\cite{hubert1985comparing}.
 This measure quantifies the agreement between cluster assignments independently of the spatial organization of the clusters.
-Both metrics introduced later in this chapter, namely \ClusteringUniversalityName{} and \AbstractionScoreName{}, rely on the \gls{ari}.
+Both metrics introduced later in this chapter, \ClusteringUniversalityName{} and \AbstractionScoreName{}, rely on the \gls{ari}.
 Since the \gls{ari} is a complex measure, we review its definition and discuss its main properties.
 
 The \gls{ari} is derived from the \gls{ri}~\cite{rand1971objective}, which measures the agreement between two partitions by considering every possible pair of point cloud.
@@ -110,7 +110,6 @@ With these definitions, the \gls{ari} can be computed as:
 Because it is bounded by $1$, a value such as $0.5$ can be misleadingly interpreted as ``halfway to a perfect match.''
 This interpretation is incorrect because the \gls{ari} is normalized against the agreement expected from two random partitions.
 As a result, values close to $1$ require the two clusterings to be nearly identical, while a value of $0.5$ already indicates substantial agreement~\cite{amezquita2020orchestrating}.
-Having introduced the \gls{ari}, we can now turn to the two additional metrics used in our analysis.
 
 \subsection{Clustering Universality}
 \label{subsec:clustering_universality}
@@ -119,7 +118,7 @@ Having introduced the \gls{ari}, we can now define the \ClusteringUniversalityNa
 While the \gls{ari} quantifies the similarity between two conceptual partitions, the objective of \gls{car} is to assess the consistency of conceptual organizations across an entire set of independently trained surrogate policies.
 
 To this end, the same set of observations is projected into the \gls{ls} of each surrogate policy and clustered.
-Under the Representation Convergence Hypothesis, these independently obtained partitions are expected to be similar.
+Under the \RepresentationConvergenceHypothesisName, these independently obtained partitions are expected to be similar.
 \ClusteringUniversalityName{} quantifies this by computing the mean pairwise \gls{ari}:
 
 \begin{align}
@@ -138,7 +137,8 @@ A negative value, on the other hand, signals that the agreement between partitio
 
 Figure~\ref{fig:clustering_universality_illustration} illustrates \ClusteringUniversalityName{} in the ideal case.
 It shows three \gls{ls} obtained by projecting the same seven observations, labeled 1 to 7, through three independently trained surrogate policies.
-Although the embeddings occupy different positions, the clusters group exactly the same elements in all three cases: the partitioning is therefore identical.
+Although the embeddings occupy different positions, the clusters group exactly the same elements in all three cases.
+The partitioning is therefore identical, resulting in an \gls{ari} of $1$.
 
 \input{figures/clustering_agent_representation/clustering_universality_illustration.tex}
 

@@ -64,5 +64,5 @@ Algorithm~\ref{alg:stochastic_gradient_descent} summarizes this whole training p
 It has been mathematically shown that gradient descent applied to a convex loss with respect to the parameters converges to a global optimum, independently of the initialization.
 However, \gls{nn} training involves highly non-convex loss surfaces, so the optimization trajectory becomes strongly dependent on the initial conditions, as illustrated in Figure~\ref{fig:multiple_gradient_descents_non_convex}, where different starting points lead to distinct local minima on standard non-convex functions.
 
-Despite the lack of theoretical guarantees of convergence to a global optimum in this setting, the simple procedure of random initialization followed by iterative gradient-based updates is sufficient in practice to train highly complex \glspl{nn}.
+Despite the lack of theoretical guarantees of convergence to a global optimum in this setting, the simple procedure of random initialization followed by iterative gradient-based updates is sufficient in practice to train highly complex \gls{nn}.
 This empirical success is often attributed to the expressive power of \gls{nn}s, even though a complete theoretical understanding of this phenomenon remains an open question.

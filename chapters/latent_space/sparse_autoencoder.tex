@@ -75,7 +75,7 @@ In these applications, \gls{sae} are used to desuperpose the \gls{lr} of \gls{ll
 Once this representation is obtained, it has been shown that many concept vectors exhibit semantic properties.
 A example is the Golden Gate Bridge concept direction, illustrated in Figure~\ref{fig:sparse_autoencoder_illustration}, which activates systematically whenever the input text or image refers to the Golden Gate Bridge, regardless of the language or modality.
 
-\glspl{sae} also provide a way to intervene directly on the \gls{lr} learned by the model.
+\gls{sae} also provide a way to intervene directly on the \gls{lr} learned by the model.
 A concept can be artificially activated by modifying its corresponding feature in the sparse representation $z$, even when the input contains no reference to it.
 The modified representation is then projected back into the original activation space, after which the model proceeds with standard next-token generation from $h^*$:
 \[

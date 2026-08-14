@@ -5,8 +5,8 @@ Following the work of \cite{zahavy2017graying}, we analyze the \gls{ls} through 
 This design choice is motivated by our rejection of the \SuperpositionHypothesisName and, more generally, of any view that assumes a linearly organized \gls{cs}, as discussed in Section~\ref{sec:clustering}.
 
 The \gls{car} methodology is composed of two main stages.
-The first stage trains multiple independent \glspl{nn}, called surrogate policies, which implement the same decision policy.
-The second stage clusters their \glspl{lr} in order to identify the underlying conceptual organization.
+The first stage trains multiple independent \gls{nn}, called surrogate policies, which implement the same decision policy.
+The second stage clusters their \gls{lr} in order to identify the underlying conceptual organization.
 
 This section is organized as follows.
 In the first subsection, we justify the use of multiple surrogate policies in order to study the stability of representations.
@@ -14,24 +14,23 @@ In the second subsection, we detail how these surrogate policies are trained so 
 
 \subsection{Multiple surrogate policies}
 
-The \gls{car} method was developed with the aim of verifying the \RepresentationConvergenceHypothesisName.
-To test this hypothesis, several \glspl{nn} must be trained independently and their \glspl{lr} compared.
-If similar \glspl{cs} consistently emerge, this provides empirical evidence supporting the Representation Convergence Hypothesis.
+The \gls{car} method was developed to test the \RepresentationConvergenceHypothesisName.
+This requires training several \gls{nn} independently and comparing their \gls{lr}.
+Consistent similarities in the resulting \gls{cs} would provide empirical support for this hypothesis.
 
 In supervised learning, this protocol is straightforward since several models can be independently trained on the same target function.
 \gls{rl} introduces an additional difficulty.
 Because of stochastic exploration, independently trained agents are not guaranteed to converge toward the same policy.
 Even if they achieve comparable performance, they may solve the task using different strategies.
-Making it impossible to determine whether differences observed in the \gls{ls} originate from the learning dynamics or from genuine differences between the learned policies.
+This makes it difficult to determine whether differences in the \gls{ls} result from different representations of the same strategy or from differences in the learned strategies themselves.
 
 To overcome this limitation, we consider an already trained initial policy.
 This policy is then imitated using imitation learning \cite{pmlr-v15-ross11a}.
-To this end, we independently train several surrogate \glspl{nn} in a supervised manner.
-Since all surrogate models approximate the same target function, they are converge toward equivalent decision policies.
+In imitation learning, several surrogate \gls{nn} are independently trained in a supervised manner to reproduce the behavior of the initial policy.
 This makes it possible to investigate whether equivalent policies also exhibit equivalent conceptual organizations.
 
 It is important to emphasize that the use of surrogate policies does not make \gls{car} a surrogate explainability method, as defined in Subsection~\ref{subsec:explainable_artificial_intelligence}.
-The surrogate policies remain deep \glspl{nn}.
+The surrogate policies remain deep \gls{nn}.
 Their role is not to simplify the decision process but to provide multiple independent realizations of the same policy function, enabling the study of representation convergence.
 
 \subsection{Training surrogate policies}

@@ -4,11 +4,11 @@
 The \gls{car} method relies on a assumption, referred to as the \RepresentationConvergenceHypothesisName.
 This hypothesis follows the two assumptions established previously throughout this manuscript.
 
-The \MechanisticHypothesisName rejects the notion that deep \glspl{nn} constitute irreducible black boxes.
+The \MechanisticHypothesisName rejects the notion that deep \gls{nn} constitute irreducible black boxes.
 Adopting a mechanistic perspective, we consider that every process results from a sequence of causal computations.
-Although these computations may be highly complex, they remain explainable through the analysis of the internal mechanisms.
+Although these computations may be complex, they remain explainable through the analysis of the internal mechanisms.
 
-The \ConceptHypothesisName states that \glspl{nn} achieve generalization by learning concepts.
+The \ConceptHypothesisName states that \gls{nn} achieve generalization by learning concepts.
 During optimization, the network progressively organizes its \gls{ls} into representations that capture the information required to solve the task.
 
 Following these hypotheses, it becomes possible to explain the \gls{nn}'s process by understanding the organization of its \gls{ls}.
@@ -19,7 +19,7 @@ We develop the \RepresentationConvergenceHypothesisName provides a theoretical e
 Under this assumption, the universality of a concept is not merely an empirical observation but the expected consequence of a common underlying \gls{cs} shared by independently learned representations.
 
 \begin{hypothesis}{Representation Convergence Hypothesis}{convergence}
-For a given task and a given \gls{nn} architecture, there exists a privileged \gls{cs}, which emerges because it constitutes an efficient representation required to solve the task.
+For a given task, \gls{nn} tend to converge toward a privileged \gls{cs} because it provides an efficient representation for solving the task.
 \end{hypothesis}
 
 It is important to clarify that this hypothesis does not imply convergence at the parameter level.

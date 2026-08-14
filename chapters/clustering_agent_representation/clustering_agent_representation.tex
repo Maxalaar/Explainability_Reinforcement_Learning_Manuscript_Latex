@@ -5,7 +5,7 @@
 
 As discussed in the previous chapter, current explainability methods for \gls{rl} still lack intrinsic approaches capable of explaining the internal mechanisms of deep neural policies.
 To the best of our knowledge, only \cite{zahavy2017graying} have proposed exploiting the \gls{ls} learned by neural policies in order to identify the concepts used by the agent.
-Its main idea is to analyze the \glspl{lr} produced by the \gls{nn} and organize them into clusters that correspond to high-level concepts.
+Its main idea is to analyze the \gls{lr} produced by the \gls{nn} and organize them into clusters that correspond to high-level concepts.
 
 While the core idea of this paper is closely aligned with our vision of explainability in \gls{rl}, this approach suffers from two important limitations.
 First, the clusters are manually constructed.
@@ -20,7 +20,7 @@ It introduces an objective evaluation metric based on the stability of the extra
 This chapter is organized as follows:
 \begin{itemize}
     \item Section~\ref{sec:representation_convergence_hypothesis} lays out the theoretical assumptions underlying the proposed \gls{car} method, which we term the \RepresentationConvergenceHypothesisName.
-    \item Section~\ref{sec:clustering_agent_representation_method} then details the \gls{car} method itself, covering both the extraction of \glspl{lr} using surrogate policies and the automatic detection of \glspl{cs} through clustering.
+    \item Section~\ref{sec:clustering_agent_representation_method} then details the \gls{car} method itself, covering both the extraction of \gls{lr} using surrogate policies and the automatic detection of \gls{cs} through clustering.
     \item Section~\ref{sec:clustering_agent_representation_metrics} introduces the metrics we propose for evaluation.
     \item Section~\ref{sec:clustering_agent_representation_results} reports the results obtained by applying \gls{car} and these metrics across several Atari environments.
     \item Section~\ref{sec:clustering_agent_representation_discussion} discusses these results and situates \gls{car} within the broader landscape of mechanistic interpretability.
