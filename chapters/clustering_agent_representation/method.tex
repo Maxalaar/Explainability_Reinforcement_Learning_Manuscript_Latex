@@ -35,6 +35,14 @@ Their role is not to simplify the decision process but to provide multiple indep
 
 \subsection{Training surrogate policies}
 
+\input{figures/clustering_agent_representation/surrogate_policy_architecture.tex}
+
+\input{figures/clustering_agent_representation/illustration_method.tex}
+
+\input{algorithms/clustering_agent_representation/car.tex}
+
+\input{figures/clustering_agent_representation/space_invaders_projection.tex}
+
 Throughout the remainder of this manuscript, the initial policy we aim to explain is denoted as $\textcolor{mygreen}{\pi}$.
 This initial policy is obtained without imposing any constraints on its origin.
 It may result from classical or deep reinforcement learning \cite{sutton2018reinforcement}, alpha-beta algorithm \cite{knuth1975analysis}, or even from demonstrations provided by humans \cite{pmlr-v9-ross10a}.
@@ -43,14 +51,10 @@ The crucial requirement is the availability of a dataset containing a sufficient
 The replicated policies are referred to as surrogate policies, denoted by $\textcolor{myred}{\pi'}$.
 For any observation $O$, the distribution over the action space produced by $\textcolor{myred}{\pi'}$ should approximate that of $\textcolor{mygreen}{\pi}$ as closely as possible.
 
-\input{figures/clustering_agent_representation/surrogate_policy_architecture.tex}
-
 The surrogate policy $\textcolor{myred}{\pi'}$ is implemented as a \gls{nn} parameterized by $\Theta$.
 This network is composed of two components: an encoder and a decoder, respectively highlighted by the blue and black dashed rectangles in Figure~\ref{fig:surrogate_policy_architecture}.
 The encoder $\textcolor{myblue}{f_{enc}}$ maps the observation $O$ to the embedding.
 The decoder, which reconstructs the action distribution parameters from the embedding.
-
-\input{figures/clustering_agent_representation/illustration_method.tex}
 
 To train $\textcolor{myred}{\pi'}$ to accurately replicate the action distribution, we define a global loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
 This loss, defined in Equation~\eqref{eq:car_loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.
@@ -74,14 +78,10 @@ On the set $\textcolor{myblue}{\mathcal{E}}$, we use a clustering function $f_{\
 Each observation is assigned a cluster label based on its proximity in the \gls{ls}, resulting in the clustering $\mathcal{C}$.
 Algorithm~\ref{alg:car} summarizes the complete \gls{car} procedure.
 
-\input{algorithms/clustering_agent_representation/car.tex}
-
 Figure~\ref{fig:space_invaders_projection} provides an illustration of the \gls{car} method.
 The point cloud shows a two-dimensional projection of the \gls{ls} of a surrogate policy trained on Space Invaders.
 The two-dimensional projection is used only for visualization, while the clusters are computed in the original high-dimensional \gls{ls}.
 Colors indicate the resulting clusters and their corresponding observations.
-Each cluster corresponds to a distinct, human-interpretable stage of the game, ranging from few or no invaders have been neutralized'' to invaders descend, but their numbers are reduced.''
+Each cluster corresponds to a distinct, human-interpretable stage of the game.
 The resulting organization suggests a correspondence between the position of observations in the \gls{ls} and the semantic properties of the corresponding game states.
-To objectively assess this correspondence and determine whether the observed clustering reflects the agent's internal decision-making process, we introduce a set of evaluation metrics detailed in the following section.
-
-\input{figures/clustering_agent_representation/space_invaders_projection.tex}
+To objectively assess this correspondence we introduce a set of evaluation metrics detailed in the following section.
