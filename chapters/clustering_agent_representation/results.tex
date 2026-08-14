@@ -1,0 +1,42 @@
+\section{Results}
+\label{sec:clustering_agent_representation_results}
+
+We now evaluate \gls{car} across several Atari benchmark environments \cite{Bellemare_2013}, which are widely used in \gls{rl} research \cite{mnih2013playingatarideepreinforcement, schulman2017proximalpolicyoptimizationalgorithms, zahavy2017graying}.
+The environments considered in this study are:
+
+\begin{itemize}
+    \item \href{https://ale.farama.org/environments/breakout/}{\textbf{Breakout}}: the agent controls a paddle to bounce a ball and break as many bricks as possible, the ball speeding up after each bounce.
+    \item \href{https://ale.farama.org/environments/mario_bros/}{\textbf{Mario Bros}}: the agent must defeat enemies, avoid fireballs, and collect mushrooms \cite{mario_bros_atari_2600}.
+    \item \href{https://ale.farama.org/environments/pong/}{\textbf{Pong}}: a two-player game in which the agent tries to prevent the ball from passing its side while attempting to score against the opponent.
+    \item \href{https://ale.farama.org/environments/space_invaders/}{\textbf{Space Invaders}}: the agent controls a cannon and must destroy waves of invaders before they reach the ground.
+    \item \href{https://ale.farama.org/environments/surround/}{\textbf{Surround}}: a two-player grid-based game in which each move blocks the traversed cell, the goal being to trap the opponent.
+\end{itemize}
+
+In all these environments, the agent receives visual observations and operates in discrete action spaces.
+The initial policies $\OriginalPolicy$ are trained using \gls{ppo} \cite{schulman2017proximalpolicyoptimizationalgorithms} with a deep actor-critic architecture.
+The network consists of four convolutional layers with configurations $(16, 4, 2)$, $(32, 4, 2)$, $(64, 4, 2)$, $(128, 4, 2)$, where each tuple represents (number of channels, kernel size, stride), followed by three fully connected layers with 512, 256, and 128 units, respectively.
+To ensure that these initial policies effectively learn to maximize rewards, we follow the recommendations of \cite{machado2017revisitingarcadelearningenvironment} and compare the performance of our initial policies against the benchmark scores reported in the same study to verify that they meet the required performance standards.
+
+For each initial policy, three surrogate policies $\SurrogatePolicy{}$ sharing the same architecture are trained as described in Section~\ref{sec:clustering_agent_representation_method}.
+These surrogate policies are randomly initialized and trained on approximately one million observation-action pairs each.
+
+\input{figures/clustering_agent_representation/environments_metrics.tex}
+
+We first evaluate the ability of the surrogate policies to replicate the behavior of the initial policies (\BehaviorReconstructionName, Table~\ref{tab:environments_metrics}).
+Across all environments, the surrogate policies achieve an average \BehaviorReconstructionName of $0.94 \pm 0.02$, indicating that they reliably reproduce the decisions of the initial policies over 100 evaluation episodes.
+
+For the remainder of the analysis, a random subset of 50,000 observations is drawn from the training dataset and embedded into the \gls{ls} of each surrogate policy, using the representation extracted directly after the last convolutional layer.
+This projection results in a point cloud $\textcolor{myblue}{\mathcal{E}}$.
+For clustering, we opted for the simplest approach and applied \emphasize{K-means clustering} \cite{macqueen1967multivariate} to the point cloud, using the Euclidean distance between the projected points to form the clusters.
+
+Across all environments, policies, and numbers of clusters, the average \AbstractionScoreName is $0.99 \pm 0.00$.
+This indicates that the clusters formed in the \gls{ls} are not mere reflections of the raw pixel inputs or of the action distributions, and therefore capture a genuine abstraction of the agent's behavior, as defined in Definition~\ref{def:abstraction}.
+
+\input{figures/clustering_agent_representation/clustering_universality_curves.tex}
+
+Figure~\ref{fig:clustering_universality_curves} reports the evolution of \ClusteringUniversalityName with respect to the number of clusters.
+From three clusters onward, all curves stabilize around $0.5$ in every environment.
+Since \ClusteringUniversalityName is computed from the \gls{ari}, this result indicates a strong similarity in the clustering of the \gls{ls} across surrogate policies within each environment \cite{amezquita2020orchestrating}, regardless of the number of clusters chosen.
+
+The combination of a high \AbstractionScoreName and a strong \ClusteringUniversalityName indicates that the latent clusters are both highly similar across independently trained surrogate policies and distinct from those obtained in the raw observation or action space.
+These results support the \RepresentationConvergenceHypothesisName and confirm that the \gls{ls} captures high-level concepts, making it a reliable representation for analyzing agent behavior.

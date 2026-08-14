@@ -1,0 +1,224 @@
+\begin{figure}[t]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tikzpicture}
+    \begin{axis}[
+        xlabel={Number of clusters},
+        ylabel={\ClusteringUniversalityName},
+        grid=major,
+        xmin=1, xmax=30,
+        ymin=0, ymax=1,
+        ytick distance=0.25,
+        legend pos=north east,
+        ymajorgrids=true,
+        width=\textwidth,
+        height=0.55\textwidth,
+        set layers=standard,
+        legend style={
+            at={(0.5,-0.25)},
+            anchor=north,
+            legend columns=-1,
+            /tikz/every even column/.append style={column sep=0.5cm}
+        }
+    ]
+        \addplot[
+            color=breakoutColor,
+            mark=\breakoutMark,
+            mark size=\breakoutMarkSize,
+        ] coordinates {
+            (2,0.92)
+            (3,0.65)
+            (4,0.62)
+            (5,0.50)
+            (6,0.59)
+            (7,0.57)
+            (8,0.53)
+            (9,0.64)
+            (10,0.68)
+            (11,0.64)
+            (12,0.61)
+            (13,0.56)
+            (14,0.51)
+            (15,0.49)
+            (16,0.52)
+            (17,0.47)
+            (18,0.55)
+            (19,0.61)
+            (20,0.45)
+            (21,0.57)
+            (22,0.51)
+            (23,0.53)
+            (24,0.48)
+            (25,0.53)
+            (26,0.48)
+            (27,0.55)
+            (28,0.50)
+            (29,0.55)
+            (30,0.54)
+        };
+        \addlegendentry{Breakout}
+        \addplot[
+            color=marioBrosColor,
+            mark=\marioBrosMark,
+            mark size=\marioBrosMarkSize,
+        ] coordinates {
+            (2,0.98)
+            (3,0.82)
+            (4,0.54)
+            (5,0.63)
+            (6,0.64)
+            (7,0.58)
+            (8,0.50)
+            (9,0.51)
+            (10,0.50)
+            (11,0.47)
+            (12,0.47)
+            (13,0.54)
+            (14,0.49)
+            (15,0.50)
+            (16,0.50)
+            (17,0.52)
+            (18,0.49)
+            (19,0.58)
+            (20,0.52)
+            (21,0.53)
+            (22,0.52)
+            (23,0.52)
+            (24,0.54)
+            (25,0.55)
+            (26,0.53)
+            (27,0.52)
+            (28,0.52)
+            (29,0.49)
+            (30,0.54)
+        };
+        \addlegendentry{Mario Bros}
+        \addplot[
+            color=pongColor,
+            mark=\pongMark,
+            mark options={line width=1.5pt, scale=1},
+            mark size=\pongMarkSize,
+        ] coordinates {
+            (2,0.25)
+            (3,0.48)
+            (4,0.54)
+            (5,0.52)
+            (6,0.51)
+            (7,0.62)
+            (8,0.62)
+            (9,0.56)
+            (10,0.49)
+            (11,0.56)
+            (12,0.50)
+            (13,0.44)
+            (14,0.47)
+            (15,0.45)
+            (16,0.46)
+            (17,0.46)
+            (18,0.44)
+            (19,0.46)
+            (20,0.44)
+            (21,0.46)
+            (22,0.42)
+            (23,0.39)
+            (24,0.40)
+            (25,0.42)
+            (26,0.40)
+            (27,0.39)
+            (28,0.41)
+            (29,0.39)
+            (30,0.37)
+        };
+        \addlegendentry{Pong}
+        \addplot[
+            color=spaceInvadersColor,
+            mark=\spaceInvadersMark,
+            mark size=\spaceInvadersMarkSize,
+        ] coordinates {
+            (2,0.11)
+            (3,0.57)
+            (4,0.48)
+            (5,0.60)
+            (6,0.55)
+            (7,0.56)
+            (8,0.57)
+            (9,0.59)
+            (10,0.50)
+            (11,0.52)
+            (12,0.50)
+            (13,0.51)
+            (14,0.53)
+            (15,0.48)
+            (16,0.51)
+            (17,0.52)
+            (18,0.50)
+            (19,0.51)
+            (20,0.48)
+            (21,0.52)
+            (22,0.50)
+            (23,0.51)
+            (24,0.50)
+            (25,0.49)
+            (26,0.52)
+            (27,0.50)
+            (28,0.53)
+            (29,0.53)
+            (30,0.53)
+        };
+        \addlegendentry{Space Invaders}
+        \addplot[
+            color=surroundColor,
+            mark=\surroundMark,
+            mark size=\surroundMarkSize,
+        ] coordinates {
+            (2,0.83)
+            (3,0.63)
+            (4,0.73)
+            (5,0.49)
+            (6,0.52)
+            (7,0.53)
+            (8,0.51)
+            (9,0.46)
+            (10,0.50)
+            (11,0.54)
+            (12,0.55)
+            (13,0.49)
+            (14,0.47)
+            (15,0.45)
+            (16,0.55)
+            (17,0.55)
+            (18,0.48)
+            (19,0.56)
+            (20,0.49)
+            (21,0.46)
+            (22,0.51)
+            (23,0.51)
+            (24,0.53)
+            (25,0.45)
+            (26,0.51)
+            (27,0.52)
+            (28,0.47)
+            (29,0.54)
+            (30,0.52)
+        };
+        \addlegendentry{Surround}
+        \addplot[
+            domain=1:30,
+            color=white,
+            very thick,
+            on layer=axis foreground,
+        ]{0.5};
+        \addplot[
+            domain=1:30,
+            samples=2,
+            color=black,
+            very thick,
+            dashed,
+            on layer=axis foreground,
+        ]{0.5};
+        \end{axis}
+    \end{tikzpicture}
+    }
+    \caption{Evolution of \ClusteringUniversalityName with respect to the number of clusters, for each of the five Atari environments.}
+    \label{fig:clustering_universality_curves}
+\end{figure}

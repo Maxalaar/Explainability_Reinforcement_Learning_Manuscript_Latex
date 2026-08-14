@@ -1,0 +1,22 @@
+\section{Discussion}
+\label{sec:clustering_agent_representation_discussion}
+
+\input{figures/clustering_agent_representation/semantic_granularity.tex}
+
+Across the five Atari environments, our results demonstrate strong stability, as illustrated in Figure~\ref{fig:clustering_universality_curves}.
+This stability indicates that there is no single optimal number of clusters to explain an agent's policy.
+Instead, the level of abstraction depends on the desired granularity.
+With fewer clusters, \gls{car} highlights broad strategic patterns.
+For instance, in the Mario Bros environment, the two main groups correspond to whether the POW block is present (highlighted in red in Figure~\ref{fig:semantic_granularity}A) or not.
+This is particularly interesting, as the use of the POW block is a key determinant of strategy in this environment \cite{mario_bros_atari_2600}.
+Conversely, with a larger number of clusters, the analysis captures more fine-grained tactical behaviors, such as ``Attacking the left.'' versus ``Navigating through the level.'' (see Figure~\ref{fig:semantic_granularity}B).
+Both perspectives are valid, depending on whether one seeks strategic or tactical insights.
+Similar interpretable structures can be observed in all evaluated environments.
+
+A major strength of \gls{car} lies in its general applicability.
+We validated it across multiple Atari environments, and it remained effective regardless of the environment considered.
+This suggests that clustering the \gls{ls} is a robust tool for extracting meaningful information about agent behavior.
+
+As emphasized throughout this manuscript, this work aligns with the perspective of mechanistic interpretability, in which \glspl{nn} are not treated as black boxes but as structured systems whose \gls{ls} can be studied and understood \cite{bereska2024mechanisticinterpretabilityaisafety}.
+Research teams at Anthropic \cite{elhage2022superposition, bricken2023monosemanticity, templeton2024scaling} were among the first to propose and exploit this mechanistic approach to explainability through the use of \glspl{sae}.
+However, they rely on the \SuperpositionHypothesisName, unlike \gls{car}, which demonstrates that meaningful structures can be uncovered through clustering without assuming a linearly organized \gls{cs}.

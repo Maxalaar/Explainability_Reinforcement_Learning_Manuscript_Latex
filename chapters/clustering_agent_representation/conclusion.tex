@@ -1,0 +1,12 @@
+\section{Conclusion}
+\label{sec:clustering_agent_representation_conclusion}
+
+In this chapter, we introduced \emphasize{\methodName} (\gls{car}), a method that extracts behaviorally meaningful clusters from an agent's \gls{ls} to enhance explainability.
+To enable a rigorous evaluation, we proposed three metrics, \BehaviorReconstructionName, \ClusteringUniversalityName, and \AbstractionScoreName, which respectively confirm that \gls{car} achieves faithful policy reproduction, strong abstraction capabilities, and robust universality across Atari environments.
+This demonstrates the relevance and effectiveness of our method in uncovering stable structures underlying agent behavior, and provides empirical support for the \RepresentationConvergenceHypothesisName.
+By providing a scalable, data-driven, and quantitatively grounded framework, \gls{car} contributes a significant step toward explainability in \gls{rl}.
+
+Future work will aim to extend \gls{car} to continuous-control and real-world domains to evaluate its generality beyond visual Atari tasks.
+Exploring the impact of the selected \gls{ls} layer on the learned representations could provide further insight into how the model organizes its internal knowledge.
+Adopting alternative distance measures and clustering paradigms, such as density-based or hierarchical approaches, may offer a more comprehensive understanding of how the \gls{ls} is organized.
+In parallel, advancing automated cluster interpretation and developing human-centered evaluation protocols would strengthen both the explainability and the practical relevance of the approach.

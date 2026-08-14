@@ -1,0 +1,20 @@
+\begin{table}[t]
+\caption{Evaluation of \BehaviorReconstructionName, \AbstractionScoreName and \ClusteringUniversalityName across the five Atari environments.}
+\centering
+\resizebox{\linewidth}{!}{
+    \begin{tblr}{
+        colspec={|c|c|c|c|},
+        hlines,
+        vlines,
+        row{1} = {font=\bfseries, halign=c, valign=m}
+    }
+        Environment     & {\textit{Behavior} \\ \textit{Reconstruction}} & {\textit{Abstraction} \\ \textit{Score}} & {\textit{Clustering} \\ \textit{Universality}} \\
+        Breakout        & 0.83 $\pm$0.02 & 0.99 $\pm$0.00 & 0.58 $\pm$0.09 \\
+        Mario Bros      & 0.98 $\pm$0.02 & 0.99 $\pm$0.00 & 0.55 $\pm$0.10 \\
+        Pong            & 0.95 $\pm$0.00 & 0.99 $\pm$0.00 & 0.48 $\pm$0.04 \\
+        Space Invaders  & 0.97 $\pm$0.07 & 0.99 $\pm$0.00 & 0.51 $\pm$0.08 \\
+        Surround        & 0.99 $\pm$0.00 & 0.99 $\pm$0.00 & 0.58 $\pm$0.07 \\
+    \end{tblr}
+}
+\label{tab:environments_metrics}
+\end{table}
