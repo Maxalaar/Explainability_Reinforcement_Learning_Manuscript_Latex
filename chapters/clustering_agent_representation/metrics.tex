@@ -107,6 +107,11 @@ With these definitions, the \gls{ari} can be computed as:
 }
 \]
 
+Because it is bounded by $1$, a value such as $0.5$ can be misleadingly interpreted as ``halfway to a perfect match.''
+This interpretation is incorrect because the \gls{ari} is normalized against the agreement expected from two random partitions.
+As a result, values close to $1$ require the two clusterings to be nearly identical, while a value of $0.5$ already indicates substantial agreement~\cite{amezquita2020orchestrating}.
+Having introduced the \gls{ari}, we can now turn to the two additional metrics used in our analysis.
+
 \subsection{Clustering Universality}
 \label{subsec:clustering_universality}
 
