@@ -12,11 +12,12 @@ The \ConceptHypothesisName states that \gls{nn} achieve generalization by learni
 During optimization, the network progressively organizes its \gls{ls} into representations that capture the information required to solve the task.
 
 Following these hypotheses, it becomes possible to explain the \gls{nn}'s process by understanding the organization of its \gls{ls}.
-This family of approaches is commonly referred to as mechanistic interpretability.
+This family of approaches is referred to as mechanistic interpretability.
+In mechanistic interpretability, universality refers to the consistency with which a concept is recovered across different models or extraction processes \cite{templeton2024scaling}.
 
-In mechanistic interpretability, universality refers to the consistency with which a concept is recovered across different models or independent extraction processes \cite{templeton2024scaling}.
-We develop the \RepresentationConvergenceHypothesisName provides a theoretical explanation for this phenomenon.
-Under this assumption, the universality of a concept is not merely an empirical observation but the expected consequence of a common underlying \gls{cs} shared by independently learned representations.
+To provide a explanation for this phenomenon, we developed the \RepresentationConvergenceHypothesisName.
+This hypothesis states that, when \gls{nn} are trained to solve the same task, a set of concepts should systematically emerge because these concepts provide a effective way of representing the problem.
+As a result, independently trained models should develop similar concepts in their learned representations.
 
 \begin{hypothesis}{Representation Convergence Hypothesis}{convergence}
 For a given task, \gls{nn} tend to converge toward a privileged \gls{cs} because it provides an efficient representation for solving the task.
@@ -26,6 +27,11 @@ It is important to clarify that this hypothesis does not imply convergence at th
 Independently trained models are expected to converge toward different sets of weights.
 The proposed hypothesis concerns a abstract level of representation.
 We assume that the conceptual organization induced by their \gls{lr} converges toward an equivalent \gls{cs}, even though the numerical implementation of the networks differ.
+
+This hypothesis provides a criterion for evaluating concept extraction methods.
+If independently trained models develop common concepts for a given task, an effective extraction method should recover these concepts consistently across models.
+Such consistency provides evidence that the extracted concepts capture meaningful structures rather than model-specific artifacts.
+It also gives a stronger justification for studying these concepts: if the concepts discovered in one model are consistently recovered across different training runs, they are more likely to reflect properties of the task rather than arbitrary features.
 
 The remainder of this chapter builds upon this hypothesis.
 This principle forms the theoretical foundation of the \ClusteringUniversalityName metric, introduced in Subsection~\ref{subsec:clustering_universality}.

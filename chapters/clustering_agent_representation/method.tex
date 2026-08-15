@@ -43,10 +43,10 @@ Their role is not to simplify the decision process but to provide multiple indep
 
 \input{figures/clustering_agent_representation/space_invaders_projection.tex}
 
-Throughout the remainder of this manuscript, the initial policy we aim to explain is denoted as $\textcolor{mygreen}{\pi}$.
+Throughout the remainder of this chapter, the initial policy we aim to explain is denoted as $\textcolor{mygreen}{\pi}$.
 This initial policy is obtained without imposing any constraints on its origin.
 It may result from classical or deep reinforcement learning \cite{sutton2018reinforcement}, alpha-beta algorithm \cite{knuth1975analysis}, or even from demonstrations provided by humans \cite{pmlr-v9-ross10a}.
-The crucial requirement is the availability of a dataset containing a sufficient number of projections from the observation space $\mathcal{O}$ to the action space $\mathcal{A}$ induced by $\textcolor{mygreen}{\pi}$.
+The crucial requirement is the availability of a dataset containing a sufficient number of projections from the observation space $\mathcal{O}$ to the action space $\mathcal{A}$ induced by $\textcolor{mygreen}{\pi}$ to train a \gls{nn}.
 
 The replicated policies are referred to as surrogate policies, denoted by $\textcolor{myred}{\pi'}$.
 For any observation $O$, the distribution over the action space produced by $\textcolor{myred}{\pi'}$ should approximate that of $\textcolor{mygreen}{\pi}$ as closely as possible.
@@ -56,11 +56,10 @@ This network is composed of two components: an encoder and a decoder, respective
 The encoder $\textcolor{myblue}{f_{enc}}$ maps the observation $O$ to the embedding.
 The decoder, which reconstructs the action distribution parameters from the embedding.
 
-To train $\textcolor{myred}{\pi'}$ to accurately replicate the action distribution, we define a global loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
+To train $\textcolor{myred}{\pi'}$ to accurately replicate the action distribution, we define a loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
 This loss, defined in Equation~\eqref{eq:car_loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.
 In practice, this function does not need to be explicitly defined, as neural policies directly output the parameters of the action distribution.
 Once training is complete, this loss ensures that $\textcolor{myred}{\pi'}$ closely approximates the behavior of the original policy $\textcolor{mygreen}{\pi}$.
-Figure~\ref{fig:illustration_method} summarizes this overall procedure.
 
 \begin{align}
     \min_{\Theta} \sum_{O \in \mathcal{O}} \mathcal{L} \left( O \right) 
@@ -72,13 +71,13 @@ Figure~\ref{fig:illustration_method} summarizes this overall procedure.
     \label{eq:car_loss}
 \end{align}
 
-We denote by $\textcolor{myblue}{\mathcal{E}}$ the set of embeddings obtained by applying $\textcolor{myblue}{f_{enc}}$ to a subset of observations $\mathbb{O} \subseteq \mathcal{O}$.
-
+Once training is complete, we can identify clusters within the \gls{ls}.
+To do so, we denote by $\textcolor{myblue}{\mathcal{E}}$ the set of embeddings obtained by applying $\textcolor{myblue}{f_{enc}}$ to a subset of observations $\mathbb{O} \subseteq \mathcal{O}$.
 On the set $\textcolor{myblue}{\mathcal{E}}$, we use a clustering function $f_{\mathrm{clust}}$ to partition the point cloud of embedded observations into distinct clusters.
 Each observation is assigned a cluster label based on its proximity in the \gls{ls}, resulting in the clustering $\mathcal{C}$.
-Algorithm~\ref{alg:car} summarizes the complete \gls{car} procedure.
 
-Figure~\ref{fig:space_invaders_projection} provides an illustration of the \gls{car} method.
+Figure~\ref{fig:illustration_method} and Algorithm~\ref{alg:car} summarize the complete \gls{car} procedure.
+Figure~\ref{fig:space_invaders_projection} illustrates the analysis of a latent space obtained by applying the \gls{car} method.
 The point cloud shows a two-dimensional projection of the \gls{ls} of a surrogate policy trained on Space Invaders.
 The two-dimensional projection is used only for visualization, while the clusters are computed in the original high-dimensional \gls{ls}.
 Colors indicate the resulting clusters and their corresponding observations.
