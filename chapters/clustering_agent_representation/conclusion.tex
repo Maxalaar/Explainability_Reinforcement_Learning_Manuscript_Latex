@@ -1,30 +1,29 @@
 \section{Conclusion}
 \label{sec:clustering_agent_representation_conclusion}
 
-Taken together, the high \AbstractionScoreName and the stable \ClusteringUniversalityName obtained across all five environments provide empirical support for the \RepresentationConvergenceHypothesisName.
-These findings suggest that the three hypotheses investigated in this manuscript, \MechanisticHypothesisName, \ConceptHypothesisName, and \RepresentationConvergenceHypothesisName, provide a promising research direction for understanding the structure of learned representations in \gls{rl} agents.
+The three hypotheses investigated in this manuscript, \MechanisticHypothesisName, \ConceptHypothesisName, and \RepresentationConvergenceHypothesisName, formed the conceptual basis for the development of \gls{car}.
+The experiments conducted with \gls{car} provide empirical support for these hypotheses, with the high \AbstractionScoreName and stable \ClusteringUniversalityName obtained across all environments.
+These findings suggest that this hypothesis-driven approach provides a promising direction for understanding the structure of learned representations in \gls{rl} agents.
 
-Beyond these results, \gls{car} provides a general and automated framework for analysing agent representations.
+Beyond its role as an experimental framework, \gls{car} provides a general and automated method for analysing agent representations.
 Both the analysis procedure and the metrics are fully automated, requiring no manual intervention or environment-specific adjustments.
-This makes \gls{car} a general-purpose method that can be applied to a wide range of \gls{rl} settings while providing a data-driven characterization of the structure of learned representations.
+This makes \gls{car} a general method that can be applied to a wide range of \gls{rl} settings.
 
-However, these results should be interpreted with some caution.
-First, the experiments were conducted on a limited set of architectures and environments, and the broader robustness of the findings remains to be established.
-In addition, several methodological choices were made for simplicity, including the choice of the \gls{ls} layer, the Euclidean distance used to compare embeddings, and the K-means clustering algorithm.
-The influence of these choices on the discovered structure has not yet been systematically evaluated.
-Consequently, further experiments are needed to determine whether the observed convergence reflects the underlying \gls{cs} of the agents or is partly influenced by these methodological choices.
+However, several implementation choices were made for have not yet been evaluated.
+These include the \gls{nn} architectures, the \gls{nn} layer selected for analysis, the distance used to compare embeddings, and the clustering algorithm.
+Their impact should therefore be studied jointly to determine how changes in the analysis procedure affect the discovered \gls{cs}.
 
-A second major limitation concerns the semantic interpretation of the discovered clusters.
+A more fundamental limitation concerns the semantic interpretation of the clusters.
 While \gls{car} provides a quantitative description of the structure present in the agent's representations, the semantics assigned to individual clusters currently rely on manual interpretation.
-For example, the labels associated with the clusters in Figure~\ref{fig:semantic_granularity} represent our interpretation of the discovered structure.
-This process is time-consuming and potentially subjective, and it does not provide a systematic guarantee that the assigned semantics accurately describe the underlying agent behavior.
-Developing methods to automatically extract the semantics of each cluster, together with reliable metrics to evaluate the correctness of these interpretations, is therefore an important direction for future work.
+The labels associated with the clusters in Figure~\ref{fig:semantic_granularity} represent our interpretation of the discovered structure.
+This process is time-consuming and subjective.
+Developing methods to automatically extract the semantics of each cluster is therefore an important direction for future work.
+
+More broadly, when considering \gls{car} within the field of explainability, it is important to emphasize that substantial work remains to be done.
+The results presented in this chapter show that \gls{car} can provide information about the concepts represented in the agent's \gls{ls}, which can therefore be considered an explanation in the sense defined in Section~\ref{sec:explanation}.
+How these explanations can be used to support validation, diagnosis, or certification remains to be established \ref{explainability_reinforcement_learning}.
 
 These limitations directly motivate several avenues for future research.
-First, extending \gls{car} to other architectures and environments, including continuous-control and real-world domains, would provide a stronger test of the generality of the observed convergence.
-Second, systematically studying the impact of the selected \gls{ls} layer, distance measures, and clustering algorithms would clarify how much the discovered structure depends on these methodological choices.
-Alternative clustering paradigms, such as density-based or hierarchical approaches, could also provide complementary views of the underlying representation structure.
-Finally, automating cluster interpretation and developing human-centered evaluation protocols would strengthen both the semantic validity and the practical relevance of the resulting explanations.
-
-Overall, \gls{car} provides a scalable, data-driven, and quantitatively grounded framework for studying the structure of agent representations.
-By revealing stable and interpretable structures across multiple environments, it constitutes a step toward the intrinsic, mechanistic explainability advocated in this manuscript.
+Studying the impact of the selected \gls{ls} layer, distance measures, and clustering algorithms would clarify how much the discovered structure depends on these methodological choices.
+Automating cluster interpretation and developing human-centered evaluation protocols would strengthen semantic validity of the resulting explanations.
+Finally, connecting \gls{car} explanations more directly to the agent's decisions and failures would help determine how they can support the broader objectives of explainability.
