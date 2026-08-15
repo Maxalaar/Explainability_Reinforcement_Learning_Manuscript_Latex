@@ -35,9 +35,20 @@ This indicates that the clusters formed in the \gls{ls} are not mere reflections
 
 \input{figures/clustering_agent_representation/clustering_universality_curves.tex}
 
+\input{figures/clustering_agent_representation/semantic_granularity.tex}
+
 Figure~\ref{fig:clustering_universality_curves} reports the evolution of \ClusteringUniversalityName with respect to the number of clusters.
 From three clusters onward, all curves stabilize around $0.5$ in every environment.
 Since \ClusteringUniversalityName is computed from the \gls{ari}, this result indicates a strong similarity in the clustering of the \gls{ls} across surrogate policies within each environment \cite{amezquita2020orchestrating}, regardless of the number of clusters chosen.
+This stability indicates that there is no single optimal number of clusters for explaining an agent's policy.
+This raises the question of how many clusters should be selected to perform an analysis of \gls{ls}.
+Our analysis suggests that this depends on the desired level of granularity.
 
-The combination of a high \AbstractionScoreName and a strong \ClusteringUniversalityName indicates that the latent clusters are both highly similar across independently trained surrogate policies and distinct from those obtained in the raw observation or action space.
-These results are consistent with the \RepresentationConvergenceHypothesisName and suggest that the \gls{ls} may capture high-level concepts that are relevant for analyzing agent behavior.
+With fewer clusters, \gls{car} highlights broad strategic patterns.
+For instance, in the Mario Bros environment, the two main groups correspond to whether the POW block is present (highlighted in red in Figure~\ref{fig:semantic_granularity}A) or not.
+This is particularly interesting, as the use of the POW block is a key determinant of strategy in this environment \cite{mario_bros_atari_2600}.
+
+With a larger number of clusters, the analysis captures more fine-grained tactical behaviors, such as `Attacking the left.'' and `Navigating through the level.'' (see Figure~\ref{fig:semantic_granularity}B).
+
+Both perspectives are valid, depending on whether the goal is to study strategic or tactical behaviors.
+Similar interpretable structures can be observed across all evaluated environments.
