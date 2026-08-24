@@ -30,7 +30,7 @@ To develop an intuition, Figure~\ref{fig:simple_gradient_descent} illustrates \g
 The point $\theta_1$ represents the initial parameter values, with $w_1$ and $w_2$ randomly initialized, and the subsequent points, from $\theta_2$ to $\theta_6$, represent the successive updates produced by the optimization procedure, progressively moving the trajectory toward the minimum of the loss function.
 The mechanism producing these updates is detailed in the remainder of this section.
 
-\input{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
+% \input{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
 
 This example provides a simplified illustration of the principle underlying gradient-based optimization.
 In \gls{dl}, the loss depends on the network parameters $\theta$ only indirectly, through its predictions, and $\theta$ can contain millions or even billions of parameters, resulting in a much higher-dimensional and complex loss landscape.
@@ -42,16 +42,46 @@ We now detail this procedure step by step, in the general setting of an arbitrar
 
 The first step of \gls{sgd} is to randomly initialize the parameter vector $\theta \in \mathbb{R}^P$ for a given network architecture $\hat{f}$.
 We denote this initial state by $\theta^{(1)}$.
-The goal is then to iteratively modify this vector in order to improve the network's ability to approximate the target function.
+The goal is to iteratively modify this vector in order to improve the network's ability to approximate the target function.
 For a given example $(x^{(i)}, y^{(i)})$, this requires determining how a change in each parameter affects the loss $\mathcal{L}$.
+
+To understand how these effects can be computed, we first consider the chain rule for a composition of two functions.
+Let $g$ be a function of $x$ and $f$ a function of $g(x)$, such that the resulting function can be written as $f(g(x))$.
+The chain rule states that the derivative of this composition is given by:
+\begin{equation}
+\frac{d}{dx} f(g(x)) = \frac{df}{dg}\frac{dg}{dx}.
+\label{eq:chain_rule_simple}
+\end{equation}
+
+This expression shows that the effect of a change in $x$ on the final output can be obtained by multiplying the local effects along the sequence of functions.
+In a \gls{nn}, the quantities passed between layers are generally vectors rather than single scalar values.
+The corresponding generalization of the derivative is the Jacobian matrix, which contains the partial derivatives of each output component with respect to each input component.
+For a function $\mathbf{f}:\mathbb{R}^n \rightarrow \mathbb{R}^m$, its Jacobian is defined as
+\begin{equation}
+J_{\mathbf{f}} =
+\begin{bmatrix}
+\frac{\partial f_1}{\partial x_1} & \cdots & \frac{\partial f_1}{\partial x_n} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial f_m}{\partial x_1} & \cdots & \frac{\partial f_m}{\partial x_n}
+\end{bmatrix}.
+\label{eq:jacobian}
+\end{equation}
+Each entry therefore describes how one output component changes when one input component is slightly modified.
+The Jacobian can consequently be viewed as the vector-valued counterpart of the ordinary derivative and provides the local information required to propagate changes through vector-valued functions.
 
 Recall from Equation~\ref{eq:layer_recursive} that the network output is obtained through a sequence of layer activations $\mathbf{h}^{(1)}, \dots, \mathbf{h}^{(L)}$, with each layer depending only on the activations of the preceding layer.
 As a result, a parameter $w_k$ belonging to layer $l$ affects the loss indirectly through a chain of dependencies.
 More precisely, $w_k$ first influences $\mathbf{h}^{(l)}$, which in turn influences $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
 
-The chain rule allows this dependency to be expressed as a product of local derivatives along the network:
+Applying the chain rule to these successive dependencies gives
 \begin{equation}
-\frac{\partial \mathcal{L}}{\partial w_k} = \frac{\partial \mathcal{L}}{\partial \mathbf{h}^{(L)}} \cdot \frac{\partial \mathbf{h}^{(L)}}{\partial \mathbf{h}^{(L-1)}} \cdots \frac{\partial \mathbf{h}^{(l+1)}}{\partial \mathbf{h}^{(l)}} \cdot \frac{\partial \mathbf{h}^{(l)}}{\partial w_k},
+\frac{\partial \mathcal{L}}{\partial w_k}
+=
+\frac{\partial \mathcal{L}}{\partial \mathbf{h}^{(L)}}
+\frac{\partial \mathbf{h}^{(L)}}{\partial \mathbf{h}^{(L-1)}}
+\cdots
+\frac{\partial \mathbf{h}^{(l+1)}}{\partial \mathbf{h}^{(l)}}
+\frac{\partial \mathbf{h}^{(l)}}{\partial w_k},
 \label{eq:chain_rule}
 \end{equation}
 where each term $\frac{\partial \mathbf{h}^{(j+1)}}{\partial \mathbf{h}^{(j)}}$ is the Jacobian matrix of layer $j+1$ with respect to its input.
@@ -61,9 +91,9 @@ This procedure is known as backpropagation and provides an efficient way of comp
 
 Once these partial derivatives have been computed, they can be collected into a single vector called the gradient of the loss with respect to the parameters:
 \begin{equation}
-\nabla_{\theta} \mathcal{L}(\hat{f}*{\theta}(x^{(i)}), y^{(i)}) =
+\nabla_{\theta} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}) =
 \left[
-\frac{\partial \mathcal{L}(\hat{f}*{\theta}(x^{(i)}), y^{(i)})}{\partial w_1},
+\frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_1},
 \dots,
 \frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_P}
 \right].
@@ -101,7 +131,7 @@ Having established how \gls{sgd} updates the parameters, a natural question is w
 It has been mathematically shown that gradient descent applied to a convex loss with respect to the parameters converges to a global optimum, independently of the initialization.
 However, \gls{nn} training involves highly non-convex loss surfaces, so the optimization trajectory becomes strongly dependent on the initial conditions, as illustrated in Figure~\ref{fig:multiple_gradient_descents_non_convex}, where different starting points lead to distinct local minima on standard non-convex functions.
 
-\input{figures/deepl_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
+% \input{figures/deepl_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
 
 Despite the lack of theoretical guarantees of convergence to a global optimum in this setting, the simple procedure of random initialization followed by iterative gradient-based updates is sufficient in practice to train highly complex \gls{nn}.
 This empirical success is often attributed to the expressive power of \gls{nn}s, even though a complete theoretical understanding of this phenomenon remains an open question.
