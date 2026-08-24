@@ -11,12 +11,20 @@ Mathematically, this objective is expressed as:
 
 However, the \gls{nn} $\hat{f}$ used to approximate the target function $f$ is highly complex.
 It involves a large number of parameters as well as many nonlinear components.
-As a result, an exact solution cannot be found by directly studying the properties of the function.
-So, one must therefore rely on approximate methods to optimize \gls{nn}s.
+As a result, the optimum cannot be determined analytically by directly studying the properties of the function.
+Instead, approximate optimization methods are required to find suitable parameter values for \gls{nn}s.
 The class of algorithms used for this optimization is known as gradient descent methods.
 Numerous variants of gradient descent have been developed for \gls{nn} training, each designed to improve specific aspects of the optimization process.
 For simplicity, the focus here is on \gls{sgd} with a batch size of 1.
 As in previous cases, this choice is made because this setting captures the essential intuition behind the training method.
+
+This section is organized into four steps.
+The first introduces the main intuition through a simple example.
+The second formalizes the general procedure by deriving the gradient of the loss using the chain rule.
+The third shows how this gradient is used to update the network parameters.
+The final step discusses the convergence properties of the resulting algorithm.
+
+\subsection{Intuition}
 
 To develop an intuition, Figure~\ref{fig:simple_gradient_descent} illustrates \gls{sgd} applied to the simple convex loss function $\mathcal{L}(w_1,w_2)=w_1^2+w_2^2$, where the red path shows the parameter updates converging to the minimum.
 The point $\theta_1$ represents the initial parameter values, with $w_1$ and $w_2$ randomly initialized, and the subsequent points, from $\theta_2$ to $\theta_6$, represent the successive updates produced by the optimization procedure, progressively moving the trajectory toward the minimum of the loss function.
@@ -25,30 +33,43 @@ The mechanism producing these updates is detailed in the remainder of this secti
 \input{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
 
 This example provides a simplified illustration of the principle underlying gradient-based optimization.
-In practice, the loss depends on the network parameters $\theta$ only indirectly, through its predictions, and $\theta$ can contain millions or even billions of parameters, resulting in a much higher-dimensional and more complex loss landscape than the two-dimensional example considered above.
-Nevertheless, the same fundamental principle remains at the core of gradient-based optimization, with local gradient information being used to iteratively adjust the parameters $\theta$ in order to reduce the loss.
+In \gls{dl}, the loss depends on the network parameters $\theta$ only indirectly, through its predictions, and $\theta$ can contain millions or even billions of parameters, resulting in a much higher-dimensional and complex loss landscape.
+
+Nevertheless, the same principle remains at the core of gradient-based optimization, with local gradient information being used to iteratively adjust the parameters $\theta$ in order to reduce the loss.
 We now detail this procedure step by step, in the general setting of an arbitrary architecture $\hat{f}$.
+
+\subsection{Gradient}
 
 The first step of \gls{sgd} is to randomly initialize the parameter vector $\theta \in \mathbb{R}^P$ for a given network architecture $\hat{f}$.
 We denote this initial state by $\theta^{(1)}$.
 The goal is then to iteratively modify this vector in order to improve the network's ability to approximate the target function.
 
-To determine how to update the parameters, the effect of small variations in each parameter on the loss $\mathcal{L}$ is studied.
-To analyze how parameter variations affect the loss, a fundamental mathematical tool known as the gradient is used.
-It is defined as the collection of partial derivatives of a function with respect to its variables.
-The gradient measures the effect of a small variation of each parameter on the loss.
-
-In our setting, the objective is to understand, for a given example $(x^{(i)}, y^{(i)})$, how the parameters should be adjusted so that the \gls{nn} prediction $\hat{y}^{(i)}$ becomes closer to the true output $y^{(i)}$.
-To achieve this, the partial derivatives of the loss function $\mathcal{L}$ with respect to each parameter vector $\theta$ are computed:
+For a given example $(x^{(i)}, y^{(i)})$, the objective is to determine how the parameters should be adjusted so that the \gls{nn} prediction $\hat{y}^{(i)}$ becomes closer to the target $y^{(i)}$.
+To do so, the effect of small variations in each parameter on the loss $\mathcal{L}$ is measured using the gradient, which is defined as the collection of partial derivatives of the loss with respect to each parameter:
 \begin{equation}
 \nabla_{\theta} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}) = \left[ \frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_1}, \dots, \frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_P} \right].
 \label{eq:gradient}
 \end{equation}
 
+Each partial derivative indicates how the loss changes when the corresponding parameter is slightly modified, providing the information needed to determine how the parameters should be updated.
+
 Since both the \gls{nn} and the loss function are compositions of differentiable functions, these derivatives can be efficiently computed using the chain rule.
+Recall from Equation~\ref{eq:layer_recursive} that the network output is obtained through a sequence of layer activations $\mathbf{h}^{(1)}, \dots, \mathbf{h}^{(L)}$, each depending only on the activations of the preceding layer.
+As a result, a parameter $w_k$ belonging to layer $l$ affects the loss only indirectly, through this chain of dependencies: $w_k$ first influences $\mathbf{h}^{(l)}$, which in turn influences $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
+The chain rule states that the overall derivative is obtained by multiplying the derivatives along this chain:
+\begin{equation}
+\frac{\partial \mathcal{L}}{\partial w_k} = \frac{\partial \mathcal{L}}{\partial \mathbf{h}^{(L)}} \cdot \frac{\partial \mathbf{h}^{(L)}}{\partial \mathbf{h}^{(L-1)}} \cdots \frac{\partial \mathbf{h}^{(l+1)}}{\partial \mathbf{h}^{(l)}} \cdot \frac{\partial \mathbf{h}^{(l)}}{\partial w_k},
+\label{eq:chain_rule}
+\end{equation}
+where each term $\frac{\partial \mathbf{h}^{(j+1)}}{\partial \mathbf{h}^{(j)}}$ is the Jacobian matrix of layer $j+1$ with respect to its input.
+Every factor in this product is a local derivative between two consecutive layers, which is straightforward to compute since Equation~\ref{eq:layer_recursive} gives $\mathbf{h}^{(l)}$ as an explicit, elementary function of $\mathbf{h}^{(l-1)}$.
+The chain rule therefore breaks down the otherwise intractable differentiation of the full composite function $\hat{f}_{\theta}$ into a sequence of simple, local computations propagated across the layers of the network, which is precisely the principle underlying the backpropagation algorithm.
+
 Each component of the gradient $\frac{\partial \mathcal{L}(\dots)}{\partial w_k} \; \forall k \in [1, \dots, P]$ indicates how a small increase in the corresponding parameter $w_k$ affects the loss.
 More precisely, for a given parameter, a positive value in the corresponding gradient component indicates that increasing this parameter will locally increase the loss.
 Conversely, a negative value indicates that increasing it will locally decrease the loss.
+
+\subsection{Update rule}
 
 Now that information is available on how changes in the parameters affect the loss, the objective is to minimize it.
 To do so, the parameters are updated in the direction opposite to the gradient.
@@ -69,6 +90,9 @@ Algorithm~\ref{alg:stochastic_gradient_descent} summarizes this whole training p
 
 \input{algorithms/deep_learning/stochastic_gradient_descent.tex}
 
+\subsection{Convergence Properties}
+
+Having established how \gls{sgd} updates the parameters, a natural question is whether this procedure is guaranteed to converge.
 It has been mathematically shown that gradient descent applied to a convex loss with respect to the parameters converges to a global optimum, independently of the initialization.
 However, \gls{nn} training involves highly non-convex loss surfaces, so the optimization trajectory becomes strongly dependent on the initial conditions, as illustrated in Figure~\ref{fig:multiple_gradient_descents_non_convex}, where different starting points lead to distinct local minima on standard non-convex functions.
 
