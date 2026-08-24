@@ -45,6 +45,12 @@
 \usepackage{dblfloatfix}
 \usepackage{placeins}
 \usepackage{cuted}
+% Never allow more than one float (figure/table) per page, to avoid two figures bunching together
+\setcounter{topnumber}{1}
+\setcounter{bottomnumber}{0}
+\setcounter{totalnumber}{1}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.1}
 
 % Algorithms
 \usepackage[ruled,vlined,linesnumbered]{algorithm2e}

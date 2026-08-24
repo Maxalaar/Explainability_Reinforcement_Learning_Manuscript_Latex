@@ -21,10 +21,11 @@ In order to quantify these two aspects, the dataset is split into two subsets:
 \end{itemize}
 
 When training is completed, the first step is to verify that the model performs well on the data it was trained on.
-To do so, the average loss on the training set, denoted $\bar{\ell}_{\text{train}}$, is studied:
-\[
-\bar{\ell}_{\text{train}} = \frac{1}{|\mathcal{D}_{\text{train}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{train}}} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})
-\]
+To do so, the average loss on the training set, denoted $\bar{\ell}_{\text{train}}$, is studied. This is an instance of the performance measure $P$ defined in Equation~\eqref{eq:performance_measure}, restricted to $\mathcal{D}_{\text{train}}$:
+\begin{equation}
+\bar{\ell}_{\text{train}} = \frac{1}{|\mathcal{D}_{\text{train}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{train}}} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}).
+\label{eq:train_loss}
+\end{equation}
 
 If $\bar{\ell}_{\text{train}}$ is not sufficiently low, this means that the model has not been able to learn the task.
 It is not necessary to go further in the analysis of the model's quality.
@@ -38,9 +39,10 @@ Their selection is often costly and remains a challenging problem in \gls{dl}.
 Assuming now that the model achieves satisfactory performance on the training dataset $\mathcal{D}_{\text{train}}$.
 We must now study its ability to generalize.
 To do so, the corresponding average loss on $\mathcal{D}_{\text{test}}$ is computed:
-\[
-\bar{\ell}_{\text{test}} = \frac{1}{|\mathcal{D}_{\text{test}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{test}}} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})
-\]
+\begin{equation}
+\bar{\ell}_{\text{test}} = \frac{1}{|\mathcal{D}_{\text{test}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{test}}} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}).
+\label{eq:test_loss}
+\end{equation}
 
 If $\bar{\ell}_{\text{test}} \gg \bar{\ell}_{\text{train}}$, the model fails to generalize.
 This situation most often arises due to a phenomenon known as overfitting.

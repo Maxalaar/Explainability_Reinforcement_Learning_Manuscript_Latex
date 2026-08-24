@@ -5,13 +5,12 @@ Rather than modeling information processing through a set of explicit rules, the
 Their architecture is composed of a large number of simple computational units, which operate on partial representations and exchange signals across the network.
 A complex pattern of weighted connections between these units enables the transformation and propagation of information.
 
-To simplify the presentation throughout this chapter, the focus is placed on the \gls{mlp} architecture.
-Although more specialized architectures exist, the \gls{mlp} forms a fundamental building block of modern \gls{dl}.
-Indeed, most of the essential mechanisms of \gls{dl} are present in it, making it a particularly suitable framework for introducing key concepts.
+To simplify the presentation, the focus is placed on the \gls{mlp} architecture.
+Although more specialized architectures exist, the \gls{mlp} forms a fundamental building block of \gls{dl}.
+Indeed, all the essential mechanisms of \gls{dl} are present in it, making it a particularly suitable framework for introducing key concepts.
+We therefore begin by examining the artificial neuron, the fundamental computational unit underlying the \gls{mlp}.
 
 \subsection{Neurons}
-
-\input{figures/deepl_learning/artificiale_neurone.tex}
 
 The artificial neuron is the basic building block of \gls{nn}.
 It is through these units that all computations within the network are carried out.
@@ -31,9 +30,10 @@ A neuron is characterized by:
 
 The activation of a neuron is determined by a weighted combination of its input signals, to which a bias is added, followed by the application of a nonlinear activation function.
 Mathematically, for a neuron receiving inputs $(a_1, \dots, a_n)$, its activation $a$ is given by:
-\[
+\begin{equation}
 a = \sigma\left(\sum_{i=1}^{n} w_i a_i + b\right),
-\]
+\label{eq:neuron_activation}
+\end{equation}
 where:
 \begin{itemize}
 \item $w_i$ is the weight associated with the $i$-th incoming connection,
@@ -47,6 +47,8 @@ The magnitude of a weight $w$ (relative to the others) indicates how strongly a 
 A large positive weight means that a high activation in the connected neuron tends to increase the activation of the receiving neuron, whereas a negative weight implies the opposite effect.
 In this way, the weights modulate the strength and nature of the connections between neurons, thereby defining the overall pattern of interaction within the network.
 
+\input{figures/deepl_learning/artificiale_neurone.tex}
+
 The activation function $\sigma$ models how a neuron transforms incoming signals into its output activation.
 Originally, this function was inspired by biological neurons, with the goal of mimicking the firing behavior of organic cells.
 However, modern \gls{dl} no longer relies on this biological interpretation.
@@ -55,12 +57,12 @@ Nonlinearity is a crucial property, since without it a \gls{nn} would reduce to 
 
 \subsection{Layers}
 
-\input{figures/deepl_learning/general_architecture_multilayer_perceptron.tex}
-
 In \gls{mlp} architectures, neurons are organized into successive layers, as illustrated in Figure~\ref{fig:general_architecture_multilayer_perceptron}.
 This layered structure determines how neurons are connected.
 In this setting, each neuron receives inputs from all neurons in the preceding layer and sends its output to all neurons in the following layer.
-Consequently, neurons within the same layer do not interact with each other.
+As a result, neurons within the same layer do not interact with each other.
+
+\input{figures/deepl_learning/general_architecture_multilayer_perceptron.tex}
 
 Three types of layers are distinguished:
 \begin{itemize}
@@ -80,13 +82,15 @@ Such a representation enables efficient parallel computation and forms the basis
 Within this framework, it is useful to introduce the notion of layer activations.
 The activation of a layer corresponds to the activations of all its neurons, organized into a vector.
 For a layer $l$ composed of $n_l$ neurons, the activations are given by:
-\[
+\begin{equation}
 \mathbf{h}^{(l)} = [a_1^{(l)}, \dots, a_{n_l}^{(l)}].
-\]
+\label{eq:layer_activation_vector}
+\end{equation}
 Using this formulation, the interaction between two consecutive layers can be written compactly as:
-\[
+\begin{equation}
 \mathbf{h}^{(l)} = \sigma^{(l)}\left(\mathbf{W}^{(l)} \mathbf{h}^{(l-1)} + \mathbf{b}^{(l)}\right),
-\]
+\label{eq:layer_interaction}
+\end{equation}
 where:
 \begin{itemize}
 \item $\mathbf{h}^{(l-1)}$ represents the activations vector of the previous layer,
@@ -110,24 +114,27 @@ An entire chapter of this manuscript is devoted to studying the information that
 \subsection{Network}
 
 With a layer-wise representation, the propagation of information can be described as a sequence of transformations applied from the input layer (indexed $1$) to the output layer (indexed $L$):
-\[
+\begin{equation}
 \hat{f}(x) = \mathbf{h}^{(L)} = \sigma^{(L)}\left(\mathbf{W}^{(L)} \sigma^{(L-1)}\left(\dots \sigma^{(1)}\left(\mathbf{W}^{(1)} x + \mathbf{b}^{(1)}\right) \dots \right) + \mathbf{b}^{(L)}\right) = \hat{y}.
-\]
+\label{eq:network_full}
+\end{equation}
 
 For a more compact description of information propagation, the layer activations are defined recursively as:
-\[
-\mathbf{h}^{(l)} = 
+\begin{equation}
+\mathbf{h}^{(l)} =
 \begin{cases}
 x & \text{if } l = 1,\\[4pt]
 \sigma^{(l)}\left(\mathbf{W}^{(l)} \mathbf{h}^{(l-1)} + \mathbf{b}^{(l)}\right) & \text{if } 2 \le l \le L.
 \end{cases}
-\]
+\label{eq:layer_recursive}
+\end{equation}
 
 To simplify notation, it is convenient to group all parameters of the network into a single set.
 The model parameters are thus denoted by:
-\[
+\begin{equation}
 \theta = \{\mathbf{W}^{(l)}, \mathbf{b}^{(l)}\}_{l=1}^{L}.
-\]
+\label{eq:parameters}
+\end{equation}
 
 In this manuscript, $\theta$ is considered as a vector in $\mathbb{R}^P$, where $P$ denotes the total number of parameters, such that $\theta = [w_1, \dots, w_P]$.
 The notation $\hat{f}_{\theta}$ expresses the dependence of the \gls{nn} on its parameters.
@@ -137,3 +144,4 @@ However, this also increases computational cost and training time.
 It is important to distinguish between the architecture and the parameters of a \gls{nn}.
 When referring to the architecture of $\hat{f}$, the number of layers, the number of neurons per layer, and the choice of activation functions are considered.
 The parameters correspond to $\theta$, which controls the strength of the connections between neurons.
+The following sections examine how these parameters can be adjusted to obtain a better approximation of the target function.
