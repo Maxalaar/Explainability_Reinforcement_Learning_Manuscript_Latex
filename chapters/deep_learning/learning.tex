@@ -43,7 +43,7 @@ We now detail this procedure step by step, in the general setting of an arbitrar
 The first step of \gls{sgd} is to randomly initialize the parameter vector $\theta \in \mathbb{R}^P$ for a given network architecture $\hat{f}$.
 We denote this initial state by $\theta^{(1)}$.
 The goal is to iteratively update this vector so that the network gets better at approximating the target function.
-To do this, we need to know, for each example $(x^{(i)}, y^{(i)})$, how a small change in each parameter affects the loss $\mathcal{L}$.
+To do this, we need to know, for each example $(x^{(i)}, y^{(i)})$, how a small change in each parameter affects the loss $\mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$.
 
 Since the quantities involved in a \gls{nn} are functions of several variables, we rely on the Jacobian matrix, the generalization of the derivative to functions with several inputs and outputs.
 For a function $\mathbf{f}\colon\mathbb{R}^n \rightarrow \mathbb{R}^m$, we denote by $J_{\mathbf{f}}(\mathbf{x})$ the Jacobian of $\mathbf{f}$ evaluated at $\mathbf{x}$, which collects the partial derivatives of every output component with respect to every input component:
@@ -63,25 +63,26 @@ J_{\mathbf{f} \circ \mathbf{g}}(\mathbf{x}) = J_{\mathbf{f}}(\mathbf{g}(\mathbf{
 \label{eq:chain_rule_generic}
 \end{equation}
 
-A network computes its output through a sequence of layer activations $\mathbf{h}^{(1)}, \dots, \mathbf{h}^{(L)}$, with each layer depending only on the one before it.
-As a result, a parameter $w_k$ belonging to layer $l$ affects the loss through a chain of dependencies, it first changes $\mathbf{h}^{(l)}$, which changes $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
+A network computes its output through a sequence of layer activations $\mathbf{h}^{(1)}, \dots, \mathbf{h}^{(L)}$, with each layer depending only on the one before it, and with $\mathbf{h}^{(L)} = \hat{f}_{\theta}(x^{(i)})$.
+As a result, a parameter $w_k$ belonging to layer $l$ affects the loss $\mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$ through a chain of dependencies, it first changes $\mathbf{h}^{(l)}$, which changes $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
+Since $x^{(i)}$ and $y^{(i)}$ are fixed for a given example, the loss can be viewed as a function of $w_k$ alone, and we seek the effect of a small change in $w_k$ on this value.
 Applying the chain rule across this chain gives
 \begin{equation}
-\frac{\partial \mathcal{L}}{\partial w_k}
+\frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_k}
 =
-J_{\mathcal{L}}(\mathbf{h}^{(L)})
+J_{\mathcal{L}}(\mathbf{h}^{(L)}, y^{(i)})
 \, J_{\mathbf{h}^{(L)}}(\mathbf{h}^{(L-1)})
 \cdots
 J_{\mathbf{h}^{(l+1)}}(\mathbf{h}^{(l)})
 \, J_{\mathbf{h}^{(l)}}(w_k),
 \label{eq:chain_rule}
 \end{equation}
-where $J_{\mathbf{h}^{(j+1)}}(\mathbf{h}^{(j)})$ denotes the Jacobian of layer $j+1$ with respect to its input $\mathbf{h}^{(j)}$, and $J_{\mathbf{h}^{(l)}}(w_k)$ denotes the Jacobian of layer $l$ with respect to $w_k$.
+where $J_{\mathcal{L}}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$ denotes the Jacobian of $\mathcal{L}$ with respect to its first argument, evaluated at $(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$, and each subsequent $J_{\mathbf{h}^{(j+1)}}(\mathbf{h}^{(j)})$ denotes the Jacobian of layer $j+1$ with respect to its input $\mathbf{h}^{(j)}$.
 Each factor is therefore the Jacobian of one layer with respect to its input, a purely local computation.
 Multiplying these local Jacobians together propagates the effect of $w_k$ all the way to the loss.
 This layer-by-layer propagation is what we call backpropagation.
 
-Once we can compute $\frac{\partial \mathcal{L}}{\partial w_k}$ for every parameter, we stack all $P$ of these values into one vector, called the gradient of the loss with respect to the parameters:
+Once we can compute $\frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_k}$ for every parameter, we stack all $P$ of these values into one vector, called the gradient of the loss with respect to the parameters:
 \begin{equation}
 \nabla_{\theta} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}) =
 \left[
