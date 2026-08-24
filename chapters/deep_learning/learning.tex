@@ -3,7 +3,6 @@
 Now that the structure of a \gls{nn} has been detailed, the next step is to examine how its parameters are adjusted to accomplish the assigned task.
 This brings us to the core of \gls{dl}, namely the learning process itself.
 As a reminder, the objective of training a \gls{nn} is to adjust its parameters so that the network provides a good approximation of the target function.
-That is, for a given architecture $\hat{f}$, the goal is to find the set of parameters $\theta$ that best approximates the target function $f$.
 Mathematically, this objective is expressed as:
 \begin{equation}
 \min_{\theta} \frac{1}{N} \sum_{i=1}^{N} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}).
@@ -20,23 +19,15 @@ For simplicity, the focus here is on \gls{sgd} with a batch size of 1.
 As in previous cases, this choice is made because this setting captures the essential intuition behind the training method.
 
 To develop an intuition, Figure~\ref{fig:simple_gradient_descent} illustrates \gls{sgd} applied to the simple convex loss function $\mathcal{L}(w_1,w_2)=w_1^2+w_2^2$, where the red path shows the parameter updates converging to the minimum.
-The point $\theta_1$ represents the initial parameter values, with $w_1$ and $w_2$ randomly initialized.
-The subsequent points, from $\theta_2$ to $\theta_6$, represent successive updates of these parameters as the optimization procedure seeks to minimize the loss function.
-At each iteration, the parameters are updated such that the value of the loss function decreases, progressively moving the trajectory toward the minimum.
-Each update relies only on information about the loss function around the current parameter values.
-The parameters are then adjusted according to the update rule given in Equation~\ref{eq:gradient_descent_update}, which will be introduced in detail in the following section.
-This process is repeated iteratively, with each update aiming to reduce the loss and move the parameters closer to a minimum.
+The point $\theta_1$ represents the initial parameter values, with $w_1$ and $w_2$ randomly initialized, and the subsequent points, from $\theta_2$ to $\theta_6$, represent the successive updates produced by the optimization procedure, progressively moving the trajectory toward the minimum of the loss function.
+The mechanism producing these updates is detailed in the remainder of this section.
 
 \input{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
 
 This example provides a simplified illustration of the principle underlying gradient-based optimization.
-In the case of \gls{nn}, the training objective is defined by Equation~\ref{eq:training_objective}, where the parameters $\theta$ are optimized to minimize the loss function.
-The loss function is defined as the \gls{mse} between the network predictions and the corresponding target values, as given in Equation~\ref{eq:mse}.
-The loss therefore depends on the network parameters indirectly through its predictions, making the resulting optimization problem considerably more complex than the simple two-dimensional example considered above.
-In practical \gls{nn} training, the parameter vector $\theta$ can contain millions or even billions of parameters, resulting in a high-dimensional loss landscape.
-Because the predictions are obtained through a sequence of nonlinear transformations across the network, the resulting loss function is non-convex and may contain multiple local minima, saddle points, and other complex structures.
-
+In practice, the loss depends on the network parameters $\theta$ only indirectly, through its predictions, and $\theta$ can contain millions or even billions of parameters, resulting in a much higher-dimensional and more complex loss landscape than the two-dimensional example considered above.
 Nevertheless, the same fundamental principle remains at the core of gradient-based optimization, with local gradient information being used to iteratively adjust the parameters $\theta$ in order to reduce the loss.
+We now detail this procedure step by step, in the general setting of an arbitrary architecture $\hat{f}$.
 
 The first step of \gls{sgd} is to randomly initialize the parameter vector $\theta \in \mathbb{R}^P$ for a given network architecture $\hat{f}$.
 We denote this initial state by $\theta^{(1)}$.
@@ -69,6 +60,7 @@ This leads us to the gradient descent update rule:
 \end{equation}
 
 where $\eta > 0$ is the learning rate, which controls the step size.
+This is precisely the rule that produced the trajectory shown in Figure~\ref{fig:simple_gradient_descent}, where each point $\theta_i$ was obtained by applying this update to the previous one.
 This parameter must remain small, as the gradient only provides reliable information in a local neighborhood of the current parameters.
 As a result, a single step is not sufficient to significantly reduce the loss, so the process is iterated many times.
 Producing a sequence of parameter vectors $\theta_1, \theta_2, \dots$ that progressively improve the model.
