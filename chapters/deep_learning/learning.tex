@@ -42,21 +42,11 @@ We now detail this procedure step by step, in the general setting of an arbitrar
 
 The first step of \gls{sgd} is to randomly initialize the parameter vector $\theta \in \mathbb{R}^P$ for a given network architecture $\hat{f}$.
 We denote this initial state by $\theta^{(1)}$.
-The goal is to iteratively modify this vector in order to improve the network's ability to approximate the target function.
-For a given example $(x^{(i)}, y^{(i)})$, this requires determining how a change in each parameter affects the loss $\mathcal{L}$.
+The goal is to iteratively update this vector so that the network gets better at approximating the target function.
+To do this, we need to know, for each example $(x^{(i)}, y^{(i)})$, how a small change in each parameter affects the loss $\mathcal{L}$.
 
-To understand how these effects can be computed, we first consider the chain rule for a composition of two functions.
-Let $g$ be a function of $x$ and $f$ a function of $g(x)$, such that the resulting function can be written as $f(g(x))$.
-The chain rule states that the derivative of this composition is given by:
-\begin{equation}
-\frac{d}{dx} f(g(x)) = \frac{df}{dg}\frac{dg}{dx}.
-\label{eq:chain_rule_simple}
-\end{equation}
-
-This expression shows that the effect of a change in $x$ on the final output can be obtained by multiplying the local effects along the sequence of functions.
-In a \gls{nn}, the quantities passed between layers are generally vectors rather than single scalar values.
-The corresponding generalization of the derivative is the Jacobian matrix, which contains the partial derivatives of each output component with respect to each input component.
-For a function $\mathbf{f}:\mathbb{R}^n \rightarrow \mathbb{R}^m$, its Jacobian is defined as
+When moving from a function of a single variable to a function of several variables, the notion of derivative must be generalized.
+For a function $\mathbf{f}\colon\mathbb{R}^n \rightarrow \mathbb{R}^m$, this generalization is given by the Jacobian matrix, which collects the partial derivatives of every output component with respect to every input component:
 \begin{equation}
 J_{\mathbf{f}} =
 \begin{bmatrix}
@@ -66,14 +56,19 @@ J_{\mathbf{f}} =
 \end{bmatrix}.
 \label{eq:jacobian}
 \end{equation}
-Each entry therefore describes how one output component changes when one input component is slightly modified.
-The Jacobian can consequently be viewed as the vector-valued counterpart of the ordinary derivative and provides the local information required to propagate changes through vector-valued functions.
+Each entry tells us how one output component reacts to a small change in one input component.
 
-Recall from Equation~\ref{eq:layer_recursive} that the network output is obtained through a sequence of layer activations $\mathbf{h}^{(1)}, \dots, \mathbf{h}^{(L)}$, with each layer depending only on the activations of the preceding layer.
-As a result, a parameter $w_k$ belonging to layer $l$ affects the loss indirectly through a chain of dependencies.
-More precisely, $w_k$ first influences $\mathbf{h}^{(l)}$, which in turn influences $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
+To compute this quantity for a composition of differentiable functions, such as $f(g(x))$, we use the chain rule, which states that the derivative of the composition is given by the product of the local derivatives along the chain:
+\begin{equation}
+\frac{d}{dx} f(g(x)) = \frac{df}{dg}\frac{dg}{dx}.
+\label{eq:chain_rule_simple}
+\end{equation}
+When $f$ and $g$ are vector-valued, this expression still holds, with the derivatives replaced by the corresponding Jacobian matrices.
 
-Applying the chain rule to these successive dependencies gives
+A network computes its output through a sequence of layer activations $\mathbf{h}^{(1)}, \dots, \mathbf{h}^{(L)}$, with each layer depending only on the one before it.
+As a result, a parameter $w_k$ belonging to layer $l$ affects the loss through a chain of dependencies.
+It first changes $\mathbf{h}^{(l)}$, which changes $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
+Applying the chain rule across this chain gives
 \begin{equation}
 \frac{\partial \mathcal{L}}{\partial w_k}
 =
@@ -84,12 +79,11 @@ Applying the chain rule to these successive dependencies gives
 \frac{\partial \mathbf{h}^{(l)}}{\partial w_k},
 \label{eq:chain_rule}
 \end{equation}
-where each term $\frac{\partial \mathbf{h}^{(j+1)}}{\partial \mathbf{h}^{(j)}}$ is the Jacobian matrix of layer $j+1$ with respect to its input.
-Each factor in this product describes a local relationship between two consecutive layers and can be computed directly from the operations defining the network.
-The chain rule therefore transforms the derivative of the complete network into a sequence of simpler local computations propagated across the layers.
-This procedure is known as backpropagation and provides an efficient way of computing how each parameter influences the loss.
+where each factor $\frac{\partial \mathbf{h}^{(j+1)}}{\partial \mathbf{h}^{(j)}}$ is the Jacobian of one layer with respect to the layer before it.
+Multiplying these local Jacobians together propagates the effect of $w_k$ all the way to the loss.
+This layer-by-layer propagation is what we call backpropagation.
 
-Once these partial derivatives have been computed, they can be collected into a single vector called the gradient of the loss with respect to the parameters:
+Once we can compute $\frac{\partial \mathcal{L}}{\partial w_k}$ for every parameter, we simply stack all $P$ of these values into one vector, called the gradient of the loss with respect to the parameters:
 \begin{equation}
 \nabla_{\theta} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}) =
 \left[
@@ -99,10 +93,9 @@ Once these partial derivatives have been computed, they can be collected into a 
 \right].
 \label{eq:gradient}
 \end{equation}
-
-Each component of the gradient indicates how a small change in the corresponding parameter affects the loss.
-For a given parameter, a positive value indicates that increasing the parameter locally increases the loss, whereas a negative value indicates that increasing it locally decreases the loss.
-The gradient therefore provides the information required to determine how the parameters should be modified to reduce the loss.
+Each component answers the same question for a different parameter, namely, if we slightly increase this parameter, does the loss go up or down, and by how much.
+A positive value means increasing the parameter increases the loss, whereas a negative value means the opposite.
+The gradient thus tells us for every parameter, which direction to move in order to reduce the loss.
 
 \subsection{Update rule}
 
