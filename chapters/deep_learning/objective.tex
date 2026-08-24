@@ -27,8 +27,9 @@ When this formulation is adapted to \gls{dl}, the following correspondences hold
 The function to be approximated is denoted by $f$.
 As with any function, it defines a mapping from an input to an output: $x \in \mathcal{X}$ denotes an input and $y \in \mathcal{Y}$ the corresponding output.
 The function $f$ is therefore characterized by an input space $\mathcal{X}$ and an output space $\mathcal{Y}$, and can be formally written as $f : \mathcal{X} \to \mathcal{Y}$.
-For simplicity of exposition and notation, both $\mathcal{X}$ and $\mathcal{Y}$ are assumed to be vector spaces throughout, while keeping in mind that this framework can be readily generalized to more settings.
-Throughout this manuscript, the notation $\hat{\cdot}$ indicates that a given object is an approximation of another.
+For simplicity of exposition, both $\mathcal{X}$ and $\mathcal{Y}$ are assumed to be vector spaces throughout this manuscript.
+This assumption is adopted solely to facilitate the presentation, as the framework can be readily extended to more general settings.
+The notation $\hat{\cdot}$ indicates that a given object is an approximation of another.
 Since the goal of the trained \gls{nn} is to approximate $f$, this approximation is denoted by $\hat{f} : \mathcal{X} \to \mathcal{Y}$.
 Given an input $x \in \mathcal{X}$, the output of the approximating function $\hat{f}(x)$ is denoted by $\hat{y}$.
 
@@ -58,8 +59,6 @@ This performance measure corresponds to the average loss over the dataset and ca
     \label{eq:performance_measure}
 \end{equation}
 
-This formulation captures the mathematical core of the learning objective.
-The goal is to find a \gls{nn} $\hat{f}$ that minimizes the prediction error over the dataset $\mathcal{D}$.
-As can be seen, the setting considered here is very general, where the target function $f$ may take many different forms.
-Consequently, $\hat{f}$ must be sufficiently expressive to approximate a broad range of such functions.
-This requirement motivates the use of \gls{nn} architectures, which are well suited to representing a wide range of functional mappings, as discussed in the following section.
+This formulation captures the mathematical core of the learning objective, namely finding a \gls{nn} $\hat{f}$ that minimizes the prediction error over the dataset $\mathcal{D}$.
+Since the target function $f$ may take many different forms, $\hat{f}$ must be expressive enough to approximate a broad range of such functions.
+\gls{nn} architectures are well suited to this requirement, as they can represent a wide range of functional mappings, whose composition is detailed in the following section.
