@@ -38,36 +38,41 @@ In \gls{dl}, the loss depends on the network parameters $\theta$ only indirectly
 Nevertheless, the same principle remains at the core of gradient-based optimization, with local gradient information being used to iteratively adjust the parameters $\theta$ in order to reduce the loss.
 We now detail this procedure step by step, in the general setting of an arbitrary architecture $\hat{f}$.
 
-\subsection{Gradient}
+\subsection{Computing the Gradient}
 
 The first step of \gls{sgd} is to randomly initialize the parameter vector $\theta \in \mathbb{R}^P$ for a given network architecture $\hat{f}$.
 We denote this initial state by $\theta^{(1)}$.
 The goal is then to iteratively modify this vector in order to improve the network's ability to approximate the target function.
+For a given example $(x^{(i)}, y^{(i)})$, this requires determining how a change in each parameter affects the loss $\mathcal{L}$.
 
-For a given example $(x^{(i)}, y^{(i)})$, the objective is to determine how the parameters should be adjusted so that the \gls{nn} prediction $\hat{y}^{(i)}$ becomes closer to the target $y^{(i)}$.
-To do so, the effect of small variations in each parameter on the loss $\mathcal{L}$ is measured using the gradient, which is defined as the collection of partial derivatives of the loss with respect to each parameter:
-\begin{equation}
-\nabla_{\theta} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}) = \left[ \frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_1}, \dots, \frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_P} \right].
-\label{eq:gradient}
-\end{equation}
+Recall from Equation~\ref{eq:layer_recursive} that the network output is obtained through a sequence of layer activations $\mathbf{h}^{(1)}, \dots, \mathbf{h}^{(L)}$, with each layer depending only on the activations of the preceding layer.
+As a result, a parameter $w_k$ belonging to layer $l$ affects the loss indirectly through a chain of dependencies.
+More precisely, $w_k$ first influences $\mathbf{h}^{(l)}$, which in turn influences $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
 
-Each partial derivative indicates how the loss changes when the corresponding parameter is slightly modified, providing the information needed to determine how the parameters should be updated.
-
-Since both the \gls{nn} and the loss function are compositions of differentiable functions, these derivatives can be efficiently computed using the chain rule.
-Recall from Equation~\ref{eq:layer_recursive} that the network output is obtained through a sequence of layer activations $\mathbf{h}^{(1)}, \dots, \mathbf{h}^{(L)}$, each depending only on the activations of the preceding layer.
-As a result, a parameter $w_k$ belonging to layer $l$ affects the loss only indirectly, through this chain of dependencies: $w_k$ first influences $\mathbf{h}^{(l)}$, which in turn influences $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
-The chain rule states that the overall derivative is obtained by multiplying the derivatives along this chain:
+The chain rule allows this dependency to be expressed as a product of local derivatives along the network:
 \begin{equation}
 \frac{\partial \mathcal{L}}{\partial w_k} = \frac{\partial \mathcal{L}}{\partial \mathbf{h}^{(L)}} \cdot \frac{\partial \mathbf{h}^{(L)}}{\partial \mathbf{h}^{(L-1)}} \cdots \frac{\partial \mathbf{h}^{(l+1)}}{\partial \mathbf{h}^{(l)}} \cdot \frac{\partial \mathbf{h}^{(l)}}{\partial w_k},
 \label{eq:chain_rule}
 \end{equation}
 where each term $\frac{\partial \mathbf{h}^{(j+1)}}{\partial \mathbf{h}^{(j)}}$ is the Jacobian matrix of layer $j+1$ with respect to its input.
-Every factor in this product is a local derivative between two consecutive layers, which is straightforward to compute since Equation~\ref{eq:layer_recursive} gives $\mathbf{h}^{(l)}$ as an explicit, elementary function of $\mathbf{h}^{(l-1)}$.
-The chain rule therefore breaks down the otherwise intractable differentiation of the full composite function $\hat{f}_{\theta}$ into a sequence of simple, local computations propagated across the layers of the network, which is precisely the principle underlying the backpropagation algorithm.
+Each factor in this product describes a local relationship between two consecutive layers and can be computed directly from the operations defining the network.
+The chain rule therefore transforms the derivative of the complete network into a sequence of simpler local computations propagated across the layers.
+This procedure is known as backpropagation and provides an efficient way of computing how each parameter influences the loss.
 
-Each component of the gradient $\frac{\partial \mathcal{L}(\dots)}{\partial w_k} \; \forall k \in [1, \dots, P]$ indicates how a small increase in the corresponding parameter $w_k$ affects the loss.
-More precisely, for a given parameter, a positive value in the corresponding gradient component indicates that increasing this parameter will locally increase the loss.
-Conversely, a negative value indicates that increasing it will locally decrease the loss.
+Once these partial derivatives have been computed, they can be collected into a single vector called the gradient of the loss with respect to the parameters:
+\begin{equation}
+\nabla_{\theta} \mathcal{L}(\hat{f}*{\theta}(x^{(i)}), y^{(i)}) =
+\left[
+\frac{\partial \mathcal{L}(\hat{f}*{\theta}(x^{(i)}), y^{(i)})}{\partial w_1},
+\dots,
+\frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_P}
+\right].
+\label{eq:gradient}
+\end{equation}
+
+Each component of the gradient indicates how a small change in the corresponding parameter affects the loss.
+For a given parameter, a positive value indicates that increasing the parameter locally increases the loss, whereas a negative value indicates that increasing it locally decreases the loss.
+The gradient therefore provides the information required to determine how the parameters should be modified to reduce the loss.
 
 \subsection{Update rule}
 
