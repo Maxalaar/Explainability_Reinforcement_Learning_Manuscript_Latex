@@ -18,34 +18,30 @@ Numerous variants of gradient descent have been developed for \gls{nn} training,
 For simplicity, the focus here is on \gls{sgd} with a batch size of 1.
 As in previous cases, this choice is made because this setting captures the essential intuition behind the training method.
 
-This section is organized into four steps.
-The first introduces the main intuition through a simple example.
-The second formalizes the general procedure by deriving the gradient of the loss using the chain rule.
-The third shows how this gradient is used to update the network parameters.
-The final step discusses the convergence properties of the resulting algorithm.
+This section is organized into three steps.
+The first derives the gradient of the loss using the chain rule.
+The second shows how this gradient is used to update the network parameters.
+The third discusses the convergence properties of the resulting algorithm.
 
-\subsection{Intuition}
+\subsection{Computing the Gradient}
 
 To develop an intuition, Figure~\ref{fig:simple_gradient_descent} illustrates \gls{sgd} applied to the simple convex loss function $\mathcal{L}(w_1,w_2)=w_1^2+w_2^2$, where the red path shows the parameter updates converging to the minimum.
 The point $\theta_1$ represents the initial parameter values, with $w_1$ and $w_2$ randomly initialized, and the subsequent points, from $\theta_2$ to $\theta_6$, represent the successive updates produced by the optimization procedure, progressively moving the trajectory toward the minimum of the loss function.
-The mechanism producing these updates is detailed in the remainder of this section.
-
-% \input{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
-
-This example provides a simplified illustration of the principle underlying gradient-based optimization.
 In \gls{dl}, the loss depends on the network parameters $\theta$ only indirectly, through its predictions, and $\theta$ can contain millions or even billions of parameters, resulting in a much higher-dimensional and complex loss landscape.
-
 Nevertheless, the same principle remains at the core of gradient-based optimization, with local gradient information being used to iteratively adjust the parameters $\theta$ in order to reduce the loss.
 We now detail this procedure step by step, in the general setting of an arbitrary architecture $\hat{f}$.
 
-\subsection{Computing the Gradient}
+% \input{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
 
 The first step of \gls{sgd} is to randomly initialize the parameter vector $\theta \in \mathbb{R}^P$ for a given network architecture $\hat{f}$.
 We denote this initial state by $\theta^{(1)}$.
 The goal is to iteratively update this vector so that the network gets better at approximating the target function.
-To do this, we need to know, for each example $(x^{(i)}, y^{(i)})$, how a small change in each parameter affects the loss $\mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$.
+To do this, we need to quantify the influence of each parameter $w_k$ on the loss $\mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$, which is given by the partial derivative $\frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_k}$.
 
-Since the quantities involved in a \gls{nn} are functions of several variables, we rely on the Jacobian matrix, the generalization of the derivative to functions with several inputs and outputs.
+However, $w_k$ can belong to any layer of the network, not only the last one.
+Computing this derivative therefore requires propagating the effect of a change in $w_k$ through all the layers that follow it, up to the loss.
+To do so, we consider each layer as a function of several variables, whose inputs are collected in the vector $\mathbf{h}^{(l-1)}$ and whose outputs are collected in the vector $\mathbf{h}^{(l)}$.
+Since these quantities are functions of several variables, we rely on the Jacobian matrix, the generalization of the derivative to functions with several inputs and outputs.
 For a function $\mathbf{f}\colon\mathbb{R}^n \rightarrow \mathbb{R}^m$, we denote by $J_{\mathbf{f}}(\mathbf{x})$ the Jacobian of $\mathbf{f}$ evaluated at $\mathbf{x}$, which collects the partial derivatives of every output component with respect to every input component:
 \begin{equation}
 J_{\mathbf{f}}(\mathbf{x}) =
@@ -57,11 +53,14 @@ J_{\mathbf{f}}(\mathbf{x}) =
 \label{eq:jacobian}
 \end{equation}
 Each entry tells us how one output component reacts to a small change in one input component.
+
+To propagate the effect of $w_k$ through the successive layers, we need the derivative of a composition of several functions.
 For a composition of differentiable functions $\mathbf{f} \circ \mathbf{g}$, the chain rule states that its Jacobian, evaluated at $\mathbf{x}$, is the product of the Jacobians of each function, each evaluated at the appropriate point,
 \begin{equation}
 J_{\mathbf{f} \circ \mathbf{g}}(\mathbf{x}) = J_{\mathbf{f}}(\mathbf{g}(\mathbf{x})) \, J_{\mathbf{g}}(\mathbf{x}).
 \label{eq:chain_rule_generic}
 \end{equation}
+This is precisely the tool required to determine the impact of $w_k$ on the output of the network, regardless of where it is located.
 
 A network computes its output through a sequence of layer activations $\mathbf{h}^{(1)}, \dots, \mathbf{h}^{(L)}$, with each layer depending only on the one before it, and with $\mathbf{h}^{(L)} = \hat{f}_{\theta}(x^{(i)})$.
 As a result, a parameter $w_k$ belonging to layer $l$ affects the loss $\mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$ through a chain of dependencies, it first changes $\mathbf{h}^{(l)}$, which changes $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
@@ -77,7 +76,7 @@ J_{\mathbf{h}^{(l+1)}}(\mathbf{h}^{(l)})
 \, J_{\mathbf{h}^{(l)}}(w_k),
 \label{eq:chain_rule}
 \end{equation}
-where $J_{\mathcal{L}}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$ denotes the Jacobian of $\mathcal{L}$ with respect to its first argument, evaluated at $(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$, and each subsequent $J_{\mathbf{h}^{(j+1)}}(\mathbf{h}^{(j)})$ denotes the Jacobian of layer $j+1$ with respect to its input $\mathbf{h}^{(j)}$.
+where $J_{\mathcal{L}}(\mathbf{h}^{(L)}, y^{(i)})$ denotes the Jacobian of $\mathcal{L}$ with respect to its first argument, evaluated at $(\mathbf{h}^{(L)}, y^{(i)})$, and each subsequent $J_{\mathbf{h}^{(j+1)}}(\mathbf{h}^{(j)})$ denotes the Jacobian of layer $j+1$ with respect to its input $\mathbf{h}^{(j)}$.
 Each factor is therefore the Jacobian of one layer with respect to its input, a purely local computation.
 Multiplying these local Jacobians together propagates the effect of $w_k$ all the way to the loss.
 This layer-by-layer propagation is what we call backpropagation.
