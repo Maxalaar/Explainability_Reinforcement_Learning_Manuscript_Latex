@@ -30,10 +30,11 @@ We denote this initial state by $\theta^{(1)}$.
 The goal is to iteratively update this vector so that the network gets better at approximating the target function.
 To do this, we need to quantify the influence of each parameter $w_k$ on the loss $\mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$, which is given by the partial derivative $\frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_k}$.
 
-However, $w_k$ can belong to any layer of the network, not only the last one.
+However, $w_k$ can belong to any layer of the network.
 Computing this derivative therefore requires propagating the effect of a change in $w_k$ through all the layers that follow it, up to the loss.
 To do so, we consider each layer as a function of several variables, whose inputs are collected in the vector $\mathbf{h}^{(l-1)}$ and whose outputs are collected in the vector $\mathbf{h}^{(l)}$.
-Since these quantities are functions of several variables, we rely on the Jacobian matrix, the generalization of the derivative to functions with several inputs and outputs.
+Since these quantities are functions of several variables, we rely on the Jacobian matrix, the generalization of the derivative to this setting.
+The Jacobian matrix quantifies how a small change in each input component affects each output component.
 For a function $\mathbf{f}\colon\mathbb{R}^n \rightarrow \mathbb{R}^m$, we denote by $J_{\mathbf{f}}(\mathbf{x})$ the Jacobian of $\mathbf{f}$ evaluated at $\mathbf{x}$, which collects the partial derivatives of every output component with respect to every input component:
 \begin{equation}
 J_{\mathbf{f}}(\mathbf{x}) =
@@ -52,8 +53,8 @@ For a composition of differentiable functions $\mathbf{f} \circ \mathbf{g}$, the
 J_{\mathbf{f} \circ \mathbf{g}}(\mathbf{x}) = J_{\mathbf{f}}(\mathbf{g}(\mathbf{x})) \, J_{\mathbf{g}}(\mathbf{x}).
 \label{eq:chain_rule_generic}
 \end{equation}
-This is precisely the tool required to determine the impact of $w_k$ on the output of the network, regardless of where it is located.
 
+This is the tool required to determine the impact of $w_k$ on the output of the network, regardless of where it is located.
 A network computes its output through a sequence of layer activations $\mathbf{h}^{(1)}, \dots, \mathbf{h}^{(L)}$, with each layer depending only on the one before it, and with $\mathbf{h}^{(L)} = \hat{f}_{\theta}(x^{(i)})$.
 As a result, a parameter $w_k$ belonging to layer $l$ affects the loss $\mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$ through a chain of dependencies, it first changes $\mathbf{h}^{(l)}$, which changes $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
 Since $x^{(i)}$ and $y^{(i)}$ are fixed for a given example, the loss can be viewed as a function of $w_k$ alone, and we seek the effect of a small change in $w_k$ on this value.
@@ -68,8 +69,13 @@ J_{\mathbf{h}^{(l+1)}}(\mathbf{h}^{(l)})
 \, J_{\mathbf{h}^{(l)}}(w_k),
 \label{eq:chain_rule}
 \end{equation}
-where $J_{\mathcal{L}}(\mathbf{h}^{(L)}, y^{(i)})$ denotes the Jacobian of $\mathcal{L}$ with respect to its first argument, evaluated at $(\mathbf{h}^{(L)}, y^{(i)})$, and each subsequent $J_{\mathbf{h}^{(j+1)}}(\mathbf{h}^{(j)})$ denotes the Jacobian of layer $j+1$ with respect to its input $\mathbf{h}^{(j)}$.
-Each factor is therefore the Jacobian of one layer with respect to its input, a purely local computation.
+where:
+\begin{itemize}
+\item $J_{\mathcal{L}}(\mathbf{h}^{(L)}, y^{(i)})$ denotes the Jacobian of $\mathcal{L}$ with respect to its first argument, evaluated at $(\mathbf{h}^{(L)}, y^{(i)})$,
+\item each subsequent $J_{\mathbf{h}^{(j+1)}}(\mathbf{h}^{(j)})$ denotes the Jacobian of layer $j+1$ with respect to its input $\mathbf{h}^{(j)}$,
+\item $J_{\mathbf{h}^{(l)}}(w_k)$ denotes the Jacobian of layer $l$ with respect to the parameter $w_k$.
+\end{itemize}
+Each factor is therefore the Jacobian of one layer with respect to its input.
 Multiplying these local Jacobians together propagates the effect of $w_k$ all the way to the loss.
 This layer-by-layer propagation is what we call backpropagation.
 
@@ -99,18 +105,7 @@ This leads us to the gradient descent update rule:
 \end{equation}
 where $\eta > 0$ is the learning rate, which controls the step size.
 
-To develop an intuition for this update rule, Figure~\ref{fig:simple_gradient_descent} illustrates it applied to the simple convex loss function $\mathcal{L}(w_1,w_2)=w_1^2+w_2^2$, where the red path shows the parameter updates converging to the minimum.
-The point $\theta_1$ represents the initial parameter values, with $w_1$ and $w_2$ randomly initialized, and the subsequent points, from $\theta_2$ to $\theta_6$, represent the successive updates produced by applying Equation~\ref{eq:gradient_descent_update}, progressively moving the trajectory toward the minimum of the loss function.
-
-% \input{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
-
-In \gls{dl}, the loss depends on the network parameters $\theta$ only indirectly, through its predictions, and $\theta$ can contain millions or even billions of parameters, resulting in a much higher-dimensional and complex loss landscape, which is typically non-convex.
-Figure~\ref{fig:multiple_gradient_descents_non_convex} illustrates the effect of this non-convexity on standard non-convex functions, where different starting points lead to distinct local minima, unlike the single global minimum reached in the convex example above.
-
-% \input{figures/deepl_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
-
-Nevertheless, the same principle remains at the core of gradient-based optimization, with local gradient information being used to iteratively adjust the parameters $\theta$ in order to reduce the loss.
-This parameter must remain small, as the gradient only provides reliable information in a local neighborhood of the current parameters.
+This parameter $\eta$ must remain small, as the gradient only provides reliable information in a local neighborhood of the current parameters.
 As a result, a single step is not sufficient to significantly reduce the loss, so the process is iterated many times.
 Producing a sequence of parameter vectors $\theta_1, \theta_2, \dots$ that progressively improve the model.
 In practice, training is stopped when successive updates no longer produce a significant decrease in the loss.
@@ -118,10 +113,19 @@ Algorithm~\ref{alg:stochastic_gradient_descent} summarizes this whole training p
 
 \input{algorithms/deep_learning/stochastic_gradient_descent.tex}
 
+To develop an intuition for this update rule, Figure~\ref{fig:simple_gradient_descent} illustrates it applied to the simple convex loss function $\mathcal{L}(w_1,w_2)=w_1^2+w_2^2$, where the red path shows the parameter updates converging to the minimum.
+The point $\theta_1$ represents the initial parameter values, with $w_1$ and $w_2$ randomly initialized, and the subsequent points, from $\theta_2$ to $\theta_6$, represent the successive updates produced by applying Equation~\ref{eq:gradient_descent_update}, progressively moving the trajectory toward the minimum of the loss function.
+
+% \input{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
+
 \subsection{Convergence Properties}
 
 Having established how \gls{sgd} updates the parameters, a natural question is whether this procedure is guaranteed to converge.
 It has been mathematically shown that gradient descent applied to a convex loss with respect to the parameters converges to a global optimum, independently of the initialization.
 However, \gls{nn} training involves highly non-convex loss surfaces, so the optimization trajectory becomes strongly dependent on the initial conditions, and no such guarantee holds.
+Figure~\ref{fig:multiple_gradient_descents_non_convex} illustrates the effect of non-convex functions, different starting points lead to distinct local minima.
+
+% \input{figures/deepl_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
+
 Despite the lack of theoretical guarantees of convergence to a global optimum in this setting, the simple procedure of random initialization followed by iterative gradient-based updates is sufficient in practice to train highly complex \gls{nn}.
 This empirical success is often attributed to the expressive power of \gls{nn}s, even though a complete theoretical understanding of this phenomenon remains an open question.
