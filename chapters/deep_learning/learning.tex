@@ -41,6 +41,8 @@ Layer $l$ is therefore the function:
 \end{equation}
 
 With this view, the whole network is the composition of its $L$ layer functions, $\hat{f}_{\theta} = \phi^{(L)} \circ \cdots \circ \phi^{(1)}$.
+Each layer function $\phi^{(l)}$ is itself parameterized by the weights belonging to layer $l$, so it can equally be viewed as a function of these parameters; this is what makes it possible, later on, to differentiate $\phi^{(l)}$ with respect to $w_k$.
+
 Because each layer function has several outputs that jointly depend on several inputs, the ordinary derivative is no longer sufficient to describe how it varies, and the Jacobian matrix is used instead as its generalization.
 The Jacobian matrix quantifies how a small change in each input component affects each output component.
 Consider layer $l$'s function $\phi^{(l)}\colon\mathbb{R}^{n_{l-1}} \rightarrow \mathbb{R}^{n_l}$: its Jacobian $J_{\phi^{(l)}}(\mathbf{h}^{(l-1)})$, evaluated at $\mathbf{h}^{(l-1)}$, collects the partial derivatives of every output component with respect to every input component:
@@ -80,6 +82,7 @@ where:
 \item $J_{\phi^{(l)}}(w_k)$ denotes the Jacobian of the function $\phi^{(l)}$ with respect to the parameter $w_k$.
 \end{itemize}
 Multiplying these local Jacobians together therefore propagates the effect of $w_k$, layer by layer, all the way to the loss.
+
 Once $\frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_k}$ can be computed for every parameter, all of these values are stacked into one vector, called the gradient:
 \begin{equation}
 \nabla_{\theta} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}) =
