@@ -8,8 +8,9 @@ Mathematically, this objective is expressed as:
 \min_{\theta} \frac{1}{N} \sum_{i=1}^{N} \mathcal{L}\left(\hat{f}_{\theta}(x^{(i)}), y^{(i)}\right).
 \label{eq:training_objective}
 \end{equation}
+For conciseness, the per-example loss is denoted $\ell^{(i)}(\theta) \overset{\mathrm{def}}{=} \mathcal{L}\left(\hat{f}_{\theta}(x^{(i)}), y^{(i)}\right)$ throughout the remainder of this section, so that the training objective can equivalently be written as $\min_{\theta} \frac{1}{N} \sum_{i=1}^{N} \ell^{(i)}(\theta)$.
 
-However, the \gls{nn} $\hat{f}$ used to approximate the target function $f$ is highly complex.
+The \gls{nn} $\hat{f}$ used to approximate the target function $f$ is highly complex.
 It involves a large number of parameters as well as many nonlinear components.
 As a result, the optimum cannot be determined analytically by directly studying the properties of the function.
 Instead, approximate optimization methods are required to find suitable parameter values for \gls{nn}.
@@ -28,8 +29,8 @@ The third discusses the convergence properties of the resulting algorithm.
 The first step of \gls{sgd} is to randomly initialize the parameter vector $\theta \in \mathbb{R}^P$ for a given network architecture $\hat{f}$.
 This initial state is denoted by $\theta^{(1)}$.
 The goal is to iteratively update this vector so that the network gets better at approximating the target function.
-The effect of each parameter $w_k$ on the loss $\mathcal{L}\left(\hat{f}_{\theta}(x^{(i)}), y^{(i)}\right)$ is quantified by the corresponding partial derivative
-$\frac{\partial \mathcal{L}\left(\hat{f}_{\theta}(x^{(i)}), y^{(i)}\right)}{\partial w_k}$.
+The effect of each parameter $w_k$ on the loss $\ell^{(i)}(\theta)$ is quantified by the corresponding partial derivative
+$\frac{\partial \ell^{(i)}(\theta)}{\partial w_k}$.
 
 However, $w_k$ can belong to any layer of the network.
 Computing this derivative therefore requires propagating the effect of a change in $w_k$ through all the layers that follow it, up to the loss.
@@ -64,10 +65,10 @@ J_{\phi^{(l+1)} \circ \phi^{(l)}}(\mathbf{h}^{(l-1)}) = J_{\phi^{(l+1)}}(\mathbf
 \label{eq:chain_rule_generic}
 \end{equation}
 
-Since the network is the composition of its layer functions $\phi^{(1)}, \dots, \phi^{(L)}$, with each layer depending only on the one before it, a parameter $w_k$ belonging to layer $l$ affects the loss $\mathcal{L}\left(\hat{f}_{\theta}(x^{(i)}), y^{(i)}\right)$ through a chain of dependencies: it first changes the output $\mathbf{h}^{(l)}$ of its own layer, which changes $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
+Since the network is the composition of its layer functions $\phi^{(1)}, \dots, \phi^{(L)}$, with each layer depending only on the one before it, a parameter $w_k$ belonging to layer $l$ affects the loss $\ell^{(i)}(\theta)$ through a chain of dependencies: it first changes the output $\mathbf{h}^{(l)}$ of its own layer, which changes $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
 This layer-by-layer propagation is referred to as backpropagation:
 \begin{equation}
-\frac{\partial \mathcal{L}\left(\hat{f}_{\theta}(x^{(i)}), y^{(i)}\right)}{\partial w_k}
+\frac{\partial \ell^{(i)}(\theta)}{\partial w_k}
 =
 J_{\mathcal{L}}(\mathbf{h}^{(L)}, y^{(i)})
 \, J_{\phi^{(L)}}(\mathbf{h}^{(L-1)})
@@ -84,13 +85,13 @@ where:
 \end{itemize}
 Multiplying these local Jacobians together therefore propagates the effect of $w_k$, layer by layer, all the way to the loss.
 
-Once $\frac{\partial \mathcal{L}\left(\hat{f}_{\theta}(x^{(i)}), y^{(i)}\right)}{\partial w_k}$ can be computed for every parameter, all of these values are stacked into one vector, called the gradient:
+Once $\frac{\partial \ell^{(i)}(\theta)}{\partial w_k}$ can be computed for every parameter, all of these values are stacked into one vector, called the gradient:
 \begin{equation}
-\nabla_{\theta} \mathcal{L}\left(\hat{f}_{\theta}(x^{(i)}), y^{(i)}\right) =
+\nabla_{\theta} \ell^{(i)}(\theta) =
 \left[
-\frac{\partial \mathcal{L}\left(\hat{f}_{\theta}(x^{(i)}), y^{(i)}\right)}{\partial w_1},
+\frac{\partial \ell^{(i)}(\theta)}{\partial w_1},
 \dots,
-\frac{\partial \mathcal{L}\left(\hat{f}_{\theta}(x^{(i)}), y^{(i)}\right)}{\partial w_P}
+\frac{\partial \ell^{(i)}(\theta)}{\partial w_P}
 \right].
 \label{eq:gradient}
 \end{equation}
@@ -105,7 +106,7 @@ To do so, the parameters are updated in the direction opposite to the gradient.
 Indeed, the gradient is followed in the opposite direction because it indicates the direction in which the loss increases, whereas the objective is to reduce it.
 This leads to the gradient descent update rule:
 \begin{equation}
-\theta^{(n+1)} = \theta^{(n)} - \eta \nabla_{\theta^{(n)}} \mathcal{L}\left(\hat{f}_{\theta^{(n)}}(x^{(i)}), y^{(i)}\right),
+\theta^{(n+1)} = \theta^{(n)} - \eta \nabla_{\theta^{(n)}} \ell^{(i)}(\theta^{(n)}),
 \label{eq:gradient_descent_update}
 \end{equation}
 where $\eta > 0$ is the learning rate, which controls the step size.
