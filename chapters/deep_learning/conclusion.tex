@@ -7,17 +7,17 @@ For clarity of presentation, several simplifying assumptions have been made thro
 The problem has been considered in a regression setting, using a \gls{mlp} trained with \gls{sgd} and a batch size of one.
 These choices were made deliberately to expose the core mechanisms of \gls{dl} as clearly as possible.
 
-Despite these simplifications, the framework introduced here captures mechanisms that are shared across a broad range of \gls{dl} methods.
-A sequence of local parameter updates, each based only on information about the loss around the current parameters, can give rise to highly complex global functions.
+Despite these simplifications, the framework introduced here captures mechanisms that are shared across a broad range of \gls{dl} methods:
+A sequence of parameter updates, each based on information about the loss around the current parameters.
 The apparent simplicity of this learning procedure therefore contrasts with the complexity of the functions that \gls{nn} can ultimately represent.
 Understanding how such complex behavior emerges from a relatively simple optimization process remains an important challenge in the study of \gls{dl}.
 
-Although mathematical tools allow us to describe the functions represented by \gls{nn} and the optimization procedures used to train them, they do not yet provide a explanation for their remarkable empirical performance.
+Mathematical tools allow us to describe the functions represented by \gls{nn} and the procedures used to train them.
+However, they do not yet fully explain their remarkable empirical performance.
 Understanding the origin of this success therefore requires looking beyond the optimization procedure itself.
 
 One common feature across \gls{nn} architectures is the presence of intermediate representations.
 Whether considering a \gls{mlp}, a \gls{cnn}, an \gls{lstm}, or an architecture based on attention, the input is progressively transformed into intermediate representations before producing the final output.
-Their presence provides a common perspective for studying how \gls{nn} process information.
-The collection of these learned representations is referred to as the \gls{ls}.
-Understanding the structure of the \gls{ls} may therefore provide important insights into how \gls{nn} learn and generalize.
-This motivates the study of the \gls{ls}, which is the focus of the following chapter.
+Their presence provides a common perspective for understanding how \gls{nn}s transform information.
+The collection of these intermediate representations is referred to as the \gls{ls}.
+Studying this \gls{ls} can provide insights into how \gls{nn}s learn and generalize, which motivates the following chapter.

@@ -30,14 +30,14 @@ To do so, the average loss on the training set, denoted $\bar{\ell}_{\text{train
 If $\bar{\ell}_{\text{train}}$ is not sufficiently low, this means that the model has not been able to learn the task.
 It is not necessary to go further in the analysis of the model's quality.
 Before restarting the training process, various design choices are then adjusted.
-Based on what has been discussed so far in this chapter, these include modifications to the number of layers, the number of neurons per layer, activation functions, the learning rate, and the initialization strategy.
+Based on what has been discussed so far in this chapter, these include modifications to the number of layers, the number of neurons per layer, activation functions, the learning rate.
 However, in practice, there are many other possible variations.
 There is no universal rule for choosing the appropriate value for each of them.
 They are therefore chosen empirically, based on models that perform well on similar tasks, combined with intuition.
 Their selection is often costly and remains a challenging problem in \gls{dl}.
 
 Assuming now that the model achieves satisfactory performance on the training dataset $\mathcal{D}_{\text{train}}$.
-We must now study its ability to generalize.
+Its ability to generalize must now be studied.
 To do so, the corresponding average loss on $\mathcal{D}_{\text{test}}$ is computed:
 \begin{equation}
 \bar{\ell}_{\text{test}} = \frac{1}{|\mathcal{D}_{\text{test}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{test}}} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}).
@@ -51,5 +51,5 @@ This typically occurs when the number of parameters is too large relative to the
 The simplest remedy is therefore to reduce the number of parameters in the model.
 However, it is still necessary to ensure that the model remains sufficiently expressive to perform well on the data.
 
-If $\bar{\ell}{\text{test}} \approx \bar{\ell}{\text{train}}$, this indicates that the training procedure has successfully produced a \gls{nn} that generalizes well beyond the training data \cite{Kawaguchi_2022}.
-The resulting model can therefore be considered suitable for the task for which it was trained.
+If $\bar{\ell}_{\text{test}} \approx \bar{\ell}_{\text{train}}$, this indicates that the training procedure has successfully produced a \gls{nn} that generalizes well beyond the training data \cite{Kawaguchi_2022}.
+The resulting model can therefore be considered suitable for the task for which it was trained, marking the end of the \gls{nn} training process.
