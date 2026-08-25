@@ -28,36 +28,36 @@ The third discusses the convergence properties of the resulting algorithm.
 The first step of \gls{sgd} is to randomly initialize the parameter vector $\theta \in \mathbb{R}^P$ for a given network architecture $\hat{f}$.
 This initial state is denoted by $\theta^{(1)}$.
 The goal is to iteratively update this vector so that the network gets better at approximating the target function.
-To do so, the effect of each parameter $w_k$ on the loss $\mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$ is quantified by the corresponding partial derivative
+The effect of each parameter $w_k$ on the loss $\mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$ is quantified by the corresponding partial derivative
 $\frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_k}$.
 
 However, $w_k$ can belong to any layer of the network.
 Computing this derivative therefore requires propagating the effect of a change in $w_k$ through all the layers that follow it, up to the loss.
 The key idea is to view each layer as a function, denoted $\phi^{(l)}$ for layer $l$, that takes as input the activation vector $\mathbf{h}^{(l-1)} \in \mathbb{R}^{n_{l-1}}$ produced by the previous layer and returns as output the activation vector $\mathbf{h}^{(l)} \in \mathbb{R}^{n_{l}}$, where $n_{l-1}$ and $n_l$ denote the number of neurons in layers $l-1$ and $l$, respectively.
-Layer $l$ is therefore the function
+Layer $l$ is therefore the function:
 \begin{equation}
-\phi^{(l)} \colon \mathbb{R}^{n_{l-1}} \to \mathbb{R}^{n_{l}}, \qquad \mathbf{h}^{(l)} = \phi^{(l)}(\mathbf{h}^{(l-1)}),
+\phi^{(l)} \colon \mathbb{R}^{n_{l-1}} \to \mathbb{R}^{n_{l}}, \qquad \mathbf{h}^{(l)} = \phi^{(l)}(\mathbf{h}^{(l-1)}).
 \label{eq:layer_function}
 \end{equation}
-and, since this function is itself parameterized by the weights belonging to layer $l$, it can equally be seen as taking these parameters as an additional input.
-With this view, the whole network is nothing more than the composition of its $L$ layer functions, $\hat{f}_{\theta} = \phi^{(L)} \circ \cdots \circ \phi^{(1)}$.
+
+With this view, the whole network is the composition of its $L$ layer functions, $\hat{f}_{\theta} = \phi^{(L)} \circ \cdots \circ \phi^{(1)}$.
 Because each layer function has several outputs that jointly depend on several inputs, the ordinary derivative is no longer sufficient to describe how it varies, and the Jacobian matrix is used instead as its generalization.
 The Jacobian matrix quantifies how a small change in each input component affects each output component.
-For a function $\mathbf{f}\colon\mathbb{R}^n \rightarrow \mathbb{R}^m$, $J_{\mathbf{f}}(\mathbf{x})$ denotes the Jacobian of $\mathbf{f}$ evaluated at $\mathbf{x}$, which collects the partial derivatives of every output component with respect to every input component:
+Consider layer $l$'s function $\phi^{(l)}\colon\mathbb{R}^{n_{l-1}} \rightarrow \mathbb{R}^{n_l}$: its Jacobian $J_{\phi^{(l)}}(\mathbf{h}^{(l-1)})$, evaluated at $\mathbf{h}^{(l-1)}$, collects the partial derivatives of every output component with respect to every input component:
 \begin{equation}
-J(\mathbf{f}(\mathbf{x})) =
-J_{\mathbf{f}}(\mathbf{x}) =
+J_{\phi^{(l)}}(\mathbf{h}^{(l-1)}) =
 \begin{bmatrix}
-\frac{\partial f_1}{\partial x_1} & \cdots & \frac{\partial f_1}{\partial x_n} \\
+\frac{\partial h_1^{(l)}}{\partial h_1^{(l-1)}} & \cdots & \frac{\partial h_1^{(l)}}{\partial h_{n_{l-1}}^{(l-1)}} \\
 \vdots & \ddots & \vdots \\
-\frac{\partial f_m}{\partial x_1} & \cdots & \frac{\partial f_m}{\partial x_n}
+\frac{\partial h_{n_l}^{(l)}}{\partial h_1^{(l-1)}} & \cdots & \frac{\partial h_{n_l}^{(l)}}{\partial h_{n_{l-1}}^{(l-1)}}
 \end{bmatrix}.
 \label{eq:jacobian}
 \end{equation}
 
-For a composition of differentiable functions $\mathbf{f} \circ \mathbf{g}$, the chain rule states that its Jacobian, evaluated at $\mathbf{x}$, is the product of the Jacobians of each function, each evaluated at the appropriate point:
+Consider now two consecutive layers, $\phi^{(l)}$ followed by $\phi^{(l+1)}$, so that $\mathbf{h}^{(l+1)} = \phi^{(l+1)}\big(\phi^{(l)}(\mathbf{h}^{(l-1)})\big)$.
+The chain rule states that the Jacobian of this composition, evaluated at $\mathbf{h}^{(l-1)}$, is the product of the Jacobians of each layer, each evaluated at the appropriate point:
 \begin{equation}
-J_{\mathbf{f} \circ \mathbf{g}}(\mathbf{x}) = J(f(g(x))) = J_{\mathbf{f}}(\mathbf{g}(\mathbf{x})) \, J_{\mathbf{g}}(\mathbf{x}).
+J_{\phi^{(l+1)} \circ \phi^{(l)}}(\mathbf{h}^{(l-1)}) = J_{\phi^{(l+1)}}(\mathbf{h}^{(l)}) \, J_{\phi^{(l)}}(\mathbf{h}^{(l-1)}).
 \label{eq:chain_rule_generic}
 \end{equation}
 
@@ -80,7 +80,6 @@ where:
 \item $J_{\phi^{(l)}}(w_k)$ denotes the Jacobian of the function $\phi^{(l)}$ with respect to the parameter $w_k$.
 \end{itemize}
 Multiplying these local Jacobians together therefore propagates the effect of $w_k$, layer by layer, all the way to the loss.
-
 Once $\frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_k}$ can be computed for every parameter, all of these values are stacked into one vector, called the gradient:
 \begin{equation}
 \nabla_{\theta} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}) =
