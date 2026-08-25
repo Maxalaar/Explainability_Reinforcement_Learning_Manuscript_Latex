@@ -1,22 +1,22 @@
-\section{Conclusion}\label{sec:deep_learning_conclusion}
+\section{Conclusion}
+\label{sec:deep_learning_conclusion}
 
-This chapter introduced the essential building blocks of \gls{dl}: the historical developments that led to its emergence, a formalization of its objective as function approximation, the structure of a \gls{nn}, the gradient-based procedure used to train it, and the criteria used to evaluate the resulting model.
-Together, these elements provide the foundation required for the rest of this manuscript.
+This chapter has introduced the fundamental concepts underlying \gls{dl}, including the general objective of \gls{nn} models, their structure, the training procedure, and their evaluation.
 
-\gls{dl} is, however, a considerably broader field than what has been covered here, and one that keeps expanding at a fast pace.
-To keep the presentation digestible, several simplifications were made throughout this chapter: the \gls{mlp} was used as the sole architecture, the learning objective was restricted to a regression setting with the \gls{mse} loss, and training relied on vanilla \gls{sgd} rather than any of its more elaborate variants.
-These choices were made deliberately, to expose the core mechanisms of \gls{dl} as clearly as possible, not to provide an exhaustive account of the field.
-This chapter should therefore be understood as an introduction laying the groundwork for the rest of the manuscript, rather than a comprehensive treatment of \gls{dl}.
+For clarity of presentation, several simplifying assumptions have been made throughout this chapter.
+The problem has been considered in a regression setting, using a \gls{mlp} trained with \gls{sgd} and a batch size of one.
+These choices were made deliberately to expose the core mechanisms of \gls{dl} as clearly as possibled.
+Despite these simplifications, the framework introduced here captures mechanisms that are shared across all range of \gls{dl} methods.
+A sequence of local parameter updates, each based only on information about the loss around the current parameters, can give rise to highly complex global functions.
 
-Despite this simplicity, the underlying principle is not: a \gls{nn} is nothing more than a composition of simple units, each computing a weighted sum followed by a nonlinearity, whose parameters are adjusted by following the gradient of a loss function.
-Yet the composition of many such simple units, and their joint optimization, gives rise to functions expressive enough to approximate highly complex mappings.
-This gap between the simplicity of the underlying principle and the complexity of what it produces is a central reason why \gls{nn} remain difficult to fully understand.
+The apparent simplicity of this learning procedure contrasts with the complexity of the functions that \gls{nn} can ultimately represent.
+Understanding how such complex behavior emerges from a relatively simple optimization process remains an important challenge in the study of \gls{dl}.
+Although mathematical tools allow us to describe the functions represented by \gls{nn} and the optimization procedures used to train them, they do not yet provide a explanation for their remarkable empirical performance.
+Understanding the origin of this success therefore requires looking beyond the optimization procedure itself.
 
-This difficulty is compounded by the lack of theoretical guarantees surrounding \gls{dl}.
-As discussed in Section~\ref{sec:learning}, gradient descent is not guaranteed to converge to a global optimum once the loss is non-convex, and, as discussed in Section~\ref{sec:evaluation}, there is no complete theoretical account of why trained networks generalize beyond their training data.
-Nevertheless, the empirical successes recalled in Section~\ref{sec:historical_developments} show that \gls{dl} works remarkably well in practice, across an increasingly wide range of domains.
-This tension between limited theoretical understanding and strong empirical performance is one of the main motivations for the rest of this manuscript.
-
-A first step toward reducing this gap is to look inside the network itself.
-As noted in Section~\ref{sec:evaluation}, a network's ability to generalize stems from the internal representations that its hidden layers progressively construct during training.
-The next chapter is devoted to studying the structure of these internal representations, referred to as the \gls{ls}.
+One common feature across \gls{nn} architectures is the presence of intermediate representations.
+Whether considering a \gls{mlp}, a \gls{cnn}, an \gls{lstm}, or an architecture based on attention, the input is progressively transformed into intermediate representations before producing the final output.
+Their presence provides a common perspective for studying how \gls{nn} process information.
+The collection of these learned representations is referred to as the \gls{ls}.
+Understanding the structure of the \gls{ls} may therefore provide important insights into how \gls{nn} learn.
+This motivates the study of the \gls{ls}, which is the focus of the following chapter.
