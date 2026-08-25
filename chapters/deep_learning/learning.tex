@@ -28,15 +28,24 @@ The third discusses the convergence properties of the resulting algorithm.
 The first step of \gls{sgd} is to randomly initialize the parameter vector $\theta \in \mathbb{R}^P$ for a given network architecture $\hat{f}$.
 This initial state is denoted by $\theta^{(1)}$.
 The goal is to iteratively update this vector so that the network gets better at approximating the target function.
-To do this, the influence of each parameter $w_k$ on the loss $\mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$ must be quantified, which is given by the partial derivative $\frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_k}$.
+To do so, the effect of each parameter $w_k$ on the loss $\mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$ is quantified by the corresponding partial derivative
+$\frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_k}$.
 
 However, $w_k$ can belong to any layer of the network.
 Computing this derivative therefore requires propagating the effect of a change in $w_k$ through all the layers that follow it, up to the loss.
-To do so, each layer is considered as a function of several variables, whose inputs are collected in the vector $\mathbf{h}^{(l-1)}$ and whose outputs are collected in the vector $\mathbf{h}^{(l)}$.
-Since these quantities depend on several variables, the Jacobian matrix is used as a generalization of the derivative.
+The key idea is to view each layer as a function, denoted $\phi^{(l)}$ for layer $l$, that takes as input the activation vector $\mathbf{h}^{(l-1)} \in \mathbb{R}^{n_{l-1}}$ produced by the previous layer and returns as output the activation vector $\mathbf{h}^{(l)} \in \mathbb{R}^{n_{l}}$, where $n_{l-1}$ and $n_l$ denote the number of neurons in layers $l-1$ and $l$, respectively.
+Layer $l$ is therefore the function
+\begin{equation}
+\phi^{(l)} \colon \mathbb{R}^{n_{l-1}} \to \mathbb{R}^{n_{l}}, \qquad \mathbf{h}^{(l)} = \phi^{(l)}(\mathbf{h}^{(l-1)}),
+\label{eq:layer_function}
+\end{equation}
+and, since this function is itself parameterized by the weights belonging to layer $l$, it can equally be seen as taking these parameters as an additional input.
+With this view, the whole network is nothing more than the composition of its $L$ layer functions, $\hat{f}_{\theta} = \phi^{(L)} \circ \cdots \circ \phi^{(1)}$.
+Because each layer function has several outputs that jointly depend on several inputs, the ordinary derivative is no longer sufficient to describe how it varies, and the Jacobian matrix is used instead as its generalization.
 The Jacobian matrix quantifies how a small change in each input component affects each output component.
 For a function $\mathbf{f}\colon\mathbb{R}^n \rightarrow \mathbb{R}^m$, $J_{\mathbf{f}}(\mathbf{x})$ denotes the Jacobian of $\mathbf{f}$ evaluated at $\mathbf{x}$, which collects the partial derivatives of every output component with respect to every input component:
 \begin{equation}
+J(\mathbf{f}(\mathbf{x})) =
 J_{\mathbf{f}}(\mathbf{x}) =
 \begin{bmatrix}
 \frac{\partial f_1}{\partial x_1} & \cdots & \frac{\partial f_1}{\partial x_n} \\
@@ -45,41 +54,34 @@ J_{\mathbf{f}}(\mathbf{x}) =
 \end{bmatrix}.
 \label{eq:jacobian}
 \end{equation}
-Each entry indicates how one output component reacts to a small change in one input component.
 
-To propagate the effect of $w_k$ through the successive layers, the derivative of a composition of several functions is required.
 For a composition of differentiable functions $\mathbf{f} \circ \mathbf{g}$, the chain rule states that its Jacobian, evaluated at $\mathbf{x}$, is the product of the Jacobians of each function, each evaluated at the appropriate point:
 \begin{equation}
-J_{\mathbf{f} \circ \mathbf{g}}(\mathbf{x}) = J_{\mathbf{f}}(\mathbf{g}(\mathbf{x})) \, J_{\mathbf{g}}(\mathbf{x}).
+J_{\mathbf{f} \circ \mathbf{g}}(\mathbf{x}) = J(f(g(x))) = J_{\mathbf{f}}(\mathbf{g}(\mathbf{x})) \, J_{\mathbf{g}}(\mathbf{x}).
 \label{eq:chain_rule_generic}
 \end{equation}
 
-This is the tool required to determine the impact of $w_k$ on the output of the network, regardless of where it is located.
-A network computes its output through a sequence of layer activations $\mathbf{h}^{(1)}, \dots, \mathbf{h}^{(L)}$, with each layer depending only on the one before it.
-As a result, a parameter $w_k$ belonging to layer $l$ affects the loss $\mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$ through a chain of dependencies, it first changes $\mathbf{h}^{(l)}$, which changes $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
-Since $x^{(i)}$ and $y^{(i)}$ are fixed for a given example, the loss can be viewed as a function of $w_k$ alone, and the effect of a small change in $w_k$ on this value is sought.
-Applying the chain rule across this chain gives
+Since the network is the composition of its layer functions $\phi^{(1)}, \dots, \phi^{(L)}$, with each layer depending only on the one before it, a parameter $w_k$ belonging to layer $l$ affects the loss $\mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$ through a chain of dependencies: it first changes the output $\mathbf{h}^{(l)}$ of its own layer, which changes $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
+This layer-by-layer propagation is referred to as backpropagation:
 \begin{equation}
 \frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_k}
 =
 J_{\mathcal{L}}(\mathbf{h}^{(L)}, y^{(i)})
-\, J_{\mathbf{h}^{(L)}}(\mathbf{h}^{(L-1)})
+\, J_{\phi^{(L)}}(\mathbf{h}^{(L-1)})
 \cdots
-J_{\mathbf{h}^{(l+1)}}(\mathbf{h}^{(l)})
-\, J_{\mathbf{h}^{(l)}}(w_k),
+J_{\phi^{(l+1)}}(\mathbf{h}^{(l)})
+\, J_{\phi^{(l)}}(w_k),
 \label{eq:chain_rule}
 \end{equation}
 where:
 \begin{itemize}
 \item $J_{\mathcal{L}}(\mathbf{h}^{(L)}, y^{(i)})$ denotes the Jacobian of $\mathcal{L}$ with respect to its first argument, evaluated at $(\mathbf{h}^{(L)}, y^{(i)})$,
-\item each subsequent $J_{\mathbf{h}^{(j+1)}}(\mathbf{h}^{(j)})$ denotes the Jacobian of layer $j+1$ with respect to its input $\mathbf{h}^{(j)}$,
-\item $J_{\mathbf{h}^{(l)}}(w_k)$ denotes the Jacobian of layer $l$ with respect to the parameter $w_k$.
+\item each subsequent $J_{\phi^{(j+1)}}(\mathbf{h}^{(j)})$ denotes the Jacobian of the function $\phi^{(j+1)}$ with respect to its input $\mathbf{h}^{(j)}$,
+\item $J_{\phi^{(l)}}(w_k)$ denotes the Jacobian of the function $\phi^{(l)}$ with respect to the parameter $w_k$.
 \end{itemize}
-Each factor is therefore the Jacobian of one layer with respect to its input.
-Multiplying these local Jacobians together propagates the effect of $w_k$ all the way to the loss.
-This layer-by-layer propagation is referred to as backpropagation.
+Multiplying these local Jacobians together therefore propagates the effect of $w_k$, layer by layer, all the way to the loss.
 
-Once $\frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_k}$ can be computed for every parameter, all $P$ of these values are stacked into one vector, called the gradient of the loss with respect to the parameters:
+Once $\frac{\partial \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})}{\partial w_k}$ can be computed for every parameter, all of these values are stacked into one vector, called the gradient:
 \begin{equation}
 \nabla_{\theta} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}) =
 \left[
