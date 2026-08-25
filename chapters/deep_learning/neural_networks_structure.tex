@@ -102,13 +102,13 @@ where:
 \item $\sigma^{(l)}$ is the activation function applied element-wise to the neurons of layer $l$.
 \end{itemize}
 
-\input{figures/deepl_learning/matrix_interaction_between_layers.tex}
-
 This matrix-vector representation is visualised in Figure~\ref{fig:matrix_interaction_between_layers}, which highlights how each neuron in layer $l$ receives weighted signals from all neurons in the previous layer.
+
+\input{figures/deepl_learning/matrix_interaction_between_layers.tex}
 
 It is important to examine the role played by the intermediate layers of a \gls{nn}.
 At least one hidden layer is required to represent sufficiently complex functions, and in practice, modern architectures often include many more.
-Theoretical results have shown that, for a fixed number of parameters, increasing the number of layers enhances the expressive capacity of \gls{nn}s \cite{telgarsky2016benefits}.
+Theoretical results have shown that, for a fixed number of parameters, increasing the number of layers enhances the expressive capacity of \gls{nn} \cite{telgarsky2016benefits}.
 A common interpretation is that each layer acts as a processing step, so that more complex target functions require more such steps to be well approximated, although this interpretation remains grounded in empirical observation rather than formal theoretical justification.
 An entire chapter of this manuscript is devoted to studying the information that can be extracted from the activations of these intermediate layers (Chapter~\ref{chap:latent_space}).
 
@@ -137,7 +137,7 @@ The model parameters are thus denoted by:
 \label{eq:parameters}
 \end{equation}
 
-In this manuscript, $\theta$ is considered as a vector in $\mathbb{R}^P$, where $P$ denotes the total number of parameters, such that $\theta = [w_1, \dots, w_P]$.
+In this manuscript, $\theta$ is a vector in $\mathbb{R}^P$, where $P$ denotes the total number of parameters, such that $\theta = [w_1, \dots, w_P]$.
 The notation $\hat{f}_{\theta}$ expresses the dependence of the \gls{nn} on its parameters.
 Increasing the number of parameters, either by adding more neurons per layer or by increasing the number of layers, can enhances the expressive power of the model, allowing it to approximate more complex functions.
 However, this also increases computational cost and training time.

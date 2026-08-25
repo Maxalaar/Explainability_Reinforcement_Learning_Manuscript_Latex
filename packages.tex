@@ -109,6 +109,12 @@
 \usepackage{etoolbox}
 \usepackage{iflang}
 
+% Prevent itemize/enumerate lists from being split across two pages
+\BeforeBeginEnvironment{itemize}{\begin{samepage}}
+\AfterEndEnvironment{itemize}{\end{samepage}}
+\BeforeBeginEnvironment{enumerate}{\begin{samepage}}
+\AfterEndEnvironment{enumerate}{\end{samepage}}
+
 % Debug
 \usepackage{lineno}
 \usepackage{lipsum}

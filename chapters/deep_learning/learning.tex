@@ -12,7 +12,7 @@ Mathematically, this objective is expressed as:
 However, the \gls{nn} $\hat{f}$ used to approximate the target function $f$ is highly complex.
 It involves a large number of parameters as well as many nonlinear components.
 As a result, the optimum cannot be determined analytically by directly studying the properties of the function.
-Instead, approximate optimization methods are required to find suitable parameter values for \gls{nn}s.
+Instead, approximate optimization methods are required to find suitable parameter values for \gls{nn}.
 The class of algorithms used for this optimization is known as gradient descent methods.
 Numerous variants of gradient descent have been developed for \gls{nn} training, each designed to improve specific aspects of the optimization process.
 For simplicity, the focus here is on \gls{sgd} with a batch size of 1.
@@ -33,7 +33,7 @@ To do this, we need to quantify the influence of each parameter $w_k$ on the los
 However, $w_k$ can belong to any layer of the network.
 Computing this derivative therefore requires propagating the effect of a change in $w_k$ through all the layers that follow it, up to the loss.
 To do so, we consider each layer as a function of several variables, whose inputs are collected in the vector $\mathbf{h}^{(l-1)}$ and whose outputs are collected in the vector $\mathbf{h}^{(l)}$.
-Since these quantities are functions of several variables, we rely on the Jacobian matrix, the generalization of the derivative to this setting.
+Since these quantities are functions of several variables, we rely on the Jacobian matrix, the generalization of the derivative.
 The Jacobian matrix quantifies how a small change in each input component affects each output component.
 For a function $\mathbf{f}\colon\mathbb{R}^n \rightarrow \mathbb{R}^m$, we denote by $J_{\mathbf{f}}(\mathbf{x})$ the Jacobian of $\mathbf{f}$ evaluated at $\mathbf{x}$, which collects the partial derivatives of every output component with respect to every input component:
 \begin{equation}
@@ -55,7 +55,7 @@ J_{\mathbf{f} \circ \mathbf{g}}(\mathbf{x}) = J_{\mathbf{f}}(\mathbf{g}(\mathbf{
 \end{equation}
 
 This is the tool required to determine the impact of $w_k$ on the output of the network, regardless of where it is located.
-A network computes its output through a sequence of layer activations $\mathbf{h}^{(1)}, \dots, \mathbf{h}^{(L)}$, with each layer depending only on the one before it, and with $\mathbf{h}^{(L)} = \hat{f}_{\theta}(x^{(i)})$.
+A network computes its output through a sequence of layer activations $\mathbf{h}^{(1)}, \dots, \mathbf{h}^{(L)}$, with each layer depending only on the one before it.
 As a result, a parameter $w_k$ belonging to layer $l$ affects the loss $\mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)})$ through a chain of dependencies, it first changes $\mathbf{h}^{(l)}$, which changes $\mathbf{h}^{(l+1)}$, and so on until the output layer $\mathbf{h}^{(L)}$, from which the loss is computed.
 Since $x^{(i)}$ and $y^{(i)}$ are fixed for a given example, the loss can be viewed as a function of $w_k$ alone, and we seek the effect of a small change in $w_k$ on this value.
 Applying the chain rule across this chain gives
@@ -127,5 +127,5 @@ Figure~\ref{fig:multiple_gradient_descents_non_convex} illustrates the effect of
 
 % \input{figures/deepl_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
 
-Despite the lack of theoretical guarantees of convergence to a global optimum in this setting, the simple procedure of random initialization followed by iterative gradient-based updates is sufficient in practice to train highly complex \gls{nn}.
-This empirical success is often attributed to the expressive power of \gls{nn}s, even though a complete theoretical understanding of this phenomenon remains an open question.
+Despite the lack of theoretical guarantees of convergence to a global optimum in this setting, the simple procedure of random initialization followed by iterative gradient-based updates is sufficient in practice to train complex \gls{nn}.
+This empirical success is often attributed to the expressive power of \gls{nn}, even though a complete theoretical understanding of this phenomenon remains an open question.
