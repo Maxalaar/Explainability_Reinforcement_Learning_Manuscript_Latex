@@ -32,7 +32,7 @@ The function that maps an observed state to the chosen action is called a policy
 The objective is to find an optimal policy, in the sense that it maximizes the expected cumulative reward over time.
 
 This framework led to the formalization of \gls{mdp}, which provide a mathematical model for sequential decision-making \cite{howard1960mdp}.
-\gls{mdp} describe a decision-maker interacting with an environment through a set of states, actions, rewards, and transition rules.
+\gls{mdp} describe a agent interacting with an environment through a set of states, actions, rewards, and transition rules.
 The earliest method proposed to solve \gls{mdp} is dynamic programming \cite{bellman1957dynamic}.
 It proceeds by breaking down a complex decision problem into smaller, more manageable subproblems, solving each one, and combining the results to obtain an overall solution.
 However, dynamic programming requires a full and exact description of the environment, which is only feasible for small problems.
@@ -62,7 +62,7 @@ To address this issue, research shifted toward more general representations of v
 Instead of maintaining explicit tables, function approximation methods were introduced.  
 These allowed value functions and policies to be represented using parametric models such as linear approximators or perceptron-like architectures \cite{BartoSuttonAnderson1983, tsitsiklis1996analysis}.
 This change enabled generalization across states, reducing the dependence on exhaustive exploration of the state space.
-The introduction of Deep Q-Networks (DQN), which demonstrated that deep \gls{nn} could be used to approximate value functions at scale \cite{mnih2013playingatarideepreinforcement}.
+The introduction of \gls{dqn}, which demonstrated that deep \gls{nn} could be used to approximate value functions at scale \cite{mnih2013playingatarideepreinforcement}.
 
 Figure~\ref{fig:evolution_reinforcement_learning_classical} provides a timeline of the key milestones that shaped the development of reinforcement learning prior to its fusion with deep learning.
 
@@ -72,7 +72,7 @@ Figure~\ref{fig:evolution_reinforcement_learning_classical} provides a timeline 
 
 The introduction of \gls{dl} into \gls{rl} marked a major turning point in the field.
 A series of algorithms significantly improved scalability.
-Deep Deterministic Policy Gradient extended actor–critic methods to continuous action spaces \cite{lillicrap2015continuouscontroldeepreinforcement}.
+\gls{ddpg} extended actor–critic methods to continuous action spaces \cite{lillicrap2015continuouscontroldeepreinforcement}.
 \gls{ppo} later became a standard algorithm in \gls{rl} due to its simplicity, stability, and ability to perform in both continuous and discrete action spaces \cite{schulman2017proximalpolicyoptimizationalgorithms}.
 
 These advances established a practical foundation for large-scale policy optimization.

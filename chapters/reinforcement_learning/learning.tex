@@ -60,7 +60,7 @@ In more advanced implementations, \(\varepsilon\) can be adapted over the course
 The learning process consists of two steps that repeat until convergence:
 \begin{enumerate}
     \item \textbf{Data collection.} The current policy \(\pi\) interacts with the \gls{mdp}.
-    For a given starting state \(s^i_1\) and observation \(o_1\), the interaction produces a episode \(t_e\) sampled from \(\tau_t(s^i_1, o_1, p, \pi, \varepsilon)\).
+    For a given starting state \(\StateInitial_1\) and observation \(o_1\), the interaction produces a episode \(t_e\) sampled from \(\tau_t(\StateInitial_1, o_1, p, \pi, \varepsilon)\).
     For each step \(i\) along the episode, the return from that step onward is \(g(t_{i:}) = \sum_{k=i}^{T} \gamma^{k-i} r_k\), which serves as the target value for the state-action pair \((s_i, a_i)\).
     This procedure is detailed in Algorithm~\ref{alg:data_collection}.
 

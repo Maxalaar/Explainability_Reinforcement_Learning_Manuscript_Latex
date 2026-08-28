@@ -16,7 +16,7 @@ To this end, the presentation proceeds step by step:
 \subsection{Markov Decision Processes}
 \label{subsec:markov_decision_processes}
 
-The \gls{rl} framework is grounded in the agent paradigm: the decision-making entity is called the agent.  
+The \gls{rl} framework is built around the agent paradigm, in which the decision-making entity is referred to as the agent. 
 The agent perceives its environment, processes the information it receives, and acts upon the environment to influence future outcomes.  
 To specify the task and the agent's capacity to perceive and act, the problem is modeled as a \gls{mdp}.
 
@@ -44,8 +44,8 @@ A \gls{mdp} is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \m
     \item \textbf{\(\mathcal{S}\)}: The set of states, representing all possible configurations of the environment.  
     A state belonging to this set is denoted by \(s \in \mathcal{S}\).  
     Among these, two special subsets are distinguished: initial states, from which an interaction can begin, and terminal states, in which the interaction ends.  
-    The set of initial states is denoted by \(\mathcal{S}^i\), with an initial state written as \(s^i \in \mathcal{S}^i\).  
-    The set of terminal states is denoted by \(\mathcal{S}^t\), with a terminal state written as \(s^t \in \mathcal{S}^t\).
+    The set of initial states is denoted by \(\StateSetInitial\), with an initial state written as \(\StateInitial \in \StateSetInitial\).
+    The set of terminal states is denoted by \(\StateSetTerminal\), with a terminal state written as \(\StateTerminal \in \StateSetTerminal\).
     
     \item \textbf{\(\mathcal{O}\)}: The set of observations that the agent can perceive from the environment.
     A observation belonging to this set is denoted by \(o \in \mathcal{O}\). 
@@ -93,12 +93,11 @@ A policy function is denoted by \(\pi\), and is defined as:
 The notation \(a \sim \pi(\cdot \mid o)\) means that the action \(a\) is sampled from the distribution induced by \(\pi(\cdot \mid o)\).  
 The notation \(\pi(a \mid o)\) denotes the probability of selecting action \(a\) under the distribution \(\pi(\cdot \mid o)\).
 
-It is important to note that this policy does not include any explicit state-estimation mechanism.
-Instead, the ability to infer information about the underlying state is entirely left to the policy itself, which must learn from experience how to compensate for the missing information.
+It is important to note that this policy does not include any explicit mechanism for estimating the underlying state from the observations.
+Instead, the policy must learn from experience how to infer the information about the underlying state that is not directly available in the observations.
 This reflects the design of many modern \gls{rl} implementations, where policies are often parameterized by architectures capable of summarizing past observations, such as recurrent or attention-based networks, without explicitly modeling the uncertainty over the underlying state.
 
 Now that the \gls{mdp} and the policy have both been defined, Figure~\ref{fig:reinforcement_learning_loop} illustrates how they interact within the general \gls{rl} loop.
-As a reminder, the objective of \gls{rl} is to iteratively improve the policy so as to maximize the reward function.
 
 \input{figures/reinforcement_learning/reinforcement_learning_loop.tex}
 
@@ -143,7 +142,7 @@ where \(t_{2:} = (s_2, o_2, a_2, r_2, \ldots, s_T, o_T, a_T, r_T)\) denotes the 
 
 There exist two special types of trajectories.
 First, a trajectory that terminates in a terminal state is called a terminal trajectory, and is denoted by \(t_t \sim \tau_t(s, o, p, \pi)\).
-Second, a terminal trajectory that starts from an initial state and an initial observation is called an episode, and is denoted by \(t_e \sim \tau_t(s^i, o, p, \pi)\).
+Second, a terminal trajectory that starts from an initial state and an initial observation is called an episode, and is denoted by \(t_e \sim \tau_t(\StateInitial, o, p, \pi)\).
 
 \subsection{Value Functions}
 \label{subsec:value_functions}
