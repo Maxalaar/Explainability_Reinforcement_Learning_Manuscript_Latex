@@ -26,13 +26,13 @@ Explanations of the learning process therefore remain an open research direction
 
 \subsection{Lack of Unified Metrics for Explainability}
 
-The diversity of explanation forms identified in this review also reveals another limitation shared by nearly all families of \gls{xrl} methods: the absence of reliable metrics for evaluating explainability.
+The diversity of explanation forms identified in this review also reveals another limitation shared by nearly all families of \gls{xrl} methods, which is the absence of reliable metrics for evaluating explainability.
 In many studies, explanations are not evaluated with human participants.
 Instead, authors focus on technical properties of the proposed method, such as fidelity, sparsity, or computational efficiency.
 When human evaluations are conducted, they usually rely on subjective satisfaction questionnaires.
 Although useful, self-reported satisfaction remains prone to numerous biases and does not necessarily indicate that the explanation has improved the observer's mental model or understanding of the agent.
 
-This limitation is not specific to \gls{xrl}: it reflects a broader challenge affecting \gls{xai} as a whole.
+This limitation is not specific to \gls{xrl}, it reflects a broader challenge affecting \gls{xai} as a whole.
 In our view, this challenge stems from a historical development largely driven by the computer science community.
 Explainability has consequently often been studied from an algorithmic or mathematical perspective, with less attention given to how humans actually benefit from explanations.
 
@@ -47,15 +47,16 @@ The absence of such collaborations is likely a consequence of the relative youth
 \subsection{Toward Intrinsic Explainability in \gls{xrl}}
 
 Our review also suggests that current \gls{xrl} research remains largely dominated by substitutive explainability approaches (Section~\ref{sec:explanation}).
-Most existing methods explain \gls{rl} agents through surrogate models or external explanations rather than by analyzing the neural network itself.
-While these approaches often improve interpretability, they inevitably discard part of the information contained in the learned representation.
+Many existing methods explain \gls{rl} agents by constructing surrogate models.
+While these approaches can provide useful explanations for simple policies, their ability to scale to increasingly complex agents is limited.
+This limitation is particularly important in deep \gls{rl}, where \gls{nn} are used to represent complex policies that would be difficult to approximate with simpler surrogate models.
+Replacing such a model with a simpler one therefore risks losing precisely the complexity that makes deep \gls{rl} effective.
 
-We argue instead that explainability should progressively move toward intrinsic approaches, which analyze the internal mechanisms of the agent rather than bypassing them.
-From this perspective, the neural network should not be regarded as an inherently opaque black box, but rather as a complex representation whose apparent opacity mainly reflects the current limitations of our analysis tools (Hypothesis~\ref{hyp:mechanistic}).
-This viewpoint is consistent with the discussion developed in Chapter~\ref{chap:latent_space}, where we argue that the notion of a black box is only temporary.
+For this reason, we argue that a promising direction for \gls{xrl} is to develop explanations directly from the \gls{nn} underlying the agent.
+Rather than bypassing the model, such approaches aim to analyze the representations learned by the network itself.
+From this perspective, the \gls{nn} should not necessarily be regarded as an inherently opaque black box, but as a complex representation whose apparent opacity may instead reflect the limitations of current analysis tools.
 
 Among the methods reviewed, \textit{latent space usage for MDP generation} (Section~\ref{subsubsec:latent_space_mdp_generation}) appears closest to this intrinsic perspective.
-Instead of replacing the learned representation, it directly exploits the latent space to identify meaningful concepts that can support the explanation of the agent's behavior.
-However, this approach still relies on a largely manual and qualitative analysis of the latent space, which limits its reproducibility and its ability to produce systematic explanations.
-The next chapter builds upon this idea and proposes a mechanistic \gls{xrl} approach based on latent-space analysis.
-Rather than constructing a surrogate explanation, it aims to explain the agent by studying its internal representations.
+Instead of replacing the learned representation, it directly exploits the \gls{ls} to identify meaningful concepts that can support the explanation of the agent's behavior.
+However, this approach still relies on a largely manual and qualitative analysis of the \gls{ls}, which limits its reproducibility and its ability to produce systematic explanations.
+The next chapter builds upon this idea and proposes a mechanistic \gls{xrl} approach based on \gls{ls} analysis.
