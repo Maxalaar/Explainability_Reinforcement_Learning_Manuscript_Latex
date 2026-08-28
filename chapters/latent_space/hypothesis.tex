@@ -1,8 +1,6 @@
 \section{Concept Hypothesis}
 \label{sec:concept_hypothesis}
 
-\input{figures/latent_space/latent_space_embeddings}
-
 In this section, we introduce the main working hypothesis underlying much of the literature on \gls{ls} analysis.  
 Although rarely stated explicitly, this hypothesis is implicitly present in the recurring use of notions such as abstraction, representation, \gls{ls}, concept, and semantics.
 Throughout this manuscript, we refer to this hypothesis as \ConceptHypothesisName.
@@ -16,11 +14,11 @@ This requires a process of abstraction, as defined in Definition~\ref{def:abstra
 
 \begin{definition}{Abstraction}{abstraction}
 Abstraction is the process by which a model transforms an input into a task-relevant internal form.  
-It captures and restructures information in order to represent relationships that are useful for prediction or decision-making.  
+It captures and restructures information in order to represent relationships that are useful for prediction.  
 \end{definition}
 
 The ability of \gls{nn} to perform abstraction arises from their intermediate activations.
-A \gls{nn} does not directly map $x$ to $y$, as illustrated in Figure~\ref{fig:general_architecture_multilayer_perceptron}, it computes a sequence of intermediate activations across hidden layers.
+A \gls{nn} does not directly map $x$ to $y$, it computes a sequence of intermediate activations across hidden layers.
 These activations are numerical encodings of the input referred to as embeddings.
 Once training is complete, these embeddings are structured to support the performance of a specific task.
 To mark this distinction, we will refer to these trained embeddings as \gls{lr}, as defined in Definition~\ref{def:representation}.
@@ -44,8 +42,12 @@ It is shaped by learning and organizes representations according to task-relevan
 \end{definition}
 
 Under the \ConceptHypothesisName, the analysis of the \gls{ls} is assumed to provide access to abstract structures learned by the model, as illustrated in Figure~\ref{fig:latent_space}.
+The same set of latent activations can be viewed either as an unstructured point cloud or, under this hypothesis, as a collection of points organized by concept membership, in which case the structure of the \gls{ls} becomes meaningful and amenable to analysis.
+In Figure~\ref{fig:latent_space}, the colors represent hypothetical concept memberships assigned by the model rather than observed labels.
 These structures are referred to as concepts.
 In this manuscript, a concept is defined as an abstract representation that organizes information and supports reasoning (see Definition~\ref{def:concept}).
+
+\input{figures/latent_space/latent_space_embeddings}
 
 \begin{definition}{Concept}{concept}
 A concept is a task-dependent abstraction that captures regularities in the input space relevant for predicting the target output.
@@ -70,7 +72,7 @@ This choice directly determines how concepts can be identified and extracted fro
 As a result, several families of \gls{ls} analysis methods have emerged in the literature, each adopting a different view of how concepts are structured within the \gls{ls}.
 
 \begin{hypothesis}{Concept Hypothesis}{concept}
-Neural networks generalize by performing abstraction.
+\gls{nn} generalize by performing abstraction.
 Through training, their \gls{ls} becomes organized around concepts.
 Concepts are task-dependent abstractions that capture regularities relevant to the task.
 Analyzing the \gls{ls} therefore provides access to the \gls{cs} through which these concepts are instantiated in the model.

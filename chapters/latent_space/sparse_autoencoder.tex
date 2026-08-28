@@ -1,24 +1,20 @@
 \section{Sparse Autoencoder}
 \label{sec:sparse_autoencoder}
 
-\input{figures/latent_space/latent_space_sparse_autoencoders.tex}
-\input{figures/latent_space/sparse_autoencoder_illustration.tex}
-
 Approaches based on latent directions face limitations.
 Only a restricted subset of concepts admit a linear representation, and even these directions are often entangled with multiple semantic concepts, as illustrated in Figure~\ref{fig:entanglement_illustration}.
 To address this limitation, an extension of the \ConceptHypothesisName has been proposed under the name \SuperpositionHypothesisName, formalized in Hypothesis~\ref{hyp:superposition} \cite{elhage2022superposition}.
+
+\begin{hypothesis}{Superposition Hypothesis}{superposition}
+Concepts are preferentially represented by distinct linear directions in \gls{ls}.
+When the number of concepts exceeds the available dimensions, multiple concepts are encoded in superposition within the same directions.
+\end{hypothesis}
 
 According to this hypothesis, in an unconstrained \gls{ls}, each concept is represented in its own independent linear direction.
 However, \gls{nn} operate in finite-dimensional spaces, so when the number of concepts exceeds the available dimensions, such a one-to-one correspondence becomes impractical.
 The network must therefore reuse its representational dimensions, allowing multiple concepts to be encoded using the same directions.
 This shared encoding is referred to as superposition \cite{bricken2023monosemanticity}.
 As a result, in a superposed representation, linear analysis of the \gls{ls} may not isolate individual concepts, the resulting directions reflect a mixture of several semantic attributes.
-For the \SuperpositionHypothesisName, this provides an explanation for the entanglement observed when analyzing \gls{ls}.
-
-\begin{hypothesis}{Superposition Hypothesis}{superposition}
-Concepts are preferentially represented by distinct linear directions in \gls{ls}.
-When the number of concepts exceeds the available dimensions, multiple concepts are encoded in superposition within the same directions.
-\end{hypothesis}
 
 The idealized non-superposed representation and can be mathematically expressed as follows:
 \[
@@ -42,6 +38,10 @@ where:
 Under the \SuperpositionHypothesisName, the phenomenon of superposition becomes an obstacle for any method that attempts to analyze \gls{lr} directly in the original activation space.
 This has motivated the development of methods that aim to recover a less superposed \gls{lr}.
 A common approach is to map \gls{ls} into a higher-dimensional space while imposing additional constraints that encourage individual concepts to be represented separately.
+This transformation is illustrated in Figure~\ref{fig:dense_to_sparse_sae}, while embeddings are entangled in the initial \gls{ls}, the sparse representation aligns each concept with a dedicated feature axis.
+
+\input{figures/latent_space/latent_space_sparse_autoencoders.tex}
+
 \gls{sae} provide a practical implementation of this approach and can be defined as follows:
 \[
 z = f_{\text{enc}}(h), \quad \hat{h} = f_{\text{dec}}(z)
@@ -74,6 +74,9 @@ The method proves to be powerful when successfully applied to language models \c
 In these applications, \gls{sae} are used to desuperpose the \gls{lr} of \gls{llm}.
 Once this representation is obtained, it has been shown that many concept vectors exhibit semantic properties.
 A example is the Golden Gate Bridge concept direction, illustrated in Figure~\ref{fig:sparse_autoencoder_illustration}, which activates systematically whenever the input text or image refers to the Golden Gate Bridge, regardless of the language or modality.
+This demonstrates that the learned concept is not tied to a specific surface form but captures a deeper semantic abstraction shared across modalities.
+
+\input{figures/latent_space/sparse_autoencoder_illustration.tex}
 
 \gls{sae} also provide a way to intervene directly on the \gls{lr} learned by the model.
 A concept can be artificially activated by modifying its corresponding feature in the sparse representation $z$, even when the input contains no reference to it.
@@ -119,6 +122,7 @@ These limitations can be summarized as follows:
 
 These limitations suggest that \SuperpositionHypothesisName, while powerful, do not fully resolve the problem of \gls{cs}.
 Convincing empirical results do not necessarily validate the underlying theoretical assumptions.
-Probing (Section~\ref{sec:probing}), interpretable directions (Section~\ref{sec:direction}), and \gls{sae} all rest on a shared assumption that the \gls{cs} can be recovered through linear decompositions of \gls{lr}.
+
+Probing, interpretable directions, and \SuperpositionHypothesisName all rest on a shared assumption that the \gls{cs} can be recovered through linear decompositions of \gls{lr}.
 This assumption has driven significant empirical progress, yet it remains theoretically fragile.
 The following section therefore introduces a approach that relaxes this constraint.

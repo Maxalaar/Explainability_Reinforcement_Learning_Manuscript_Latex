@@ -1,12 +1,10 @@
 \section{Clustering}
 \label{sec:clustering}
 
-\input{figures/latent_space/latent_space_clustering.tex}
-\input{figures/latent_space/deep_clustering_illustration.tex}
-
-All the \gls{ls} analysis methods presented so far rely on assumptions about a linear \gls{cs}.For probing methods, concepts must be at least partially linearly separable for simple probes to succeed \ref{sec:probing}.
-Latent directions assumes that variations associated with a concept can be captured by moving along a linear axis of the \gls{ls} \ref{sec:direction}.
-Similarly, the superposition hypothesis (Hypothesis~\ref{hyp:superposition}) assumes that concepts are represented through linear directions that become entangled because of representational capacity constraints (Section~\ref{sec:sparse_autoencoder}).
+All the \gls{ls} analysis methods presented so far rely on assumptions about a linear \gls{cs}.
+For probing methods, concepts must be at least partially linearly separable for simple probes to succeed.
+Latent directions assumes that variations associated with a concept can be captured by moving along a linear axis of the \gls{ls}.
+The \SuperpositionHypothesisName assumes that concepts are represented through linear directions that become entangled because of representational capacity constraints.
 Although these assumptions have led to empirical successes, their theoretical justification remains limited.
 Several observations suggest that the linearity hypothesis may not fully capture the \gls{cs}.
 
@@ -22,9 +20,12 @@ Conversely, inputs that differ significantly from a concept perspective are expe
 This is a considerably weaker assumption, in the sense that it is empirically verified in a wide range of settings.
 
 Under this assumption, the discovery of concepts can be reformulated as the identification of groups of embeddings that occupy the same region of the \gls{ls}.
-Concepts are therefore no longer associated with directions, but with clusters of neighboring representations, as illustrated in Figure~\ref{fig:deep_clustering_illustration}.
-This idea forms the basis of the research field known as deep clustering.
+Concepts are therefore no longer associated with directions, but with clusters of neighboring representations.
+This is shown schematically in Figure~\ref{fig:latent_clusters}, where the points represent embeddings associated with concepts A, B, and C, and the ellipses indicate the approximate extent of each group and highlight their geometric separation.
 
+\input{figures/latent_space/latent_space_clustering.tex}
+
+This idea forms the basis of the research field known as deep clustering.
 In these approaches, a collection of inputs is projected into a \gls{ls} using a \gls{nn}.
 The resulting embeddings form a point cloud on which standard clustering algorithms can be applied.
 The obtained clusters are then interpreted as representing distinct concepts.
@@ -48,8 +49,6 @@ The model is trained to minimize the reconstruction error between the original i
 
 This objective encourages the \gls{ls} to preserve the most informative features of the input while enforcing a compact representation.
 
-Clustering algorithms are then applied to the learned embeddings.
-
 Let $\mathcal{D} = \{x^{(i)}\}_{i=1}^N$ denote a dataset of inputs.
 Through the encoder $f_{\text{enc}}$, this dataset induces a point cloud in the \gls{ls}:
 \[
@@ -61,11 +60,13 @@ Clustering algorithms are then applied to this set $\mathcal{Z}$ of embeddings i
 An example of this methodology can be observed in Figure~\ref{fig:deep_clustering_illustration}, where the approach is applied to the STL-10 dataset \cite{coates2011analysis} using $k$-means clustering \cite{macqueen1967multivariate} with a number of clusters arbitrarily fixed to $K = 10$ \cite{xie_unsupervised_2016}.
 For each cluster, the corresponding line shows the $10$ samples closest to the associated centroid in the \gls{ls}.
 
+\input{figures/latent_space/deep_clustering_illustration.tex}
+
 We observe that the method captures coherent semantic categories such as animals, vehicles, and flying entities.
 This result is particularly striking given that the only available information to the system consists of raw images.
 It suggests that the compression process induces a \gls{ls} in which semantically meaningful \gls{cs} emerge.
 
-More advanced approaches combine representation learning and clustering objectives within a single optimization process.
+More advanced approaches combine representation learning and clustering within a single optimization process.
 In this setting, additional loss terms encourage embeddings to organize themselves around cluster centroids during training.
 This often produces \gls{ls} that are easier to analyze and improves the quality of the discovered semantic \gls{cs} \cite{guo_improved_2017, miklautz_breaking_2024}.
 
