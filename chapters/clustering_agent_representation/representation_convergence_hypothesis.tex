@@ -28,10 +28,13 @@ Independently trained models are expected to converge toward different sets of w
 The proposed hypothesis concerns a abstract level of representation.
 We assume that the conceptual organization induced by their \gls{lr} converges toward an equivalent \gls{cs}, even though the numerical implementation of the networks differ.
 
-This hypothesis provides a criterion for evaluating concept extraction methods.
-If independently trained models develop common concepts for a given task, an effective extraction method should recover these concepts consistently across models.
-Such consistency provides evidence that the extracted concepts capture meaningful structures rather than model-specific artifacts.
-It also gives a stronger justification for studying these concepts: if the concepts discovered in one model are consistently recovered across different training runs, they are more likely to reflect properties of the task rather than arbitrary features.
+The \gls{car} method is designed to investigate this hypothesis by searching for concepts that are consistently recovered across independently trained models.
+In this sense, the hypothesis serves both as the foundation of the method and as the phenomenon that the method aims to investigate.
+If independently trained models develop common concepts for a given task, \gls{car} should be able to recover these concepts consistently across models.
+Conversely, the absence of such convergence would provide evidence against the hypothesis.
 
-The remainder of this chapter builds upon this hypothesis.
-This principle forms the theoretical foundation of the \ClusteringUniversalityName metric, introduced in Subsection~\ref{subsec:clustering_universality}.
+The consistency of the recovered concepts can therefore be used to evaluate the extent to which independently trained networks converge toward a common conceptual organization.
+This also provides a stronger justification for studying these concepts, as concepts consistently recovered across different training runs are more likely to reflect properties of the task than model-specific artifacts.
+
+The remainder of this chapter develops the methodology used to investigate this hypothesis.
+The \ClusteringUniversalityName metric, introduced in Subsection~\ref{subsec:clustering_universality}, provides a quantitative measure of the convergence observed between the concepts identified in independently trained models.
