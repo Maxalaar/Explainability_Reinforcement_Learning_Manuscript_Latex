@@ -2,11 +2,10 @@
 \label{sec:clustering}
 
 All the \gls{ls} analysis methods presented so far rely on assumptions about a linear \gls{cs}.
-For probing methods, concepts must be at least partially linearly separable for simple probes to succeed.
+For probing methods, concepts must be at least partially linearly separable for simple probes.
 Latent directions assumes that variations associated with a concept can be captured by moving along a linear axis of the \gls{ls}.
 The \SuperpositionHypothesisName assumes that concepts are represented through linear directions that become entangled because of representational capacity constraints.
-Although these assumptions have led to empirical successes, their theoretical justification remains limited.
-Several observations suggest that the linearity hypothesis may not fully capture the \gls{cs}.
+Although these assumptions have led to empirical successes, several observations suggest that the linearity hypothesis may not fully capture the \gls{cs}.
 
 For instance, some concepts can only be recovered using non-linear probes.
 Likewise, methods based on interpretable directions typically identify only a limited number of semantic factors.
@@ -20,7 +19,6 @@ Conversely, inputs that differ significantly from a concept perspective are expe
 This is a considerably weaker assumption, in the sense that it is empirically verified in a wide range of settings.
 
 Under this assumption, the discovery of concepts can be reformulated as the identification of groups of embeddings that occupy the same region of the \gls{ls}.
-Concepts are therefore no longer associated with directions, but with clusters of neighboring representations.
 This is shown schematically in Figure~\ref{fig:latent_clusters}, where the points represent embeddings associated with concepts A, B, and C, and the ellipses indicate the approximate extent of each group and highlight their geometric separation.
 
 \input{figures/latent_space/latent_space_clustering.tex}
@@ -31,31 +29,39 @@ The resulting embeddings form a point cloud on which standard clustering algorit
 The obtained clusters are then interpreted as representing distinct concepts.
 
 Deep clustering has been particularly successful in unsupervised image classification.
-Typically, an autoencoder is composed of an encoder $f_{\text{enc}}$ and a decoder $f_{\text{dec}}$.
-The encoder maps an input $x^{(i)} \in \mathcal{X}$ to a low-dimensional \gls{lr} $z^{(i)} \in \mathbb{R}^d$:
-\[
-z^{(i)} = f_{\text{enc}}(x^{(i)}), \quad d \ll \dim(\mathcal{X}).
-\]
-
-To ensure that this compressed representation does not discard essential information, the decoder reconstructs the input from the \gls{ls}:
-\[
-\hat{x}^{(i)} = f_{\text{dec}}(z^{(i)}) = f_{\text{dec}}(f_{\text{enc}}(x^{(i)})).
-\]
-
-The model is trained to minimize the reconstruction error between the original input and its reconstruction, typically using a \gls{mse} loss:
-\[
-\mathcal{L}_{\text{rec}} = \frac{1}{N} \sum_{i=1}^N \left\| x^{(i)} - \hat{x}^{(i)} \right\|_2^2.
-\]
-
+For this type of task used a specific \gls{nn} architecture called an autoencoder.
+An autoencoder is composed of an encoder $f_{\text{enc}}$ and a decoder $f_{\text{dec}}$.
+The encoder maps an input $x^{(i)} \in \mathcal{X}$ to a low-dimensional \gls{lr} $z^{(i)} \in \mathbb{R}^d$.
+The decoder then maps this representation back to the input space to produce a reconstruction $\hat{x}^{(i)}$.
+The model is trained by \gls{sgd} to minimize the reconstruction error between the original input and its reconstruction using a \gls{mse} loss.
 This objective encourages the \gls{ls} to preserve the most informative features of the input while enforcing a compact representation.
 
-Let $\mathcal{D} = \{x^{(i)}\}_{i=1}^N$ denote a dataset of inputs.
-Through the encoder $f_{\text{enc}}$, this dataset induces a point cloud in the \gls{ls}:
+This can be expressed mathematically as follows:
 \[
-\mathcal{Z} = \{z^{(i)} \in \mathbb{R}^d \mid z^{(i)} = f_{\text{enc}}(x^{(i)}), \; x^{(i)} \in \mathcal{D} \}.
+x^{(i)}
+\xrightarrow{\;f_{\mathrm{enc}}\;}
+z^{(i)}
+\xrightarrow{\;f_{\mathrm{dec}}\;}
+\hat{x}^{(i)},
+\qquad
+d \ll \dim(\mathcal{X}),
+\qquad
+\mathcal{L}_{\mathrm{rec}}
+=
+\frac{1}{N}\sum_{i=1}^{N}
+\left\|x^{(i)}-\hat{x}^{(i)}\right\|_2^2.
 \]
 
-Clustering algorithms are then applied to this set $\mathcal{Z}$ of embeddings in order to identify groups of similar representations.
+Once the autoencoder has been trained sufficiently well, the reconstruction loss $\mathcal{L}_{\mathrm{rec}}$ should be low enough for the learned representation to be useful.
+A clustering algorithm can then be applied to the compressed representations of the images.
+Let $\mathcal{D} = {x^{(i)}}_{i=1}^N$ denote a dataset of inputs.
+Through the encoder $f_{\text{enc}}$, this dataset is mapped to a point cloud in the \gls{ls}:
+$$
+\mathcal{Z} = \{z^{(i)} \in \mathbb{R}^d \mid z^{(i)} = f_{\text{enc}}(x^{(i)}), \; x^{(i)} \in \mathcal{D} \}.
+$$
+
+A classical clustering algorithm is then applied to the set $\mathcal{Z}$ of embeddings to identify groups of similar representations.
+Each resulting cluster can therefore be interpreted as a group of images that the model considers similar.
 
 An example of this methodology can be observed in Figure~\ref{fig:deep_clustering_illustration}, where the approach is applied to the STL-10 dataset \cite{coates2011analysis} using $k$-means clustering \cite{macqueen1967multivariate} with a number of clusters arbitrarily fixed to $K = 10$ \cite{xie_unsupervised_2016}.
 For each cluster, the corresponding line shows the $10$ samples closest to the associated centroid in the \gls{ls}.
@@ -73,7 +79,9 @@ This often produces \gls{ls} that are easier to analyze and improves the quality
 Despite its effectiveness, clustering-based analysis presents several important limitations.
 First, as with most unsupervised semantic discovery techniques, interpreting the resulting clusters remains partly subjective.
 Benchmark datasets often provide class labels for evaluation, but the discovered clusters may not match the categories that humans consider relevant. 
+
 Alternative semantic groupings may also be equally valid.
 Second, clustering methods are highly sensitive to design choices, as the number of clusters, the distance metric, and the clustering algorithm itself can all significantly influence the results, making parameter selection challenging and often requiring substantial empirical tuning.
+
 Finally, to the best of our knowledge, no intervention technique has yet been proposed in the context of clustering-based analysis.
 Unlike probing or \gls{sae} analysis, which allow targeted modifications of \gls{lr} to study their causal role, clustering methods currently offer no mechanism to alter the model's behavior by acting directly on the discovered \gls{cs}.

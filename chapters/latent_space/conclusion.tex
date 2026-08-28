@@ -7,7 +7,7 @@ The four families of methods reviewed in this chapter, namely probing, interpret
 Each of them approaches the question from a different angle, but they share a common objective: uncover how \gls{lr} are structured and what information can be extracted from them.
 
 However, a fundamental difficulty remains.
-There is currently no consensus on how to rigorously evaluate to what extent these methods genuinely provide access to the internal concepts of a model.
+There is currently no consensus on how to rigorously evaluate whether these methods truly capture the internal concepts of a model.
 Most existing metrics assess reconstruction quality or linear separability, but these do not directly measure whether the discovered \gls{cs} correspond to meaningful abstractions from the model's perspective.
 This leaves open the question of what it means, formally, for a concept to be represented in a \gls{nn}.
 
@@ -15,3 +15,8 @@ Addressing this question may require contributions from disciplines beyond compu
 As the notion of semantics is inherently tied to human interpretation, a purely formal or computational account may be insufficient.
 Insights from philosophy, cognitive science, or psychology could prove valuable in grounding the notion of concept in a way that is both theoretically rigorous and empirically tractable.
 Despite these open questions, the methods studied in this chapter provide a practical foundation for analyzing the internal representations of \gls{nn}.
+
+Building on the \ConceptHypothesisName and the insights developed throughout this chapter, this manuscript investigates a representation-based approach to explainability in \gls{rl}.
+More specifically, it builds on the intuition underlying deep clustering to identify meaningful structures within the representations learned by \gls{rl} agents.
+To establish the necessary foundations, the next chapter introduces the principles of \gls{rl}.
+The subsequent chapter then presents the proposed method for analyzing these representations and studying their potential for explainability in \gls{rl} (Chapter~\ref{chap:clustering_agent_representation}).
