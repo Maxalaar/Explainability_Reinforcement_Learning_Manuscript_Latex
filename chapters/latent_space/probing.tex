@@ -56,7 +56,7 @@ If the resulting change in the model’s output is consistent with the applied p
 
 To this end, the \gls{lr} $h^{l}$ is minimally modified such that the probe prediction for the target concept $c_j$ changes state, while the predictions associated with other concepts remain unchanged.
 This goal can be formulated as an optimization problem over the latent activation itself.
-The optimization is performed directly on the representation $h^{l'}$, using gradient-based optimization as introduced in Section~\ref{sec:learning}.
+The optimization is performed directly on the representation $h^{l'}$, using \gls{sgd}.
 The solution to this problem is the optimal modified representation $h^{l*}$, defined as:
 \[
 h^{l*} =

@@ -6,10 +6,11 @@
 In classical machine learning approaches, practitioners had to manually design data representations in order to make them usable by simple models.
 \gls{dl} introduces a paradigm shift: rather than relying on hand-crafted features to meaningfully represent data, it automatically learns these representations.
 Through the successive activation of hidden layers, \gls{nn} gradually construct representations that become increasingly relevant to the task under consideration \cite{rumelhart1986learning}.
+
 These representations are not meaningful at initialization, they emerge progressively during training as the model optimizes its objective.
-It is precisely through these learned representations that a trained network is able to map an input to an output, including for examples never encountered during training.
+It is through these learned representations that a trained network is able to map an input to an output, including for examples never encountered during training.
 Since these representations are learned internally by the network and are not directly observable from the input or output spaces, they are commonly referred to as \gls{lr}.
-The collection of these \gls{lr} learned throughout the network is commonly referred to as a \gls{ls}.
+The collection of these \gls{lr} learned throughout the network is referred to as a \gls{ls}.
 
 These \gls{ls} are now at the core of a growing number of practical applications.
 Neural video compression exploits the compactness of \gls{ls} to encode information efficiently \cite{lu2019dvcendtoenddeepvideo}.

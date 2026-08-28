@@ -29,7 +29,7 @@ The resulting embeddings form a point cloud on which standard clustering algorit
 The obtained clusters are then interpreted as representing distinct concepts.
 
 Deep clustering has been particularly successful in unsupervised image classification.
-For this type of task used a specific \gls{nn} architecture called an autoencoder.
+For this type of task, a specific \gls{nn} architecture called an autoencoder is commonly used.
 An autoencoder is composed of an encoder $f_{\text{enc}}$ and a decoder $f_{\text{dec}}$.
 The encoder maps an input $x^{(i)} \in \mathcal{X}$ to a low-dimensional \gls{lr} $z^{(i)} \in \mathbb{R}^d$.
 The decoder then maps this representation back to the input space to produce a reconstruction $\hat{x}^{(i)}$.
@@ -53,9 +53,9 @@ d \ll \dim(\mathcal{X}),
 \]
 
 Once the autoencoder has been trained sufficiently well, the reconstruction loss $\mathcal{L}_{\mathrm{rec}}$ should be low enough for the learned representation to be useful.
+
 A clustering algorithm can then be applied to the compressed representations of the images.
-Let $\mathcal{D} = {x^{(i)}}_{i=1}^N$ denote a dataset of inputs.
-Through the encoder $f_{\text{enc}}$, this dataset is mapped to a point cloud in the \gls{ls}:
+Let $\mathcal{D}$ denote a dataset of inputs, through the encoder $f_{\text{enc}}$, this dataset is mapped to a point cloud in the \gls{ls}:
 $$
 \mathcal{Z} = \{z^{(i)} \in \mathbb{R}^d \mid z^{(i)} = f_{\text{enc}}(x^{(i)}), \; x^{(i)} \in \mathcal{D} \}.
 $$

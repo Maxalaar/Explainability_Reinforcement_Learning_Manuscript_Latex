@@ -67,7 +67,7 @@ This design follows the same principle as in probing methods, the transformation
 More expressive projection functions could themselves introduce complex structures into the transformed representation.
 In that case, it would become difficult to determine whether the observed concept reflects a \gls{cs} already present in the model's or structure introduced by the projection.
 
-The parameters of these projection functions $f_{\text{enc}}$ and $f_{\text{dec}}$ are learned by minimizing $\mathcal{L}_{\text{auto}}$ using gradient-based optimization, as introduced in Section~\ref{sec:learning}.
+The parameters of these projection functions $f_{\text{enc}}$ and $f_{\text{dec}}$ are learned by minimizing $\mathcal{L}_{\text{auto}}$ using \gls{sgd}.
 Under this formulation, each dimension of $\mathcal{Z}$ is interpreted as a dedicated concept direction.
 
 The method proves to be powerful when successfully applied to language models \cite{templeton2024scaling}.
