@@ -1,16 +1,24 @@
 \section{Learning}
 \label{sec:rl_learning}
 
-Now that the optimal policy \(\pi^*\) has been defined, the practical question of how to obtain it arises.
+Now that the optimal policy \(\pi^*\) has been defined, the question is how to obtain it.
 The recursive Bellman equations for \(V_\pi\) and \(Q_\pi\) suggest dynamic programming approaches, but these scale poorly to large state spaces.
-\gls{rl} offers an alternative: it seeks to solve the \gls{mdp} iteratively, by generating a sequence of policies that progressively approach \(\pi^*\) through direct interaction with the environment.
+\gls{rl} offers an alternative by solving the \gls{mdp} iteratively and generating a sequence of policies that progressively approach \(\pi^*\) through direct interaction with the environment.
 In this section, two major families of \gls{rl} methods used today are introduced: critic-only methods and actor-critic methods.
 
 \subsection{Critic-Only Methods}
 \label{subsec:critic_only}
 
 The central idea behind all critic-only approaches is to iteratively construct an approximation of the state-action value function \(Q_\pi\), denoted by \(\hat{Q}_\pi\).
-Although \(\hat{Q}_\pi\) is only an approximation of the true \(Q_\pi\), the policy always acts greedily with respect to this approximation:
+Although \(\hat{Q}_\pi\) is only an approximation of the true \(Q_\pi\), the policy always acts greedily with respect to this approximation.
+
+Since \(\hat{Q}_\pi\) serves as the basis for the agent's decisions, it cannot rely on more information than the agent itself has access to.
+It must therefore be defined solely over observations, as a function \(\hat{Q}_\pi : \mathcal{O} \times \mathcal{A} \to \mathbb{R}\).
+Its objective is to approximate the true \(Q_\pi\), which depends on the underlying states \(s\), using only the partial information available through \(o\).
+In practice, this does not necessarily pose a problem, as observations often contain sufficient information to make accurate predictions about the underlying state.
+Moreover, the strong representational capacity of \gls{nn} allows the critic to capture these relationships without explicitly representing the mapping between observations and states.
+
+This leads to the following mathematical formulation:
 \begin{equation}
     \pi(a \mid o) =
     \begin{cases}
@@ -19,11 +27,6 @@ Although \(\hat{Q}_\pi\) is only an approximation of the true \(Q_\pi\), the pol
     \end{cases}
     \label{eq:greedy_policy}
 \end{equation}
-
-Since \(\hat{Q}_\pi\) serves as the basis for the agent's decisions, it cannot rely on more information than the agent itself has access to.  
-It must therefore be defined solely over observations, as a function \(\hat{Q}_\pi : \mathcal{O} \times \mathcal{A} \to \mathbb{R}\).  
-Its objective is to approximate the true \(Q_\pi\), which depends on the underlying states \(s\), using only the partial information available through \(o\).
-Once again, this poses no issue in practice, as it reflects how these algorithms are actually deployed in real-world applications.
 
 It is precisely this way of modeling the policy that gives this family of methods its name.  
 The policy is not represented explicitly as a standalone function.  
@@ -127,8 +130,5 @@ Algorithm~\ref{alg:actor_critic} summarizes this whole actor-critic learning loo
 
 \input{algorithms/reinforcement_learning/actor_critic.tex}
 
-PPO (Proximal Policy Optimization), which is the current standard in \gls{rl}, belongs to this family of actor-critic methods.  
+PPO (Proximal Policy Optimization), which is the current standard in \gls{rl}, belongs to this family of actor-critic methods.
 It will be used throughout this manuscript for all \gls{rl} experiments.
-
-Now that highly performant policies can be trained, learning purely through interaction with their environment without any human supervision, the question arises of how to explain their behavior.
-This is the subject of the next chapter: explainability in the context of \gls{rl}.

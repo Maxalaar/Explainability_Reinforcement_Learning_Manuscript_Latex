@@ -1,0 +1,27 @@
+\section{Conclusion}
+\label{sec:rl_conclusion}
+
+This chapter has provided an introduction to the fundamental principles of \gls{rl}.
+As in Chapter~\ref{chap:deep_learning}, only the essential concepts required to understand the deep \gls{rl} framework have been presented.
+The broader field of \gls{rl} encompasses many additional methods and extensions.
+
+Despite this limited scope, the defining characteristics of \gls{rl} can already be observed in its simple learning procedure.
+A policy is iteratively improved using estimates obtained through the interaction between an agent and its environment.
+Learning therefore emerges from the repeated alternation of two elementary operations, which are performed until the policy and its associated value estimates converge.
+
+This simple iterative structure brings \gls{rl} conceptually close to \gls{dl}.
+In both paradigms, simple operations repeated at scale can give rise to highly complex capabilities with limited human intervention.
+Their combination is particularly powerful.
+\gls{rl} provides a general framework for learning through interaction, where a wide range of decision-making problems can be formulated as \glspl{mdp}.
+\gls{dl}, in turn, provides flexible function approximators capable of representing the value functions and policies required by this framework.
+Together, these two paradigms form the foundation of deep \gls{rl}, whose empirical performance has led to remarkable results.
+
+Originally inspired by biological learning processes, \gls{rl} is now closer than ever to this initial intuition.
+Agents learn through interaction, adapt via trial and error, and progressively improve their behavior based on experience.
+This behavior is governed by deep neural architectures, which are the closest computational analog to organic brains.
+More than ever, \gls{rl} stands as one of the core paradigms for achieving artificial general intelligence \cite{silver2021reward}.
+
+As the capabilities of \gls{rl} continue to improve, a new challenge becomes increasingly important.
+The ability to learn complex behaviors with limited human intervention can make the resulting decisions difficult to understand.
+To address this challenge, a parallel research direction has consequently emerged.
+This is the subject of the next chapter, which focuses on explainability in the context of \gls{rl}.
