@@ -1,0 +1,26 @@
+\section{Agent Paradigm}
+\label{sec:agent_paradigm}
+
+The \gls{rl} framework is built around the agent paradigm, in which the decision-making entity is referred to as the agent.
+A standard definition is:
+\begin{quote}
+\emph{``An agent is anything that can be viewed as perceiving its environment through sensors and acting upon that environment through actuators.''} \cite{russell2021artificial}
+\end{quote}
+
+When this definition is adapted to the \gls{rl} setting, it can be described as follows.
+The agent perceives its environment through observations.
+These observations are then processed by a decision-making mechanism referred to as the policy.
+The policy determines how the agent modifies its environment through the actions it selects.
+The resulting action modifies the environment and, in turn, affects its subsequent dynamics.
+
+In the context of \gls{rl}, the policy is obtained through learning.
+The objective of the agent is to maximize the cumulative reward it receives over time through its interactions with the environment.
+The procedure responsible for this process is the \gls{rl} algorithm. The algorithm progressively modifies the policy based on the experience collected through interaction.
+
+In this manuscript, the \gls{rl} algorithm is considered as a process external to the agent.
+This distinction is a deliberate conceptual choice.
+Some other presentations of \gls{rl}, describe the agent as both the learner and the decision-making entity \cite{suttonbarto1998}.
+We chose to distinguish the agent from the \gls{rl} algorithm because this provides a more general definition of an agent.
+
+An agent can therefore exist without learning, for example when its behavior is entirely specified by a set of programmed rules.
+Such an agent still perceives, processes information, and acts upon its environment, but its behavior is not the result of \gls {rl}.
