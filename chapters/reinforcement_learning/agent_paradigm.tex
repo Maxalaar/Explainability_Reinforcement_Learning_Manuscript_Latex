@@ -12,16 +12,19 @@ The agent perceives its environment through observations.
 These observations are then processed by a decision-making mechanism referred to as the policy.
 The policy determines how the agent modifies its environment through the actions it selects.
 
-The objective of a \gls{rl} agent is to maximize the cumulative reward it receives through its interactions with the environment.
+The objective of an \gls{rl} agent is to maximize the cumulative reward it receives through its interactions with the environment.
 To achieve this objective, the agent's policy must progressively improve through experience.
 The procedure responsible for this learning process is the \gls{rl} algorithm, which progressively modifies the policy based on the experience collected through interaction.
 
 In this manuscript, the \gls{rl} algorithm is considered as a process external to the agent.
-This distinction is a deliberate conceptual choice.
 Other presentations of \gls{rl} describe the agent as both the learner and the decision-making entity \cite{suttonbarto1998}.
-
 We chose to distinguish the agent from the \gls{rl} algorithm because this provides a more general definition of an agent.
+
 An agent can therefore exist without learning, for example when its behavior is entirely specified by a set of programmed rules.
 Such an agent still perceives, processes information, and acts upon its environment, but its behavior is not the result of \gls{rl}.
+
+This distinction also makes the definition consistent with modern implementations of \gls{rl} \cite{espeholt2018impala, liang2018rllib}, in which the acting policy and the learning algorithm are separate software components.
+Several copies of the policy, each interacting with its own instance of the environment, collect experience in parallel, while a single learning algorithm uses this experience to update the shared policy parameters.
+
 
 \input{figures/reinforcement_learning/reinforcement_learning_loop.tex}
