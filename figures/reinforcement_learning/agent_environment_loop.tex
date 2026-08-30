@@ -1,0 +1,20 @@
+\begin{figure}[t]
+    \centering
+    \resizebox{0.6\textwidth}{!}{
+    \begin{tikzpicture}
+        % Nodes
+        \node[draw, circle, align=center] (policy) at (-5, 0) {Policy};
+        \node[draw, circle, align=center] (environment) at (0, 0) {\large Environment};
+
+        % Arrows with labels
+        \draw[->, bend left=20] (policy) to node[above, font=\small, align=center] (action) {Action} (environment);
+        \draw[->, bend left=20] (environment) to node[below, font=\small, align=center] (observation) {Observation} (policy);
+
+        % Agent
+        \node[draw, rectangle, fit=(policy)(action)(observation), inner sep=0.15cm, dashed, rounded corners=0.3cm] (agent_box) {};
+        \node[] at ($(agent_box.north) + (0, 0.3cm)$) {Agent};
+    \end{tikzpicture}
+    }
+    \caption{The agent paradigm.}
+    \label{fig:agent_environment_loop}
+\end{figure}
