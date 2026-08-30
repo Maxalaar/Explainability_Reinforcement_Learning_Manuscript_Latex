@@ -40,11 +40,11 @@ To obtain an interpretable policy model, two families of explainability methods 
 \subsubsection{\textit{Interpretable Policy Learning}}
 \label{subsubsec:interpretable_policy_learning}
 
-This family of methods aims at learning a policy represented by an \textbf{interpretable} model \cite{topin2021iterative, trivedi2022learning}.
+This family of methods aims at learning a policy represented by an interpretable model \cite{topin2021iterative, trivedi2022learning}.
 It is the most direct approach to addressing the challenges posed by \gls{xrl}.
 This type of training requires modifying the \gls{mdp} in order to adapt it to the search space and to the type of policy representation.
 Moreover, this search space often needs to be reduced to make learning feasible.
-Such a \textbf{reduction} requires the integration of \textbf{expert knowledge} into the learning process.
+Such a reduction requires the integration of expert knowledge into the learning process.
 With this family of methods, the \textit{interpretable policy function} itself is used to provide explanations to the observer.
 
 \subsubsection{\textit{Policy Approximation via Interpretable Model}}
@@ -78,23 +78,23 @@ Three families of explainability methods can be used to obtain this type of expl
 \subsubsection{\textit{Observation Perturbation}}
 \label{subsubsec:observation_perturbation}
 
-Perturbation analysis consists in applying various \textbf{modifications} to the observation in order to study their \textbf{impact} on the output of the \textbf{policy function} \cite{greydanus2018visualizing}.
-The greater the variation in the output caused by a perturbation applied to a given component of the input vector, the higher the \textbf{weight} assigned to that component.
+Perturbation analysis consists in applying various modifications to the observation in order to study their impact on the output of the policy function \cite{greydanus2018visualizing}.
+The greater the variation in the output caused by a perturbation applied to a given component of the input vector, the higher the weight assigned to that component.
 The magnitude of the perturbation is measured by computing the distance between the original output and the output obtained from the perturbed input.
 Using this set of weights, a \textit{heatmap} is constructed, enabling the observer to visualize which parts of the observation vector are most sensitive in the action-selection process (see Figure~\ref{fig:saliency_map_heatmap_perturbation}).
 
 \subsubsection{\textit{Observation Gradient Analysis}}
 \label{subsubsec:observation_gradient_analysis}
 
-Observation \textbf{gradient} analysis refers to a set of methods that require a differentiable policy function in order to extract information from it \cite{simonyan2014deep, weitkamp2019visual, huber2019enhancing}.
-To this end, the gradient of the policy function is computed with respect to all \textbf{components of the input vector}.
+Observation gradient analysis refers to a set of methods that require a differentiable policy function in order to extract information from it \cite{simonyan2014deep, weitkamp2019visual, huber2019enhancing}.
+To this end, the gradient of the policy function is computed with respect to all components of the input vector.
 For each input component, the resulting gradient provides a weighting that represents its importance in the output of the policy function.
 Based on these weightings, a \textit{heatmap} is constructed to allow the observer to visually identify the parts of the input vector that are the most influential in the policy function's output (see Figure~\ref{fig:saliency_map_heatmap_gradient}).
 
 \subsubsection{\textit{Attention-Based Architecture}}
 \label{subsubsec:attention_based_architecture}
 
-\textbf{Attention} blocks constitute a \gls{nn} architecture that makes it possible to weight the relative importance of one part of a vector with respect to the other parts of the same vector \cite{vaswani2023attention}.
+Attention blocks constitute a \gls{nn} architecture that makes it possible to weight the relative importance of one part of a vector with respect to the other parts of the same vector \cite{vaswani2023attention}.
 These weights are computed as a function of the vector itself and are learned by the \gls{nn} during training.
 For a given observation, each component of the observation vector is assigned a scalar value.
 It can therefore be assumed that the components associated with the highest weights are the most influential in determining the output \cite{mott2019towards, itaya2021visual}.
@@ -114,7 +114,7 @@ The family of methods used to produce such explanations relies on the \textit{us
 \subsubsection{\textit{Latent Space Usage for Counterfactual Generation}}
 \label{subsubsec:latent_space_counterfactual_generation}
 
-This family of methods employs \textbf{generative models} \cite{bond2021deep} to exploit the \gls{lr}.
+This family of methods employs generative models \cite{bond2021deep} to exploit the \gls{lr}.
 A generative model learns to produce new data by imitating the distribution of its training data.
 Here, it is used to synthesize alternative observations that are likely to change the agent's action \cite{olson2021counterfactual}.
 
@@ -131,7 +131,7 @@ These observations should not be interpreted as definitive evidence of the agent
 Such behaviors would need to be observed repeatedly across many different situations before drawing stronger conclusions.
 Nevertheless, counterfactual explanations can provide useful clues about the factors considered by the agent and help an observer develop a better understanding of its behavior.
 
-The main challenge of this approach lies in the fact that, to serve as explanations, counterfactuals must be both \textbf{close} and \textbf{feasible}.
+The main challenge of this approach lies in the fact that, to serve as explanations, counterfactuals must be both close and feasible.
 A close counterfactual is one that does not differ significantly from the original observation.
 A feasible counterfactual corresponds to an observation that can actually occur in the considered environment.
 
@@ -152,20 +152,20 @@ This simple approach can be further enhanced using families of methods such as \
 \subsubsection{\textit{Extraction via Critic Analysis}}
 \label{subsubsec:extraction_via_critic_analysis}
 
-In this family of methods, the predictions of the critic are used to determine which \textbf{trajectories to present to the observer} \cite{Sequeira_2020}.
+In this family of methods, the predictions of the critic are used to determine which trajectories to present to the observer \cite{Sequeira_2020}.
 A set of states is selected from multiple trajectories.
 For a given state, all possible actions are examined.
 The state is assigned a value equal to the difference between the critic's prediction for the lowest-valued action and the prediction for the highest-valued action.
 Trajectories containing the states with the highest values according to this procedure are then chosen to be presented to the observer.
-These trajectories are considered \textbf{critical moments} of the agent and are therefore relevant for analysis.
+These trajectories are considered critical moments of the agent and are therefore relevant for analysis.
 For this family of methods, the \textit{selected trajectories} represent the interpretable information provided to the observer.
 
 \subsubsection{\textit{Hierarchical Decomposition}}
 \label{subsubsec:hierarchical_decomposition}
 
-Hierarchical agents are composed of a set of \textbf{sub-policies} specialized for specific tasks within subsets of the environment's states.
+Hierarchical agents are composed of a set of sub-policies specialized for specific tasks within subsets of the environment's states.
 This family of methods distributes the optimization of the reward function across multiple models, significantly simplifying the learning process.
-Moreover, this \textbf{decomposition} of the policy function can also provide explainability in the agent's strategy \cite{Beyret_2019}.
+Moreover, this decomposition of the policy function can also provide explainability in the agent's strategy \cite{Beyret_2019}.
 If a sub-policy is selected, it indicates that the agent will execute a specialized behavior.
 This behavioral specialization provides insight into the strategy the agent employs to maximize the reward function.
 The agent's \textit{trajectory}, together with the \textit{sub-policy} selected for each action, is used as interpretable information.
@@ -187,8 +187,8 @@ To improve the interpretability of value-based explanations, a family of methods
 \subsubsection{\textit{Critic Enrichment}}
 \label{subsubsec:critic_enrichment}
 
-In order to obtain interpretable information from the predictions of the \textbf{critic}, it is possible to \textbf{decompose} the critic into multiple \textbf{sub-functions} \cite{juozapaitis2019explainable}.
-The reward function is thus decomposed into multiple sub-reward functions, each representing a \textbf{sub-objective} of the task to be accomplished.
+In order to obtain interpretable information from the predictions of the critic, it is possible to decompose the critic into multiple sub-functions \cite{juozapaitis2019explainable}.
+The reward function is thus decomposed into multiple sub-reward functions, each representing a sub-objective of the task to be accomplished.
 Similarly, for each of these sub-reward functions, corresponding sub-critic functions are defined, along with a function that combines their outputs.
 During training, the agent selects its actions so as to maximize this combination function of the sub-critics.
 Using this approach, for each observation and action, a prediction is obtained regarding the sub-objectives the agent is attempting to maximize, so that the action chosen by the agent reveals which sub-reward it aims to maximize (see Figure~\ref{fig:trajectory_prediction_values}).
@@ -207,7 +207,7 @@ The families of methods used to obtain explanations in the form of agent--enviro
 \subsubsection{\textit{Bayesian Network Learning}}
 \label{subsubsec:bayesian_network_learning}
 
-The evolution of an agent within an environment can be observed as a set of \textbf{random variables} connected through a \textbf{Bayesian network} \cite{madumal2020explainable}.
+The evolution of an agent within an environment can be observed as a set of random variables connected through a Bayesian network \cite{madumal2020explainable}.
 Random variables are defined to represent both external aspects (the environment) and internal aspects of the agent (the actions).
 By analyzing trajectories, it becomes possible to infer causal relationships among these random variables.
 At the end of this process, a weighted causal graph is obtained, which serves as an explanation for the observer, as illustrated for the video game \textit{StarCraft~II} in Figure~\ref{fig:interaction_model_causal_graph}, where nodes represent random variables and edges represent causal relationships between them.
@@ -221,7 +221,7 @@ This \textit{Bayesian network}, representing the interactions between the agent 
 Each layer of a \gls{nn} can be viewed as a projection from one space to another \cite{zahavy2017graying}.
 As information propagates through successive layers of a \gls{nn}, it becomes increasingly abstract.
 It can therefore be assumed that two vectors that are close in this projected space are also close in terms of the agent's perception.
-Based on this observation, it is possible to \textbf{redefine an \gls{mdp}} by leveraging the \textbf{abstract representations} produced by the final layers of a \gls{nn}.
+Based on this observation, it is possible to redefine an \gls{mdp} by leveraging the abstract representations produced by the final layers of a \gls{nn}.
 Once the new \gls{mdp} has been constructed, a model of the interaction between the agent and its environment is obtained.
 This model, represented as a \textit{graph}, is then used as the explanation.
 
