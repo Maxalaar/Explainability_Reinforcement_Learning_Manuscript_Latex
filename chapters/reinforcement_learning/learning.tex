@@ -6,6 +6,14 @@ The recursive Bellman equations for \(V_\pi\) and \(Q_\pi\) suggest dynamic prog
 \gls{rl} offers an alternative by solving the \gls{mdp} iteratively and generating a sequence of policies that progressively approach \(\pi^*\) through direct interaction with the environment.
 This section introduces two major families of \gls{rl} algorithms, critic-only methods and actor-critic methods.
 
+At a high level, every algorithm presented below repeats the same three steps, shown in Figure~\ref{fig:reinforcement_learning_loop}.
+First, the current policy interacts with the environment.
+Second, the resulting trajectories are sent to the \gls{rl} algorithm.
+Third, the algorithm uses them to update the policy.
+The two families differ only in how this update is carried out.
+
+\input{figures/reinforcement_learning/reinforcement_learning_loop.tex}
+
 \subsection{Critic-Only Methods}
 \label{subsec:critic_only}
 

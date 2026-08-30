@@ -1,30 +1,34 @@
 \begin{figure}[t]
     \centering
-    \colorlet{mygreen}{green!50!black}
-    \resizebox{0.85\textwidth}{!}{
-    \begin{tikzpicture}
-        % Nodes
-        \node[draw, circle, align=center] (policy) at (-5, 0) {\scalebox{2}{$\pi$} \\ Policy};
-        \node[draw, circle, align=center] (environment) at (0, 0) {\large Environment};
+    \resizebox{0.62\textwidth}{!}{
+    \begin{tikzpicture}[
+        >=latex,
+        stepmark/.style={draw, circle, fill=white, minimum size=0.62cm, inner sep=0pt, font=\bfseries\small},
+    ]
+        % Entities
+        \node[draw, circle, align=center] (policy) at (-4.2, 0) {\scalebox{2}{$\pi$} \\ Policy};
+        \node[draw, circle, align=center] (environment) at (4.2, 0) {\large Environment};
+        \node[draw, rounded corners=0.3cm, minimum width=3.6cm, minimum height=1.1cm] (rl) at (0, -3.6) {RL algorithm};
 
-        % Arrows with labels
-        \draw[->, bend left=20] (policy) to node[above, font=\small, align=center] (action) {Action} (environment);
-        \draw[->, bend left=20] (environment) to node[below, font=\small, align=center] (observation) {Observation} (policy);
+        % 1. Agent--environment interaction
+        \draw[<->] (policy) --
+            node[above=4pt] {Action, Observation}
+            node[below=4pt, stepmark] {1}
+            (environment);
 
-        % Agent
-        \node[draw, rectangle, fit=(policy)(action)(observation), inner sep=0.1cm, dashed, rounded corners=0.3cm] (agent_box) {};
-        \node[] (agent_label) at ($(agent_box.north) + (0, 0.3cm)$) {Agent};
+        % 2. Trajectories sent to the algorithm
+        \draw[->] (environment) --
+            node[left=3pt, stepmark] {2}
+            node[right=3pt] {Trajectories}
+            (rl);
 
-        % RL Algorithm
-        \node[draw, rectangle, fit=(agent_box)(agent_label), inner sep=0.1cm, rounded corners=0.3cm] (rl_algorithm_box) {};
-        \node[] (rl_algorithm_label) at ($(rl_algorithm_box.north) + (0, 0.3cm)$) {RL Algorithm};
-
-        % Reward
-        \coordinate (top_environment) at ($(environment.north) + (0, 0.2cm)$);
-        \coordinate (point_rl_algorithm_box) at (rl_algorithm_box.east |- top_environment);
-        \draw[->] (environment.north) -- (top_environment) -- node[above, font=\small] {Reward} (point_rl_algorithm_box);
+        % 3. Policy update
+        \draw[->] (rl) --
+            node[right=3pt, stepmark] {3}
+            node[left=3pt] {Policy update}
+            (policy);
     \end{tikzpicture}
     }
-    \caption{Reinforcement learning loop.}
+    \caption{The three steps of a reinforcement learning iteration.}
     \label{fig:reinforcement_learning_loop}
 \end{figure}
