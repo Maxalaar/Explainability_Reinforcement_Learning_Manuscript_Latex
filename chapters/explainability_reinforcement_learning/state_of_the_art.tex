@@ -9,8 +9,8 @@ They are presented according to the form of explanation they produce, following 
 A family of methods is defined as a set of methods that share the same source, form, and subject of explanation, as well as a similar procedure for generating explanations.
 Methods belonging to the same family may differ in their implementation or in the details of the generation process, while relying on the same underlying principle.
 
-The remainder of this section is organized around the six forms of explanation identified in Section~\ref{subsec:form}.
-Each subsection focuses on one form of explanation, with its subsubsections presenting the corresponding families of methods.
+The remainder of this review is organized by form of explanation, following the six forms identified in Section~\ref{subsec:form}.
+For each form, we first describe its underlying principle and its limitations, then present the families of methods that produce it.
 
 \subsection{Policy Model}
 \label{subsec:policy_model}
@@ -108,10 +108,10 @@ However, as shown for ``Ms.\ Pac-Man'' in Figure~\ref{fig:attention_map_heatmap_
 
 A counterfactual explanation is a new observation, close to the original one, that leads the agent to select a different action.
 Comparing the two observations reveals which elements of the environment must change for the agent to behave differently, and thus provides insight into its decision-making process.
-The corresponding family of methods relies on the \textit{use of the \gls{ls} for counterfactual generation}.
+Unlike the other forms of explanation, this form is currently associated with a single family of methods, based on the \textit{use of the \gls{ls} for counterfactual generation}.
 
-\subsubsection{\textit{Latent Space Usage for Counterfactual Generation}}
-\label{subsubsec:latent_space_counterfactual_generation}
+\subsubsection*{\textit{Latent Space Usage for Counterfactual Generation}}
+\phantomsection\label{subsubsec:latent_space_counterfactual_generation}
 
 This family of methods uses generative models to build counterfactuals from the \gls{lr} of the observation \cite{bond2021deep, olson2021counterfactual}.
 The observation is encoded into the \gls{ls}, its representation is modified until the agent selects the desired action, and this modified representation is decoded back into a new observation.
@@ -172,10 +172,10 @@ Consequently, a value function maps an observation to a scalar value in $\mathbb
 
 This aggregated prediction provides limited information about the underlying factors that contribute to this value.
 It does not directly reveal which aspects of the task are being optimized or how the predicted return is composed.
-To improve the interpretability of value-based explanations, a family of methods known as \textit{critic enrichment} can be employed.
+Unlike the other forms of explanation, this form is currently associated with a single family of methods, aimed at improving the interpretability of value-based explanations: \textit{critic enrichment}.
 
-\subsubsection{\textit{Critic Enrichment}}
-\label{subsubsec:critic_enrichment}
+\subsubsection*{\textit{Critic Enrichment}}
+\phantomsection\label{subsubsec:critic_enrichment}
 
 In order to obtain interpretable information from the predictions of the critic, it is possible to decompose the critic into multiple sub-functions \cite{juozapaitis2019explainable}.
 The reward function is thus decomposed into multiple sub-reward functions, each representing a sub-objective of the task to be accomplished.
