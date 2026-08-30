@@ -106,34 +106,24 @@ However, as shown for ``Ms.\ Pac-Man'' in Figure~\ref{fig:attention_map_heatmap_
 \subsection{Counterfactual}
 \label{subsec:counterfactual}
 
-In the context of \gls{rl}, a counterfactual explanation consists in generating a new observation, distinct from the original one, that leads the agent to select a different action.
-By comparing the original and the modified observations, the observer can identify which elements of the environment must change for the agent to adopt an alternative behavior.
-This form of explanation therefore provides insight into the agent's decision-making process.
-The family of methods used to produce such explanations relies on the \textit{use of the \gls{ls} for counterfactual generation}.
+A counterfactual explanation is a new observation, close to the original one, that leads the agent to select a different action.
+Comparing the two observations reveals which elements of the environment must change for the agent to behave differently, and thus provides insight into its decision-making process.
+The corresponding family of methods relies on the \textit{use of the \gls{ls} for counterfactual generation}.
 
 \subsubsection{\textit{Latent Space Usage for Counterfactual Generation}}
 \label{subsubsec:latent_space_counterfactual_generation}
 
-This family of methods employs generative models \cite{bond2021deep} to exploit the \gls{lr}.
-A generative model learns to produce new data by imitating the distribution of its training data.
-Here, it is used to synthesize alternative observations that are likely to change the agent's action \cite{olson2021counterfactual}.
+This family of methods uses generative models to build counterfactuals from the \gls{lr} of the observation \cite{bond2021deep, olson2021counterfactual}.
+The observation is encoded into the \gls{ls}, its representation is modified until the agent selects the desired action, and this modified representation is decoded back into a new observation.
+Working in the \gls{ls} rather than at the pixel level keeps the counterfactual close to the original state and consistent with the environment.
+The fidelity of the generated observations to the real game can then be assessed through user studies \cite{olson2021counterfactual}.
+
+Figure~\ref{fig:counterfactual_example} illustrates this approach on the Atari game \textit{Space Invaders} \cite{olson2021counterfactual}.
+In the original observation (Figure~\ref{fig:counterfactual_example_original}) the agent selects ``LEFT'', whereas in the counterfactual observation (Figure~\ref{fig:counterfactual_example_counterfactual}) it selects ``RIGHT\_FIRE''.
+Here, removing an enemy is enough to change the action, which suggests that the position of that enemy influences the agent's decision.
+Such observations remain only indicative. Identifying a reliable pattern requires repeating the analysis across many situations.
 
 \input{figures/explainability_reinforcement_learning/counterfactual_example.tex}
-
-Figure~\ref{fig:counterfactual_example} illustrates this approach on the Atari game \textit{Space Invaders}.
-Figure~\ref{fig:counterfactual_example_original} shows the original observation, for which the agent selects ``LEFT''.
-Figure~\ref{fig:counterfactual_example_counterfactual} shows the counterfactual observation produced by the generative model, for which the agent instead selects ``RIGHT\_FIRE''.
-Comparing the two panels reveals some of the factors that influence the agent's decision.
-In Figure~\ref{fig:counterfactual_example_original}, the agent does not fire because a projectile is already present on the screen, which makes it impossible to launch another one.
-The transition to Figure~\ref{fig:counterfactual_example_counterfactual} also suggests that the agent targets the lowest enemy first, since removing that enemy causes the agent to redirect its shot toward the next lowest one.
-
-These observations should not be interpreted as definitive evidence of the agent's strategy.
-Such behaviors would need to be observed repeatedly across many different situations before drawing stronger conclusions.
-Nevertheless, counterfactual explanations can provide useful clues about the factors considered by the agent and help an observer develop a better understanding of its behavior.
-
-The main challenge of this approach lies in the fact that, to serve as explanations, counterfactuals must be both close and feasible.
-A close counterfactual is one that does not differ significantly from the original observation.
-A feasible counterfactual corresponds to an observation that can actually occur in the considered environment.
 
 \subsection{Agent Trajectory}
 \label{subsec:agent_trajectory}
