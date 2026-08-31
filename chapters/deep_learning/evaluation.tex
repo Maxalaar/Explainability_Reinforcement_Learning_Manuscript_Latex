@@ -21,13 +21,13 @@ In order to quantify these two aspects, the dataset is split into two subsets:
 \end{itemize}
 
 When training is completed, the first step is to verify that the model performs well on the data it was trained on.
-To do so, the average loss on the training set, denoted $\bar{\ell}_{\text{train}}$, is studied. This is an instance of the performance measure $P$ defined in Equation~\eqref{eq:performance_measure}, restricted to $\mathcal{D}_{\text{train}}$:
+To do so, the average loss on the training set, denoted $\bar{\mathcal{L}}_{\text{train}}$, is studied. This is an instance of the performance measure $P$ defined in Equation~\eqref{eq:performance_measure}, restricted to $\mathcal{D}_{\text{train}}$:
 \begin{equation}
-\bar{\ell}_{\text{train}} = \frac{1}{|\mathcal{D}_{\text{train}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{train}}} \fullLoss{\theta}{i}.
+\bar{\mathcal{L}}_{\text{train}} = \frac{1}{|\mathcal{D}_{\text{train}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{train}}} \fullLoss{\theta}{i}.
 \label{eq:train_loss}
 \end{equation}
 
-If $\bar{\ell}_{\text{train}}$ is not sufficiently low, this means that the model has not been able to learn the task.
+If $\bar{\mathcal{L}}_{\text{train}}$ is not sufficiently low, this means that the model has not been able to learn the task.
 It is not necessary to go further in the analysis of the model's quality.
 Before restarting the training process, various design choices are then adjusted.
 Based on what has been discussed so far in this chapter, these include modifications to the number of layers, the number of neurons per layer, activation functions, the learning rate.
@@ -40,16 +40,16 @@ Assuming now that the model achieves satisfactory performance on the training da
 Its ability to generalize must now be studied.
 To do so, the corresponding average loss on $\mathcal{D}_{\text{test}}$ is computed:
 \begin{equation}
-\bar{\ell}_{\text{test}} = \frac{1}{|\mathcal{D}_{\text{test}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{test}}} \fullLoss{\theta}{i}.
+\bar{\mathcal{L}}_{\text{test}} = \frac{1}{|\mathcal{D}_{\text{test}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{test}}} \fullLoss{\theta}{i}.
 \label{eq:test_loss}
 \end{equation}
 
-If $\bar{\ell}_{\text{test}} \gg \bar{\ell}_{\text{train}}$, the model fails to generalize.
+If $\bar{\mathcal{L}}_{\text{test}} \gg \bar{\mathcal{L}}_{\text{train}}$, the model fails to generalize.
 This situation most often arises due to a phenomenon known as overfitting.
 In such cases, the model does not learn general patterns but instead memorizes the training examples.
 This typically occurs when the number of parameters is too large relative to the amount of training data.
 The simplest remedy is therefore to reduce the number of parameters in the model.
 However, it is still necessary to ensure that the model remains sufficiently expressive to perform well on the data.
 
-If $\bar{\ell}_{\text{test}} \approx \bar{\ell}_{\text{train}}$, this indicates that the training procedure has successfully produced a \gls{nn} that generalizes well beyond the training data \cite{Kawaguchi_2022}.
+If $\bar{\mathcal{L}}_{\text{test}} \approx \bar{\mathcal{L}}_{\text{train}}$, this indicates that the training procedure has successfully produced a \gls{nn} that generalizes well beyond the training data \cite{Kawaguchi_2022}.
 The resulting model can therefore be considered suitable for the task for which it was trained, marking the end of the \gls{nn} training process.

@@ -8,7 +8,7 @@ Mathematically, this objective is expressed as:
 \min_{\theta} \frac{1}{N} \sum_{i=1}^{N} \fullLoss{\theta}{i}.
 \label{eq:training_objective}
 \end{equation}
-For conciseness, the per-example loss on example $i$, viewed as a function of the parameters $\theta$, is denoted $\loss{\theta}{i} = \fullLoss{\theta}{i}$ throughout the remainder of this section.
+For conciseness, the per-example loss on example $i$ is denoted $\loss{\theta}{i} \overset{\mathrm{def}}{=} \fullLoss{\theta}{i}$, that is, the loss function $\mathcal{L}$ applied to the prediction $\hat{f}_{\theta}(x^{(i)})$ and the target $y^{(i)}$. This value depends on the loss function, the architecture, the parameters and the data point; since the first two are fixed and the data point is selected by the index $i$, only the dependence on $\theta$ is kept in the notation. The compact form $\loss{\theta}{i}$ and the explicit form $\fullLoss{\theta}{i}$ denote the same quantity, so the training objective can equivalently be written $\min_{\theta} \frac{1}{N} \sum_{i=1}^{N} \loss{\theta}{i}$.
 
 The \gls{nn} $\hat{f}$ used to approximate the target function $f$ is highly complex.
 It involves a large number of parameters as well as many nonlinear components.
