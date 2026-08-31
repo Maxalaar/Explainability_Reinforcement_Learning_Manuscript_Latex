@@ -42,10 +42,10 @@ This leads to the following formulation for a dataset $\mathcal{D}$ of size $N$,
     \label{eq:dataset}
 \end{equation}
 
-Now that the way the target function $f$ is represented has been made explicit, one can ask what it means for a function $\hat{f}$ to be a good approximation of this function.
-It means that, for a given input $x^{(i)}$, the \gls{nn} output $\hat{y}^{(i)}$ is close to the true output $y^{(i)}$.
+Now that the representation of the target function $f$ has been established, the next question is what makes a function $\hat{f}$ a good approximation of it.
+For a given input $x^{(i)}$, this means that the \gls{nn} output $\hat{y}^{(i)}$ should be close to the true output $y^{(i)}$.
 To quantify the quality of this approximation, a function $\mathcal{L}$ is introduced that measures the discrepancy between predictions and target values.
-In \gls{dl}, this function called the loss function plays a central role as it guides the learning process.
+This function called the loss function plays a central role as it guides the learning process.
 In regression settings, a common choice is the \gls{mse}, defined as:
 \begin{equation}
     \mathcal{L}(\hat{y}, y) = (\hat{y} - y)^2.

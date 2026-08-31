@@ -7,11 +7,11 @@ A complex pattern of weighted connections between these units enables the transf
 
 To simplify the presentation, the focus is placed on the \gls{mlp} architecture.
 Although more specialized architectures exist, the \gls{mlp} forms a fundamental building block of \gls{dl}.
-All the essential mechanisms of \gls{dl} are present in it, making it a particularly suitable framework for introducing key concepts.
+All the essential mechanisms are present in it, making it a particularly suitable framework for introducing key concepts.
 
 This section therefore begins by examining the artificial neuron, the fundamental computational unit underlying the \gls{mlp}.
 It then explains how these neurons are organized into layers.
-Finally, it concludes with a general description of the neural network as a whole.
+Finally, it concludes with a general description of the \gls{nn} as a whole.
 
 \subsection{Neurons}
 
@@ -46,7 +46,7 @@ where:
 
 Figure~\ref{fig:artificiale_neurone} shows a schematic view of this basic unit.
 The set of weights $w_1, \dots, w_i$ with the bias $b$ constitute the parameters of the neuron, and they are the elements that evolve during training.
-The magnitude of a weight $w$ (relative to the others) indicates how strongly a neuron depends on the activation of the neurons to which it is connected.
+The magnitude of a weight $w$, relative to the others, indicates how strongly a neuron depends on the activation of the neurons to which it is connected.
 A large positive weight means that a high activation in the connected neuron tends to increase the activation of the receiving neuron, whereas a negative weight implies the opposite effect.
 In this way, the weights modulate the strength and nature of the connections between neurons, thereby defining the overall pattern of interaction within the network.
 
@@ -75,7 +75,7 @@ Three types of layers are distinguished:
 \end{itemize}
 
 The input and output layers play a specific role.
-The input layer has no preceding layer: its neurons do not compute activations but instead directly encode the components of the input vector $x$.
+The input layer has no preceding layer, as its neurons directly encode the components of the input vector $x$.
 Conversely, the output layer has no subsequent layer, and its neurons produce the model's prediction $\hat{y}$.
 This structure imposes a direct correspondence between the dimensionality of the input space and the number of neurons in the input layer, and similarly between the output space and the number of neurons in the output layer.
 
@@ -109,7 +109,9 @@ This matrix-vector representation is visualised in Figure~\ref{fig:matrix_intera
 It is important to examine the role played by the intermediate layers of a \gls{nn}.
 At least one hidden layer is required to represent sufficiently complex functions, and in practice, modern architectures often include many more.
 Theoretical results have shown that, for a fixed number of parameters, increasing the number of layers enhances the expressive capacity of \gls{nn} \cite{telgarsky2016benefits}.
-A common interpretation is that each layer acts as a processing step, so that more complex target functions require more such steps to be well approximated, although this interpretation remains grounded in empirical observation rather than formal theoretical justification \cite{goodfellow2016deep}.
+Each layer can be viewed as an additional stage in the computation performed by the network.
+This suggests that deeper networks can represent increasingly complex functions by composing a larger number of transformations.
+The precise relationship between depth and function complexity remains primarily supported by empirical observations rather than formal theoretical justification \cite{goodfellow2016deep}.
 % An entire chapter of this manuscript is devoted to studying the information that can be extracted from the activations of these intermediate layers (Chapter~\ref{chap:latent_space}).
 
 \subsection{Network}
