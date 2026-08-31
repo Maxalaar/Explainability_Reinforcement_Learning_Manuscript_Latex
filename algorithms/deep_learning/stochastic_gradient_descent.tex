@@ -34,12 +34,12 @@ $n \leftarrow 1$\;
     $\hat{y}^{(i)} \leftarrow \hat{f}_{\theta^{(n)}}(x^{(i)})$\;
 
     \BlankLine
-    \tcp{Compute the error between the prediction and the ground truth}
-    $\ell \leftarrow \mathcal{L}(\hat{y}^{(i)}, y^{(i)})$\;
+    \tcp{Per-example loss between the prediction and the ground truth}
+    $\loss{\theta^{(n)}}{i} \leftarrow \mathcal{L}(\hat{y}^{(i)}, y^{(i)})$\;
 
     \BlankLine
-    \tcp{Compute the gradient of the error since the loss function is differentiable}
-    $g \leftarrow \nabla_{\theta^{(n)}} \ell$\;
+    \tcp{Gradient of the per-example loss, since it is differentiable}
+    $g \leftarrow \nabla_{\theta} \loss{\theta^{(n)}}{i}$\;
 
     \BlankLine
     \tcp{Error minimization via a gradient descent step}

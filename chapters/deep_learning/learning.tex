@@ -113,14 +113,15 @@ where $\eta > 0$ is the learning rate, which controls the step size, and $\nabla
 
 This parameter $\eta$ must remain small, as the gradient only provides reliable information in a local neighborhood of the current parameters.
 As a result, a single step is not sufficient to significantly reduce the loss, so the process is iterated many times.
-Producing a sequence of parameter vectors $\theta_1, \theta_2, \dots$ that progressively improve the model.
+Producing a sequence of parameter vectors $\theta^{(1)}, \theta^{(2)}, \dots$ that progressively improve the model.
 In practice, training is stopped when successive updates no longer produce a significant decrease in the loss.
+
 Algorithm~\ref{alg:stochastic_gradient_descent} summarizes this whole training procedure.
 
 \input{algorithms/deep_learning/stochastic_gradient_descent.tex}
 
 To develop an intuition for this update rule, Figure~\ref{fig:simple_gradient_descent} illustrates it applied to the simple convex loss function $\mathcal{L}(w_1,w_2)=w_1^2+w_2^2$, where the red path shows the parameter updates converging to the minimum.
-The point $\theta_1$ represents the initial parameter values, with $w_1$ and $w_2$ randomly initialized, and the subsequent points, from $\theta_2$ to $\theta_6$, represent the successive updates produced by applying Equation~\ref{eq:gradient_descent_update}, progressively moving the trajectory toward the minimum of the loss function.
+The point $\theta^{(1)}$ represents the initial parameter values, with $w_1$ and $w_2$ randomly initialized, and the subsequent points, from $\theta^{(2)}$ to $\theta^{(6)}$, represent the successive updates produced by applying Equation~\ref{eq:gradient_descent_update}, progressively moving the trajectory toward the minimum of the loss function.
 
 \heavyfig{fig:simple_gradient_descent}{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
 

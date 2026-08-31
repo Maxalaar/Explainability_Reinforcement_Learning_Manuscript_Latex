@@ -23,7 +23,7 @@ In order to quantify these two aspects, the dataset is split into two subsets:
 When training is completed, the first step is to verify that the model performs well on the data it was trained on.
 To do so, the average loss on the training set, denoted $\bar{\ell}_{\text{train}}$, is studied. This is an instance of the performance measure $P$ defined in Equation~\eqref{eq:performance_measure}, restricted to $\mathcal{D}_{\text{train}}$:
 \begin{equation}
-\bar{\ell}_{\text{train}} = \frac{1}{|\mathcal{D}_{\text{train}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{train}}} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}).
+\bar{\ell}_{\text{train}} = \frac{1}{|\mathcal{D}_{\text{train}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{train}}} \fullLoss{\theta}{i}.
 \label{eq:train_loss}
 \end{equation}
 
@@ -40,7 +40,7 @@ Assuming now that the model achieves satisfactory performance on the training da
 Its ability to generalize must now be studied.
 To do so, the corresponding average loss on $\mathcal{D}_{\text{test}}$ is computed:
 \begin{equation}
-\bar{\ell}_{\text{test}} = \frac{1}{|\mathcal{D}_{\text{test}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{test}}} \mathcal{L}(\hat{f}_{\theta}(x^{(i)}), y^{(i)}).
+\bar{\ell}_{\text{test}} = \frac{1}{|\mathcal{D}_{\text{test}}|} \sum_{(x^{(i)}, y^{(i)}) \in \mathcal{D}_{\text{test}}} \fullLoss{\theta}{i}.
 \label{eq:test_loss}
 \end{equation}
 
