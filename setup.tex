@@ -124,6 +124,11 @@
 \newcommand{\OriginalPolicy}{\textcolor{mygreen}{\pi}}
 \newcommand{\SurrogatePolicy}[1]{\textcolor{myred}{\pi'_{#1}}}
 
+% Deep learning notation: per-example loss
+% #1 = parameters (\theta, \theta^{(n)}, ...), #2 = training-example index
+\newcommand{\fullLoss}[2]{\mathcal{L}\left(\hat{f}_{#1}(x^{(#2)}), y^{(#2)}\right)}
+\newcommand{\loss}[2]{\mathcal{L}^{(#2)}\left(#1\right)}
+
 \definecolor{spaceInvadersColor}{RGB}{0, 0, 255}
 \newcommand{\spaceInvadersMark}{*}
 \newcommand{\spaceInvadersMarkSize}{0.06cm}
