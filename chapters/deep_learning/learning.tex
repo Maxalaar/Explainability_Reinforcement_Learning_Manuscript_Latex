@@ -122,7 +122,7 @@ Algorithm~\ref{alg:stochastic_gradient_descent} summarizes this whole training p
 To develop an intuition for this update rule, Figure~\ref{fig:simple_gradient_descent} illustrates it applied to the simple convex loss function $\mathcal{L}(w_1,w_2)=w_1^2+w_2^2$, where the red path shows the parameter updates converging to the minimum.
 The point $\theta_1$ represents the initial parameter values, with $w_1$ and $w_2$ randomly initialized, and the subsequent points, from $\theta_2$ to $\theta_6$, represent the successive updates produced by applying Equation~\ref{eq:gradient_descent_update}, progressively moving the trajectory toward the minimum of the loss function.
 
-\input{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
+\heavyfig{fig:simple_gradient_descent}{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
 
 \subsection{Convergence Properties}
 
@@ -131,6 +131,6 @@ It has been mathematically shown that gradient descent applied to a convex loss 
 However, \gls{nn} training involves highly non-convex loss surfaces, so the optimization trajectory becomes strongly dependent on the initial conditions, and no such guarantee holds.
 Figure~\ref{fig:multiple_gradient_descents_non_convex} illustrates the effect of non-convex functions, different starting points lead to distinct local minima.
 
-\input{figures/deepl_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
+\heavyfig{fig:multiple_gradient_descents_non_convex}{figures/deepl_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
 
 Despite the lack of theoretical guarantees of convergence to a global optimum, the simple procedure of random initialization followed by iterative gradient-based updates is sufficient in practice to train complex \gls{nn}.

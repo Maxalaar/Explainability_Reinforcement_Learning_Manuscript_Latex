@@ -1,4 +1,20 @@
 \input{figures/timeline.tex}
+\newif\ifdraftfigures
+
+\newcommand{\heavyfig}[2]{%  #1 = label to preserve, #2 = figure file
+    \ifdraftfigures
+        \begin{figure}[t]
+            \centering
+            \fbox{\parbox[c][3cm][c]{0.6\linewidth}{\centering\itshape
+                Heavy figure skipped in draft mode}}
+            \caption{\itshape Figure skipped in draft mode
+                (set \texttt{\string\draftfiguresfalse} to render it).}
+            \label{#1}
+        \end{figure}%
+    \else
+        \input{#2}%
+    \fi
+}
 
 \AddToShipoutPictureBG{%
     \AtPageLowerLeft{%
