@@ -23,7 +23,7 @@ As a result, the optimum cannot be determined analytically by directly studying 
 
 Instead, approximate optimization methods are required to find suitable parameter values for \gls{nn}.
 The class of algorithms used for this optimization is known as gradient descent methods.
-Numerous variants of gradient descent have been developed for \gls{nn} training, each designed to improve specific aspects of the optimization process.
+Numerous variants of gradient descent have been developed for \gls{nn} training.
 For simplicity, the focus here is on \gls{sgd} with a batch size of 1.
 As in previous cases, this choice is made because this setting captures the essential intuition behind the training method.
 
@@ -55,8 +55,7 @@ This can be expressed as
 \end{equation}
 
 Each layer function can have multiple inputs and multiple outputs, so the ordinary derivative is not sufficient to describe how its outputs change with respect to its inputs.
-The Jacobian matrix extends the derivative to functions with multiple inputs and outputs.
-It quantifies how a small change in each input component affects each output component.
+The Jacobian matrix extends the derivative to functions with multiple inputs and outputs, quantifying how each output component changes with respect to each input component.
 Consider the function $\phi^{(l)}$ and its Jacobian $J_{\phi^{(l)}}$ evaluated at $\mathbf{h}^{(l-1)}$.
 The Jacobian collects the partial derivatives of each output component with respect to each input component:
 \begin{equation}
@@ -69,7 +68,6 @@ J_{\phi^{(l)}}(\mathbf{h}^{(l-1)}) =
 \label{eq:jacobian}
 \end{equation}
 
-The Jacobian allows the effect of a change in the input of a layer to be expressed in terms of the resulting change in its output.
 Since a \gls{nn} is composed of several layers, a change in an early layer can affect the outputs of all subsequent layers.
 It is therefore necessary to propagate this change through the sequence of layer functions until it reaches the network output.
 The chain rule provides the mathematical tool required to describe this propagation.
@@ -110,7 +108,6 @@ where:
 \item each subsequent $J_{\phi^{(j+1)}}(\mathbf{h}^{(j)})$ denotes the Jacobian of the function $\phi^{(j+1)}$ with respect to its input $\mathbf{h}^{(j)}$,
 \item $J_{\phi^{(l)}}(w_k)$ denotes the Jacobian of the function $\phi^{(l)}$ with respect to the parameter $w_k$.
 \end{itemize}
-Multiplying these local Jacobians together therefore propagates the effect of $w_k$, layer by layer, all the way to the loss.
 
 Once $\frac{\partial \loss{\theta}{i}}{\partial w_k}$ can be computed for every parameter, all of these values are stacked into one vector, called the gradient:
 \begin{equation}
@@ -138,7 +135,7 @@ This leads to the gradient descent update rule:
 \end{equation}
 where $\eta > 0$ is the learning rate, which controls the step size, and $\nabla_{\theta} \loss{\theta^{(n)}}{i}$ denotes the gradient of the loss with respect to the parameters, evaluated at the current values $\theta^{(n)}$.
 
-This parameter $\eta$ must remain small, as the gradient only provides reliable information in a local neighborhood of the current parameters.
+The parameter $\eta$ must remain small, as the gradient only provides reliable information in a local neighborhood of the current parameters.
 As a result, a single step is not sufficient to significantly reduce the loss, so the process is iterated many times.
 Producing a sequence of parameter vectors $\theta^{(1)}, \theta^{(2)}, \dots$ that progressively improve the model.
 In practice, training is stopped when successive updates no longer produce a significant decrease in the loss.
