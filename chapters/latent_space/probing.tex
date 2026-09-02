@@ -2,8 +2,8 @@
 \label{sec:probing}
 
 Probing methods aim to determine whether a given semantic concept is encoded within the \gls{ls} of a \gls{nn} \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
-They investigate whether the presence or absence of a selected concept can be inferred from embeddings.
-The assumption is that if a concept can be reliably decoded from these representations, then the network likely encodes information related to it in order to perform its task.
+The idea behind these methods is that if a concept can be reliably decoded from \gls{lr}, it is likely relevant to the problem being solved.
+Studying such concepts can therefore provide insight into how the network internally represents the problem.
 
 A probing analysis begins by identifying a set of semantic concepts that the network could potentially use to accomplish its task.
 Each example in the dataset is then annotated to indicate the presence or absence of the studied concepts.
@@ -14,10 +14,10 @@ The dataset can therefore be written as follows:
 \]
 
 The data are subsequently projected into the \gls{ls} of the pretrained model.
-For each example $i$, let $h_l^{(i)} \in \mathbb{R}^{n_l}$ denote the representation vector obtained at layer $l$.
-A classifier, referred to as a probe, is then trained to predict the presence of a given concept from this representation.
-The probe is denoted by $p_{\theta}^{l,j}$, where $\theta$ represents its parameters, $l$ identifies the layer from which the representation is extracted, and $j$ identifies the concept being predicted.
-It maps the representation $h_l^{(i)}$ to a scalar value in $[0,1]$, which can be interpreted as the probability that the concept is present.
+For an input $x$, we write $\latentRepresentation[l](x) \in \mathbb{R}^{n_l}$, or simply $\latentRepresentation[l]$, the \gls{lr} obtained at layer $l$.
+A classifier, referred to as a probe, is then trained to predict the presence of a given concept from this \gls{lr}.
+It is denoted by $p_{\theta}^{l,j}$, where $\theta$ represents its parameters, $l$ indicates the layer from which the \gls{lr} is extracted, and $j$ identifies the concept being predicted.
+The probe maps the \gls{lr} to a scalar value in $[0,1]$, which can be interpreted as the probability that the concept is present.
 The parameters $\theta$ are learned by minimizing a loss function over the training examples using \gls{sgd}.
 This gives the following mathematical formulation:
 \begin{equation}
@@ -25,19 +25,23 @@ p_{\theta}^{l,j} : \mathbb{R}^{n_l} \rightarrow [0,1],
 \qquad
 \min_{\theta} \frac{1}{N} \sum_{i=1}^{N}
 \mathcal{L}\left(
-p_{\theta}^{l,j}\left(h_l^{(i)}\right),
+p_{\theta}^{l,j}\left(\latentRepresentation[l](x^{(i)})\right),
 c_j^{(i)}
 \right).
 \label{eq:probe_function}
 \end{equation}
 
-The classifier used to detect the presence or absence of a concept must remain intentionally simple.
-Indeed, if the probe has too much capacity, it may reconstruct the target information from complex correlations that do not necessarily correspond to information explicitly encoded in the \gls{ls}.
-In such a case, it becomes difficult to determine whether the concept is genuinely represented by the network or merely reconstructed through the expressive power of the classifier.
+The architecture of the probe must be kept intentionally simple.
+A probe with excessive expressive capacity may be able to predict the concept by exploiting complex patterns within the representation.
+These patterns do not necessarily indicate that the concept is explicitly encoded in the \gls{ls}.
+Instead, they may result from the ability of the probe itself to combine and transform the available information.
+Consequently, a highly expressive probe makes it difficult to distinguish between information that is directly accessible in the representation and information that is reconstructed by the classifier.
+Restricting the capacity of the probe therefore helps ensure that its predictions primarily reflect the information already present in the \gls{ls}.
 
 For this reason, probing methods often rely on linear classifiers.
 A linear separation suggests that the information is easily accessible to the \gls{nn} and potentially usable during decision-making.
 If the classifier achieves performance significantly above chance level, this suggests that the \gls{ls} contains exploitable information related to the considered concept.
+
 Figure~\ref{fig:probes_decision_boundaries} illustrates the decision boundaries of such linear probes for three concepts, where each colored region indicates the area classified positively by the corresponding probe.
 
 \input{figures/latent_space/latent_space_probing.tex}
@@ -48,38 +52,38 @@ The model is provided only with sequences of moves and information about the act
 The central question is whether the \gls{llm} develops an internal representation of the game state.
 To address this question, the probed concepts correspond to the presence or absence of different game pieces on specific board positions.
 
-As illustrated in Figure~\ref{fig:probing_illustration}, probes are able to reconstruct the full board state from the model's hidden representations, even though the only available information to the model is a sequence of text.
+As illustrated in Figure~\ref{fig:probing_illustration}, probes are able to reconstruct the full board state from the model's \gls{lr}, even though the only available information to the model is a sequence of text.
 In this figure, each row corresponds to a piece type, comparing the ground truth with the probe's predictions and confidence.
 The close agreement between the ground truth and predicted positions suggests that the model develops a structured representation of the underlying environment from which the data are generated.
 
 \input{figures/latent_space/probing_illustration.tex}
 
 However, the fact that a concept can be decoded from \gls{lr} does not necessarily imply that the model actually uses this information to perform its task.
-To assess whether representations play a causal role in the model’s output, it is possible to perform interventions on the \gls{lr}.
+To assess whether \gls{lr} play a causal role in the model’s output, it is possible to perform interventions on them.
 An intervention consists of modifying a \gls{lr} in a controlled manner by activating or deactivating a given concept, and then studying its impact on the model’s output.
 If the resulting change in the model’s output is consistent with the applied perturbation, this suggests that the representation had a causal role.
 
-To this end, the \gls{lr} $h^{l}$ is minimally modified such that the probe prediction for the target concept $c_j$ changes state, while the predictions associated with other concepts remain unchanged.
-This goal can be formulated as an optimization problem over the latent activation itself.
-The optimization is performed directly on the representation $h^{l'}$, using \gls{sgd}.
-The solution to this problem is the optimal modified representation $h^{l*}$, defined as:
+To this end, the \gls{lr} is minimally modified such that the probe prediction for the target concept $c_j$ changes state, while the predictions associated with other concepts remain unchanged.
+This goal can be formulated as an optimization problem over the \gls{lr} itself.
+The optimization is performed directly on the \gls{lr}, using \gls{sgd}.
+The solution to this problem is the optimal modified \gls{lr}, defined as:
 \[
-h^{l*} =
-\arg\min_{h^{l'}}
-\underbrace{\gamma \, \mathcal{L}_{\text{flip}}\big(p_{\theta}^{l,j}(h^{l'}), c_j\big)}_{\text{flip target concept } c_j}
+\latentRepresentation[l]^{*} =
+\arg\min_{\latentRepresentation[l]'}
+\underbrace{\gamma \, \mathcal{L}_{\text{flip}}\big(p_{\theta}^{l,j}(\latentRepresentation[l]'), c_j\big)}_{\text{flip target concept } c_j}
 +
-\underbrace{\lambda \sum_{k \neq j} \mathcal{L}_{\text{preserve}}\big(p_{\theta}^{l,k}(h^{l'}), c_k\big)}_{\text{preserve other concepts } c_{k \neq j}}
+\underbrace{\lambda \sum_{k \neq j} \mathcal{L}_{\text{preserve}}\big(p_{\theta}^{l,k}(\latentRepresentation[l]'), c_k\big)}_{\text{preserve other concepts } c_{k \neq j}}
 +
-\underbrace{\beta \|h^{l'} - h^{l}\|_2^2}_{\text{minimality}}
+\underbrace{\beta \|\latentRepresentation[l]' - \latentRepresentation[l]\|_2^2}_{\text{minimality}}
 \]
 where:
 \begin{itemize}
-    \item $h^{l}$ is the original \gls{lr} of the input at layer $l$,
-    \item $h^{l'}$ is the modified \gls{lr} being optimized,
-    \item $h^{l*}$ is the optimal modified representation,
+    \item $\latentRepresentation[l]$ is the original \gls{lr} of the input at layer $l$,
+    \item $\latentRepresentation[l]'$ is the modified \gls{lr} being optimized,
+    \item $\latentRepresentation[l]^{*}$ is the optimal modified \gls{lr},
     \item $\mathcal{L}_{\text{flip}}$: loss encouraging the prediction of the target concept $c_j$ to change state (i.e., flipping the predicted label),
     \item $\mathcal{L}_{\text{preserve}}$: loss enforcing invariance of all non-target concepts $c_k$ for $k \neq j$,
-    \item $\|h^{l'} - h^{l}\|_2^2$: regularization term ensuring the modified representation remains close to the original \gls{lr},
+    \item $\|\latentRepresentation[l]' - \latentRepresentation[l]\|_2^2$: regularization term ensuring the modified \gls{lr} remains close to the original one,
     \item $\gamma, \lambda, \beta$: weighting coefficients controlling the trade-off between the intervention strength, the preservation of other concepts, and the minimality of the perturbation.
 \end{itemize}
 

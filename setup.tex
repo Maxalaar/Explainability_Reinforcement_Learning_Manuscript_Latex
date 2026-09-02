@@ -129,6 +129,12 @@
 \newcommand{\fullLoss}[2]{\mathcal{L}\left(\hat{f}_{#1}(x^{(#2)}), y^{(#2)}\right)}
 \newcommand{\loss}[2]{\mathcal{L}^{(#2)}\left(#1\right)}
 
+% Deep learning notation: latent representation (\gls{lr})
+% Optional #1 = layer index; \latentRepresentation -> h, \latentRepresentation[l] -> h_{l}
+\newcommand{\latentRepresentation}[1][]{%
+    \mathbf{h}\if\relax\detokenize{#1}\relax\else_{#1}\fi
+}
+
 \definecolor{spaceInvadersColor}{RGB}{0, 0, 255}
 \newcommand{\spaceInvadersMark}{*}
 \newcommand{\spaceInvadersMarkSize}{0.06cm}

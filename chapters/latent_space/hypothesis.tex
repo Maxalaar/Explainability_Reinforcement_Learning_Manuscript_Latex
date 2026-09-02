@@ -24,25 +24,25 @@ Once training is complete, these embeddings are structured to support the perfor
 To mark this distinction, we will refer to these trained embeddings as \gls{lr}, as defined in Definition~\ref{def:representation}.
 
 \begin{definition}{Latent Representation}{representation}
-A representation is the internal encoding of an input given by a intermediate layer of a trained \gls{nn}.
+A \gls{lr} is the internal encoding of an input given by an intermediate layer of a trained \gls{nn}.
 \end{definition}
 
-Each hidden layer refines the representation of the previous layer.  
-Each transformation progressively reshapes the representation into a form more directly aligned with the output space \cite{rumelhart1986learning}.  
-This process can be described as a sequence of transformations where each $h^{(l)}$ is a representation:  
+Each hidden layer refines the \gls{lr} of the previous layer.
+Each transformation progressively reshapes the \gls{lr} into a form more directly aligned with the output space \cite{rumelhart1986learning}.
+This process can be described as a sequence of transformations where each $\latentRepresentation[l]$ is a \gls{lr}:
 \[
-x \rightarrow h^{(1)} \rightarrow h^{(2)} \rightarrow \dots \rightarrow h^{(L-1)} \rightarrow \hat{y}
+x \rightarrow \latentRepresentation[1] \rightarrow \latentRepresentation[2] \rightarrow \dots \rightarrow \latentRepresentation[L-1] \rightarrow \hat{y}
 \]
 
-The set of all such representations produced by a layer over a dataset defines its \gls{ls}, as defined in Definition~\ref{def:latent_space}.
+The set of all such \gls{lr} produced by a layer over a dataset defines its \gls{ls}, as defined in Definition~\ref{def:latent_space}.
 
 \begin{definition}{Latent Space}{latent_space}
-The \gls{ls} is the set of all representations produced by a layer over a dataset.  
-It is shaped by learning and organizes representations according to task-relevant properties.  
+The \gls{ls} is the set of all \gls{lr} produced by a layer over a dataset.
+It is shaped by learning and organizes \gls{lr} according to task-relevant properties.
 \end{definition}
 
 Under the \ConceptHypothesisName, the analysis of the \gls{ls} is assumed to provide access to abstract structures learned by the model, as illustrated in Figure~\ref{fig:latent_space}.
-The same set of latent activations can be viewed either as an unstructured point cloud or, under this hypothesis, as a collection of points organized by concept membership, in which case the structure of the \gls{ls} becomes meaningful and amenable to analysis.
+The same set of \gls{lr} can be viewed either as an unstructured point cloud or, under this hypothesis, as a collection of points organized by concept membership, in which case the structure of the \gls{ls} becomes meaningful and amenable to analysis.
 In Figure~\ref{fig:latent_space}, the colors represent hypothetical concept memberships assigned by the model.
 In this manuscript, a concept is defined as an abstract representation that organizes information and supports reasoning (see Definition~\ref{def:concept}).
 
