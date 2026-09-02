@@ -60,12 +60,11 @@ where:
     \item $\gamma, \lambda$ are weighting coefficients controlling the trade-off between reconstruction fidelity and sparsity.
 \end{itemize}
 
+The parameters of these projection functions $f_{\text{enc}}$ and $f_{\text{dec}}$ are learned by minimizing $\mathcal{L}_{\text{auto}}$ using \gls{sgd}.
+Under this formulation, each dimension of $\mathcal{Z}$ is interpreted as a dedicated concept direction.
 
 In practice, both $f_{\text{enc}}$ and $f_{\text{dec}}$ are implemented as linear projections between the original \gls{ls} and the high-dimensional space $\mathcal{Z}$. This choice is motivated by the same principle underlying probing methods. The transformation applied to the \gls{lr} should remain as simple as possible.
 Using more expressive projection functions could introduce additional structures into the transformed \gls{lr}. In this case, it would become difficult to determine whether an observed concept was already encoded in the model's \gls{lr}, or whether it was introduced by the projection itself. Restricting $f_{\text{enc}}$ and $f_{\text{dec}}$ to linear projections therefore helps ensure that the concepts identified in $\mathcal{Z}$ can be attributed to the original \gls{lr}, rather than to the transformation used to analyze it.
-
-The parameters of these projection functions $f_{\text{enc}}$ and $f_{\text{dec}}$ are learned by minimizing $\mathcal{L}_{\text{auto}}$ using \gls{sgd}.
-Under this formulation, each dimension of $\mathcal{Z}$ is interpreted as a dedicated concept direction.
 
 The method proves to be powerful when successfully applied to language models \cite{templeton2024scaling}.
 In these applications, \gls{sae} are used to desuperpose the \gls{lr} of \gls{llm}.
@@ -120,6 +119,7 @@ These limitations can be summarized as follows:
 These limitations suggest that \SuperpositionHypothesisName, while powerful, do not fully resolve the problem of \gls{cs}.
 Convincing empirical results do not necessarily validate the underlying theoretical assumptions.
 
-Probing, interpretable directions, and \SuperpositionHypothesisName all rest on a shared assumption that the \gls{cs} can be recovered through linear decompositions of \gls{lr}.
-This assumption has driven significant empirical progress, yet it remains theoretically fragile.
-The following section therefore introduces a approach that relaxes this constraint.
+So far, all the methods described, including probing, interpretable directions, and the \SuperpositionHypothesisName, rely on a common assumption.
+The \gls{cs} can be recovered from \gls{lr} through linear decomposition.
+This assumption has enabled substantial progress in understanding neural representations, but it also imposes a strong constraint on how concepts are expected to be represented.
+The following section explores an alternative approach that does not rely on this constraint.
