@@ -35,7 +35,7 @@ This framework led to the formalization of \gls{mdp}, which provide a mathematic
 \gls{mdp} describe a agent interacting with an environment through a set of states, actions, rewards, and transition rules.
 The earliest method proposed to solve \gls{mdp} is dynamic programming \cite{bellman1957dynamic}.
 It proceeds by breaking down a complex decision problem into smaller, more manageable subproblems, solving each one, and combining the results to obtain an overall solution.
-However, dynamic programming requires a full and exact description of the environment, which is only feasible for small problems.
+However, dynamic programming requires a full description of the environment, which is only feasible for small problems.
 
 \subsection{Emergence of reinforcement learning (1970--2000)}
 
@@ -62,7 +62,7 @@ To address this issue, research shifted toward more general representations of v
 Instead of maintaining explicit tables, function approximation methods were introduced.  
 These allowed value functions and policies to be represented using parametric models such as linear approximators or perceptron-like architectures \cite{BartoSuttonAnderson1983, tsitsiklis1996analysis}.
 This change enabled generalization across states, reducing the dependence on exhaustive exploration of the state space.
-The introduction of \gls{dqn}, which demonstrated that deep \gls{nn} could be used to approximate value functions at scale \cite{mnih2013playingatarideepreinforcement}.
+The introduction of \gls{dqn} made it possible to efficiently use deep \gls{nn} to approximate value functions at scale \cite{mnih2013playingatarideepreinforcement}.
 
 Figure~\ref{fig:evolution_reinforcement_learning_classical} provides a timeline of the key milestones that shaped the development of reinforcement learning prior to its fusion with deep learning.
 
