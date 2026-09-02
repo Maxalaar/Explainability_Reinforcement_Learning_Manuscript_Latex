@@ -18,7 +18,7 @@ It captures and restructures information in order to represent relationships tha
 \end{definition}
 
 The ability of \gls{nn} to perform abstraction arises from their intermediate activations.
-A \gls{nn} does not directly map $x$ to $y$, it computes a sequence of intermediate activations across hidden layers.
+A \gls{nn} does not directly map $x$ to $\hat{y}$, it computes a sequence of intermediate activations across hidden layers.
 These activations are numerical encodings of the input referred to as embeddings.
 Once training is complete, these embeddings are structured to support the performance of a specific task.
 To mark this distinction, we will refer to these trained embeddings as \gls{lr}, as defined in Definition~\ref{def:representation}.
@@ -43,8 +43,7 @@ It is shaped by learning and organizes representations according to task-relevan
 
 Under the \ConceptHypothesisName, the analysis of the \gls{ls} is assumed to provide access to abstract structures learned by the model, as illustrated in Figure~\ref{fig:latent_space}.
 The same set of latent activations can be viewed either as an unstructured point cloud or, under this hypothesis, as a collection of points organized by concept membership, in which case the structure of the \gls{ls} becomes meaningful and amenable to analysis.
-In Figure~\ref{fig:latent_space}, the colors represent hypothetical concept memberships assigned by the model rather than observed labels.
-These structures are referred to as concepts.
+In Figure~\ref{fig:latent_space}, the colors represent hypothetical concept memberships assigned by the model.
 In this manuscript, a concept is defined as an abstract representation that organizes information and supports reasoning (see Definition~\ref{def:concept}).
 
 \input{figures/latent_space/latent_space_embeddings}
@@ -56,7 +55,7 @@ A concept is a task-dependent abstraction that captures regularities in the inpu
 Our definition of concepts is consistent with both the pragmatic tradition in philosophy and the information-processing view of cognition.
 Within these frameworks, concepts arise from the need to simplify an otherwise intractable reality.
 Because the environment contains more information than any cognitive system can process, intelligent behavior relies on abstractions, called concepts, that discard irrelevant details while preserving the information required to achieve a given objective \cite{Peirce1878,Misak2013}.
-These concepts are realized as internal representations that reduce complexity and enable reasoning under limited computational resources \cite{Newell1980,Simon1996}.
+These concepts are realized as representations that reduce complexity and enable reasoning under limited computational resources \cite{Newell1980,Simon1996}.
 Although these theories were originally developed to explain human cognition, the \ConceptHypothesisName assumes that the same principles can be extended to deep \gls{nn}.
 
 In order to influence the model's computations, concepts must necessarily admit a concrete realization within the \gls{ls}.

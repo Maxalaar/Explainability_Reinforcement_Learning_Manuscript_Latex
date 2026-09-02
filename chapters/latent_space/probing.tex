@@ -2,7 +2,7 @@
 \label{sec:probing}
 
 Probing methods aim to determine whether a given semantic concept is encoded within the \gls{ls} of a \gls{nn} \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
-More specifically, they investigate whether the presence or absence of a selected concept can be inferred from embeddings.
+They investigate whether the presence or absence of a selected concept can be inferred from embeddings.
 The assumption is that if a concept can be reliably decoded from these representations, then the network likely encodes information related to it in order to perform its task.
 
 A probing analysis begins by identifying a set of semantic concepts that the network could potentially use to accomplish its task.
@@ -14,23 +14,28 @@ The dataset can therefore be written as follows:
 \]
 
 The data are subsequently projected into the \gls{ls} of the pretrained model.
-We denote by $h^{l}$ the representation vector obtained at layer $l$.
-From these \gls{lr}, a classifier is trained in a supervised manner to predict the presence of the considered concept.
-This classifier is referred to as a probe and is denoted by $p$.
-Its purpose is to determine whether a given concept is present in the representation.
-Its purpose is therefore to assess whether information associated with the concept is accessible from the network’s internal representations.
-This can be formalized as follows:
-\[
-p_{\theta}^{l, j} : h^{l} \mapsto c_j,
-\quad
-\theta^* = \arg\min_\theta \mathcal{L}\big(p_\theta^{l,j}(h^{l}), c_j\big)
-\]
+For each example $i$, let $h_l^{(i)} \in \mathbb{R}^{n_l}$ denote the representation vector obtained at layer $l$.
+A classifier, referred to as a probe, is then trained to predict the presence of a given concept from this representation.
+The probe is denoted by $p_{\theta}^{l,j}$, where $\theta$ represents its parameters, $l$ identifies the layer from which the representation is extracted, and $j$ identifies the concept being predicted.
+It maps the representation $h_l^{(i)}$ to a scalar value in $[0,1]$, which can be interpreted as the probability that the concept is present.
+The parameters $\theta$ are learned by minimizing a loss function over the training examples using \gls{sgd}.
+This gives the following mathematical formulation:
+\begin{equation}
+p_{\theta}^{l,j} : \mathbb{R}^{n_l} \rightarrow [0,1],
+\qquad
+\min_{\theta} \frac{1}{N} \sum_{i=1}^{N}
+\mathcal{L}\left(
+p_{\theta}^{l,j}\left(h_l^{(i)}\right),
+c_j^{(i)}
+\right).
+\label{eq:probe_function}
+\end{equation}
 
 The classifier used to detect the presence or absence of a concept must remain intentionally simple.
 Indeed, if the probe has too much capacity, it may reconstruct the target information from complex correlations that do not necessarily correspond to information explicitly encoded in the \gls{ls}.
 In such a case, it becomes difficult to determine whether the concept is genuinely represented by the network or merely reconstructed through the expressive power of the classifier.
-For this reason, probing methods often rely on linear classifiers.
 
+For this reason, probing methods often rely on linear classifiers.
 A linear separation suggests that the information is easily accessible to the \gls{nn} and potentially usable during decision-making.
 If the classifier achieves performance significantly above chance level, this suggests that the \gls{ls} contains exploitable information related to the considered concept.
 Figure~\ref{fig:probes_decision_boundaries} illustrates the decision boundaries of such linear probes for three concepts, where each colored region indicates the area classified positively by the corresponding probe.
