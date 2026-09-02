@@ -54,9 +54,11 @@ This can be expressed as
 \label{eq:layer_function}
 \end{equation}
 
-Because each layer function has several outputs that jointly depend on several inputs, the ordinary derivative is no longer sufficient to describe how it varies, and the Jacobian matrix is used instead as its generalization.
-The Jacobian matrix quantifies how a small change in each input component affects each output component.
-Consider layer $l$'s function, its Jacobian $J_{\phi^{(l)}}(\mathbf{h}^{(l-1)})$, evaluated at $\mathbf{h}^{(l-1)}$, collects the partial derivatives of every output component with respect to every input component:
+Each layer function can have multiple inputs and multiple outputs, so the ordinary derivative is not sufficient to describe how its outputs change with respect to its inputs.
+The Jacobian matrix extends the derivative to functions with multiple inputs and outputs.
+It quantifies how a small change in each input component affects each output component.
+Consider the function $\phi^{(l)}$ and its Jacobian $J_{\phi^{(l)}}$ evaluated at $\mathbf{h}^{(l-1)}$.
+The Jacobian collects the partial derivatives of each output component with respect to each input component:
 \begin{equation}
 J_{\phi^{(l)}}(\mathbf{h}^{(l-1)}) =
 \begin{bmatrix}
@@ -67,9 +69,14 @@ J_{\phi^{(l)}}(\mathbf{h}^{(l-1)}) =
 \label{eq:jacobian}
 \end{equation}
 
-Consider two consecutive layers, $\phi^{(l)}$ and $\phi^{(l+1)}$.
-The chain rule states that the Jacobian of this composition is given by the product of the Jacobians of the two layers.
+The Jacobian allows the effect of a change in the input of a layer to be expressed in terms of the resulting change in its output.
+Since a \gls{nn} is composed of several layers, a change in an early layer can affect the outputs of all subsequent layers.
+It is therefore necessary to propagate this change through the sequence of layer functions until it reaches the network output.
+The chain rule provides the mathematical tool required to describe this propagation.
+To illustrate this, consider two consecutive layers, $\phi^{(l)}$ and $\phi^{(l+1)}$.
+The chain rule states that the Jacobian of their composition is given by the product of their Jacobians.
 Each Jacobian is evaluated at the input received by the corresponding layer:
+
 
 \begin{equation}
 J_{\phi^{(l+1)} \circ \phi^{(l)}}\left(\mathbf{h}^{(l-1)}\right)
