@@ -2,7 +2,7 @@
 \label{sec:sparse_autoencoder}
 
 Approaches based on latent directions face limitations.
-Only a restricted subset of concepts admit a linear representation, and even these directions are often entangled with multiple semantic concepts, as illustrated in Figure~\ref{fig:entanglement_illustration}.
+Only a restricted subset of concepts admit a linear representation, and even these directions are often entangled with multiple semantic concepts.
 To address this limitation, an extension of the \ConceptHypothesisName has been proposed under the name \SuperpositionHypothesisName, formalized in Hypothesis~\ref{hyp:superposition} \cite{elhage2022superposition}.
 
 \begin{hypothesis}{Superposition Hypothesis}{superposition}
@@ -11,11 +11,6 @@ When the number of concepts exceeds the available dimensions, multiple concepts 
 \end{hypothesis}
 
 According to this hypothesis, in an unconstrained \gls{ls}, each concept is represented in its own independent linear direction.
-However, \gls{nn} operate in finite-dimensional spaces, so when the number of concepts exceeds the available dimensions, such a one-to-one correspondence becomes impractical.
-The network must therefore reuse its representational dimensions, allowing multiple concepts to be encoded using the same directions.
-This shared encoding is referred to as superposition \cite{bricken2023monosemanticity}.
-As a result, in a superposed \gls{lr}, linear analysis of the \gls{ls} may not isolate individual concepts, the resulting directions reflect a mixture of several semantic attributes.
-
 The idealized non-superposed \gls{lr} can be mathematically expressed as follows:
 \[
 \latentRepresentation = \sum_{i=1}^{n} \alpha_i \mathbf{v}_i,
@@ -35,8 +30,12 @@ where:
     \item $\|\boldsymbol{\alpha}\|_0 \ll n$ indicates that only a small fraction of concepts are active for a given \gls{lr}.
 \end{itemize}
 
-Under the \SuperpositionHypothesisName, the phenomenon of superposition becomes an obstacle for any method that attempts to analyze \gls{lr} directly in the original activation space.
-This has motivated the development of methods that aim to recover a less superposed \gls{lr}.
+However, \gls{nn} operate in finite-dimensional spaces, so when the number of concepts exceeds the available dimensions, such a one-to-one correspondence becomes impractical.
+The network must therefore reuse its representational dimensions, allowing multiple concepts to be encoded using the same directions.
+This shared encoding is referred to as superposition \cite{bricken2023monosemanticity}.
+This phenomenon becomes an obstacle for any method that attempts to analyze \gls{lr} directly in the original activation space.
+
+Building on this observation, several works based on the \SuperpositionHypothesisName have developed methods that aim to recover less superposed \gls{lr}.
 A common approach is to map \gls{ls} into a higher-dimensional space while imposing additional constraints that encourage individual concepts to be represented separately.
 This transformation is illustrated in Figure~\ref{fig:dense_to_sparse_sae}, while \gls{lr} are entangled in the initial \gls{ls}, the sparse representation aligns each concept with a dedicated feature axis.
 
@@ -56,16 +55,14 @@ where:
     \item $f_{\text{dec}}(z)$ is the decoding function that reconstructs the original \gls{lr} from the sparse code,
     \item $z \in \mathcal{Z}$ is the sparse representation of $\latentRepresentation$, with $\dim(z) \gg \dim(\latentRepresentation)$,
     \item $\hat{\latentRepresentation}$ is the reconstructed \gls{lr},
-    \item $\gamma \|\latentRepresentation - \hat{\latentRepresentation}\|_2^2$ is the reconstruction loss ensuring that the original \gls{lr} can be faithfully recovered,
-    \item $\lambda \|z\|_1$ is the sparsity regularization term that encourages most components of $z$ to be zero,
+    \item $\|\latentRepresentation - \hat{\latentRepresentation}\|_2^2$ is the reconstruction loss ensuring that the original \gls{lr} can be faithfully recovered,
+    \item $\|z\|_1$ is the sparsity regularization term that encourages most components of $z$ to be zero,
     \item $\gamma, \lambda$ are weighting coefficients controlling the trade-off between reconstruction fidelity and sparsity.
 \end{itemize}
 
 
-In practice, both $f_{\text{enc}}$ and $f_{\text{dec}}$ are implemented as linear projections between the original \gls{ls} and the high-dimensional space $\mathcal{Z}$.
-This design follows the same principle as in probing methods, the transformation used to analyze the \gls{lr} should remain as simple as possible.
-More expressive projection functions could themselves introduce complex structures into the transformed \gls{lr}.
-In that case, it would become difficult to determine whether the observed concept reflects a \gls{cs} already present in the model's or structure introduced by the projection.
+In practice, both $f_{\text{enc}}$ and $f_{\text{dec}}$ are implemented as linear projections between the original \gls{ls} and the high-dimensional space $\mathcal{Z}$. This choice is motivated by the same principle underlying probing methods. The transformation applied to the \gls{lr} should remain as simple as possible.
+Using more expressive projection functions could introduce additional structures into the transformed \gls{lr}. In this case, it would become difficult to determine whether an observed concept was already encoded in the model's \gls{lr}, or whether it was introduced by the projection itself. Restricting $f_{\text{enc}}$ and $f_{\text{dec}}$ to linear projections therefore helps ensure that the concepts identified in $\mathcal{Z}$ can be attributed to the original \gls{lr}, rather than to the transformation used to analyze it.
 
 The parameters of these projection functions $f_{\text{enc}}$ and $f_{\text{dec}}$ are learned by minimizing $\mathcal{L}_{\text{auto}}$ using \gls{sgd}.
 Under this formulation, each dimension of $\mathcal{Z}$ is interpreted as a dedicated concept direction.
