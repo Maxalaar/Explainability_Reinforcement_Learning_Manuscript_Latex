@@ -47,7 +47,7 @@
   \end{scope}
 
   % ============================================================
-  % (b) TOP-RIGHT — Interpretable directions
+  % (b) TOP-RIGHT — Directions
   % ============================================================
   \begin{scope}[xshift=\ovPanelGap, yshift=0pt]
   \begin{axis}[
@@ -64,11 +64,11 @@
     \fill[colorB] (axis cs:-2.5,-4.0) circle (4pt);
   \end{axis}
   \node[anchor=north, yshift=-6pt] at (axisDirections.south)
-    {\textbf{(b)} Interpretable directions};
+    {\textbf{(b)} Directions};
   \end{scope}
 
   % ============================================================
-  % (c) BOTTOM-LEFT — Sparse Autoencoder
+  % (c) BOTTOM-LEFT — Superposition
   % ============================================================
   \begin{scope}[xshift=0pt, yshift=-\ovRowGap]
   \begin{axis}[
@@ -91,7 +91,7 @@
     \plotPoints[color=colorC, size=2pt, mark=triangle*]{figures/latent_space/sae_right_c.data}
   \end{axis}
   \node[anchor=north, yshift=-6pt] at (axisSAE.south)
-    {\textbf{(c)} Sparse autoencoder};
+    {\textbf{(c)} Superposition};
   \end{scope}
 
 % ============================================================

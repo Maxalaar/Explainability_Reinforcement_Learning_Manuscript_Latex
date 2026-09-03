@@ -1,9 +1,12 @@
-\section{Interpretable Directions}
-\label{sec:direction}
+\section{Directions}
+\label{sec:directions}
 
-To overcome the limitations of binary concept detection in probing methods, several approaches have been proposed to analyze the structure of \gls{lr}.
-Among them, the notion of interpretable directions has emerged as a natural extension, aiming to capture the continuous nature of how concepts are encoded in \gls{ls}.
-Empirically, it has been observed that shifting a \gls{lr} along a direction can induce coherent and semantically meaningful changes in the model’s output \cite{haas2024discovering, voynov2020unsuperviseddiscoveryinterpretabledirections}.
+Probing describes a concept as a binary attribute, either present or absent in a \gls{lr}.
+The methods in this section instead associate each concept with a direction in the \gls{ls}.
+Moving a \gls{lr} along this direction is expected to strengthen or weaken the concept smoothly.
+This provides information that a binary probe cannot express.
+
+Empirically, it has been observed that shifting a \gls{lr} along such a direction can induce coherent and semantically meaningful changes in the model’s output \cite{haas2024discovering, voynov2020unsuperviseddiscoveryinterpretabledirections}.
 Such transformations can be mathematically express as:
 \[
 \latentRepresentation' = \latentRepresentation + \alpha \mathbf{v}_i,
@@ -47,10 +50,8 @@ In practice, interpretable direction methods typically discover only a few dozen
 
 In addition, \gls{lr} often exhibit a phenomenon known as entanglement, illustrated in Figure~\ref{fig:entanglement_illustration}, where multiple semantic attributes are mixed within the same directions of the \gls{ls}.
 For instance, in a generative face model, moving along the ``glasse'' direction may simultaneously modify age and gender, whereas a disentangled \gls{lr} would let each axis control a single semantic attribute while leaving the others unchanged.
-Ideally, one would like each semantic factor to vary independently along a specific direction, without affecting other attributes.
-This lack of separability indicates that semantic information is not cleanly factored in the \gls{ls}, which motivates the search for more structured decompositions.
+This lack of separability suggests that semantic information is not cleanly organized in the \gls{ls}.
+This observation motivates the \SuperpositionHypothesisName, which proposes a different view of how \gls{nn} organize information internally.
+The next section introduces this hypothesis.
 
 \input{figures/latent_space/entanglement_illustration.tex}
-
-This limitation has motivated a stronger hypothesis about how \gls{nn} organize information internally, namely the \SuperpositionHypothesisName, introduced in the next section.
-% Under this hypothesis, \gls{sae} offer a way to analyze the structure of \gls{lr} by recovering the underlying features encoded in them.

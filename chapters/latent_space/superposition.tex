@@ -1,9 +1,9 @@
-\section{Sparse Autoencoder}
-\label{sec:sparse_autoencoder}
+\section{Superposition}
+\label{sec:superposition}
 
-Approaches based on latent directions face limitations.
-Only a restricted subset of concepts admit a linear representation, and even these directions are often entangled with multiple semantic concepts.
-To address this limitation, an extension of the \ConceptHypothesisName has been proposed under the name \SuperpositionHypothesisName, formalized in Hypothesis~\ref{hyp:superposition} \cite{elhage2022superposition}.
+The previous section highlighted a limitation of interpretable directions.
+Only a limited number of concepts can be represented by a linear direction, and these directions are often entangled with multiple semantic concepts.
+To account for this, an extension of the \ConceptHypothesisName has been proposed under the name \SuperpositionHypothesisName, formalized in Hypothesis~\ref{hyp:superposition} \cite{elhage2022superposition}.
 
 \begin{hypothesis}{Superposition Hypothesis}{superposition}
 Concepts are preferentially represented by distinct linear directions in \gls{ls}.
@@ -119,7 +119,7 @@ These limitations can be summarized as follows:
 These limitations suggest that \SuperpositionHypothesisName, while powerful, do not fully resolve the problem of \gls{cs}.
 Convincing empirical results do not necessarily validate the underlying theoretical assumptions.
 
-So far, all the methods described, including probing, interpretable directions, and the \SuperpositionHypothesisName, rely on a common assumption.
-The \gls{cs} can be recovered from \gls{lr} through linear decomposition.
+So far, every method described, whether based on probing, interpretable directions, or superposition, relies on a common assumption.
+The \gls{cs} can be recovered from \gls{lr} through a linear decomposition.
 This assumption has enabled substantial progress in understanding neural representations, but it also imposes a strong constraint on how concepts are expected to be represented.
-The following section explores an alternative approach that does not rely on this constraint.
+The following section examines clustering as an alternative approach that does not rely on this assumption.
