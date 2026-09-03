@@ -51,7 +51,7 @@ This line of work culminated in Q-learning, which showed that optimal action-val
 The publication of the foundational reference work \cite{suttonbarto1998} contributed to the formalization of \gls{rl} as a coherent field.
 From that point onward, the field can be considered well established and widely recognized as a distinct area of research.
 
-\subsection{Consolidation of reinforcement learning (2000--2013)}
+\subsection{Consolidation of reinforcement learning (2000--2012)}
 
 A limitation of early algorithms such as Q-learning is their reliance on explicit state–action tables. 
 Although these methods remove the need to know the full dynamics of the \gls{mdp}, they still require storing a value for each possible state–action pair. 
@@ -62,7 +62,8 @@ To address this issue, research shifted toward more general representations of v
 Instead of maintaining explicit tables, function approximation methods were introduced.  
 These allowed value functions and policies to be represented using parametric models such as linear approximators or perceptron-like architectures \cite{BartoSuttonAnderson1983, tsitsiklis1996analysis}.
 This change enabled generalization across states, reducing the dependence on exhaustive exploration of the state space.
-The introduction of \gls{dqn} made it possible to efficiently use deep \gls{nn} to approximate value functions at scale \cite{mnih2013playingatarideepreinforcement}.
+These parametric representations nonetheless remained limited in expressiveness.
+The next step consisted in replacing such approximators with \gls{nn}, which would soon reshape the field.
 
 Figure~\ref{fig:evolution_reinforcement_learning_classical} provides a timeline of the key milestones that shaped the development of reinforcement learning prior to its fusion with deep learning.
 
@@ -71,11 +72,16 @@ Figure~\ref{fig:evolution_reinforcement_learning_classical} provides a timeline 
 \input{figures/reinforcement_learning/evolution_deep_reinforcement_learning.tex}
 
 The introduction of \gls{dl} into \gls{rl} marked a major turning point in the field.
-A series of algorithms significantly improved scalability.
-\gls{ddpg} extended actor–critic methods to continuous action spaces \cite{lillicrap2015continuouscontroldeepreinforcement}.
-\gls{ppo} later became a standard algorithm in \gls{rl} due to its simplicity, stability, and ability to perform in both continuous and discrete action spaces \cite{schulman2017proximalpolicyoptimizationalgorithms}.
+This shift was initiated by \gls{dqn}, which used a deep \gls{nn} to approximate action-value functions at scale.
+This made it possible to train an agent to play Atari games at a human level directly from raw pixels \cite{mnih2013playingatarideepreinforcement}.
+The use of deep \gls{nn} provided \gls{rl} with a powerful and flexible function approximator.
+This removed an important practical limitation by making it possible to efficiently represent the complex functions required by \gls{rl}.
 
-These advances established a practical foundation for large-scale policy optimization.
+A series of subsequent algorithms further extended and improved this approach.
+\gls{ddpg} extended actor–critic methods to continuous action spaces \cite{lillicrap2015continuouscontroldeepreinforcement}.
+\gls{ppo} later became a widely adopted algorithm in \gls{rl} due to its simplicity, stability, and ability to handle both continuous and discrete action spaces \cite{schulman2017proximalpolicyoptimizationalgorithms}.
+
+These advances established a foundation for large-scale policy optimization.
 Notably, AlphaZero demonstrated that the combination of deep \gls{nn}, \gls{rl}, and tree search could reach superhuman performance in the game of Go \cite{silver2017masteringchessshogiselfplay}.  
 This success was later extended to even more complex real-time strategy environments such as StarCraft II, where agents must handle long-term planning, partial observability, and large action spaces \cite{samvelyan2019starcraftmultiagentchallenge}.  
 Similarly, in Dota 2, large-scale multi-agent \gls{rl} systems such as OpenAI Five showed that self-play combined with deep policy optimization can achieve professional-level performance in highly dynamic and stochastic environments \cite{openai2019dota2largescale}.
