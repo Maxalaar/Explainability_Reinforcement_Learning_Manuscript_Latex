@@ -2,9 +2,8 @@
 \label{sec:rl_conclusion}
 
 This chapter has provided an introduction to the fundamental principles of \gls{rl}.
-As in Chapter~\ref{chap:deep_learning}, only the essential concepts required to understand the deep \gls{rl} framework have been presented.
-The broader field of \gls{rl} encompasses many additional methods and extensions.
-
+Only the essential concepts required to understand the \gls{rl} framework have been presented.
+% The broader field of \gls{rl} encompasses many additional methods and extensions.
 Despite this limited scope, the two defining steps of \gls{rl} can already be observed in its simple learning procedure.
 The first step consists of estimating the reward that can be obtained from the interaction between the agent and its environment in a given situation.
 The second step uses this estimate to improve the current policy.
@@ -13,17 +12,16 @@ Learning therefore results from the repeated alternation of these two basic oper
 This simple iterative structure brings \gls{rl} conceptually close to \gls{dl}.
 In both paradigms, simple operations can lead to complex behaviors when repeated at scale.
 Their combination is particularly powerful.
-\gls{rl} provides a general framework for learning through interaction, where a wide range of decision-making problems can be formulated as \gls{mdp}.
-\gls{dl}, in turn, provides flexible function approximators capable of representing the value functions and policies.
-Together, these two paradigms form the foundation of deep \gls{rl}.
-The resulting combination enables agents to learn complex decision-making behaviors directly from interaction with their environment.
+A wide range of decision-making problems can be formulated as \gls{mdp}, allowing \gls{rl} to be applied to a broad range of tasks.
+\gls{dl}, in turn, provides flexible function approximators capable of representing the value functions and policies required to solve these tasks.
+Together, these two paradigms form the basis of deep \gls{rl}, which has achieved remarkable success across a wide range of challenging tasks.
 
-Originally inspired by biological learning processes, \gls{rl} has progressively evolved toward increasingly close parallels with this analogy.
+From a broader perspective, the evolution of \gls{rl} has brought the field closer than ever to its initial biological inspiration.
 In modern implementations, agents progressively improve their behavior through trial and error directly based on experience.
 Moreover, their decision-making capabilities are represented by neural architectures that resemble their biological counterparts.
 It is therefore not surprising that \gls{rl} has become one of the core paradigms for pursuing artificial general intelligence \cite{silver2021reward}.
 
 As the capabilities of \gls{rl} continue to improve, a new challenge becomes increasingly important.
 The ability to learn complex behaviors with limited human intervention can make the resulting agent's strategy difficult to understand.
-To address this challenge, a parallel research direction has emerged.
-This is the subject of the next chapter, which focuses on explainability in the context of \gls{rl}.
+To address this challenge, a parallel research direction has emerged, known as \gls{xrl}.
+This field is the subject of the next chapter.
