@@ -152,7 +152,7 @@ This parameter controls the time horizon of the agent's objective.
 When \(\gamma\) is close to \(0\), the agent focuses almost exclusively on immediate rewards, leading to short-sighted behavior.  
 As \(\gamma\) increases toward \(1\), future rewards gain more weight, and the agent adopts a more far-sighted strategy.  
 In theory, since the goal is to maximize long-term cumulative reward, the discount factor would ideally be set to \(\gamma = 1\).
-In practice, however, \(\gamma\) is often chosen slightly below \(1\) (e.g., \(0.99\)) to stabilize learning, and to reflect the fact that distant future rewards are inherently more uncertain.
+In practice, \(\gamma\) is often chosen slightly below \(1\) (e.g., \(0.99\)) to stabilize learning, and to reflect the fact that distant future rewards are inherently more uncertain.
 
 The return also admits a recursive form, which is central to the dynamic programming and \gls{rl} algorithms presented later:
 \[
