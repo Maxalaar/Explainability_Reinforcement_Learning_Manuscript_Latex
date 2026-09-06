@@ -1,0 +1,15 @@
+\section{Conclusion}
+\label{sec:experiments_conclusion}
+
+The experiments reported in this chapter apply \gls{car} and its metrics to five Atari environments.
+The surrogate policies reproduce the behavior of the initial policies with an average \BehaviorReconstructionName of $0.94 \pm 0.02$.
+The latent clusterings are stable across independently trained surrogate policies, with a \ClusteringUniversalityName of about $0.5$ from three clusters onward, and they are largely independent of the observation and action spaces, with an average \AbstractionScoreName of $0.99 \pm 0.00$.
+Together, these results provide empirical support for the \RepresentationConvergenceHypothesisName and, more broadly, for the hypothesis-driven approach underlying \gls{car}.
+
+Several methodological choices have not yet been evaluated.
+These include the \gls{nn} architecture, the layer selected for analysis, the distance used to compare embeddings, and the clustering algorithm.
+Their impact should be studied jointly to determine how much the discovered \gls{cs} depends on the analysis procedure rather than on the policy itself.
+
+The evaluation is also limited in scope.
+It considers only five Atari games, and the semantic labels attached to the clusters in Figure~\ref{fig:semantic_granularity} were assigned by hand, which is time-consuming and subjective.
+Extending the study to more diverse environments and developing human-centered evaluation protocols would strengthen the validity of the resulting explanations.

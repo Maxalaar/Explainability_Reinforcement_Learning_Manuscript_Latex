@@ -1,7 +1,7 @@
 \section{Results}
-\label{sec:clustering_agent_representation_results}
+\label{sec:experiments_results}
 
-This section quantitatively evaluates this behavior across several Atari benchmark environments \cite{Bellemare_2013}, which are widely used in \gls{rl} research \cite{mnih2013playingatarideepreinforcement, schulman2017proximalpolicyoptimizationalgorithms, zahavy2017graying}.
+This section quantitatively evaluates \gls{car} across several Atari benchmark environments \cite{Bellemare_2013}, which are widely used in \gls{rl} research \cite{mnih2013playingatarideepreinforcement, schulman2017proximalpolicyoptimizationalgorithms, zahavy2017graying}.
 The environments considered in this study are:
 
 \begin{itemize}
@@ -52,3 +52,9 @@ With a larger number of clusters, the analysis captures more fine-grained tactic
 
 Both perspectives are valid, depending on whether the goal is to study strategic or tactical behaviors.
 Similar interpretable structures can be observed across all evaluated environments.
+
+% TODO: extend with the additional experimental material planned for this chapter:
+% - ablation studies: analysed layer, clustering algorithm (K-means, GMM, deep embedding clustering),
+%   distance measure, with/without action loss
+% - training diagnostics: loss and reward curves
+% - deeper qualitative analysis of the discovered clusters
