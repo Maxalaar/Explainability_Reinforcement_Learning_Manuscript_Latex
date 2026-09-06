@@ -11,6 +11,7 @@ The second stage clusters their \gls{lr} in order to identify the underlying con
 This section is organized as follows.
 In the first subsection, we justify the use of multiple surrogate policies in order to study the stability of representations.
 In the second subsection, we detail how these surrogate policies are trained so as to best match the original policy.
+In the third subsection, we describe how their \gls{lr} are clustered to extract the \gls{cs}.
 
 \subsection{Multiple surrogate policies}
 
@@ -37,12 +38,6 @@ Their role is not to simplify the decision process but to provide multiple indep
 
 \input{figures/clustering_agent_representation/surrogate_policy_architecture.tex}
 
-\input{figures/clustering_agent_representation/illustration_method.tex}
-
-\input{algorithms/clustering_agent_representation/car.tex}
-
-\input{figures/clustering_agent_representation/space_invaders_projection.tex}
-
 Throughout the remainder of this chapter, the initial policy we aim to explain is denoted as $\textcolor{mygreen}{\pi}$.
 This initial policy is obtained without imposing any constraints on its origin.
 It may result from classical or deep reinforcement learning \cite{sutton2018reinforcement}, alpha-beta algorithm \cite{knuth1975analysis}, or even from demonstrations provided by humans \cite{pmlr-v9-ross10a}.
@@ -54,7 +49,7 @@ For any observation $O$, the distribution over the action space produced by $\te
 The surrogate policy $\textcolor{myred}{\pi'}$ is implemented as a \gls{nn} parameterized by $\Theta$.
 This network is composed of two components: an encoder and a decoder, respectively highlighted by the blue and black dashed rectangles in Figure~\ref{fig:surrogate_policy_architecture}.
 The encoder $\textcolor{myblue}{f_{enc}}$ maps the observation $O$ to the embedding.
-The decoder, which reconstructs the action distribution parameters from the embedding.
+The decoder reconstructs the parameters of the action distribution from this embedding.
 
 To train $\textcolor{myred}{\pi'}$ to accurately replicate the action distribution, we define a loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
 This loss, defined in Equation~\eqref{eq:car_loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.
@@ -71,7 +66,15 @@ Once training is complete, this loss ensures that $\textcolor{myred}{\pi'}$ clos
     \label{eq:car_loss}
 \end{align}
 
-Once training is complete, we can identify clusters within the \gls{ls}.
+\subsection{Cluster extraction}
+
+\input{figures/clustering_agent_representation/illustration_method.tex}
+
+\input{algorithms/clustering_agent_representation/car.tex}
+
+\input{figures/clustering_agent_representation/space_invaders_projection.tex}
+
+Once the surrogate policies are trained, we identify clusters within their \gls{ls}.
 To do so, we denote by $\textcolor{myblue}{\mathcal{E}}$ the set of embeddings obtained by applying $\textcolor{myblue}{f_{enc}}$ to a subset of observations $\mathbb{O} \subseteq \mathcal{O}$.
 On the set $\textcolor{myblue}{\mathcal{E}}$, we use a clustering function $f_{\mathrm{clust}}$ to partition the point cloud of embedded observations into distinct clusters.
 Each observation is assigned a cluster label based on its proximity in the \gls{ls}, resulting in the clustering $\mathcal{C}$.
