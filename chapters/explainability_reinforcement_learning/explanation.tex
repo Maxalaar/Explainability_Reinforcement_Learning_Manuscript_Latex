@@ -47,18 +47,6 @@ An explanation is any interpretable information that enables an observer to refi
 An explainability method is a transformation process that produces an explanation from the object being explained.
 \end{definition}
 
-This definition of explanation provides the foundation for the approach to explainability adopted throughout this manuscript.
-Explainability is not regarded as a binary property but as a continuum that evolves with the development of scientific knowledge \cite{Siegel_Craver_2024, zednik2019solving}.
-
-Accordingly, the opacity of a system should be interpreted as an epistemic limitation reflecting the current state of knowledge rather than as an intrinsic property of the system itself.
-This view is consistent with the methodological commitments of scientific inquiry.
-Scientific progress is driven by the continuous refinement of theories and analytical methods that provide progressively deeper accounts of observed phenomena.
-Consequently, explainability should be regarded as a matter of degree, increasing as the understanding of a system improves.
-
-This quantitative perspective allows us to express an intuitive idea: not all explanations provide the same level of value \cite{doshivelez2017rigorous}.
-The effectiveness of an explanation depends on its ability to improve the observer's understanding of the system.
-For example, describing a marginal aspect of a system is different from correcting an observer's misunderstanding of a key mechanism.
-
 Figure~\ref{fig:explanation_process_illustration} summarizes this whole explanation process, from the object of the explanation to the mental model refined by the observer, as a chain of three information structures, depicted as boxes and connected by arrows denoting a transformation of information:
 \begin{enumerate}
     \item[(1)] The object of the explanation, that is, the system the observer seeks to understand.
@@ -70,6 +58,13 @@ A brace spanning boxes~(2) and~(3) indicates that this second half of the proces
 
 \input{figures/explainability_reinforcement_learning/explanation_process_illustration.tex}
 
+This definition of explanation establishes the approach to explainability adopted throughout this manuscript.
+Under this definition, explainability is regarded as a continuum that evolves as knowledge develops \cite{Siegel_Craver_2024, zednik2019solving}.
+
+This quantitative perspective highlights that not all explanations provide the same level of value \cite{doshivelez2017rigorous}.
+The effectiveness of an explanation depends on its ability to improve the observer's understanding of the system.
+For example, describing a marginal aspect of a system is different from correcting an observer's misunderstanding of a key mechanism.
+
 \subsection{Explainable Artificial Intelligence}
 \label{subsec:explainable_artificial_intelligence}
 
@@ -80,27 +75,24 @@ In these architectures, information is represented in a distributed manner acros
 Unlike symbolic approaches, individual components of \gls{nn} cannot be directly associated with human concepts.
 From this starting point, we identify two types of approaches:
 \begin{itemize}
-    \item \textbf{Substitutive explainability:} In this approach, the underlying assumption is that there is nothing to explain within a \gls{nn}.
+    \item \textbf{Substitutive explainability:} In this approach, the assumption is that there is nothing to explain within a \gls{nn}.
     There is no semantic meaning associated with each computational component, and therefore nothing to interpret.
     This corresponds to the ``black box'' view of \gls{nn}.
     Under this assumption, \gls{xai} consists of replacing as much of the \gls{dl} system as possible with alternative \gls{ai} methods \cite{rudin2019stop}.
 
-    \item \textbf{Intrinsic explainability:} In this approach, it is argued that \gls{nn} inherently contain mechanisms that can be explained.
+    \item \textbf{Intrinsic explainability:} In this approach, it is argued that \gls{nn} contain mechanisms that can be explained.
     The limitation is considered to lie not in the networks themselves, but in the absence of adequate tools to analyze their functioning \cite{olah2020zoom}.
 \end{itemize}
 
 This manuscript considers methods from both approaches in order to provide a comprehensive overview of the \gls{xai} field.
-The substitutive view has produced valuable results, particularly when interpretability is prioritized over the raw predictive performance of \gls{dl} models \cite{rudin2019stop}.
-However, this manuscript adopts \MechanisticHypothesisName \cite{Siegel_Craver_2024, zednik2019solving}, stated below.
+Although both approaches have produced convincing results, this manuscript primarily adopts the perspective of the \MechanisticHypothesisName \cite{Siegel_Craver_2024, zednik2019solving}.
+This perspective is more closely aligned with the definition of explainability adopted in this manuscript, which considers explainability as a continuum that evolves with the development of knowledge.
 
 \begin{hypothesis}{Mechanistic Hypothesis}{mechanistic}
 Every \gls{ai} system results from a sequence of causal computations.
 Because the rules governing these interactions are mechanical, the behavior of the system can be explained.
 If an \gls{ai} system cannot be explained, this reflects a limitation of knowledge rather than an intrinsic property of the system.
 \end{hypothesis}
-
-Under this hypothesis, the opacity of an \gls{ai} system reflects a limitation of current knowledge and analytical tools rather than an intrinsic property of the system, so the ``black box'' framing of \gls{nn} is not adopted as an ontological claim.
-As a consequence, the perspective adopted throughout this manuscript is that of intrinsic explainability.
 
 \subsection{Explainability Method in XAI}
 \label{subsec:explainability_method}
