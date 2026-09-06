@@ -11,28 +11,29 @@ Although these computations may be complex, they remain explainable through the 
 The \ConceptHypothesisName states that \gls{nn} achieve generalization by learning concepts.
 During optimization, the network progressively organizes its \gls{ls} into representations that capture the information required to solve the task.
 
-Following these hypotheses, it becomes possible to explain the \gls{nn}'s process by understanding the organization of its \gls{ls}.
+Following these two hypotheses, it becomes possible to explain a \gls{nn} by studying the organization of its \gls{ls}.
 This family of approaches is referred to as mechanistic interpretability.
-In mechanistic interpretability, universality refers to the consistency with which a concept is recovered across different models or extraction processes \cite{templeton2024scaling}.
+Since the \gls{car} method is grounded in these two hypotheses, it falls within this field of research.
+More specifically, \gls{car} focuses on a specific aspect of mechanistic interpretability known as universality.
+Universality refers to the consistency with which a concept is recovered across different models trained on the same task \cite{templeton2024scaling}.
 
 To provide a explanation for this phenomenon, we developed the \RepresentationConvergenceHypothesisName.
 This hypothesis states that, when \gls{nn} are trained to solve the same task, a set of concepts should systematically emerge because these concepts provide a effective way of representing the problem.
 As a result, independently trained models should develop similar concepts in their learned representations.
 
 \begin{hypothesis}{Representation Convergence Hypothesis}{convergence}
-For a given task, \gls{nn} tend to converge toward a privileged \gls{cs} because it provides an efficient representation for solving the task.
+For a given task, independently trained \gls{nn} tend to develop similar sets of concepts because these concepts provide an efficient representation for solving the task.
 \end{hypothesis}
+
+The \gls{car} method is designed to investigate the \RepresentationConvergenceHypothesisName by assessing whether it can consistently recover similar concepts across independently trained models.
+The hypothesis therefore serves both as the foundation of the method and as the phenomenon it aims to investigate.
+If \gls{car} consistently recovers the same set of concepts across different training runs, this set is more likely to reflect invariant properties of the task than model-specific artifacts.
+Conversely, the absence of representation convergence would provide evidence against the hypothesis and would also question the validity of the \gls{car} approach.
 
 It is important to clarify that this hypothesis does not imply convergence at the parameter level.
 Independently trained models are expected to converge toward different sets of weights.
 The proposed hypothesis concerns a abstract level of representation.
 We assume that the conceptual organization induced by their \gls{lr} converges toward an equivalent \gls{cs}, even though the numerical implementation of the networks differ.
-
-The \gls{car} method is designed to investigate this hypothesis by searching for concepts that are consistently recovered across independently trained models.
-In this sense, the hypothesis serves both as the foundation of the method and as the phenomenon that the method aims to investigate.
-If independently trained models develop common concepts for a given task, \gls{car} should be able to recover these concepts consistently across models.
-Conversely, the absence of such convergence would provide evidence against the hypothesis.
-This also provides a stronger justification for studying these concepts, as concepts consistently recovered across different training runs are more likely to reflect properties of the task than model-specific artifacts.
 
 The remainder of this chapter develops the methodology used to investigate this hypothesis.
 The \ClusteringUniversalityName metric, introduced in Subsection~\ref{subsec:clustering_universality}, provides a quantitative measure of the convergence observed between the concepts identified in independently trained models.

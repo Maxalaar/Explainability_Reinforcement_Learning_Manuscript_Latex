@@ -1,4 +1,4 @@
-\section{Method}
+\section{Latent Clustering of Surrogate Policies}
 \label{sec:clustering_agent_representation_method}
 
 Following the work of \cite{zahavy2017graying}, we analyze the \gls{ls} through clustering techniques, placing our approach within the broader field of Deep Clustering.
@@ -25,8 +25,8 @@ Even if they achieve comparable performance, they may solve the task using diffe
 This makes it difficult to determine whether differences in the \gls{ls} result from different representations of the same strategy or from differences in the learned strategies themselves.
 
 To overcome this limitation, we consider an already trained initial policy.
-This policy is then imitated using imitation learning \cite{pmlr-v15-ross11a}.
-In imitation learning, several surrogate \gls{nn} are independently trained in a supervised manner to reproduce the behavior of the initial policy.
+This policy is then used as a target for imitation learning \cite{pmlr-v15-ross11a}.
+In this process, several surrogate \gls{nn} are independently trained in a supervised manner to reproduce its behavior.
 This makes it possible to investigate whether equivalent policies also exhibit equivalent conceptual organizations.
 
 It is important to emphasize that the use of surrogate policies does not make \gls{car} a surrogate explainability method, as defined in Subsection~\ref{subsec:explainable_artificial_intelligence}.
