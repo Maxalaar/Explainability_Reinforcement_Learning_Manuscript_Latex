@@ -74,16 +74,50 @@ Once training is complete, this loss ensures that $\textcolor{myred}{\pi'}$ clos
 
 \input{figures/clustering_agent_representation/space_invaders_projection.tex}
 
-Once the surrogate policies are trained, we identify clusters within their \gls{ls}.
-To do so, we denote by $\textcolor{myblue}{\mathcal{E}}$ the set of embeddings obtained by applying $\textcolor{myblue}{f_{enc}}$ to a subset of observations $\mathbb{O} \subseteq \mathcal{O}$.
-On the set $\textcolor{myblue}{\mathcal{E}}$, we use a clustering function $f_{\mathrm{clust}}$ to partition the point cloud of embedded observations into distinct clusters.
-Each observation is assigned a cluster label based on its proximity in the \gls{ls}, resulting in the clustering $\mathcal{C}$.
+Once the surrogate policies are trained, their encoders are used to generate a point cloud from a set of observations.
+This point cloud provides a sample of the \gls{ls} to be analyzed.
+The proposed \gls{car} method adopts the deep clustering approach introduced in Section~\ref{sec:clustering}.
+Under this approach, conceptually similar observations are expected to produce nearby \gls{lr}.
+A \gls{cs} can therefore be viewed as a region of the \gls{ls} containing related \gls{lr}.
+To identify these regions, a clustering algorithm is applied to the point cloud.
 
+The clustering is performed independently for each of the $n$ surrogate policies.
+For a surrogate policy $\SurrogatePolicy{i}$, we denote by $\textcolor{myblue}{\mathcal{E}_{i}}$ the set of embeddings obtained by applying its encoder $\textcolor{myblue}{f_{enc_{i}}}$ to a subset of observations $\mathbb{O} \subseteq \mathcal{O}$.
+A clustering function $f_{\mathrm{clust}}$ partitions the point cloud $\textcolor{myblue}{\mathcal{E}_{i}}$ into groups of nearby \gls{lr}, assigning each observation a cluster label and yielding the partition $\mathcal{C}_{i}$.
+The same observation set $\mathbb{O}$ is used for every policy, so that the partitions $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$ are defined over the same observations and can be compared.
+This comparison is the basis of the evaluation introduced in the following section.
 Figure~\ref{fig:illustration_method} and Algorithm~\ref{alg:car} summarize the complete \gls{car} procedure.
-Figure~\ref{fig:space_invaders_projection} illustrates the analysis of a latent space obtained by applying the \gls{car} method.
-The point cloud shows a two-dimensional projection of the \gls{ls} of a surrogate policy trained on Space Invaders.
-The two-dimensional projection is used only for visualization, while the clusters are computed in the original high-dimensional \gls{ls}.
-Colors indicate the resulting clusters and their corresponding observations.
-Each cluster corresponds to a distinct, human-interpretable stage of the game.
-The resulting organization suggests a correspondence between the position of observations in the \gls{ls} and the semantic properties of the corresponding game states.
-To objectively assess this correspondence we introduce a set of evaluation metrics detailed in the following section.
+
+Two choices govern this analysis without belonging to the clustering algorithm itself.
+The first is the layer at which the encoder is cut.
+Any hidden layer defines a \gls{ls}, and deeper layers produce more abstract \gls{lr}.
+\gls{car} does not assume that one layer is correct; it analyzes the \gls{ls} of whichever layer is selected.
+The second is the number of clusters.
+\gls{car} does not assume that a task admits a single correct number of concepts.
+This number instead sets the granularity at which the conceptual organization is examined.
+A small number reveals broad, strategic concepts, while a larger number reveals finer, tactical ones.
+The influence of both choices is studied in Chapter~\ref{chap:experiments}.
+
+Two choices govern this analysis without being part of the clustering algorithm itself.
+The first is the layer at which the encoder is cut.
+Each hidden layer defines a \gls{ls}, and \gls{car} does not assume that any particular layer provides the correct representation.
+Instead, it analyzes the \gls{ls} corresponding to the selected layer.
+The second choice is the number of clusters.
+\gls{car} does not assume that a task has a single correct number of concepts.
+Instead, this choice determines the granularity at which the conceptual organization is examined.
+The influence of both choices is studied in Chapter~\ref{chap:experiments}.
+
+Figure~\ref{fig:space_invaders_projection} shows the outcome of this procedure for a surrogate policy trained on Space Invaders, using five clusters.
+The point cloud is a two-dimensional projection used only for visualization.
+The clusters are computed in the original high-dimensional \gls{ls}.
+Each cluster gathers observations that correspond to a distinct, interpretable stage of a game:
+\begin{itemize}
+    \item \textbf{Cluster 1:} The start of a game, with few or no invaders neutralized.
+    \item \textbf{Cluster 2:} The right-hand group of invaders eliminated.
+    \item \textbf{Cluster 3:} The pursuit of the bonus saucer.
+    \item \textbf{Cluster 4:} The end of a game, with a few fast invaders close to the ground.
+    \item \textbf{Cluster 5:} The middle of a game, with the invaders descending but already thinned out.
+\end{itemize}
+
+The position of an observation in the \gls{ls} thus reflects the stage of the game it belongs to, suggesting a correspondence between the geometry of the \gls{ls} and the semantic properties of game states.
+To assess this correspondence objectively, we introduce a set of evaluation metrics in the following section.
