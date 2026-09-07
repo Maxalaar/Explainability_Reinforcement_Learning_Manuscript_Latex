@@ -25,12 +25,18 @@ If $b$ accurately captures the key decision patterns of $a$, understanding $b$ p
 In our setting, this means that generating explanations for $\SurrogatePolicy{}$ that faithfully reproduce $\OriginalPolicy$ amounts to explaining $\OriginalPolicy$ directly.
 To verify that $\SurrogatePolicy{}$ is indeed a faithful copy, we introduce the \BehaviorReconstructionName metric.
 
-This metric is computed by comparing the cumulative rewards obtained by the original policy $\OriginalPolicy$ and the surrogate policies $\SurrogatePolicy{}$ over $m$ evaluation episodes.
-The behavior reconstruction metric is then defined as:
+This metric compares the returns obtained by the original policy $\OriginalPolicy$ and the surrogate policies $\SurrogatePolicy{}$ over a set of evaluation episodes.
+We use the definition of return introduced in Section~\ref{subsec:value_functions}, where $g(t,\gamma)$ denotes the discounted sum of rewards collected along a trajectory $t$.
+Here, the return is computed over complete episodes with $\gamma=1$, so $g$ corresponds to the total reward collected during the episode.
+Each policy is evaluated over $m$ episodes.
+We denote by $g_{\OriginalPolicy}^{i}$ the return obtained by the original policy in episode $i$, and by $g_{\SurrogatePolicy{j}}^{k}$ the return obtained by surrogate policy $j$ in episode $k$, with $i,k\in{1,\dots,m}$ and $j\in{1,\dots,n}$.
+The \BehaviorReconstructionName{} is then defined as the mean return of the surrogate policies normalized by the mean return of the original policy:
 
 \begin{align}
     \text{\BehaviorReconstructionName} = \frac{1}{n \sum_{i=1}^{m} g_{\OriginalPolicy}^{i}} \sum_{j=1}^{n} \sum_{k=1}^{m} g_{\SurrogatePolicy{j}}^{k}
 \end{align}
+
+where $n$ is the number of surrogate policies.
 
 In imitation learning, it is unlikely to expect the surrogate policy $\SurrogatePolicy{}$ to outperform the initial policy $\OriginalPolicy$ it aims to approximate through supervised learning \cite{pmlr-v9-ross10a}.
 Consequently this metric ranges in $[0,1]$.

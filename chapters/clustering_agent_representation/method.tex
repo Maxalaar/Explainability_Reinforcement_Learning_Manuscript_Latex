@@ -5,16 +5,19 @@ Following the work of \cite{zahavy2017graying}, we analyze the \gls{ls} through 
 This design choice is motivated by our rejection of the \SuperpositionHypothesisName and, more generally, of any view that assumes a linearly organized \gls{cs}, as discussed in Section~\ref{sec:clustering}.
 
 The \gls{car} methodology is composed of two main stages.
-The first stage trains multiple independent \gls{nn}s, called surrogate policies, which implement the same decision policy.
-The second stage clusters their \gls{lr}s in order to identify the underlying conceptual organization.
+The first stage trains multiple independent \gls{nn}, called surrogate policies, which implement the same decision policy.
+The second stage clusters their \gls{lr} in order to identify the underlying conceptual organization.
 Once these two stages have been completed, the resulting clustering can be analyzed from two complementary perspectives.
 First, the consistency of the resulting clusters across independent training runs can be assessed to determine whether the identified clusters are stable.
 Second, the semantic content of the clusters can be examined to determine whether they correspond to meaningful concepts.
+Figure~\ref{fig:illustration_method} provides a visual overview of the two stages, from the imitation of the initial policy to the clustering of the surrogate representations.
 
-This section is organized as follows.
-In the first subsection, we justify the use of multiple surrogate policies in order to study the stability of representations.
-In the second subsection, we detail how these surrogate policies are trained so as to best match the original policy.
-In the third subsection, we describe how their \gls{lr} are clustered to extract the \gls{cs}.
+\input{figures/clustering_agent_representation/illustration_method.tex}
+
+This section is organized into three parts.
+The first explains why multiple surrogate policies are used to study the stability of the representations.
+The second describes how these policies are trained to match the original policy as closely as possible.
+The third presents how their \gls{lr} are clustered to identify the \gls{cs}.
 
 \subsection{Multiple surrogate policies}
 
@@ -83,25 +86,26 @@ For a surrogate policy $\SurrogatePolicy{i}$, we denote by $\textcolor{myblue}{\
 A clustering function $f_{\mathrm{clust}}$ partitions the point cloud $\textcolor{myblue}{\mathcal{E}_{i}}$ into groups of nearby \gls{lr}, assigning each observation a cluster label and yielding the partition $\mathcal{C}_{i}$.
 The same observation set $\mathbb{O}$ is used for every policy, so that the partitions $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$ are defined over the same observations and can be compared.
 This comparison is the basis of the evaluation introduced in the following section.
-Figure~\ref{fig:illustration_method} and Algorithm~\ref{alg:car} summarize the complete \gls{car} procedure.
-
-\input{figures/clustering_agent_representation/illustration_method.tex}
+Algorithm~\ref{alg:car} states the complete \gls{car} procedure.
 
 \input{algorithms/clustering_agent_representation/car.tex}
 
-Two choices govern this analysis without belonging to the clustering algorithm itself.
-The first is the layer at which the encoder is cut.
-Any hidden layer defines a \gls{ls}, and deeper layers produce more abstract \gls{lr}.
-\gls{car} does not assume that one layer is correct; it analyzes the \gls{ls} of whichever layer is selected.
+Two choices govern this analysis without being part of the clustering algorithm itself.
+The first is the choice of layer used to extract the representations.
+Each hidden layer defines its own \gls{ls}, reflecting the information represented at that stage of the network.
+\gls{car} can therefore be applied to the \gls{lr} extracted from any layer.
+This allows the conceptual organization of the policy to be examined at different levels of the network.
+
 The second is the number of clusters.
 \gls{car} does not assume that a task admits a single correct number of concepts.
-This number instead sets the granularity at which the conceptual organization is examined.
+This choice instead determines the granularity at which the conceptual organization is examined.
 A small number reveals broad, strategic concepts, while a larger number reveals finer, tactical ones.
 The influence of both choices is studied in Chapter~\ref{chap:experiments}.
 
+
 Figure~\ref{fig:space_invaders_projection} shows the outcome of this procedure for a surrogate policy trained on Space Invaders, using five clusters.
-The point cloud is a two-dimensional projection used only for visualization.
 The clusters are computed in the original high-dimensional \gls{ls}.
+The point cloud is a two-dimensional projection used only for visualization.
 Each cluster gathers observations that correspond to a distinct, interpretable stage of a game:
 \begin{itemize}
     \item \textbf{Cluster 1:} The start of a game, with few or no invaders neutralized.
@@ -114,4 +118,13 @@ Each cluster gathers observations that correspond to a distinct, interpretable s
 \input{figures/clustering_agent_representation/space_invaders_projection.tex}
 
 The position of an observation in the \gls{ls} thus reflects the stage of the environment it belongs to, suggesting a correspondence between the geometry of the \gls{ls} and the semantic properties of environment states.
-To assess this correspondence objectively, we introduce a set of evaluation metrics in the following section.
+
+This example illustrates what \gls{car} is expected to produce, but it relies on the visual inspection of a single surrogate policy, which is precisely the type of evidence whose limitations motivated this work.
+
+Three aspects must therefore be evaluated before such an analysis can be trusted.
+First, the surrogate policy must faithfully reproduce the original policy so that its explanations remain relevant to the target policy.
+Second, the recovered conceptual organization must be consistent across independently trained surrogate policies.
+Finally, the clusters must capture genuine abstractions rather than simply reproducing structure already present in the observations or action distributions.
+
+The following section introduces one evaluation metric for each of these aspects and details how it is computed.
+
