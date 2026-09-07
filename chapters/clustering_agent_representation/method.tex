@@ -52,7 +52,7 @@ For any observation $O$, the distribution over the action space produced by $\te
 The surrogate policy $\textcolor{myred}{\pi'}$ is implemented as a \gls{nn} parameterized by $\Theta$.
 This network is composed of two components: an encoder and a decoder, respectively highlighted by the blue and black dashed rectangles in Figure~\ref{fig:surrogate_policy_architecture}.
 The encoder $\textcolor{myblue}{f_{enc}}$ maps the observation $O$ to the embedding.
-The decoder reconstructs the parameters of the action distribution from this embedding.
+The decoder $f_{dec}$ reconstructs the parameters of the action distribution from this embedding.
 
 To train $\textcolor{myred}{\pi'}$ to accurately replicate the action distribution, we define a loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
 This loss, defined in Equation~\eqref{eq:car_loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.

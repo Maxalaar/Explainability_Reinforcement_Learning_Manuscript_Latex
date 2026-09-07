@@ -42,7 +42,7 @@
 
     % Decoder box: encloses the embedding and the layers up to the output
     \node[draw, dashed, rounded corners=0.15cm, color=black, fit=(N3-1)(N3-6)(N5-1), inner sep=0.15cm] (decoder_box) {};
-    \node[align=center] (decoder_label) at ($(decoder_box.north) + (0, 0.5cm)$) {Decoder};
+    \node[align=center] (decoder_label) at ($(decoder_box.north) + (0, 0.5cm)$) {\scalebox{1.5}{$f_{dec}$}};
 
     % Observation
     \node[minimum height=1cm, minimum width=1cm] (observation_1) at ($(N1-1) + (-1.75cm, 0)$) {\scalebox{1.25}{$o_1$}};
