@@ -5,8 +5,11 @@ Following the work of \cite{zahavy2017graying}, we analyze the \gls{ls} through 
 This design choice is motivated by our rejection of the \SuperpositionHypothesisName and, more generally, of any view that assumes a linearly organized \gls{cs}, as discussed in Section~\ref{sec:clustering}.
 
 The \gls{car} methodology is composed of two main stages.
-The first stage trains multiple independent \gls{nn}, called surrogate policies, which implement the same decision policy.
-The second stage clusters their \gls{lr} in order to identify the underlying conceptual organization.
+The first stage trains multiple independent \gls{nn}s, called surrogate policies, which implement the same decision policy.
+The second stage clusters their \gls{lr}s in order to identify the underlying conceptual organization.
+Once these two stages have been completed, the resulting clustering can be analyzed from two complementary perspectives.
+First, the consistency of the resulting clusters across independent training runs can be assessed to determine whether the identified clusters are stable.
+Second, the semantic content of the clusters can be examined to determine whether they correspond to meaningful concepts.
 
 This section is organized as follows.
 In the first subsection, we justify the use of multiple surrogate policies in order to study the stability of representations.
@@ -119,5 +122,5 @@ Each cluster gathers observations that correspond to a distinct, interpretable s
     \item \textbf{Cluster 5:} The middle of a game, with the invaders descending but already thinned out.
 \end{itemize}
 
-The position of an observation in the \gls{ls} thus reflects the stage of the game it belongs to, suggesting a correspondence between the geometry of the \gls{ls} and the semantic properties of game states.
+The position of an observation in the \gls{ls} thus reflects the stage of the environment it belongs to, suggesting a correspondence between the geometry of the \gls{ls} and the semantic properties of environment states.
 To assess this correspondence objectively, we introduce a set of evaluation metrics in the following section.
