@@ -39,8 +39,6 @@ Their role is not to simplify the decision process but to provide multiple indep
 
 \subsection{Training surrogate policies}
 
-\input{figures/clustering_agent_representation/surrogate_policy_architecture.tex}
-
 Throughout the remainder of this chapter, the initial policy we aim to explain is denoted as $\textcolor{mygreen}{\pi}$.
 This initial policy is obtained without imposing any constraints on its origin.
 It may result from classical or deep reinforcement learning \cite{sutton2018reinforcement}, alpha-beta algorithm \cite{knuth1975analysis}, or even from demonstrations provided by humans \cite{pmlr-v9-ross10a}.
@@ -53,6 +51,8 @@ The surrogate policy $\textcolor{myred}{\pi'}$ is implemented as a \gls{nn} para
 This network is composed of two components: an encoder and a decoder, respectively highlighted by the blue and black dashed rectangles in Figure~\ref{fig:surrogate_policy_architecture}.
 The encoder $\textcolor{myblue}{f_{enc}}$ maps the observation $O$ to the embedding.
 The decoder $f_{dec}$ reconstructs the parameters of the action distribution from this embedding.
+
+\input{figures/clustering_agent_representation/surrogate_policy_architecture.tex}
 
 To train $\textcolor{myred}{\pi'}$ to accurately replicate the action distribution, we define a loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
 This loss, defined in Equation~\eqref{eq:car_loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.
@@ -71,12 +71,6 @@ Once training is complete, this loss ensures that $\textcolor{myred}{\pi'}$ clos
 
 \subsection{Cluster extraction}
 
-\input{figures/clustering_agent_representation/illustration_method.tex}
-
-\input{algorithms/clustering_agent_representation/car.tex}
-
-\input{figures/clustering_agent_representation/space_invaders_projection.tex}
-
 Once the surrogate policies are trained, their encoders are used to generate a point cloud from a set of observations.
 This point cloud provides a sample of the \gls{ls} to be analyzed.
 The proposed \gls{car} method adopts the deep clustering approach introduced in Section~\ref{sec:clustering}.
@@ -91,6 +85,10 @@ The same observation set $\mathbb{O}$ is used for every policy, so that the part
 This comparison is the basis of the evaluation introduced in the following section.
 Figure~\ref{fig:illustration_method} and Algorithm~\ref{alg:car} summarize the complete \gls{car} procedure.
 
+\input{figures/clustering_agent_representation/illustration_method.tex}
+
+\input{algorithms/clustering_agent_representation/car.tex}
+
 Two choices govern this analysis without belonging to the clustering algorithm itself.
 The first is the layer at which the encoder is cut.
 Any hidden layer defines a \gls{ls}, and deeper layers produce more abstract \gls{lr}.
@@ -99,15 +97,6 @@ The second is the number of clusters.
 \gls{car} does not assume that a task admits a single correct number of concepts.
 This number instead sets the granularity at which the conceptual organization is examined.
 A small number reveals broad, strategic concepts, while a larger number reveals finer, tactical ones.
-The influence of both choices is studied in Chapter~\ref{chap:experiments}.
-
-Two choices govern this analysis without being part of the clustering algorithm itself.
-The first is the layer at which the encoder is cut.
-Each hidden layer defines a \gls{ls}, and \gls{car} does not assume that any particular layer provides the correct representation.
-Instead, it analyzes the \gls{ls} corresponding to the selected layer.
-The second choice is the number of clusters.
-\gls{car} does not assume that a task has a single correct number of concepts.
-Instead, this choice determines the granularity at which the conceptual organization is examined.
 The influence of both choices is studied in Chapter~\ref{chap:experiments}.
 
 Figure~\ref{fig:space_invaders_projection} shows the outcome of this procedure for a surrogate policy trained on Space Invaders, using five clusters.
@@ -121,6 +110,8 @@ Each cluster gathers observations that correspond to a distinct, interpretable s
     \item \textbf{Cluster 4:} The end of a game, with a few fast invaders close to the ground.
     \item \textbf{Cluster 5:} The middle of a game, with the invaders descending but already thinned out.
 \end{itemize}
+
+\input{figures/clustering_agent_representation/space_invaders_projection.tex}
 
 The position of an observation in the \gls{ls} thus reflects the stage of the environment it belongs to, suggesting a correspondence between the geometry of the \gls{ls} and the semantic properties of environment states.
 To assess this correspondence objectively, we introduce a set of evaluation metrics in the following section.
