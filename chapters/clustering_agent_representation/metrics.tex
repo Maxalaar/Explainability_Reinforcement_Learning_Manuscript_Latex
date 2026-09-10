@@ -13,30 +13,23 @@ The remainder of this section details the motivation for each metric and describ
 In the first subsection, we develop the \BehaviorReconstructionName{}.
 We then introduce the \gls{ari} measure, which serves as the foundation for the two other metrics introduced in the subsequent subsections, namely \ClusteringUniversalityName{} and \AbstractionScoreName{}.
 
-The following notations will be adopted for the rest of the manuscript:
-we consider $n$ surrogate policies, denoted as $\SurrogatePolicy{1}, \dots, \SurrogatePolicy{n}$, trained as described in Section~\ref{sec:clustering_agent_representation_method}. 
-Each surrogate policy is associated with a projection function $\textcolor{myblue}{f_{enc_{1}}}, \dots, \textcolor{myblue}{f_{enc_{n}}}$, which is applied to the set of observations $\mathbb{O}$, yielding embeddings $\textcolor{myblue}{\mathcal{E}_{1}}, \dots, \textcolor{myblue}{\mathcal{E}_{n}}$. 
-A clustering function is then applied to each embedding set, producing partitions $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$.
-
 \subsection{Behavior Reconstruction}
 
-We argue that explaining a function $b$ that closely approximates another function $a$ is essentially the same as explaining $a$.
-If $b$ accurately captures the key decision patterns of $a$, understanding $b$ provides meaningful insights into how $a$ works \cite{guidotti2018surveymethodsexplainingblack}.
-In our setting, this means that generating explanations for $\SurrogatePolicy{}$ that faithfully reproduce $\OriginalPolicy$ amounts to explaining $\OriginalPolicy$ directly.
-To verify that $\SurrogatePolicy{}$ is indeed a faithful copy, we introduce the \BehaviorReconstructionName metric.
+% We argue that explaining a function $b$ that closely approximates another function $a$ is essentially the same as explaining $a$.
+% If $b$ accurately captures the key decision patterns of $a$, understanding $b$ provides meaningful insights into how $a$ works \cite{guidotti2018surveymethodsexplainingblack}.
+% In our setting, this means that generating explanations for $\SurrogatePolicy{}$ that faithfully reproduce $\OriginalPolicy$ amounts to explaining $\OriginalPolicy$ directly.
 
+We introduce the \BehaviorReconstructionName metric to assess whether $\SurrogatePolicy{}$ faithfully reproduces the behavior of $\OriginalPolicy$.
 This metric compares the returns obtained by the original policy $\OriginalPolicy$ and the surrogate policies $\SurrogatePolicy{}$ over a set of evaluation episodes.
 We use the definition of return introduced in Section~\ref{subsec:value_functions}, where $g(t,\gamma)$ denotes the discounted sum of rewards collected along a trajectory $t$.
 Here, the return is computed over complete episodes with $\gamma=1$, so $g$ corresponds to the total reward collected during the episode.
 Each policy is evaluated over $m$ episodes.
-We denote by $g_{\OriginalPolicy}^{i}$ the return obtained by the original policy in episode $i$, and by $g_{\SurrogatePolicy{j}}^{k}$ the return obtained by surrogate policy $j$ in episode $k$, with $i,k\in{1,\dots,m}$ and $j\in{1,\dots,n}$.
+We denote by $g_{\OriginalPolicy}^{i}$ the return obtained by the original policy in episode $i$, and by $g_{\SurrogatePolicy{j}}^{i}$ the return obtained by surrogate policy $\SurrogatePolicy{j}$ in episode $i$.
 The \BehaviorReconstructionName{} is then defined as the mean return of the surrogate policies normalized by the mean return of the original policy:
 
 \begin{align}
     \text{\BehaviorReconstructionName} = \frac{1}{n \sum_{i=1}^{m} g_{\OriginalPolicy}^{i}} \sum_{j=1}^{n} \sum_{k=1}^{m} g_{\SurrogatePolicy{j}}^{k}
 \end{align}
-
-where $n$ is the number of surrogate policies.
 
 In imitation learning, it is unlikely to expect the surrogate policy $\SurrogatePolicy{}$ to outperform the initial policy $\OriginalPolicy$ it aims to approximate through supervised learning \cite{pmlr-v9-ross10a}.
 Consequently this metric ranges in $[0,1]$.
@@ -50,7 +43,8 @@ This means that if the rewards achieved are comparable, the surrogate policy is 
 \label{subsec:adjusted_rand_index}
 
 Within \gls{car}, concepts are assumed to correspond to clusters in the \gls{ls}.
-Combined with the \RepresentationConvergenceHypothesisName, this leads to a direct experimental prediction: if independently trained surrogate policies converge toward the same conceptual organization, then clustering their \gls{lr} should produce similar partitions.
+Combined with the \RepresentationConvergenceHypothesisName, this leads to a direct experimental prediction.
+If independently trained surrogate policies converge toward the same conceptual organization, clustering their \gls{lr} should produce similar partitions.
 
 When a particular observation is processed by the network, it is expected to activate the same concept regardless of the specific neural implementation of the policy.
 If independently trained policies converge toward the same conceptual organization, a given observation should activate the same concept across all models.
@@ -61,12 +55,19 @@ This measure quantifies the agreement between cluster assignments independently 
 Both metrics introduced later in this chapter, \ClusteringUniversalityName{} and \AbstractionScoreName{}, rely on the \gls{ari}.
 Since the \gls{ari} is a complex measure, we review its definition and discuss its main properties.
 
-The \gls{ari} is derived from the \gls{ri}~\cite{rand1971objective}, which measures the agreement between two partitions by considering every possible pair of point cloud.
-For each pair, four situations are possible: the point may belong to the same cluster in both partitions, to different clusters in both partitions, or they may disagree by being grouped together in only one of the two partitions.
+The \gls{ari} is derived from the \gls{ri}~\cite{rand1971objective}, which measures the agreement between two partitions by considering every possible pair of points in the point cloud.
+For each pair, four situations are possible:
+\begin{itemize}
+\item \textbf{Agreement:} The points belong to the same cluster in both partitions.
+\item \textbf{Agreement:} The points belong to different clusters in both partitions.
+\item \textbf{Disagreement:} The points belong to the same cluster in the first partition but to different clusters in the second.
+\item \textbf{Disagreement:} The points belong to different clusters in the first partition but to the same cluster in the second.
+\end{itemize}
+
 The \gls{ri} measures the proportion of pairs for which the two partitions agree:
-\[
+$$
 \text{RI} = \frac{\text{number of agreeing pairs}}{\text{total number of pairs}}.
-\]
+$$
 
 Although the \gls{ri} is intuitive, it suffers from an important limitation.
 In most clustering problems, the majority of pairs of points belong to different clusters.
@@ -121,7 +122,7 @@ As a result, values close to $1$ require the two clusterings to be nearly identi
 \label{subsec:clustering_universality}
 
 Having introduced the \gls{ari}, we can now define the \ClusteringUniversalityName metric.
-While the \gls{ari} quantifies the similarity between two conceptual partitions, the objective of \gls{car} is to assess the consistency of conceptual organizations across an entire set of independently trained surrogate policies.
+While the \gls{ari} quantifies the similarity between two partitions, the objective of \gls{car} is to assess the consistency of conceptual organizations across an entire set of independently trained surrogate policies.
 
 To this end, the same set of observations is projected into the \gls{ls} of each surrogate policy and clustered.
 Under the \RepresentationConvergenceHypothesisName, these independently obtained partitions are expected to be similar.
@@ -131,9 +132,9 @@ Under the \RepresentationConvergenceHypothesisName, these independently obtained
     \text{\ClusteringUniversalityName}
     =
     \frac{1}{\binom{n}{2}}
-    \sum_{i=1}^{n}
-    \sum_{j=0}^{i-1}
-    \operatorname{ARI}(\mathcal{C}{i}, \mathcal{C}{j}).
+    \sum_{i=2}^{n}
+    \sum_{j=1}^{i-1}
+    \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{j}).
 \end{align}
 
 This metric takes values in $[-1, 1]$.
@@ -182,4 +183,4 @@ The \AbstractionScoreName ranges from $[0, 1]$.
 A score around $0$ means that the latent clusters are strongly aligned with either the observation or the action space, reflecting minimal abstraction, cases~\ref{i}.
 A score close to $1$ indicates that the latent clusters are independent of both the observation and action spaces, capturing abstractions that meaningfully reflect the agent's behavior, case~\ref{ii}.
 
-The results of applying \gls{car} and these metrics to concrete environments are presented in Chapter~\ref{chap:experiments}.
+% The results of applying \gls{car} and these metrics to concrete environments are presented in Chapter~\ref{chap:experiments}.

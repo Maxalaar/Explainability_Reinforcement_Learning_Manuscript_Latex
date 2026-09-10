@@ -42,32 +42,30 @@ Their role is not to simplify the decision process but to provide multiple indep
 
 \subsection{Training surrogate policies}
 
-Throughout the remainder of this chapter, the initial policy we aim to explain is denoted as $\textcolor{mygreen}{\pi}$.
+Throughout the remainder of this manuscript, the initial policy we aim to explain is denoted as $\textcolor{mygreen}{\pi}$.
 This initial policy is obtained without imposing any constraints on its origin.
 It may result from classical or deep reinforcement learning \cite{sutton2018reinforcement}, alpha-beta algorithm \cite{knuth1975analysis}, or even from demonstrations provided by humans \cite{pmlr-v9-ross10a}.
 The crucial requirement is the availability of a dataset containing a sufficient number of projections from the observation space $\mathcal{O}$ to the action space $\mathcal{A}$ induced by $\textcolor{mygreen}{\pi}$ to train a \gls{nn}.
 
-The replicated policies are referred to as surrogate policies, denoted by $\textcolor{myred}{\pi'}$.
-For any observation $O$, the distribution over the action space produced by $\textcolor{myred}{\pi'}$ should approximate that of $\textcolor{mygreen}{\pi}$ as closely as possible.
-
-The surrogate policy $\textcolor{myred}{\pi'}$ is implemented as a \gls{nn} parameterized by $\Theta$.
-This network is composed of two components: an encoder and a decoder, respectively highlighted by the blue and black dashed rectangles in Figure~\ref{fig:surrogate_policy_architecture}.
-The encoder $\textcolor{myblue}{f_{enc}}$ maps the observation $O$ to the embedding.
-The decoder $f_{dec}$ reconstructs the parameters of the action distribution from this embedding.
+The replicated policies are referred to as surrogate policies.
+To assess the stability of the learned representations, $n$ surrogate policies are trained independently, denoted by $\SurrogatePolicy{1}, \dots, \SurrogatePolicy{n}$.
+All surrogate policies share the same architecture.
+It consists of a \gls{nn} with two components, an encoder $\textcolor{myblue}{f_{enc}}$ and a decoder $f_{dec}$, highlighted by the blue and black dashed rectangles, respectively, in Figure~\ref{fig:surrogate_policy_architecture}.
+The encoder maps the observation $O$ to the embedding, and the decoder reconstructs the parameters of the action distribution from this embedding.
+For a given surrogate policy $\SurrogatePolicy{i}$, parameterized by $\Theta_i$, its encoder and decoder are written $\textcolor{myblue}{f_{enc_{i}}}$ and $f_{dec_{i}}$.
 
 \input{figures/clustering_agent_representation/surrogate_policy_architecture.tex}
 
-To train $\textcolor{myred}{\pi'}$ to accurately replicate the action distribution, we define a loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
+% For any observation $O$, each $\SurrogatePolicy{i}$ should produce an action distribution that closely matches that of $\textcolor{mygreen}{\pi}$.
+To train each surrogate policy $\SurrogatePolicy{i}$ to accurately replicate the action distribution, we define a loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
 This loss, defined in Equation~\eqref{eq:car_loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.
-In practice, this function does not need to be explicitly defined, as neural policies directly output the parameters of the action distribution.
-Once training is complete, this loss ensures that $\textcolor{myred}{\pi'}$ closely approximates the behavior of the original policy $\textcolor{mygreen}{\pi}$.
+In practice, this function $p$ does not need to be explicitly defined, as neural policies directly output the parameters of the action distribution.
 
 \begin{align}
-    \min_{\Theta} \sum_{O \in \mathcal{O}} \mathcal{L} \left( O \right) 
-    = \min_{\Theta} \sum_{O \in \mathcal{O}} 
+    \min_{\Theta_i} \sum_{O \in \mathcal{O}}
     \mathrm{MSE}\Big(
         p \, \!\big(\textcolor{mygreen}{\pi}\left(O\right)\big),
-        p \, \!\big(\textcolor{myred}{\pi'_{\Theta}}\left(O\right)\big)
+        p \, \!\big(\textcolor{myred}{\pi'_{\Theta_i}}\left(O\right)\big)
     \Big)
     \label{eq:car_loss}
 \end{align}
@@ -81,10 +79,10 @@ Under this approach, conceptually similar observations are expected to produce n
 A \gls{cs} can therefore be viewed as a region of the \gls{ls} containing related \gls{lr}.
 To identify these regions, a clustering algorithm is applied to the point cloud.
 
-The clustering is performed independently for each of the $n$ surrogate policies.
-For a surrogate policy $\SurrogatePolicy{i}$, we denote by $\textcolor{myblue}{\mathcal{E}_{i}}$ the set of embeddings obtained by applying its encoder $\textcolor{myblue}{f_{enc_{i}}}$ to a subset of observations $\mathbb{O} \subseteq \mathcal{O}$.
-A clustering function $f_{\mathrm{clust}}$ partitions the point cloud $\textcolor{myblue}{\mathcal{E}_{i}}$ into groups of nearby \gls{lr}, assigning each observation a cluster label and yielding the partition $\mathcal{C}_{i}$.
-The same observation set $\mathbb{O}$ is used for every policy, so that the partitions $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$ are defined over the same observations and can be compared.
+The clustering is performed independently for each surrogate policy.
+For a surrogate policy $\SurrogatePolicy{i}$, applying its encoder $\textcolor{myblue}{f_{enc_{i}}}$ to a subset of observations $\mathbb{O} \subseteq \mathcal{O}$ yields the set of embeddings $\textcolor{myblue}{\mathcal{E}_{i}}$.
+A clustering function $f_{\mathrm{clust}}$ then partitions the point cloud $\textcolor{myblue}{\mathcal{E}_{i}}$ into groups of nearby \gls{lr}, assigning each observation a cluster label and yielding the partition $\mathcal{C}_{i}$.
+The same observation set $\mathbb{O}$ is used for every surrogate policy, so that the partitions $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$ are defined over the same observations and can be compared.
 This comparison is the basis of the evaluation introduced in the following section.
 Algorithm~\ref{alg:car} states the complete \gls{car} procedure.
 
@@ -120,7 +118,6 @@ Each cluster gathers observations that correspond to a distinct, interpretable s
 The position of an observation in the \gls{ls} thus reflects the stage of the environment it belongs to, suggesting a correspondence between the geometry of the \gls{ls} and the semantic properties of environment states.
 
 This example illustrates what \gls{car} is expected to produce, but it relies on the visual inspection of a single surrogate policy, which is precisely the type of evidence whose limitations motivated this work.
-
 Three aspects must therefore be evaluated before such an analysis can be trusted.
 First, the surrogate policy must faithfully reproduce the original policy so that its explanations remain relevant to the target policy.
 Second, the recovered conceptual organization must be consistent across independently trained surrogate policies.
