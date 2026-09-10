@@ -7,6 +7,7 @@ The environments considered in this study are:
 \begin{itemize}
     \item \href{https://ale.farama.org/environments/breakout/}{\textbf{Breakout}}: the agent controls a paddle to bounce a ball and break as many bricks as possible, the ball speeding up after each bounce.
     \item \href{https://ale.farama.org/environments/mario_bros/}{\textbf{Mario Bros}}: the agent must defeat enemies, avoid fireballs, and collect mushrooms \cite{mario_bros_atari_2600}.
+    \item \href{https://ale.farama.org/environments/ms_pacman/}{\textbf{Ms.\ Pac-Man}}: the agent navigates a maze, eating pellets while avoiding four ghosts, with power pellets briefly making the ghosts edible.
     \item \href{https://ale.farama.org/environments/pong/}{\textbf{Pong}}: a two-player game in which the agent tries to prevent the ball from passing its side while attempting to score against the opponent.
     \item \href{https://ale.farama.org/environments/space_invaders/}{\textbf{Space Invaders}}: the agent controls a cannon and must destroy waves of invaders before they reach the ground.
     \item \href{https://ale.farama.org/environments/surround/}{\textbf{Surround}}: a two-player grid-based game in which each move blocks the traversed cell, the goal being to trap the opponent.
@@ -24,7 +25,7 @@ These surrogate policies are trained on approximately one million observation-ac
 \FloatBarrier
 
 We first evaluate the ability of the surrogate policies to replicate the behavior of the initial policies (\BehaviorReconstructionName, Table~\ref{tab:environments_metrics}).
-Across all environments, the surrogate policies achieve an average \BehaviorReconstructionName of $0.94 \pm 0.02$, indicating that they reliably reproduce the decisions of the initial policies over 100 evaluation episodes.
+Across all environments, the surrogate policies achieve an average \BehaviorReconstructionName of $0.95 \pm 0.02$, indicating that they reliably reproduce the decisions of the initial policies over 100 evaluation episodes.
 
 For the remainder of the analysis, a random subset of 50,000 observations is drawn from the training dataset and embedded into the \gls{ls} of each surrogate policy, using the representation extracted directly after the last convolutional layer.
 This projection results in a point cloud $\textcolor{myblue}{\mathcal{E}}$.
