@@ -1,0 +1,96 @@
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+        \begin{tikzpicture}
+        \begin{axis}[ymode=log, xlabel={Epoch}, ylabel={Action loss}, grid=major, width=6.5cm, height=5cm, tick label style={font=\small}, label style={font=\small}]
+        \addplot[thin, color=breakoutColor] coordinates {(1,3.3005) (34,0.7979) (67,0.4972) (100,0.3760) (133,0.3091) (166,0.2642) (199,0.2330) (232,0.2103) (265,0.1923) (298,0.1786) (331,0.1673) (364,0.1578) (397,0.1491) (430,0.1432) (463,0.1361) (496,0.1310) (529,0.1269) (562,0.1226) (595,0.1192) (600,0.1182)};
+        \addplot[thin, color=breakoutColor] coordinates {(1,3.3093) (34,0.8592) (67,0.5367) (100,0.4015) (133,0.3262) (166,0.2781) (199,0.2438) (232,0.2191) (265,0.2001) (298,0.1841) (331,0.1720) (364,0.1622) (397,0.1531) (430,0.1459) (463,0.1408) (496,0.1356) (529,0.1292) (562,0.1244) (595,0.1218) (600,0.1202)};
+        \addplot[thin, color=breakoutColor] coordinates {(1,3.3299) (34,0.9590) (67,0.5697) (100,0.4143) (133,0.3293) (166,0.2777) (199,0.2418) (232,0.2167) (265,0.1969) (298,0.1820) (331,0.1700) (364,0.1597) (397,0.1515) (430,0.1439) (463,0.1382) (496,0.1314) (529,0.1275) (562,0.1228) (595,0.1195) (600,0.1184)};
+        \end{axis}
+        \end{tikzpicture}
+        }
+        \caption{Breakout}
+        \label{fig:surrogate_training_breakout}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+        \begin{tikzpicture}
+        \begin{axis}[ymode=log, xlabel={Epoch}, ylabel={Action loss}, grid=major, width=6.5cm, height=5cm, tick label style={font=\small}, label style={font=\small}]
+        \addplot[thin, color=marioBrosColor] coordinates {(1,14.8064) (6,6.6000) (11,4.6932) (16,3.7979) (21,3.2255) (26,2.7950) (31,2.4568) (36,2.1831) (41,1.9586) (46,1.7765) (51,1.6390) (56,1.5198) (61,1.4210) (66,1.3336) (71,1.2585) (76,1.1925) (81,1.1415) (86,1.0899) (91,1.0473) (96,1.0067) (100,0.9770)};
+        \addplot[thin, color=marioBrosColor] coordinates {(1,13.9914) (6,5.7239) (11,4.2091) (16,3.4875) (21,2.9882) (26,2.5980) (31,2.3031) (36,2.0587) (41,1.8517) (46,1.6883) (51,1.5464) (56,1.4302) (61,1.3393) (66,1.2574) (71,1.1879) (76,1.1276) (81,1.0730) (86,1.0292) (91,0.9897) (96,0.9535) (100,0.9291)};
+        \addplot[thin, color=marioBrosColor] coordinates {(1,14.4070) (6,5.8056) (11,4.3536) (16,3.5892) (21,3.0552) (26,2.6428) (31,2.3269) (36,2.0684) (41,1.8752) (46,1.6995) (51,1.5680) (56,1.4471) (61,1.3526) (66,1.2709) (71,1.1982) (76,1.1348) (81,1.0816) (86,1.0358) (91,0.9926) (96,0.9550) (100,0.9270)};
+        \end{axis}
+        \end{tikzpicture}
+        }
+        \caption{Mario Bros}
+        \label{fig:surrogate_training_mario_bros}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+        \begin{tikzpicture}
+        \begin{axis}[ymode=log, xlabel={Epoch}, ylabel={Action loss}, grid=major, width=6.5cm, height=5cm, tick label style={font=\small}, label style={font=\small}]
+        \addplot[thin, color=msPacmanColor] coordinates {(1,27.1299) (12,4.8831) (23,2.4171) (34,1.4646) (45,1.0649) (56,0.8613) (67,0.7298) (78,0.6299) (89,0.5539) (100,0.4961) (111,0.4505) (122,0.4202) (133,0.3914) (144,0.3688) (155,0.3509) (166,0.3339) (177,0.3196) (188,0.3066) (199,0.2941) (200,0.2929)};
+        \addplot[thin, color=msPacmanColor] coordinates {(1,27.4661) (12,4.8214) (23,2.1927) (34,1.5704) (45,1.7119) (56,0.8459) (67,0.6609) (78,0.5625) (89,0.4881) (100,0.4401) (111,0.6438) (122,0.3744) (133,0.3474) (144,0.3299) (155,0.3120) (166,0.2957) (177,0.2860) (188,0.2749) (199,0.3547) (200,0.2608)};
+        \addplot[thin, color=msPacmanColor] coordinates {(1,27.8892) (12,4.5449) (23,2.2309) (34,1.4869) (45,1.1135) (56,0.8831) (67,0.7563) (78,0.6963) (89,0.5726) (100,0.5595) (111,0.4733) (122,0.4310) (133,0.4060) (144,0.3792) (155,0.3794) (166,0.3522) (177,0.3243) (188,0.3117) (199,0.2987) (200,0.2966)};
+        \end{axis}
+        \end{tikzpicture}
+        }
+        \caption{Ms.\ Pac-Man}
+        \label{fig:surrogate_training_ms_pacman}
+    \end{subfigure}
+
+    \vspace{0.5cm}
+
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+        \begin{tikzpicture}
+        \begin{axis}[ymode=log, xlabel={Epoch}, ylabel={Action loss}, grid=major, width=6.5cm, height=5cm, tick label style={font=\small}, label style={font=\small}]
+        \addplot[thin, color=pongColor] coordinates {(1,2.5732) (6,1.3059) (11,0.9484) (16,0.7769) (21,0.6780) (26,0.6095) (31,0.5613) (36,0.5240) (41,0.4939) (46,0.4681) (51,0.4462) (56,0.4273) (61,0.4109) (66,0.3959) (71,0.3829) (76,0.3711) (81,0.3602) (86,0.3497) (91,0.3405) (96,0.3327) (100,0.3266)};
+        \addplot[thin, color=pongColor] coordinates {(1,2.5733) (6,1.3004) (11,0.9744) (16,0.8094) (21,0.7182) (26,0.6519) (31,0.6026) (36,0.5607) (41,0.5261) (46,0.4978) (51,0.4728) (56,0.4510) (61,0.4325) (66,0.4157) (71,0.4007) (76,0.3878) (81,0.3759) (86,0.3657) (91,0.3560) (96,0.3475) (100,0.3415)};
+        \addplot[thin, color=pongColor] coordinates {(1,2.5732) (6,1.3249) (11,0.9486) (16,0.7818) (21,0.6848) (26,0.6179) (31,0.5676) (36,0.5267) (41,0.4934) (46,0.4651) (51,0.4414) (56,0.4203) (61,0.4020) (66,0.3867) (71,0.3722) (76,0.3598) (81,0.3487) (86,0.3386) (91,0.3294) (96,0.3211) (100,0.3149)};
+        \end{axis}
+        \end{tikzpicture}
+        }
+        \caption{Pong}
+        \label{fig:surrogate_training_pong}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+        \begin{tikzpicture}
+        \begin{axis}[ymode=log, xlabel={Epoch}, ylabel={Action loss}, grid=major, width=6.5cm, height=5cm, tick label style={font=\small}, label style={font=\small}]
+        \addplot[thin, color=spaceInvadersColor] coordinates {(1,2.1788) (12,1.1213) (23,0.9292) (34,0.8281) (45,0.7546) (56,0.6980) (67,0.6508) (78,0.6127) (89,0.5793) (100,0.5531) (111,0.5309) (122,0.5113) (133,0.4946) (144,0.4799) (155,0.4667) (166,0.4549) (177,0.4442) (188,0.4347) (199,0.4264) (200,0.4260)};
+        \addplot[thin, color=spaceInvadersColor] coordinates {(1,2.1801) (12,1.1053) (23,0.9291) (34,0.8288) (45,0.7589) (56,0.7045) (67,0.6616) (78,0.6256) (89,0.5966) (100,0.5717) (111,0.5507) (122,0.5315) (133,0.5150) (144,0.5005) (155,0.4877) (166,0.4762) (177,0.4654) (188,0.4557) (199,0.4471) (200,0.4466)};
+        \addplot[thin, color=spaceInvadersColor] coordinates {(1,2.1951) (12,1.1148) (23,0.9097) (34,0.8110) (45,0.7429) (56,0.6917) (67,0.6503) (78,0.6153) (89,0.5868) (100,0.5620) (111,0.5397) (122,0.5190) (133,0.5008) (144,0.4857) (155,0.4726) (166,0.4596) (177,0.4486) (188,0.4391) (199,0.4302) (200,0.4298)};
+        \end{axis}
+        \end{tikzpicture}
+        }
+        \caption{Space Invaders}
+        \label{fig:surrogate_training_space_invaders}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+        \begin{tikzpicture}
+        \begin{axis}[ymode=log, xlabel={Epoch}, ylabel={Action loss}, grid=major, width=6.5cm, height=5cm, tick label style={font=\small}, label style={font=\small}]
+        \addplot[thin, color=surroundColor] coordinates {(1,24.2212) (34,4.7912) (67,2.0912) (100,1.4291) (133,1.1316) (166,0.9598) (199,0.8497) (232,0.7670) (265,0.7080) (298,0.6612) (331,0.6230) (364,0.5919) (397,0.5663) (430,0.5424) (463,0.5225) (496,0.5059) (529,0.4896) (562,0.4765) (595,0.4648) (600,0.4626)};
+        \addplot[thin, color=surroundColor] coordinates {(1,24.0464) (34,2.8642) (67,1.8330) (100,1.3987) (133,1.1628) (166,1.0158) (199,0.9126) (232,0.8353) (265,0.7736) (298,0.7260) (331,0.6858) (364,0.6513) (397,0.6234) (430,0.5987) (463,0.5766) (496,0.5572) (529,0.5407) (562,0.5243) (595,0.5112) (600,0.5088)};
+        \addplot[thin, color=surroundColor] coordinates {(1,24.7783) (34,4.1007) (67,1.8595) (100,1.3125) (133,1.0589) (166,0.9075) (199,0.8081) (232,0.7370) (265,0.6835) (298,0.6427) (331,0.6093) (364,0.5809) (397,0.5578) (430,0.5374) (463,0.5206) (496,0.5050) (529,0.4904) (562,0.4782) (595,0.4662) (600,0.4658)};
+        \end{axis}
+        \end{tikzpicture}
+        }
+        \caption{Surround}
+        \label{fig:surrogate_training_surround}
+    \end{subfigure}
+    \caption{Training action loss of the three surrogate policies of each environment, on a logarithmic scale.}
+    \label{fig:surrogate_policy_training}
+\end{figure}

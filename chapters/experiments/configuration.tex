@@ -57,8 +57,7 @@ The latent space analyzed by \gls{car} is the representation produced by the las
 \subsection{Parameters}
 
 Table~\ref{tab:experiments_parameters} lists the parameters common to all experiments, grouped by pipeline stage.
-The trajectory dataset generated for each initial policy contains on the order of one million observation--action pairs.
-Parameters that vary across environments, such as the reward scaling, the exact number of training epochs, and the dataset size, are given in the released configuration files.
+Parameters that vary across environments, such as the reward scaling and the exact number of training epochs, are given in the released configuration files.
 
 \begin{table}[t]
     \centering
@@ -87,6 +86,7 @@ Parameters that vary across environments, such as the reward scaling, the exact 
         \multicolumn{2}{@{}l}{\textbf{Surrogate policy training (behavior cloning)}} \\
         \midrule
         Surrogate policies per environment  & $3$ \\
+        Observation--action pairs per dataset & $\geq 10^{6}$ \\
         Optimizer                           & Adam \\
         Learning rate                       & $1 \times 10^{-4}$ \\
         Batch size                          & $2048$ \\
