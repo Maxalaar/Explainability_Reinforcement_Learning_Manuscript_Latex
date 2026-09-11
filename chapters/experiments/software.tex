@@ -14,10 +14,6 @@ Each result can therefore be traced back to the settings that produced it.
 
 \input{figures/experiments/pipeline.tex}
 
-Table~\ref{tab:software_libraries} summarizes the main third-party libraries used in the pipeline.
-
-\input{tables/experiments/software_libraries_table.tex}
-
 \subsection{Initial policy training}
 
 The first stage trains the initial policy using RLlib \cite{moritz2018ray, liang2018rllib}.
@@ -28,7 +24,6 @@ Other RLlib algorithms, such as \gls{appo} \cite{espeholt2018impala}, \gls{dqn} 
 
 The policy and critic networks are implemented using PyTorch \cite{paszke2019pytorch}.
 The resulting policy and critic parameters are saved as a checkpoint together with the environment and training configurations.
-This checkpoint can then be loaded by the subsequent stages.
 
 \subsection{Trajectory dataset generation}
 
@@ -74,3 +69,6 @@ This reduces the computational cost and allows point clouds containing tens of t
 
 The resulting partitions are used to compute the \ClusteringUniversalityName and the \AbstractionScoreName.
 The stage also produces the material required for the qualitative analysis, including the clustered point clouds and the cluster assignment of each observation.
+
+Table~\ref{tab:software_libraries} summarizes the main third-party libraries used in the pipeline.
+\input{tables/experiments/software_libraries_table.tex}

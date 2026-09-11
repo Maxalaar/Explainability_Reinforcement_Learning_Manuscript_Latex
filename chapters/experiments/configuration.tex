@@ -31,12 +31,13 @@ This provides sufficient temporal resolution for effective control while reducin
 
 The actions correspond to the different buttons available on the Atari controller.
 The resulting action space is therefore discrete.
+
 Since Atari games are fully deterministic, sticky actions are introduced to add stochasticity to the trajectories.
 With a probability of $0.05$, the environment repeats the action selected at the previous step instead of applying the new action.
 This prevents the agent from simply memorizing a fixed sequence of actions during training.
 
-With the environment configuration established, the next section describes the objective associated with each environment.
-A visualization of the six environments is provided in Figure~\ref{fig:environments} to give an overview of the experimental settings.
+With the environment configuration established, the objective of each environment is described below.
+Figure~\ref{fig} provides an overview of the six environments used in the experiments.
 
 \input{figures/experiments/environments.tex}
 
@@ -65,7 +66,6 @@ Each player leaves a solid trail behind a moving cursor, and the goal is to forc
 \subsection{Neural architecture}
 
 The surrogate policies use a convolutional neural network to process the visual observations.
-The input consists of a stack of four consecutive $64 \times 64$ frames.
 The convolutional part consists of four layers with $16$, $32$, $64$, and $128$ channels, using $4 \times 4$ kernels with a stride of $2$.
 Each convolutional layer is followed by a LeakyReLU activation.
 The resulting representation is then flattened and passed through a multilayer perceptron that produces the parameters of the action distribution.
@@ -78,17 +78,17 @@ The size of the output layer matches the number of actions available in each env
 
 \input{figures/experiments/neural_architecture.tex}
 
-The latent space analyzed by \gls{car} is not restricted to a specific layer or architecture.
-Any latent space produced by the network can be analyzed using the same methodology.
-In the experiments presented in this chapter, the default analysis considers the representation produced by the last convolutional layer.
-The layer-wise analysis additionally considers the representations produced by the hidden layers of the multilayer perceptron.
-The final output layer is excluded because it directly produces the action-distribution parameters.
+% The latent space analyzed by \gls{car} is not restricted to a specific layer or architecture.
+% Any latent space produced by the network can be analyzed using the same methodology.
+% In the experiments presented in this chapter, the default analysis considers the representation produced by the last convolutional layer.
+% The layer-wise analysis additionally considers the representations produced by the hidden layers of the multilayer perceptron.
+% The final output layer is excluded because it directly produces the action-distribution parameters.
 
 \subsection{Parameters}
 
 Having defined the environments and neural architectures, the remaining parameters of the \gls{car} pipeline must now be specified.
-There are too many parameters to discuss them all in detail, as each stage of the pipeline introduces its own configuration choices.
 The main parameters shared across the experiments are summarized in Table~\ref{tab:experiments_parameters}.
+There are too many parameters to discuss them all in detail, as each stage of the pipeline introduces its own configuration choices.
 
 \input{tables/experiments/experiments_parameters_table.tex}
 
