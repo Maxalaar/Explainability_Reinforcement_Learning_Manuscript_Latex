@@ -1,0 +1,34 @@
+\begin{table*}[t]
+\hspace*{\fill}
+\resizebox{\textwidth}{!}{
+\begin{tblr}{|Q[c,m,3.4cm]|Q[c,m,3.5cm]|Q[l,m,8.5cm]|}
+    \hline
+    \textbf{Pipeline Stage} & \textbf{Library} & \SetCell{c}\textbf{Description} \\
+    \hline
+    \hline
+    \SetCell[r=3]{c} \textbf{Initial policy training} & RLlib \cite{moritz2018ray, liang2018rllib} & Distributed \gls{rl} library used to train the initial policy. \\
+    \hline
+    & PyTorch \cite{paszke2019pytorch} & Deep learning framework implementing the policy and critic networks. \\
+    \hline
+    & Gymnasium \cite{towers2024gymnasium} & Common interface used to plug in any \gls{rl} environment. \\
+    \hline
+    \hline
+    \SetCell[r=2]{c} \textbf{Trajectory dataset generation} & RLlib \cite{moritz2018ray, liang2018rllib} & Distributed environment runners used to collect trajectories in parallel. \\
+    \hline
+    & Apache Arrow \cite{arrow} & Columnar file format (Parquet) used to store the trajectory datasets. \\
+    \hline
+    \hline
+    \textbf{Surrogate policy training} & PyTorch Lightning \cite{falcon2019lightning} & Structured training loop used for the behavior cloning of the surrogate policies. \\
+    \hline
+    \hline
+    \textbf{Surrogate policy evaluation} & RLlib \cite{moritz2018ray, liang2018rllib} & Wraps each surrogate policy as an \gls{rl} policy to evaluate it in the environment. \\
+    \hline
+    \hline
+    \textbf{Latent space analysis} & cuML \cite{raschka2020cuml} & \gls{gpu}-accelerated clustering algorithms used to analyze the latent representations. \\
+    \hline
+\end{tblr}
+}
+\hspace*{\fill}
+\caption{Main software libraries used at each stage of the \gls{car} pipeline.}
+\label{tab:software_libraries}
+\end{table*}
