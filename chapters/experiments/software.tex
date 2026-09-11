@@ -16,7 +16,7 @@ Every result can therefore be traced back to the settings that produced it.
 
 \subsection{Initial policy training}
 
-The first stage trains the initial policy $\OriginalPolicy$ using RLlib \cite{moritz2018ray, liang2018rllib}.
+The first stage trains the initial policy using RLlib \cite{moritz2018ray, liang2018rllib}.
 RLlib provides a highly scalable implementation of \gls{rl} algorithms and supports a wide range of state-of-the-art methods.
 It supports distributed training, allowing the computational workload to be spread across multiple processes and machines.
 
@@ -31,7 +31,7 @@ The policy and critic networks are implemented using PyTorch \cite{paszke2019pyt
 PyTorch provides efficient GPU computation and supports a wide range of neural network architectures.
 This provides a standardized implementation that is compatible with the broader \gls{dl} ecosystem.
 
-The output of this stage is a checkpoint containing the trained policy $\OriginalPolicy$.
+The output of this stage is a checkpoint containing the trained policy.
 
 \subsection{Trajectory dataset generation}
 
