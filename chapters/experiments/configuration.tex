@@ -87,7 +87,18 @@ The final output layer is excluded because it directly produces the action-distr
 
 \subsection{Parameters}
 
-Table~\ref{tab:experiments_parameters} lists the parameters common to all experiments, grouped by pipeline stage.
-Parameters that vary across environments, such as the reward scaling and the exact number of training epochs, are given in the released configuration files.
+Having defined the environments and neural architectures, the remaining parameters of the \gls{car} pipeline must now be specified.
+There are too many parameters to discuss them all in detail, as each stage of the pipeline introduces its own configuration choices.
+The main parameters shared across the experiments are summarized in Table~\ref{tab:experiments_parameters}.
 
 \input{tables/experiments/experiments_parameters_table.tex}
+
+Given the large number of possible configurations, it is not feasible to evaluate all possible combinations.
+The choices made in this work are therefore based primarily on standard practices from the literature and on practical experience.
+Whenever possible, we used the simplest suitable configuration.
+For the clustering algorithm and distance metric in particular, the simplest suitable choices are used to establish a baseline.
+
+These choices do not restrict the \gls{car} methodology itself.
+Most components can be replaced or configured differently depending on the application.
+The evaluation metrics provide an objective basis for comparing these alternatives and determining which configurations produce the most consistent and meaningful results.
+
