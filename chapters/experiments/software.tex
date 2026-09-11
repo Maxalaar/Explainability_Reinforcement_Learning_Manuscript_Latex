@@ -3,85 +3,74 @@
 
 \gls{dl} and \gls{rl} are inherently empirical fields, in which the effectiveness of a method is assessed through experimentation.
 For this reason, particular attention is given to the implementation of \gls{car}.
-It relies on established libraries that provide efficient and widely used implementations of its main components.
-The implementation is made publicly available as open-source to support the objective and reproducible replication of the reported results.\footnote{\url{https://github.com/Maxalaar/Clustering_Agent_Latent_Space}}
+It relies on established libraries that provide efficient implementations of its main components.
+The code is made publicly available as open-source to support reproducible replication of the reported results.\footnote{\url{https://github.com/Maxalaar/Clustering_Agent_Latent_Space}}
 
 \gls{car} is organized as a pipeline of five stages, shown in Figure~\ref{fig:car_pipeline}.
-Each stage is an independent executable, and stages communicate only through artifacts written to disk.
-This decoupling allows any stage to be rerun or inspected independently.
+Each stage is an independent executable, and stages communicate through artifacts written to disk.
+This allows each stage to be rerun or inspected independently.
 The parameters of each experiment are gathered in a single configuration object, described in Section~\ref{sec:experiments_configuration}.
-Every result can therefore be traced back to the settings that produced it.
+Each result can therefore be traced back to the settings that produced it.
 
 \input{figures/experiments/pipeline.tex}
 
-Table~\ref{tab:software_libraries} summarizes the main third-party libraries used at each stage of the pipeline.
+Table~\ref{tab:software_libraries} summarizes the main third-party libraries used in the pipeline.
 
 \input{tables/experiments/software_libraries_table.tex}
 
 \subsection{Initial policy training}
 
-The first stage of the pipeline, Stage~1 in Figure~\ref{fig:car_pipeline}, trains the initial policy using RLlib \cite{moritz2018ray, liang2018rllib}.
-RLlib provides a highly scalable implementation of \gls{rl} algorithms and supports a wide range of state-of-the-art methods.
-It supports distributed training, allowing the computational workload to be spread across multiple processes and machines.
-
-The use of RLlib allows \gls{car} to be applied to any environment implemented using the Gymnasium interface \cite{towers2024gymnasium}.
-This flexibility allows \gls{car} to be applied to a wide range of environments.
-By default, the \gls{rl} algorithm used to train the initial policy is \gls{ppo} \cite{schulman2017proximalpolicyoptimizationalgorithms}.
-Other algorithms supported by RLlib, such as \gls{appo} \cite{espeholt2018impala}, \gls{dqn} \cite{mnih2013playingatarideepreinforcement}, and DreamerV3, can also be selected through the same configuration.
+The first stage trains the initial policy using RLlib \cite{moritz2018ray, liang2018rllib}.
+RLlib provides scalable implementations of \gls{rl} algorithms and supports distributed training.
+The use of RLlib also allows \gls{car} to be applied to environments implemented using the Gymnasium interface \cite{towers2024gymnasium}.
+By default, the initial policy is trained using \gls{ppo} \cite{schulman2017proximalpolicyoptimizationalgorithms}.
+Other RLlib algorithms, such as \gls{appo} \cite{espeholt2018impala}, \gls{dqn} \cite{mnih2013playingatarideepreinforcement}, and DreamerV3, can also be selected through the same configuration.
 
 The policy and critic networks are implemented using PyTorch \cite{paszke2019pytorch}.
-PyTorch provides efficient GPU computation and supports a wide range of neural network architectures.
-This provides a standardized implementation that is compatible with the broader \gls{dl} ecosystem.
-
-As shown in Figure~\ref{fig:car_pipeline}, this stage produces the initial policy, the first artifact of the pipeline.
-It consists of the trained parameters of the policy and critic networks, saved as a checkpoint together with the configuration of the environment and of the training algorithm, so that it can be reloaded by any of the subsequent stages.
+The resulting policy and critic parameters are saved as a checkpoint together with the environment and training configurations.
+This checkpoint can then be loaded by the subsequent stages.
 
 \subsection{Trajectory dataset generation}
 
-The second stage of the pipeline, Stage~2 in Figure~\ref{fig:car_pipeline}, builds the dataset used to train the surrogate policies from the initial policy produced by the previous stage.
-The distributed execution capabilities of RLlib are used to collect trajectories in parallel.
-Multiple environment runners execute the initial policy simultaneously, distributing the computational workload across the available resources.
+The second stage builds the dataset used to train the surrogate policies.
+RLlib is used to collect trajectories in parallel using multiple environment runners.
+For each step, the dataset stores the observation together with the parameters of the action distribution produced by the initial policy.
 
-The initial policy is run in the environment, and the interactions between the agent and the environment are recorded.
-For each step, the dataset stores the observation together with the parameters of the action distribution produced by the policy.
 Trajectories are stored as Parquet files \cite{arrow}.
-Parquet is a compressed columnar format widely used for large-scale data processing.
-Its columnar structure allows data to be read efficiently and supports concurrent access from multiple processes.
-This is particularly useful here because the datasets contain on the order of one million observation--action pairs and cannot be loaded entirely into memory.
+Its columnar structure allows efficient data access and supports concurrent processing.
+This is useful here because the datasets contain around one million observation--action pairs and cannot be loaded entirely into memory.
 
-This trajectory dataset is the second artifact of the pipeline (Figure~\ref{fig:car_pipeline}).
-As shown in the figure, it is reused directly by the fifth stage to obtain the latent representations analyzed by \gls{car}, in addition to serving as the training data for the third stage.
+The resulting dataset is used both to train the surrogate policies and to generate the latent representations analyzed by \gls{car}.
 
 \subsection{Surrogate policy training}
 
-The third stage of the pipeline, Stage~3 in Figure~\ref{fig:car_pipeline}, trains the surrogate policies using behavior cloning on the trajectory dataset produced by the previous stage.
+The third stage trains the surrogate policies using behavior cloning on the trajectory dataset.
 This provides a supervised learning approach for replicating the initial policy.
 The training procedure is implemented using PyTorch Lightning \cite{falcon2019lightning}.
-PyTorch Lightning provides a structured interface for supervised training while remaining compatible with the PyTorch ecosystem.
-It handles common training operations such as data loading, optimization, checkpointing, and GPU execution, while allowing the underlying neural network implementation to remain fully controlled.
+PyTorch Lightning provides a simple interface for supervised training while remaining compatible with PyTorch.
+It handles common training operations such as data loading, optimization, checkpointing, and GPU execution.
 
-This stage produces the surrogate policies, the third artifact of the pipeline (Figure~\ref{fig:car_pipeline}).
-Each surrogate policy is saved as a checkpoint with the configuration used to train it.
+Each surrogate policy is saved as a checkpoint together with the configuration used for training.
 
 \subsection{Surrogate policy evaluation}
 
-The fourth stage of the pipeline, Stage~4 in Figure~\ref{fig:car_pipeline}, measures how faithfully each surrogate policy produced by the third stage reproduces the behavior of the initial policy.
-Each surrogate is wrapped so that it can be used as an RLlib policy and is then evaluated in the original environment.
-Its mean cumulative reward over multiple episodes is compared with that of initial policy.
+The fourth stage evaluates how faithfully the surrogate policies reproduce the behavior of the initial policy.
+Each surrogate is wrapped as an RLlib policy and evaluated in the original environment.
+Its mean cumulative reward over multiple episodes is compared with that of the initial policy.
 Evaluation episodes are collected using parallel environment runners.
 
-As shown in Figure~\ref{fig:car_pipeline}, this stage provides the value of the \BehaviorReconstructionName.
-It therefore verifies whether the surrogate policies adequately reproduce the behavior of the initial policy before their latent representations are analyzed.
-If a surrogate does not reproduce the original behavior sufficiently well, its training can be repeated before proceeding to the next stage.
+This stage computes the \BehaviorReconstructionName.
+It therefore verifies that the surrogate policies reproduce the behavior of the initial policy sufficiently well before their latent representations are analyzed.
+If a surrogate does not meet the required level of behavior reconstruction, its training can be repeated.
 
 \subsection{Latent space analysis}
 
-The fifth stage of the pipeline, Stage~5 in Figure~\ref{fig:car_pipeline}, performs the main analysis of \gls{car}.
-As shown in the figure, it reuses the trajectory dataset generated at the second stage together with the surrogate policies produced at the third stage.
-The latent representations produced by the surrogate policies form the point clouds that are analyzed using clustering algorithms.
+The fifth stage performs the main analysis of \gls{car}.
+The trajectory dataset and trained surrogate policies are used to generate the latent representations.
+These representations form the point clouds that are analyzed using clustering algorithms.
 
-The clustering step relies on the cuML library \cite{raschka2020cuml}, which provides GPU-accelerated implementations of several clustering algorithms.
-This significantly reduces the computational cost of clustering and makes it possible to analyze point clouds containing tens of thousands of representations.
+The clustering step relies on the cuML library \cite{raschka2020cuml}, which provides GPU-accelerated clustering algorithms.
+This reduces the computational cost and allows point clouds containing tens of thousands of representations to be analyzed.
 
-The resulting partitions are used to compute the \ClusteringUniversalityName and the \AbstractionScoreName, the two remaining outputs of the pipeline shown in Figure~\ref{fig:car_pipeline}.
-Beyond these metric values, this stage also produces the material required for the qualitative analysis presented in the following sections, namely the clustered point clouds and the cluster assignment of each observation.
+The resulting partitions are used to compute the \ClusteringUniversalityName and the \AbstractionScoreName.
+The stage also produces the material required for the qualitative analysis, including the clustered point clouds and the cluster assignment of each observation.
