@@ -36,7 +36,7 @@ We first evaluate the ability of the surrogate policies to replicate the behavio
 The surrogate policies reach a \BehaviorReconstructionName of $0.96$ on average over 100 evaluation episodes, ranging from $0.83$ for Breakout to $1.00$ for Ms.\ Pac-Man and Surround.
 They therefore reproduce the decisions of the initial policies closely enough for their latent representations to be analyzed in place of those of the initial policies.
 
-\input{figures/clustering_agent_representation/environments_metrics.tex}
+\input{tables/clustering_agent_representation/environments_metrics.tex}
 \FloatBarrier
 
 For the remainder of the analysis, a random subset of 50,000 observations is embedded into the \gls{ls} of each surrogate policy, using the representation extracted directly after the last convolutional layer, and the resulting point cloud $\textcolor{myblue}{\mathcal{E}}$ is partitioned with $k$-means clustering \cite{macqueen1967multivariate}.

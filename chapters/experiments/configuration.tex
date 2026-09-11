@@ -1,46 +1,67 @@
 \section{Experimental Configuration}
 \label{sec:experiments_configuration}
 
-This section describes the setup shared by all the experiments reported in this chapter: the environments, the neural architecture of the policies, and the main parameters of each pipeline stage.
-For every environment, a single initial policy is trained and then imitated by $n = 3$ surrogate policies.
+This section describes the configuration of the experiments reported in this chapter.
+It covers the environments, the neural architecture of the policies, and the main parameters of each pipeline stage.
+In general, for each environment, a single initial policy is trained and then imitated by three surrogate policies.
 
 \subsection{Environments}
 
-All experiments use environments from the Atari benchmark \cite{Bellemare_2013}, accessed through the Arcade Learning Environment and configured following common practice in reinforcement learning research \cite{machado2017revisitingarcadelearningenvironment}.
-In every environment the agent receives visual observations and selects actions from a discrete set.
-The six environments are shown in Figure~\ref{fig:environments}.
+All experiments use environments from the Atari benchmark \cite{Bellemare_2013}, accessed through the Arcade Learning Environment.
+The use of Atari environments offers several advantages.
+First, Atari is a widely used benchmark in the \gls{rl} community, with many studies using these environments as standard evaluation settings.
+This makes the experimental results easier to compare with existing work.
+Second, these environments were not specifically designed for \gls{rl}, which reduces the risk of introducing biases related to the design of the environments themselves.
+Finally, the benchmark provides a diverse set of well-known environments with varying levels of complexity.
+This diversity makes it possible to evaluate \gls{car} across different types of tasks and levels of difficulty.
+
+The configuration of the Atari environments follows common practice in \gls{rl} research \cite{machado2017revisitingarcadelearningenvironment}.
+
+In each environment, the agent receives visual observations in the form of raw pixels.
+Each image is resized to $64 \times 64$ pixels and converted to grayscale to reduce memory requirements.
+An exception is made for Pac-Man, where color information is important for determining the behavior of other agents in the environment.
+The original color information is therefore preserved for this environment.
+
+To provide information about the dynamics of the environment, four consecutive observations are stacked along the channel dimension.
+The resulting observation has a shape of $64 \times 64 \times 4$.
+This allows the agent to infer the motion of objects from successive observations rather than relying on a single frame.
+
+Frame skipping is also used to reduce the duration of each episode.
+The agent selects a new action every five frames, while the selected action is repeated for the intervening frames.
+This provides sufficient temporal resolution for effective control while reducing the number of decisions required during an episode.
+
+The actions correspond to the different buttons available on the Atari controller.
+The resulting action space is therefore discrete.
+Since Atari games are fully deterministic, sticky actions are introduced to add stochasticity to the trajectories.
+With a probability of $0.05$, the environment repeats the action selected at the previous step instead of applying the new action.
+This prevents the agent from simply memorizing a fixed sequence of actions during training.
+
+With the environment configuration established, the next section describes the objective associated with each environment.
+A visualization of the six environments is provided in Figure~\ref{fig:environments} to give an overview of the experimental settings.
 
 \input{figures/experiments/environments.tex}
 
 \paragraph{Breakout.}
 The agent moves a paddle at the bottom of the screen (Figure~\ref{fig:environment_breakout}) to bounce a ball into a wall of bricks, each broken brick scoring a point, and the ball speeding up as the wall is cleared.
-The observation is dominated by the layout of the remaining bricks, which changes gradually over a game.
 
 \paragraph{Mario Bros.}
 A single-screen platform game (Figure~\ref{fig:environment_mario_bros}).
 The player clears each phase by hitting enemies from below to flip them, then kicking them off the platforms before they recover.
 A central POW block flips every enemy at once but can only be used a few times per phase.
-Deciding when to spend the POW block is a clear strategic choice, which makes this environment useful for testing whether \gls{car} recovers strategy-level distinctions.
 
 \paragraph{Ms.\ Pac-Man.}
 The player moves through a maze (Figure~\ref{fig:environment_ms_pacman}), eating pellets while avoiding four ghosts, with power pellets briefly making the ghosts edible.
 The maze structure and the many possible local situations, such as a nearby ghost, an intersection, or an active power pellet, produce a large number of distinguishable states.
-This makes Ms.\ Pac-Man well suited to examining \gls{car} at fine cluster granularities.
-It is also the only environment kept in color.
 
 \paragraph{Pong.}
 A minimal two-player game (Figure~\ref{fig:environment_pong}) in which the agent controls one paddle and must send the ball past the opponent.
-The observation contains almost nothing beyond the two paddles, the ball, and the score.
-Pong therefore acts as a lower bound on how much structure \gls{car} can be expected to recover.
 
 \paragraph{Space Invaders.}
 The agent moves a cannon along the bottom of the screen (Figure~\ref{fig:environment_space_invaders}), firing at descending rows of aliens while dodging their shots and using destructible shields, with a bonus saucer occasionally crossing the top.
-A game goes through visually distinct phases, from the full alien formation to a few fast aliens near the ground, which makes this environment convenient for illustrating the clusters found by \gls{car}.
 
 \paragraph{Surround.}
 A two-player game on a grid (Figure~\ref{fig:environment_surround}).
 Each player leaves a solid trail behind a moving cursor, and the goal is to force the opponent to crash into a trail or a wall.
-Every move permanently blocks a cell, so the state of a game is essentially the pattern of trails drawn so far, which grows continuously over an episode.
 
 \subsection{Neural architecture}
 
@@ -59,48 +80,4 @@ The latent space analyzed by \gls{car} is the representation produced by the las
 Table~\ref{tab:experiments_parameters} lists the parameters common to all experiments, grouped by pipeline stage.
 Parameters that vary across environments, such as the reward scaling and the exact number of training epochs, are given in the released configuration files.
 
-\begin{table}[t]
-    \centering
-    \begin{tabularx}{0.92\linewidth}{@{}lX@{}}
-        \toprule
-        \multicolumn{2}{@{}l}{\textbf{Observations}} \\
-        \midrule
-        Frame size                          & $64 \times 64$ \\
-        Frames stacked per observation      & $4$ \\
-        Frame skip                          & $5$ \\
-        Sticky-action probability           & $0.05$ \\
-        Color                               & grayscale (color for Ms.\ Pac-Man) \\
-        \addlinespace
-        \multicolumn{2}{@{}l}{\textbf{Initial policy training (PPO)}} \\
-        \midrule
-        Optimizer                           & Adam \\
-        Learning rate                       & $1.5 \times 10^{-4}$ \\
-        GAE $\lambda$                        & $0.95$ \\
-        Policy clipping $\varepsilon$        & $0.1$ \\
-        Value-function clipping              & $10$ \\
-        Entropy coefficient                 & $0.01$ \\
-        KL coefficient                       & $0.5$ \\
-        Epochs per update                   & $10$ \\
-        Gradient clipping (global norm)     & $100$ \\
-        \addlinespace
-        \multicolumn{2}{@{}l}{\textbf{Surrogate policy training (behavior cloning)}} \\
-        \midrule
-        Surrogate policies per environment  & $3$ \\
-        Observation--action pairs per dataset & $\geq 10^{6}$ \\
-        Optimizer                           & Adam \\
-        Learning rate                       & $1 \times 10^{-4}$ \\
-        Batch size                          & $2048$ \\
-        Loss                                & MSE between action-distribution parameters \\
-        Train / validation split            & $80\,/\,20$ \\
-        \addlinespace
-        \multicolumn{2}{@{}l}{\textbf{Latent space analysis}} \\
-        \midrule
-        Observations per surrogate policy   & $50\,000$ \\
-        Clustering algorithm                & $k$-means, Euclidean distance, $10$ restarts \\
-        Number of clusters $K$              & $2$ to $30$ \\
-        Points for the 2D projection        & $10\,000$ \\
-        \bottomrule
-    \end{tabularx}
-    \caption{Parameters common to all experiments, grouped by pipeline stage.}
-    \label{tab:experiments_parameters}
-\end{table}
+\input{tables/experiments/experiments_parameters_table.tex}
