@@ -45,12 +45,18 @@
 \usepackage{dblfloatfix}
 \usepackage{placeins}
 \usepackage{cuted}
-% Never allow more than one float (figure/table) per page, to avoid two figures bunching together
-\setcounter{topnumber}{1}
-\setcounter{bottomnumber}{0}
-\setcounter{totalnumber}{1}
+% Allow up to two floats (figure/table) per page: large floats still land alone
+% thanks to topfraction, but this lets small ones share a page with each other
+% or with text instead of leaving it mostly empty.
+\setcounter{topnumber}{2}
+\setcounter{totalnumber}{2}
 \renewcommand{\topfraction}{0.9}
 \renewcommand{\textfraction}{0.1}
+% When a float lands alone on a dedicated float page, pin it to the top instead
+% of the default behavior of centering it with blank space above and below.
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
 
 % Algorithms
 \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
