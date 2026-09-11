@@ -10,7 +10,7 @@ Section~\ref{ssec:experiments_latent_space_analysis} then presents the analysis 
 \subsection{Initial policy training}
 \label{ssec:initial_policy_training}
 
-\input{figures/experiments/initial_policy_training.tex}
+\input{figures/experiments/policy_training.tex}
 
 Figure~\ref{fig:initial_policy_training} shows how the initial policies improve during \gls{ppo} training.
 For each environment, the mean episode return is normalized so that $0\%$ and $100\%$ correspond to the lowest and highest mean return observed during that run.
@@ -24,8 +24,6 @@ Each initial policy reaches a score of the same order as these references, so it
 
 \subsection{Surrogate policy training}
 \label{ssec:surrogate_policy_training}
-
-\input{figures/experiments/surrogate_policy_training.tex}
 
 Figure~\ref{fig:surrogate_policy_training} shows, for each environment, the training action loss of the three surrogate policies.
 In every case the loss decreases smoothly, and the three independently trained policies follow almost identical trajectories, converging to the same value.
@@ -44,7 +42,7 @@ With the behavioral fidelity of the surrogate policies established, this section
 
 For the remainder of the analysis, a random subset of 50,000 observations is embedded into the \gls{ls} of each surrogate policy, using the representation extracted directly after the last convolutional layer, and the resulting point cloud $\textcolor{myblue}{\mathcal{E}}$ is partitioned with $k$-means clustering \cite{macqueen1967multivariate}.
 
-\input{figures/clustering_agent_representation/clustering_universality_curves.tex}
+\input{figures/clustering_agent_representation/clustering_curves.tex}
 
 Figure~\ref{fig:clustering_universality_curves} reports the evolution of \ClusteringUniversalityName with respect to the number of clusters.
 After the first few values of $K$, every curve settles onto a plateau whose level depends on the environment, from about $0.45$--$0.50$ for Breakout and Pong to about $0.65$ for Ms.\ Pac-Man and Space Invaders.
@@ -56,8 +54,6 @@ The \AbstractionScoreName, in contrast, varies markedly across environments.
 It is close to $1$ for Pong ($0.99$) and high for Breakout, Mario Bros and Space Invaders ($0.69$ to $0.82$): in these environments the latent clusters are largely independent of a direct clustering of the observations or of the action distributions.
 It is lower for Surround ($0.55$) and Ms.\ Pac-Man ($0.43$).
 In these two environments the position of the agent on the screen largely determines both the raw observation and the decision to take, so a clustering of the \gls{ls} naturally coincides with a clustering of the observations, and the \AbstractionScoreName cannot separate the two; a low score does not by itself imply that the representation is not abstract.
-
-\input{figures/clustering_agent_representation/abstraction_score_curves.tex}
 
 \input{figures/clustering_agent_representation/semantic_granularity.tex}
 
