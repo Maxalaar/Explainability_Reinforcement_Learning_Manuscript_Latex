@@ -1,17 +1,15 @@
 \section{Software Implementation}
 \label{sec:experiments_software}
 
-\gls{dl} and \gls{rl} are inherently empirical fields, in which the effectiveness of a method is ultimately assessed through experimentation.
-Experimental validation is therefore as important as the theoretical formulation of the method.
+\gls{dl} and \gls{rl} are inherently empirical fields, in which the effectiveness of a method is assessed through experimentation.
 For this reason, particular attention is given to the implementation of \gls{car}.
-The method relies on established libraries that provide efficient and widely used implementations of its main components.
-The implementation is made publicly available as open-source software to support the objective and reproducible replication of the reported results.\footnote{\url{https://github.com/Maxalaar/Clustering_Agent_Latent_Space}}
+It relies on established libraries that provide efficient and widely used implementations of its main components.
+The implementation is made publicly available as open-source to support the objective and reproducible replication of the reported results.\footnote{\url{https://github.com/Maxalaar/Clustering_Agent_Latent_Space}}
 
 \gls{car} is organized as a pipeline of five stages, shown in Figure~\ref{fig:car_pipeline}.
 Each stage is an independent executable, and stages communicate only through artifacts written to disk.
 This decoupling allows any stage to be rerun or inspected independently.
 The parameters of each experiment are gathered in a single configuration object, described in Section~\ref{sec:experiments_configuration}.
-Each stage also saves the configuration it used alongside its outputs.
 Every result can therefore be traced back to the settings that produced it.
 
 \input{figures/experiments/pipeline.tex}
