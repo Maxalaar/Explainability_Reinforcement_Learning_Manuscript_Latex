@@ -1,0 +1,96 @@
+\begin{figure}[t]
+    \centering
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\textwidth}{!}{
+        \begin{tikzpicture}
+
+        \pic[shift={(0,0,0)}] at (0,0,0)
+            {Box={name=obs, caption=Observation, xlabel={{"4",""}}, zlabel=, fill={rgb:black,1;white,9}, height=42, width=6, depth=42}};
+
+        \pic[shift={(2,0,0)}] at (obs-east)
+            {RightBandedBox={name=c1, caption=Conv, xlabel={{"16",""}}, zlabel=, fill=ConvColor, bandfill=ConvActivationColor, height=34, width=6, depth=34}};
+        \draw [connection] (obs-east) -- node {\midarrow} (c1-west);
+
+        \pic[shift={(1.5,0,0)}] at (c1-east)
+            {RightBandedBox={name=c2, caption=Conv, xlabel={{"32",""}}, zlabel=, fill=ConvColor, bandfill=ConvActivationColor, height=26, width=9, depth=26}};
+        \draw [connection] (c1-east) -- node {\midarrow} (c2-west);
+
+        \pic[shift={(1.5,0,0)}] at (c2-east)
+            {RightBandedBox={name=c3, caption=Conv, xlabel={{"64",""}}, zlabel=, fill=ConvColor, bandfill=ConvActivationColor, height=18, width=12, depth=18}};
+        \draw [connection] (c2-east) -- node {\midarrow} (c3-west);
+
+        \pic[shift={(1.5,0,0)}] at (c3-east)
+            {RightBandedBox={name=c4, caption=Conv, xlabel={{"128",""}}, zlabel=, fill=ConvColor, bandfill=ConvActivationColor, height=12, width=16, depth=12}};
+        \draw [connection] (c3-east) -- node {\midarrow} (c4-west);
+
+        \pic[shift={(2,0,0)}] at (c4-east)
+            {Box={name=fc1, caption={FC 128}, fill=FcColor, opacity=0.7, height=3, width=2, depth=16}};
+        \draw [connection] (c4-east) -- node {\midarrow} node[above, sloped, pos=0.5]{\footnotesize flatten} (fc1-west);
+
+        \pic[shift={(2,0,0)}] at (fc1-east)
+            {Box={name=out, caption=, fill=OutputColor, opacity=0.8, height=3, width=3, depth=8}};
+        \node[align=center] at ($(out-south)+(0,-0.9)$) {\bf Distribution};
+        \draw [connection] (fc1-east) -- node {\midarrow} (out-west);
+
+        \end{tikzpicture}
+        }
+        \caption{Pong and Space Invaders.}
+        \label{fig:neural_architecture_single_hidden}
+    \end{subfigure}
+
+    \vspace{0.8cm}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\textwidth}{!}{
+        \begin{tikzpicture}
+
+        \pic[shift={(0,0,0)}] at (0,0,0)
+            {Box={name=obs, caption=Observation, xlabel={{"4",""}}, zlabel=, fill={rgb:black,1;white,9}, height=42, width=6, depth=42}};
+
+        \pic[shift={(2,0,0)}] at (obs-east)
+            {RightBandedBox={name=c1, caption=Conv, xlabel={{"16",""}}, zlabel=, fill=ConvColor, bandfill=ConvActivationColor, height=34, width=6, depth=34}};
+        \draw [connection] (obs-east) -- node {\midarrow} (c1-west);
+
+        \pic[shift={(1.5,0,0)}] at (c1-east)
+            {RightBandedBox={name=c2, caption=Conv, xlabel={{"32",""}}, zlabel=, fill=ConvColor, bandfill=ConvActivationColor, height=26, width=9, depth=26}};
+        \draw [connection] (c1-east) -- node {\midarrow} (c2-west);
+
+        \pic[shift={(1.5,0,0)}] at (c2-east)
+            {RightBandedBox={name=c3, caption=Conv, xlabel={{"64",""}}, zlabel=, fill=ConvColor, bandfill=ConvActivationColor, height=18, width=12, depth=18}};
+        \draw [connection] (c2-east) -- node {\midarrow} (c3-west);
+
+        \pic[shift={(1.5,0,0)}] at (c3-east)
+            {RightBandedBox={name=c4, caption=Conv, xlabel={{"128",""}}, zlabel=, fill=ConvColor, bandfill=ConvActivationColor, height=12, width=16, depth=12}};
+        \draw [connection] (c3-east) -- node {\midarrow} (c4-west);
+
+        \pic[shift={(2,0,0)}] at (c4-east)
+            {Box={name=fc1, caption={FC 512}, fill=FcColor, opacity=0.7, height=3, width=2, depth=30}};
+        \draw [connection] (c4-east) -- node {\midarrow} node[above, sloped, pos=0.5]{\footnotesize flatten} (fc1-west);
+
+        \pic[shift={(1.5,0,0)}] at (fc1-east)
+            {Box={name=fc2, caption={FC 256}, fill=FcColor, opacity=0.7, height=3, width=2, depth=22}};
+        \draw [connection] (fc1-east) -- node {\midarrow} (fc2-west);
+
+        \pic[shift={(1.5,0,0)}] at (fc2-east)
+            {Box={name=fc3, caption={FC 128}, fill=FcColor, opacity=0.7, height=3, width=2, depth=16}};
+        \draw [connection] (fc2-east) -- node {\midarrow} (fc3-west);
+
+        \pic[shift={(1.5,0,0)}] at (fc3-east)
+            {Box={name=out, caption=, fill=OutputColor, opacity=0.8, height=3, width=3, depth=8}};
+        \node[align=center] at ($(out-south)+(0,-0.9)$) {\bf Distribution};
+        \draw [connection] (fc3-east) -- node {\midarrow} (out-west);
+
+        \end{tikzpicture}
+        }
+        \caption{Breakout, Mario Bros, Ms.\ Pac-Man, and Surround.}
+        \label{fig:neural_architecture_deep_hidden}
+    \end{subfigure}
+
+    \caption{
+        Architecture of the surrogate policies.
+    }
+    \label{fig:neural_architecture}
+\end{figure}

@@ -2,44 +2,42 @@
     \centering
     \begin{tabularx}{0.92\linewidth}{@{}lX@{}}
         \toprule
-        \multicolumn{2}{@{}l}{\textbf{Observations}} \\
+        \multicolumn{2}{@{}l}{\textbf{Environment configuration}} \\
         \midrule
-        Frame size                          & $64 \times 64$ \\
-        Frames stacked per observation      & $4$ \\
-        Frame skip                          & $5$ \\
-        Sticky-action probability           & $0.05$ \\
-        Color                               & grayscale (color for Ms.\ Pac-Man) \\
+        Frame size                              & $64 \times 64$ \\
+        Frames stacked per observation          & $4$ \\
+        Frame skip                              & $5$ \\
+        Sticky-action probability               & $0.05$ \\
         \addlinespace
-        \multicolumn{2}{@{}l}{\textbf{Initial policy training (PPO)}} \\
+        \multicolumn{2}{@{}l}{\textbf{Initial policy training}} \\
         \midrule
-        Optimizer                           & Adam \\
-        Learning rate                       & $1.5 \times 10^{-4}$ \\
-        GAE $\lambda$                        & $0.95$ \\
-        Policy clipping $\varepsilon$        & $0.1$ \\
-        Value-function clipping              & $10$ \\
-        Entropy coefficient                 & $0.01$ \\
-        KL coefficient                       & $0.5$ \\
-        Epochs per update                   & $10$ \\
-        Gradient clipping (global norm)     & $100$ \\
+        Algorithm                               & \gls{ppo} \\
+        Optimizer                               & Adam \\
+        Learning rate                           & $1.5 \times 10^{-4}$ \\
+        GAE $\lambda$                           & $0.95$ \\
+        Policy clipping $\varepsilon$           & $0.1$ \\
+        Value-function clipping                 & $10$ \\
+        Entropy coefficient                     & $0.01$ \\
+        KL coefficient                          & $0.5$ \\
+        Epochs per update                       & $10$ \\
+        Gradient clipping (global norm)         & $100$ \\
         \addlinespace
-        \multicolumn{2}{@{}l}{\textbf{Surrogate policy training (behavior cloning)}} \\
+        \multicolumn{2}{@{}l}{\textbf{Surrogate policy training}} \\
         \midrule
-        Surrogate policies per environment  & $3$ \\
-        Observation--action pairs per dataset & $\geq 10^{6}$ \\
-        Optimizer                           & Adam \\
-        Learning rate                       & $1 \times 10^{-4}$ \\
-        Batch size                          & $2048$ \\
-        Loss                                & MSE between action-distribution parameters \\
-        Train / validation split            & $80\,/\,20$ \\
+        Surrogate policies per environment      & $3$ \\
+        Observation--action pairs per dataset   & $\geq 10^{6}$ \\
+        Batch size                              & $2048$ \\
+        Optimizer                               & Adam \\
+        Learning rate                           & $1 \times 10^{-4}$ \\
         \addlinespace
         \multicolumn{2}{@{}l}{\textbf{Latent space analysis}} \\
         \midrule
-        Observations per surrogate policy   & $50\,000$ \\
-        Clustering algorithm                & $k$-means, Euclidean distance, $10$ restarts \\
-        Number of clusters $K$              & $2$ to $30$ \\
-        Points for the 2D projection        & $10\,000$ \\
+        Embedding per surrogate policy       & $50\,000$ \\
+        Clustering algorithm                    & $k$-means \\
+        Distance                                & Euclidean distance \\
+        Number of clusters $K$                  & $2$ to $30$ \\
         \bottomrule
     \end{tabularx}
-    \caption{Parameters common to all experiments, grouped by pipeline stage.}
+    \caption{Main experimental parameters.}
     \label{tab:experiments_parameters}
 \end{table}

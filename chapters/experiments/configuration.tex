@@ -65,8 +65,6 @@ Each player leaves a solid trail behind a moving cursor, and the goal is to forc
 
 \subsection{Neural architecture}
 
-% \input{tables/experiments/neural_architecture_table.tex}
-
 The surrogate policies use a convolutional neural network to process the visual observations.
 The input consists of a stack of four consecutive $64 \times 64$ frames.
 The convolutional part consists of four layers with $16$, $32$, $64$, and $128$ channels, using $4 \times 4$ kernels with a stride of $2$.
@@ -76,7 +74,10 @@ The resulting representation is then flattened and passed through a multilayer p
 The architecture of the multilayer perceptron varies across environments.
 For Pong and Space Invaders, it contains a single hidden layer with $128$ units.
 For the other four environments, it contains three hidden layers with $512$, $256$, and $128$ units.
-Table~\ref{tab:neural_architecture} summarizes these configurations together with the number of actions for each environment.
+Figure~\ref{fig:neural_architecture} illustrates both configurations.
+The size of the output layer matches the number of actions available in each environment: $4$ for Breakout, $18$ for Mario Bros, $9$ for Ms.\ Pac-Man, $6$ for Pong, $6$ for Space Invaders, and $5$ for Surround.
+
+\input{figures/experiments/neural_architecture.tex}
 
 The latent space analyzed by \gls{car} is not restricted to a specific layer or architecture.
 Any latent space produced by the network can be analyzed using the same methodology.

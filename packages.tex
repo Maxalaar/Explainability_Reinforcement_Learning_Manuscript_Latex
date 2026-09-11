@@ -98,6 +98,18 @@
 \usetikzlibrary{plotmarks}
 \usepgfplotslibrary{fillbetween}
 \tikzset{>=latex}   % Set the default arrowhead style for TikZ drawings to 'latex'
+
+% PlotNeuralNet (https://github.com/HarisIqbal88/PlotNeuralNet), used for the
+% neural architecture diagrams in the experiments chapter.
+% Its layer styles set a default value for the pic key "fill" through
+% "fill/.store in=\fill", which globally overwrites the plain TeX glue macro
+% \fill (used e.g.\ by \hspace*{\fill}) as a side effect of loading the
+% package. Save and restore it so the rest of the document is unaffected.
+\usepackage{import}
+\usetikzlibrary{3d}
+\let\originalfill\fill
+\subimport{styles/plotneuralnet/}{init}
+\let\fill\originalfill
 \usepackage[outline]{contour}   % Load the 'contour' package with the 'outline' option
 \contourlength{1.2pt}   % Set the thickness of the outline created by the 'contour' package
 

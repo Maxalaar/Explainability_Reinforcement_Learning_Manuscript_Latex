@@ -38,7 +38,12 @@
             \coordinate (fork) at ($(s3.south) + (0,-0.9cm)$);
             \draw[plain] (s3.south) -- (fork);
             \draw[flow] (fork) -| (s4.north);
-            \draw[flow] (fork) -| (s5.north);
+
+            % --- point de fusion pour la branche vers s5 ---
+            \coordinate (s5turn) at (s5.north |- fork);
+            \draw[plain] (fork) -- (s5turn);
+            \draw[flow] (s5turn) -- (s5.north);
+
             \draw[flow] (s4) -- (m4);
             \draw[flow] (m5a |- s5.south) -- (m5a);
             \draw[flow] (m5b |- s5.south) -- (m5b);
@@ -49,7 +54,7 @@
             \node[artifact] at (fork) {Surrogate policies};
 
             % --- stage 5 also reuses the trajectory dataset artifact ---
-            \draw[flow] (artDataset.east) -| ($(s5.north) + (0,0)$);
+            \draw[plain] (artDataset.east) -| (s5turn);
         \end{tikzpicture}
     }
     \caption{The \gls{car} pipeline.}
