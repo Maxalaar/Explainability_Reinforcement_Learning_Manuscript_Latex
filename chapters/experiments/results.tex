@@ -25,7 +25,7 @@ Each initial policy reaches a score of the same order as these references, so it
 \input{figures/experiments/surrogate_policy_training.tex}
 
 Figure~\ref{fig:surrogate_policy_training} shows, for each environment, the training action loss of the three surrogate policies: the mean squared error between the action-distribution parameters of the surrogate and those of the initial policy.
-In every case the loss decreases smoothly, and the three independently trained policies follow almost identical trajectories, converging to the same value; the three curves in each panel largely overlap.
+In every case the loss decreases smoothly, and the three independently trained policies follow almost identical trajectories, converging to the same value; the three curves of each environment largely overlap.
 This consistency matters for \gls{car}: the method compares the latent representations of independently trained policies, and this comparison is only meaningful if these policies implement the same decision function.
 The behavioral fidelity of the surrogate policies is quantified by the \BehaviorReconstructionName in the next section.
 
@@ -33,35 +33,39 @@ The behavioral fidelity of the surrogate policies is quantified by the \Behavior
 \label{ssec:experiments_latent_space_analysis}
 
 We first evaluate the ability of the surrogate policies to replicate the behavior of the initial policies (\BehaviorReconstructionName, Table~\ref{tab:environments_metrics}).
-Across all environments, the surrogate policies achieve an average \BehaviorReconstructionName of $0.95 \pm 0.02$, indicating that they reliably reproduce the decisions of the initial policies over 100 evaluation episodes.
+The surrogate policies reach a \BehaviorReconstructionName of $0.96$ on average over 100 evaluation episodes, ranging from $0.83$ for Breakout to $1.00$ for Ms.\ Pac-Man and Surround.
+They therefore reproduce the decisions of the initial policies closely enough for their latent representations to be analyzed in place of those of the initial policies.
 
 \input{figures/clustering_agent_representation/environments_metrics.tex}
 \FloatBarrier
 
 For the remainder of the analysis, a random subset of 50,000 observations is embedded into the \gls{ls} of each surrogate policy, using the representation extracted directly after the last convolutional layer, and the resulting point cloud $\textcolor{myblue}{\mathcal{E}}$ is partitioned with $k$-means clustering \cite{macqueen1967multivariate}.
 
-Across all environments, policies, and numbers of clusters, the average \AbstractionScoreName is $0.99 \pm 0.00$.
-This indicates that the clusters formed in the \gls{ls} are not mere reflections of the raw pixel inputs or of the action distributions.
-
 \input{figures/clustering_agent_representation/clustering_universality_curves.tex}
 
-\input{figures/clustering_agent_representation/semantic_granularity.tex}
-
 Figure~\ref{fig:clustering_universality_curves} reports the evolution of \ClusteringUniversalityName with respect to the number of clusters.
-From three clusters onward, all curves stabilize around $0.5$ in every environment.
-Since \ClusteringUniversalityName is computed from the \gls{ari}, this result indicates a strong similarity in the clustering of the \gls{ls} across surrogate policies within each environment \cite{amezquita2020orchestrating}, regardless of the number of clusters chosen.
-This stability indicates that there is no single optimal number of clusters for explaining an agent's policy.
-This raises the question of how many clusters should be selected to perform an analysis of \gls{ls}.
-Our analysis suggests that this depends on the desired level of granularity.
+After the first few values of $K$, every curve settles onto a plateau whose level depends on the environment, from about $0.45$--$0.50$ for Breakout and Pong to about $0.65$ for Ms.\ Pac-Man and Space Invaders.
+Since \ClusteringUniversalityName is computed from the \gls{ari}, and an \gls{ari} of $0.5$ already corresponds to substantial agreement \cite{amezquita2020orchestrating}, these values indicate that independently trained surrogate policies recover a similar cluster structure in every environment, and that this structure is stable with respect to the number of clusters.
+The strength of this agreement varies across environments, but remains clearly above chance everywhere.
+The absence of a single optimal number of clusters suggests that $K$ should be chosen according to the level of granularity desired for the analysis.
+
+The \AbstractionScoreName, in contrast, varies markedly across environments.
+It is close to $1$ for Pong ($0.99$) and high for Breakout, Mario Bros and Space Invaders ($0.69$ to $0.82$): in these environments the latent clusters are largely independent of a direct clustering of the observations or of the action distributions.
+It is lower for Surround ($0.55$) and Ms.\ Pac-Man ($0.43$).
+In these two environments the position of the agent on the screen largely determines both the raw observation and the decision to take, so a clustering of the \gls{ls} naturally coincides with a clustering of the observations, and the \AbstractionScoreName cannot separate the two; a low score does not by itself imply that the representation is not abstract.
+
+\input{figures/clustering_agent_representation/abstraction_score_curves.tex}
+
+\input{figures/clustering_agent_representation/semantic_granularity.tex}
 
 With fewer clusters, \gls{car} highlights broad strategic patterns.
 For instance, in the Mario Bros environment, the two main groups correspond to whether the POW block is present (highlighted in red in Figure~\ref{fig:semantic_granularity}A) or not.
 This is particularly interesting, as the use of the POW block is a key determinant of strategy in this environment \cite{mario_bros_atari_2600}.
 
-With a larger number of clusters, the analysis captures more fine-grained tactical behaviors, such as `Attacking the left.'' and `Navigating through the level.'' (see Figure~\ref{fig:semantic_granularity}B).
+With a larger number of clusters, the analysis captures more fine-grained tactical behaviors, such as ``Attacking the left'' and ``Navigating through the level'' (see Figure~\ref{fig:semantic_granularity}B).
 
 Both perspectives are valid, depending on whether the goal is to study strategic or tactical behaviors.
-Similar interpretable structures can be observed across all evaluated environments.
+Similar interpretable structures can be observed across the evaluated environments.
 
 % TODO: extend with the additional experimental material planned for this chapter:
 % - ablation studies: analysed layer, clustering algorithm (K-means, GMM, deep embedding clustering),

@@ -1,0 +1,48 @@
+\begin{figure}[t]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tikzpicture}
+    \begin{axis}[
+        xlabel={Number of clusters},
+        ylabel={\AbstractionScoreName},
+        grid=major,
+        xmin=1, xmax=30,
+        ymin=0, ymax=1,
+        ytick distance=0.25,
+        ymajorgrids=true,
+        width=\textwidth,
+        height=0.55\textwidth,
+        set layers=standard,
+        legend style={at={(0.5,-0.22)}, anchor=north, legend columns=3,
+            /tikz/every even column/.append style={column sep=0.4cm}},
+    ]
+        \addplot[color=breakoutColor, mark=\breakoutMark, mark size=\breakoutMarkSize] coordinates {
+            (2,0.88) (3,0.50) (4,0.72) (5,0.79) (6,0.79) (7,0.85) (8,0.82) (9,0.81) (10,0.83) (11,0.85) (12,0.82) (13,0.83) (14,0.83) (15,0.83) (16,0.84) (17,0.82) (18,0.82) (19,0.85) (20,0.83) (21,0.84) (22,0.85) (23,0.84) (24,0.85) (25,0.86) (26,0.86) (27,0.87) (28,0.87) (29,0.87) (30,0.85)
+        };
+        \addlegendentry{Breakout}
+        \addplot[color=marioBrosColor, mark=\marioBrosMark, mark size=\marioBrosMarkSize] coordinates {
+            (2,0.02) (3,0.77) (4,0.69) (5,0.74) (6,0.64) (7,0.68) (8,0.65) (9,0.64) (10,0.71) (11,0.70) (12,0.70) (13,0.75) (14,0.68) (15,0.74) (16,0.74) (17,0.77) (18,0.76) (19,0.72) (20,0.75) (21,0.75) (22,0.75) (23,0.74) (24,0.77) (25,0.82) (26,0.74) (27,0.76) (28,0.76) (29,0.77) (30,0.76)
+        };
+        \addlegendentry{Mario Bros}
+        \addplot[color=msPacmanColor, mark=\msPacmanMark, mark size=\msPacmanMarkSize] coordinates {
+            (2,0.08) (3,0.60) (4,0.53) (5,0.52) (6,0.42) (7,0.37) (8,0.31) (9,0.36) (10,0.44) (11,0.40) (12,0.39) (13,0.41) (14,0.42) (15,0.45) (16,0.42) (17,0.43) (18,0.44) (19,0.44) (20,0.42) (21,0.43) (22,0.46) (23,0.44) (24,0.47) (25,0.51) (26,0.52) (27,0.46) (28,0.47) (29,0.46) (30,0.50)
+        };
+        \addlegendentry{Ms.\ Pac-Man}
+        \addplot[color=pongColor, mark=\pongMark, mark options={line width=1.5pt, scale=1}, mark size=\pongMarkSize] coordinates {
+            (2,0.99) (3,1.00) (4,1.00) (5,1.00) (6,0.99) (7,0.99) (8,0.99) (9,0.99) (10,0.99) (11,0.99) (12,0.99) (13,0.99) (14,0.99) (15,0.99) (16,0.99) (17,0.99) (18,0.99) (19,0.99) (20,0.99) (21,0.99) (22,0.99) (23,0.99) (24,0.99) (25,0.99) (26,0.99) (27,0.99) (28,0.99) (29,0.99) (30,0.99)
+        };
+        \addlegendentry{Pong}
+        \addplot[color=spaceInvadersColor, mark=\spaceInvadersMark, mark size=\spaceInvadersMarkSize] coordinates {
+            (2,0.93) (3,0.80) (4,0.69) (5,0.71) (6,0.71) (7,0.67) (8,0.74) (9,0.73) (10,0.72) (11,0.72) (12,0.63) (13,0.67) (14,0.69) (15,0.70) (16,0.66) (17,0.68) (18,0.64) (19,0.66) (20,0.64) (21,0.67) (22,0.67) (23,0.66) (24,0.64) (25,0.67) (26,0.64) (27,0.65) (28,0.66) (29,0.64) (30,0.64)
+        };
+        \addlegendentry{Space Invaders}
+        \addplot[color=surroundColor, mark=\surroundMark, mark size=\surroundMarkSize] coordinates {
+            (2,0.43) (3,0.40) (4,0.38) (5,0.53) (6,0.53) (7,0.50) (8,0.48) (9,0.50) (10,0.54) (11,0.53) (12,0.58) (13,0.56) (14,0.55) (15,0.51) (16,0.60) (17,0.58) (18,0.56) (19,0.55) (20,0.59) (21,0.56) (22,0.59) (23,0.59) (24,0.55) (25,0.65) (26,0.58) (27,0.61) (28,0.61) (29,0.63) (30,0.67)
+        };
+        \addlegendentry{Surround}
+    \end{axis}
+    \end{tikzpicture}
+    }
+    \caption{Evolution of \AbstractionScoreName with respect to the number of clusters, for each of the six Atari environments.}
+    \label{fig:abstraction_score_curves}
+\end{figure}
