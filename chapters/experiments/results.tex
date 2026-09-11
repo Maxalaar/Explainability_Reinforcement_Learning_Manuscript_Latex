@@ -1,9 +1,11 @@
 \section{Results}
 \label{sec:experiments_results}
 
-This section reports the results of applying \gls{car} to the six environments described in Section~\ref{sec:experiments_configuration}.
-Sections~\ref{ssec:initial_policy_training} and~\ref{ssec:surrogate_policy_training} first check that the two learning stages of the pipeline behave as expected: that the initial policies reach a competent level of play, and that the surrogate policies faithfully imitate them.
-Section~\ref{ssec:experiments_latent_space_analysis} then presents the analysis of the latent representations and the values of the three evaluation metrics.
+This section reports the results of applying \gls{car} to the six environments.
+Sections~\ref{ssec:initial_policy_training} and~\ref{ssec:surrogate_policy_training} first verify that the two learning stages of the pipeline behave as expected.
+The first section verifies that the initial policies reach a competent level of play, while the second checks that the surrogate policies faithfully reproduce their behavior.
+Section~\ref{ssec:experiments_latent_space_analysis} then presents the analysis of the latent representations and the results of the three evaluation metrics.
+
 
 \subsection{Initial policy training}
 \label{ssec:initial_policy_training}
@@ -14,7 +16,8 @@ Figure~\ref{fig:initial_policy_training} shows how the initial policies improve 
 For each environment, the mean episode return is normalized so that $0\%$ and $100\%$ correspond to the lowest and highest mean return observed during that run.
 In every environment the return increases and then reaches a plateau, at which point training is stopped.
 The number of iterations required to reach this plateau varies from a few hundred, for Pong, to several thousand, for Surround and Ms.\ Pac-Man.
-For Ms.\ Pac-Man the return decreases after its peak; since the best checkpoint is retained rather than the last one, this does not affect the policy that is subsequently analyzed.
+For Ms.\ Pac-Man the return decreases after its peak.
+Since the best checkpoint is retained rather than the last one, this does not affect the policy that is subsequently analyzed.
 
 To confirm that the trained policies play competently, their scores are compared with the reference scores reported by \cite{machado2017revisitingarcadelearningenvironment}.
 Each initial policy reaches a score of the same order as these references, so it constitutes a reasonable target for imitation.
@@ -24,9 +27,8 @@ Each initial policy reaches a score of the same order as these references, so it
 
 \input{figures/experiments/surrogate_policy_training.tex}
 
-Figure~\ref{fig:surrogate_policy_training} shows, for each environment, the training action loss of the three surrogate policies: the mean squared error between the action-distribution parameters of the surrogate and those of the initial policy.
-In every case the loss decreases smoothly, and the three independently trained policies follow almost identical trajectories, converging to the same value; the three curves of each environment largely overlap.
-This consistency matters for \gls{car}: the method compares the latent representations of independently trained policies, and this comparison is only meaningful if these policies implement the same decision function.
+Figure~\ref{fig:surrogate_policy_training} shows, for each environment, the training action loss of the three surrogate policies.
+In every case the loss decreases smoothly, and the three independently trained policies follow almost identical trajectories, converging to the same value.
 The behavioral fidelity of the surrogate policies is quantified by the \BehaviorReconstructionName in the next section.
 
 \subsection{Latent space analysis}
