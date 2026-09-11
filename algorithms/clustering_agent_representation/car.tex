@@ -4,7 +4,7 @@
 
 \Input{
 \\
-Original policy $\textcolor{mygreen}{\pi}$\\
+Initial policy $\InitialPolicy$\\
 Observation dataset $\mathbb{O}$\\
 Number of surrogate policies $n$\\
 Surrogate policy architecture $\textcolor{myred}{\pi'}$ (encoder $\textcolor{myblue}{f_{enc}}$, decoder $f_{dec}$)\\
@@ -20,8 +20,8 @@ Clusterings $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$
 
 \AlgoRule
 
-\tcp{Behavioral cloning dataset built from the target policy $\textcolor{mygreen}{\pi}$}
-$\mathcal{D} \leftarrow \big\{ \big(O, p(\textcolor{mygreen}{\pi}(O))\big) \mid O \in \mathbb{O} \big\}$\;
+\tcp{Behavioral cloning dataset built from the target policy $\InitialPolicy$}
+$\mathcal{D} \leftarrow \big\{ \big(O, p(\InitialPolicy(O))\big) \mid O \in \mathbb{O} \big\}$\;
 
 \BlankLine
 \tcp{MSE loss between action-distribution parameters, as defined in Equation~\eqref{eq:loss}}
@@ -33,7 +33,7 @@ $\mathcal{L} \leftarrow$ \gls{mse}\;
     Initialize $\Theta_i$ randomly\;
 
     \BlankLine
-    \tcp{Behavioral cloning of $\textcolor{mygreen}{\pi}$ via SGD, see Algorithm~\ref{alg:stochastic_gradient_descent}}
+    \tcp{Behavioral cloning of $\InitialPolicy$ via SGD, see Algorithm~\ref{alg:stochastic_gradient_descent}}
     $\Theta_i \leftarrow$ \FnSGD{$\mathcal{D}, \textcolor{myred}{\pi'}, \mathcal{L}, \eta, \Theta_i$}\;
 }
 

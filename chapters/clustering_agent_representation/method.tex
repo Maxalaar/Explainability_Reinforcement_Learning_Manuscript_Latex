@@ -16,7 +16,7 @@ Figure~\ref{fig:illustration_method} provides a visual overview of the two stage
 
 This section is organized into three parts.
 The first explains why multiple surrogate policies are used to study the stability of the representations.
-The second describes how these policies are trained to match the original policy as closely as possible.
+The second describes how these policies are trained to match the initial policy as closely as possible.
 The third presents how their \gls{lr} are clustered to identify the \gls{cs}.
 
 \subsection{Multiple surrogate policies}
@@ -42,10 +42,10 @@ Their role is not to simplify the decision process but to provide multiple indep
 
 \subsection{Training surrogate policies}
 
-Throughout the remainder of this manuscript, the initial policy we aim to explain is denoted as $\textcolor{mygreen}{\pi}$.
+Throughout the remainder of this manuscript, the initial policy we aim to explain is denoted as $\InitialPolicy$.
 This initial policy is obtained without imposing any constraints on its origin.
 It may result from classical or deep reinforcement learning \cite{sutton2018reinforcement}, alpha-beta algorithm \cite{knuth1975analysis}, or even from demonstrations provided by humans \cite{pmlr-v9-ross10a}.
-The crucial requirement is the availability of a dataset containing a sufficient number of projections from the observation space $\mathcal{O}$ to the action space $\mathcal{A}$ induced by $\textcolor{mygreen}{\pi}$ to train a \gls{nn}.
+The crucial requirement is the availability of a dataset containing a sufficient number of projections from the observation space $\mathcal{O}$ to the action space $\mathcal{A}$ induced by $\InitialPolicy$ to train a \gls{nn}.
 
 The replicated policies are referred to as surrogate policies.
 To assess the stability of the learned representations, $n$ surrogate policies are trained independently, denoted by $\SurrogatePolicy{1}, \dots, \SurrogatePolicy{n}$.
@@ -56,7 +56,7 @@ For a given surrogate policy $\SurrogatePolicy{i}$, parameterized by $\Theta_i$,
 
 \input{figures/clustering_agent_representation/surrogate_policy_architecture.tex}
 
-% For any observation $O$, each $\SurrogatePolicy{i}$ should produce an action distribution that closely matches that of $\textcolor{mygreen}{\pi}$.
+% For any observation $O$, each $\SurrogatePolicy{i}$ should produce an action distribution that closely matches that of $\InitialPolicy$.
 To train each surrogate policy $\SurrogatePolicy{i}$ to accurately replicate the action distribution, we define a loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
 This loss, defined in Equation~\eqref{eq:car_loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.
 In practice, this function $p$ does not need to be explicitly defined, as neural policies directly output the parameters of the action distribution.
@@ -64,7 +64,7 @@ In practice, this function $p$ does not need to be explicitly defined, as neural
 \begin{align}
     \min_{\Theta_i} \sum_{O \in \mathcal{O}}
     \mathrm{MSE}\Big(
-        p \, \!\big(\textcolor{mygreen}{\pi}\left(O\right)\big),
+        p \, \!\big(\InitialPolicy\left(O\right)\big),
         p \, \!\big(\textcolor{myred}{\pi'_{\Theta_i}}\left(O\right)\big)
     \Big)
     \label{eq:car_loss}
@@ -119,7 +119,7 @@ The position of an observation in the \gls{ls} thus reflects the stage of the en
 
 This example illustrates what \gls{car} is expected to produce, but it relies on the visual inspection of a single surrogate policy, which is precisely the type of evidence whose limitations motivated this work.
 Three aspects must therefore be evaluated before such an analysis can be trusted.
-First, the surrogate policy must faithfully reproduce the original policy so that its explanations remain relevant to the target policy.
+First, the surrogate policy must faithfully reproduce the initial policy so that its explanations remain relevant to the target policy.
 Second, the recovered conceptual organization must be consistent across independently trained surrogate policies.
 Finally, the clusters must capture genuine abstractions rather than simply reproducing structure already present in the observations or action distributions.
 

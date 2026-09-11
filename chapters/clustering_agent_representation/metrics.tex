@@ -4,7 +4,7 @@
 To evaluate the effectiveness of \gls{car}, three evaluation metrics are introduced:
 
 \begin{itemize}
-    \item \textbf{\BehaviorReconstructionName} : it measures how well a surrogate policy faithfully reproduces the behavior of the original policy by comparing their cumulative rewards.
+    \item \textbf{\BehaviorReconstructionName} : it measures how well a surrogate policy faithfully reproduces the behavior of the initial policy by comparing their cumulative rewards.
     \item \textbf{\ClusteringUniversalityName} : it evaluates the stability of clusterings by measuring the similarity of clusters obtained from independently trained surrogate policies.
     \item \textbf{\AbstractionScoreName} : it quantifies the extent to which \gls{ls} clusters capture abstractions rather than directly reflecting the structure of observations or actions.
 \end{itemize}
@@ -17,27 +17,27 @@ We then introduce the \gls{ari} measure, which serves as the foundation for the 
 
 % We argue that explaining a function $b$ that closely approximates another function $a$ is essentially the same as explaining $a$.
 % If $b$ accurately captures the key decision patterns of $a$, understanding $b$ provides meaningful insights into how $a$ works \cite{guidotti2018surveymethodsexplainingblack}.
-% In our setting, this means that generating explanations for $\SurrogatePolicy{}$ that faithfully reproduce $\OriginalPolicy$ amounts to explaining $\OriginalPolicy$ directly.
+% In our setting, this means that generating explanations for $\SurrogatePolicy{}$ that faithfully reproduce $\InitialPolicy$ amounts to explaining $\InitialPolicy$ directly.
 
-We introduce the \BehaviorReconstructionName metric to assess whether $\SurrogatePolicy{}$ faithfully reproduces the behavior of $\OriginalPolicy$.
-This metric compares the returns obtained by the original policy $\OriginalPolicy$ and the surrogate policies $\SurrogatePolicy{}$ over a set of evaluation episodes.
+We introduce the \BehaviorReconstructionName metric to assess whether $\SurrogatePolicy{}$ faithfully reproduces the behavior of $\InitialPolicy$.
+This metric compares the returns obtained by the initial policy $\InitialPolicy$ and the surrogate policies $\SurrogatePolicy{}$ over a set of evaluation episodes.
 We use the definition of return introduced in Section~\ref{subsec:value_functions}, where $g(t,\gamma)$ denotes the discounted sum of rewards collected along a trajectory $t$.
 Here, the return is computed over complete episodes with $\gamma=1$, so $g$ corresponds to the total reward collected during the episode.
 Each policy is evaluated over $m$ episodes.
-We denote by $g_{\OriginalPolicy}^{i}$ the return obtained by the original policy in episode $i$, and by $g_{\SurrogatePolicy{j}}^{i}$ the return obtained by surrogate policy $\SurrogatePolicy{j}$ in episode $i$.
-The \BehaviorReconstructionName{} is then defined as the mean return of the surrogate policies normalized by the mean return of the original policy:
+We denote by $g_{\InitialPolicy}^{i}$ the return obtained by the initial policy in episode $i$, and by $g_{\SurrogatePolicy{j}}^{i}$ the return obtained by surrogate policy $\SurrogatePolicy{j}$ in episode $i$.
+The \BehaviorReconstructionName{} is then defined as the mean return of the surrogate policies normalized by the mean return of the initial policy:
 
 \begin{align}
-    \text{\BehaviorReconstructionName} = \frac{1}{n \sum_{i=1}^{m} g_{\OriginalPolicy}^{i}} \sum_{j=1}^{n} \sum_{k=1}^{m} g_{\SurrogatePolicy{j}}^{k}
+    \text{\BehaviorReconstructionName} = \frac{1}{n \sum_{i=1}^{m} g_{\InitialPolicy}^{i}} \sum_{j=1}^{n} \sum_{k=1}^{m} g_{\SurrogatePolicy{j}}^{k}
 \end{align}
 
-In imitation learning, it is unlikely to expect the surrogate policy $\SurrogatePolicy{}$ to outperform the initial policy $\OriginalPolicy$ it aims to approximate through supervised learning \cite{pmlr-v9-ross10a}.
+In imitation learning, it is unlikely to expect the surrogate policy $\SurrogatePolicy{}$ to outperform the initial policy $\InitialPolicy$ it aims to approximate through supervised learning \cite{pmlr-v9-ross10a}.
 Consequently this metric ranges in $[0,1]$.
-Values approaching 1 indicate minimal loss in reproducing $\OriginalPolicy$, while values close to 0 indicate poor reproduction.  
+Values approaching 1 indicate minimal loss in reproducing $\InitialPolicy$, while values close to 0 indicate poor reproduction.  
 
 We deliberately adopt a reward-based definition rather than alternatives based on actions or action distributions (e.g., training loss, accuracy, KL divergence \cite{shlens2014noteskullbackleiblerdivergencelikelihood}, or optimal transport \cite{peyré2020computationaloptimaltransport}).
 Since surrogate policies are trained in a supervised manner, they cannot develop strategies beyond those demonstrated by the initial policy.
-This means that if the rewards achieved are comparable, the surrogate policy is effectively copying the original policy's behavior.
+This means that if the rewards achieved are comparable, the surrogate policy is effectively copying the initial policy's behavior.
 
 \subsection{Adjusted Rand Index}
 \label{subsec:adjusted_rand_index}

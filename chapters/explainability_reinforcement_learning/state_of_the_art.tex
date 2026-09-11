@@ -51,10 +51,10 @@ With this family of methods, the \textit{interpretable policy function} itself i
 \label{subsubsec:policy_approximation_via_interpretable_model}
 
 An interpretable model can be trained to approximate a policy learned through deep \gls{rl} \cite{sieusahai2021explaining}.
-In this setting, the problem is formulated as a supervised learning task, where the original deep \gls{rl} policy is used to label each observation with the action it selects, such as the observation from the Atari game ``Pong'' shown in Figure~\ref{fig:policy_approximation_observation}.
-Using this dataset, the interpretable model is trained to reproduce the behavior of the original policy, yielding for instance the decision tree illustrated in Figure~\ref{fig:policy_approximation_decision_tree}, obtained by approximating a deep \gls{rl} policy trained on that environment.
+In this setting, the problem is formulated as a supervised learning task, where the initial deep \gls{rl} policy is used to label each observation with the action it selects, such as the observation from the Atari game ``Pong'' shown in Figure~\ref{fig:policy_approximation_observation}.
+Using this dataset, the interpretable model is trained to reproduce the behavior of the initial policy, yielding for instance the decision tree illustrated in Figure~\ref{fig:policy_approximation_decision_tree}, obtained by approximating a deep \gls{rl} policy trained on that environment.
 The resulting interpretable model is then used as an explanation for the observer.
-If this approximation is sufficiently faithful, it can also be deployed in the environment in place of the original policy, thereby providing a high degree of control over the agent.
+If this approximation is sufficiently faithful, it can also be deployed in the environment in place of the initial policy, thereby providing a high degree of control over the agent.
 
 \input{figures/explainability_reinforcement_learning/policy_approximation_example.tex}
 
