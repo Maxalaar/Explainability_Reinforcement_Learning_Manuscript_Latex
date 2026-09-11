@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering
+\resizebox{\linewidth}{!}{
+    \begin{tblr}{
+        colspec={|c|c|c|},
+        hlines,
+        vlines,
+        row{1} = {font=\bfseries, halign=c, valign=m}
+    }
+        Environment     & Decoder hidden layers & Actions \\
+        Breakout        & 512, 256, 128 & 4 \\
+        Mario Bros      & 512, 256, 128 & 18 \\
+        Ms.\ Pac-Man    & 512, 256, 128 & 9 \\
+        Pong            & 128 & 6 \\
+        Space Invaders  & 128 & 6 \\
+        Surround        & 512, 256, 128 & 5 \\
+    \end{tblr}
+}
+\caption{Width of the surrogate decoder and number of actions for each environment.}
+\label{tab:neural_architecture}
+\end{table}

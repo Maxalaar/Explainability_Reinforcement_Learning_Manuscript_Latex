@@ -65,15 +65,24 @@ Each player leaves a solid trail behind a moving cursor, and the goal is to forc
 
 \subsection{Neural architecture}
 
-The initial policy and the surrogate policies are convolutional networks that share the same feature-extraction trunk.
-The trunk is a sequence of four convolutional layers, with $16$, $32$, $64$, and $128$ channels, $4 \times 4$ kernels, and a stride of $2$, each followed by layer normalization and a LeakyReLU activation.
-Its input is the observation, a stack of four consecutive $64 \times 64$ frames.
+% \input{tables/experiments/neural_architecture_table.tex}
 
-The initial policy follows an actor--critic design: the trunk feeds two separate multilayer perceptrons, one producing the parameters of the action distribution and one producing the value estimate.
-The surrogate policy has the encoder--decoder structure introduced in Section~\ref{sec:clustering_agent_representation_method}: its encoder $\textcolor{myblue}{f_{enc}}$ is a trunk with the same architecture, and its decoder is a single multilayer perceptron producing the parameters of the action distribution.
-The surrogate has no value head, since it is trained only to reproduce the action distribution of the initial policy.
+The surrogate policies use a convolutional neural network to process the visual observations.
+The input consists of a stack of four consecutive $64 \times 64$ frames.
+The convolutional part consists of four layers with $16$, $32$, $64$, and $128$ channels, using $4 \times 4$ kernels with a stride of $2$.
+Each convolutional layer is followed by a LeakyReLU activation.
+The resulting representation is then flattened and passed through a multilayer perceptron that produces the parameters of the action distribution.
 
-The latent space analyzed by \gls{car} is the representation produced by the last convolutional layer of the surrogate encoder.
+The architecture of the multilayer perceptron varies across environments.
+For Pong and Space Invaders, it contains a single hidden layer with $128$ units.
+For the other four environments, it contains three hidden layers with $512$, $256$, and $128$ units.
+Table~\ref{tab:neural_architecture} summarizes these configurations together with the number of actions for each environment.
+
+The latent space analyzed by \gls{car} is not restricted to a specific layer or architecture.
+Any latent space produced by the network can be analyzed using the same methodology.
+In the experiments presented in this chapter, the default analysis considers the representation produced by the last convolutional layer.
+The layer-wise analysis additionally considers the representations produced by the hidden layers of the multilayer perceptron.
+The final output layer is excluded because it directly produces the action-distribution parameters.
 
 \subsection{Parameters}
 
