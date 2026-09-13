@@ -14,8 +14,8 @@
 % Margins around boxes A and B (horizontal, and vertical top/bottom set
 % independently so the box can be made asymmetric)
 \providecommand{\NeuralArchBoxMarginX}{2cm}
-\providecommand{\NeuralArchBoxMarginYTop}{2cm}
-\providecommand{\NeuralArchBoxMarginYBottom}{2cm}
+\providecommand{\NeuralArchBoxMarginYTop}{1cm}
+\providecommand{\NeuralArchBoxMarginYBottom}{2.2cm}
 
 % Padding between the "A"/"B" letter and its surrounding circle; the
 % circle itself is a node that auto-fits around the letter, so its size
@@ -23,8 +23,8 @@
 \providecommand{\NeuralArchCircleInnerSep}{3pt}
 
 % Offset of the label/circle A relative to the top-left corner of box A
-\providecommand{\NeuralArchLabelAOffsetX}{0.1cm}
-\providecommand{\NeuralArchLabelAOffsetY}{0.1cm}
+\providecommand{\NeuralArchLabelAOffsetX}{0.0cm}
+\providecommand{\NeuralArchLabelAOffsetY}{0.0cm}
 
 % Offset of the label/circle B relative to the top-left corner of box B
 \providecommand{\NeuralArchLabelBOffsetX}{0.1cm}
@@ -66,6 +66,12 @@
                   \selectfont\bfseries
     }
 }
+
+% This font/size optically centers a bit right of the box TikZ computes
+% for a single bold capital, so re-centering it needs a small symmetric
+% kern (shifts the ink without changing the measured width, so the
+% auto-sizing circle radius is unaffected).
+\newcommand{\NeuralArchCircleLetter}[1]{\kern-0.75pt#1\kern0.75pt}
 
 
 % --------------------------------------------------------
@@ -249,7 +255,7 @@
     anchor=south east
 ] (labelA) at
     ($(boxA.north west)+(\NeuralArchLabelAOffsetX,\NeuralArchLabelAOffsetY)$)
-    {A};
+    {\NeuralArchCircleLetter{A}};
 
 
 % ============================================================
@@ -354,7 +360,7 @@
     anchor=south east
 ] (labelB) at
     ($(boxB.north west)+(\NeuralArchLabelBOffsetX,\NeuralArchLabelBOffsetY)$)
-    {B};
+    {\NeuralArchCircleLetter{B}};
 
 
 % ============================================================
@@ -369,14 +375,14 @@
 
     % Circle A
     \tikz[baseline=(legendA.base)]{
-        \node[archLabelCircle] (legendA) {A};
+        \node[archLabelCircle] (legendA) {\NeuralArchCircleLetter{A}};
     }
     \quad Pong, Space Invaders
     \qquad\qquad
 
     % Circle B
     \tikz[baseline=(legendB.base)]{
-        \node[archLabelCircle] (legendB) {B};
+        \node[archLabelCircle] (legendB) {\NeuralArchCircleLetter{B}};
     }
     \quad Breakout, Mario Bros, Ms.\ Pac-Man, Surround
 
