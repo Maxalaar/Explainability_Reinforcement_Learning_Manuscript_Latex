@@ -11,16 +11,24 @@
 % Horizontal shift of heads A and B
 \providecommand{\NeuralArchBoxShiftX}{0.2cm}
 
-% Margins around boxes A and B
+% Margins around boxes A and B (horizontal, and vertical top/bottom set
+% independently so the box can be made asymmetric)
 \providecommand{\NeuralArchBoxMarginX}{2cm}
-\providecommand{\NeuralArchBoxMarginY}{2cm}
+\providecommand{\NeuralArchBoxMarginYTop}{2cm}
+\providecommand{\NeuralArchBoxMarginYBottom}{2cm}
 
-% Radius of the circles around A and B
-\providecommand{\NeuralArchCircleRadius}{0.18cm}
+% Padding between the "A"/"B" letter and its surrounding circle; the
+% circle itself is a node that auto-fits around the letter, so its size
+% is controlled only through this padding
+\providecommand{\NeuralArchCircleInnerSep}{3pt}
 
-% Offset of the A/B circle relative to the label position
-\providecommand{\NeuralArchCircleOffsetX}{0cm}
-\providecommand{\NeuralArchCircleOffsetY}{0cm}
+% Offset of the label/circle A relative to the top-left corner of box A
+\providecommand{\NeuralArchLabelAOffsetX}{0.1cm}
+\providecommand{\NeuralArchLabelAOffsetY}{0.1cm}
+
+% Offset of the label/circle B relative to the top-left corner of box B
+\providecommand{\NeuralArchLabelBOffsetX}{0.1cm}
+\providecommand{\NeuralArchLabelBOffsetY}{0.1cm}
 
 % ============================================================
 % Figure
@@ -41,6 +49,23 @@
 \fontsize{\NeuralArchTextSize pt}
          {\dimexpr\NeuralArchTextSize pt*6/5\relax}
 \selectfont
+
+% --------------------------------------------------------
+% Style for the auto-sizing A/B circle nodes (shared by the
+% in-diagram labels and the legend, so both stay consistent)
+% --------------------------------------------------------
+
+\tikzset{
+    archLabelCircle/.style={
+        circle,
+        draw,
+        thick,
+        inner sep=\NeuralArchCircleInnerSep,
+        font=\fontsize{\NeuralArchLabelSize pt}
+                  {\dimexpr\NeuralArchLabelSize pt*6/5\relax}
+                  \selectfont\bfseries
+    }
+}
 
 
 % --------------------------------------------------------
@@ -124,7 +149,25 @@
 \draw [connection] (c3-east) -- node {\midarrow} (c4-west);
 
 
-\node[align=center] at ($(c4-east)+(0.9,0)$) {flatten};
+% --------------------------------------------------------
+% Flatten
+% --------------------------------------------------------
+% Drawn as a single wide dense bar (same shape convention as the
+% Dense boxes below) so the flattening operation reads clearly as
+% "all conv features concatenated into one vector".
+
+\pic[shift={(1.3,0,0)}] at (c4-east)
+    {Box={
+        name=flatten,
+        caption={\mbox{Flatten}},
+        fill=FlattenColor,
+        opacity=0.85,
+        height=3,
+        width=2,
+        depth=42
+    }};
+
+\draw [connection] (c4-east) -- node {\midarrow} (flatten-west);
 
 
 % ============================================================
@@ -133,7 +176,7 @@
 
 \pic[
     shift={(\NeuralArchBoxShiftX,3.2,0)}
-] at (c4-east)
+] at (flatten-east)
     {Box={
         name=aFc1,
         caption={Dense 128},
@@ -143,6 +186,8 @@
         width=2,
         depth=16
     }};
+
+\draw [connection] (flatten-east) -- node {\midarrow} (aFc1-west);
 
 
 \pic[shift={(2,0,0)}] at (aFc1-east)
@@ -169,40 +214,42 @@
 % ------------------------------------------------------------
 % Box A
 % ------------------------------------------------------------
+% inner xsep/ysep on a \tikz fit node are symmetric, so an
+% asymmetric top/bottom margin needs the box built in two steps:
+% first fit tightly around the content, then grow that fit by
+% independent amounts on each side before drawing the outline.
 
 \node[
-    draw,
-    dashed,
-    rounded corners=0.1cm,
-    inner xsep=\NeuralArchBoxMarginX,
-    inner ysep=\NeuralArchBoxMarginY,
     fit=(aFc1-nearnorthwest)
         (aFc1-farsouthwest)
         (aOut-nearsoutheast)
-        (aOut-farnortheast)
-] (boxA) {};
+        (aOut-farnortheast),
+    inner sep=0pt
+] (boxA-fit) {};
+
+\coordinate (boxA-sw) at
+    ($(boxA-fit.south west) - (\NeuralArchBoxMarginX,\NeuralArchBoxMarginYBottom)$);
+\coordinate (boxA-ne) at
+    ($(boxA-fit.north east) + (\NeuralArchBoxMarginX,\NeuralArchBoxMarginYTop)$);
+
+\node[fit=(boxA-sw)(boxA-ne), inner sep=0pt] (boxA) {};
+
+\draw[dashed, rounded corners=0.1cm] (boxA.south west) rectangle (boxA.north east);
 
 
 % ------------------------------------------------------------
 % Label A + circle
 % ------------------------------------------------------------
+% A single auto-sizing circle node: its radius follows the size of
+% the "A" glyph plus \NeuralArchCircleInnerSep, and its position is
+% freely adjustable via the \NeuralArchLabelAOffsetX/Y parameters.
 
 \node[
-    above left=-0.1cm and -0.1cm of boxA.north west,
-    inner sep=0pt,
-    font=\fontsize{\NeuralArchLabelSize pt}
-              {\dimexpr\NeuralArchLabelSize pt*6/5\relax}
-              \selectfont\bfseries
-] (labelA) {A};
-
-
-\draw[
-    thick
-]
-($(labelA.center)
-    +(\NeuralArchCircleOffsetX,\NeuralArchCircleOffsetY)$)
-circle
-    (\NeuralArchCircleRadius);
+    archLabelCircle,
+    anchor=south east
+] (labelA) at
+    ($(boxA.north west)+(\NeuralArchLabelAOffsetX,\NeuralArchLabelAOffsetY)$)
+    {A};
 
 
 % ============================================================
@@ -211,7 +258,7 @@ circle
 
 \pic[
     shift={(\NeuralArchBoxShiftX,-3.2,0)}
-] at (c4-east)
+] at (flatten-east)
     {Box={
         name=bFc1,
         caption={Dense 512},
@@ -221,6 +268,8 @@ circle
         width=2,
         depth=30
     }};
+
+\draw [connection] (flatten-east) -- node {\midarrow} (bFc1-west);
 
 
 \pic[shift={(1.5,0,0)}] at (bFc1-east)
@@ -279,16 +328,21 @@ circle
 % ------------------------------------------------------------
 
 \node[
-    draw,
-    dashed,
-    rounded corners=0.1cm,
-    inner xsep=\NeuralArchBoxMarginX,
-    inner ysep=\NeuralArchBoxMarginY,
     fit=(bFc1-nearnorthwest)
         (bFc1-farsouthwest)
         (bOut-nearsoutheast)
-        (bOut-farnortheast)
-] (boxB) {};
+        (bOut-farnortheast),
+    inner sep=0pt
+] (boxB-fit) {};
+
+\coordinate (boxB-sw) at
+    ($(boxB-fit.south west) - (\NeuralArchBoxMarginX,\NeuralArchBoxMarginYBottom)$);
+\coordinate (boxB-ne) at
+    ($(boxB-fit.north east) + (\NeuralArchBoxMarginX,\NeuralArchBoxMarginYTop)$);
+
+\node[fit=(boxB-sw)(boxB-ne), inner sep=0pt] (boxB) {};
+
+\draw[dashed, rounded corners=0.1cm] (boxB.south west) rectangle (boxB.north east);
 
 
 % ------------------------------------------------------------
@@ -296,21 +350,11 @@ circle
 % ------------------------------------------------------------
 
 \node[
-    above left=-0.1cm and -0.1cm of boxB.north west,
-    inner sep=0pt,
-    font=\fontsize{\NeuralArchLabelSize pt}
-              {\dimexpr\NeuralArchLabelSize pt*6/5\relax}
-              \selectfont\bfseries
-] (labelB) {B};
-
-
-\draw[
-    thick
-]
-($(labelB.center)
-    +(\NeuralArchCircleOffsetX,\NeuralArchCircleOffsetY)$)
-circle
-    (\NeuralArchCircleRadius);
+    archLabelCircle,
+    anchor=south east
+] (labelB) at
+    ($(boxB.north west)+(\NeuralArchLabelBOffsetX,\NeuralArchLabelBOffsetY)$)
+    {B};
 
 
 % ============================================================
@@ -324,31 +368,15 @@ circle
 ] at (current bounding box.south) {
 
     % Circle A
-    \tikz[baseline=-0.6ex]{
-        \node[
-            circle,
-            draw,
-            inner sep=0pt,
-            minimum size=2*\NeuralArchCircleRadius,
-            font=\fontsize{\NeuralArchLabelSize pt}
-                      {\dimexpr\NeuralArchLabelSize pt*6/5\relax}
-                      \selectfont\bfseries
-        ] {A};
+    \tikz[baseline=(legendA.base)]{
+        \node[archLabelCircle] (legendA) {A};
     }
     \quad Pong, Space Invaders
     \qquad\qquad
 
     % Circle B
-    \tikz[baseline=-0.6ex]{
-        \node[
-            circle,
-            draw,
-            inner sep=0pt,
-            minimum size=2*\NeuralArchCircleRadius,
-            font=\fontsize{\NeuralArchLabelSize pt}
-                      {\dimexpr\NeuralArchLabelSize pt*6/5\relax}
-                      \selectfont\bfseries
-        ] {B};
+    \tikz[baseline=(legendB.base)]{
+        \node[archLabelCircle] (legendB) {B};
     }
     \quad Breakout, Mario Bros, Ms.\ Pac-Man, Surround
 

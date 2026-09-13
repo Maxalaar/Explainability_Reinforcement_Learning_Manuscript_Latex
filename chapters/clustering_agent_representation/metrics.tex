@@ -197,8 +197,17 @@ As discussed above, \ClusteringUniversalityName alone does not indicate whether 
 We therefore introduce the \AdjustedClusteringUniversalityName, which measures how much of the agreement between the different surrogate policies remains after accounting for the three trivial baselines.
 
 \begin{align}
-\scalebox{0.7}{%
-$\text{\AdjustedClusteringUniversalityName} = \text{\ClusteringUniversalityName} - \frac{1}{n} \sum_{i=1}^{n} \max \left( \left|A^{obs}_{i}\right|, \left|A^{act}_{i}\right|, \left|A^{untr}_{i}\right| \right)$%
+\scalebox{1}{%
+$\vcenter{\hbox{\shortstack{\textit{Adjusted}\\\textit{Clustering}\\\textit{Universality}}}}
+=
+\vcenter{\hbox{\shortstack{\textit{Clustering}\\\textit{Universality}}}}
+-
+\frac{1}{n}\sum_{i=1}^{n}
+\max\left(
+\left|A^{obs}_{i}\right|,
+\left|A^{act}_{i}\right|,
+\left|A^{untr}_{i}\right|
+\right)$%
 }
 \end{align}
 
