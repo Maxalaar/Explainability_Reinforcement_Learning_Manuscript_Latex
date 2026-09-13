@@ -1,17 +1,18 @@
 \section{Evaluation Metrics}
 \label{sec:clustering_agent_representation_metrics}
 
-To evaluate the effectiveness of \gls{car}, three evaluation metrics are introduced:
+To evaluate the effectiveness of \gls{car}, four evaluation metrics are introduced:
 
 \begin{itemize}
     \item \textbf{\BehaviorReconstructionName} : it measures how well a surrogate policy faithfully reproduces the behavior of the initial policy by comparing their cumulative rewards.
     \item \textbf{\ClusteringUniversalityName} : it evaluates the stability of clusterings by measuring the similarity of clusters obtained from independently trained surrogate policies.
-    \item \textbf{\AbstractionScoreName} : it quantifies the extent to which \gls{ls} clusters capture abstractions rather than directly reflecting the structure of observations or actions.
+    \item \textbf{\AbstractionScoreName} : it quantifies the extent to which \gls{ls} clusters capture abstractions rather than directly reflecting the structure of observations, actions, or the network architecture prior to training.
+    \item \textbf{\AdjustedClusteringUniversalityName} : it combines the two previous metrics into a single measure of how much of the cross-seed agreement captured by \ClusteringUniversalityName cannot be explained away by any of the trivial baselines underlying \AbstractionScoreName.
 \end{itemize}
 
 The remainder of this section details the motivation for each metric and describes how they are calculated.
 In the first subsection, we develop the \BehaviorReconstructionName{}.
-We then introduce the \gls{ari} measure, which serves as the foundation for the two other metrics introduced in the subsequent subsections, namely \ClusteringUniversalityName{} and \AbstractionScoreName{}.
+We then introduce the \gls{ari} measure, which serves as the foundation for the three other metrics introduced in the subsequent subsections, namely \ClusteringUniversalityName{}, \AbstractionScoreName{}, and \AdjustedClusteringUniversalityName{}.
 
 \subsection{Behavior Reconstruction}
 
@@ -150,37 +151,59 @@ The partitioning is therefore identical, resulting in an \gls{ari} of $1$.
 \input{figures/clustering_agent_representation/clustering_universality_illustration.tex}
 
 \subsection{Abstraction Score}
+\label{subsec:abstraction_score}
 
 If \ClusteringUniversalityName is high, it becomes important to determine what underlies this stability.
 Two possibilities arise:
 \begin{enumerate}[label=(\roman*), ref=(\roman*)]
-    \item \label{i} the \gls{ls} merely reproduces the structure of the observation space or action distribution, offering no abstraction, as defined in Definition~\ref{def:abstraction};
+    \item \label{i} the \gls{ls} offers no abstraction, as defined in Definition~\ref{def:abstraction}, either because it merely reproduces the structure of the observation space or action distribution, or because it reproduces a structure that is already present in the network architecture prior to any training;
     \item \label{ii} the \gls{ls} captures similarities in decision-making processes, yielding behaviorally meaningful clusters.
 \end{enumerate}
 
-
 To distinguish among these cases, we introduce the \AbstractionScoreName.
-This metric contextualizes latent clusterings by examining how their patterns align with reference structures derived from the raw observation and action data.
+This metric contextualizes latent clusterings by examining how their patterns align with three reference baselines: the raw observation data, the action data, and an untrained network of the same architecture.
 We consider : $\mathcal{C}_{obs}$, the clustering in the observation space $\mathbb{O}$, and $\mathcal{C}_{act}$, the clustering in the action-space distribution parameters.
 The clusterings $\mathcal{C}_{obs}$ and $\mathcal{C}_{act}$ are performed using the same algorithm, distance metric, and hyperparameters as those used for $\mathcal{C}_{i}$ in the \gls{ls}, ensuring that any biases introduced by the clustering procedure itself are minimized.
 
-For each latent clustering $\mathcal{C}_{i}$, we define its similarity to these baselines using the \gls{ari}:
+The third baseline addresses the case where the \gls{ls} merely reflects an inductive bias of the network architecture rather than something learned.
+To this end, we introduce $m$ untrained networks sharing the same architecture as the surrogate policies, but with randomly initialized, never-updated weights.
+Each of these $m$ untrained networks is used to project the same observations into its own latent space, which is then clustered in the same way, yielding partitions $\mathcal{C}_{untr, 1}, \dots, \mathcal{C}_{untr, m}$.
+This baseline isolates what the architecture already imposes on the representation before any learning takes place, so that a high similarity between $\mathcal{C}_i$ and this baseline indicates that the corresponding structure cannot be attributed to training.
+
+For each latent clustering $\mathcal{C}_{i}$, we define its similarity to these three baselines using the \gls{ari}:
 
 \begin{align*}
 A^{obs}_{i} &= \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{obs}) \\
-A^{act}_{i} &= \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{act})
+A^{act}_{i} &= \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{act}) \\
+A^{untr}_{i} &= \frac{1}{m} \sum_{k=1}^{m} \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{untr, k})
 \end{align*}
 
-The \AbstractionScoreName is subsequently calculated as one minus the average of the maximum absolute similarity values across these two reference baselines:
+The \AbstractionScoreName is subsequently calculated as one minus the average of the maximum absolute similarity values across these three reference baselines:
 
 \begin{align}
-\scalebox{0.96}{%
-$\text{\AbstractionScoreName} = 1 - \frac{1}{n} \sum_{i=1}^{n} \max \left( \left|A^{obs}_{i}\right|, \left|A^{act}_{i}\right| \right)$%
+\scalebox{0.9}{%
+$\text{\AbstractionScoreName} = 1 - \frac{1}{n} \sum_{i=1}^{n} \max \left( \left|A^{obs}_{i}\right|, \left|A^{act}_{i}\right|, \left|A^{untr}_{i}\right| \right)$%
 }
 \end{align}
 
 The \AbstractionScoreName ranges from $[0, 1]$.
-A score around $0$ means that the latent clusters are strongly aligned with either the observation or the action space, reflecting minimal abstraction, cases~\ref{i}.
-A score close to $1$ indicates that the latent clusters are independent of both the observation and action spaces, capturing abstractions that meaningfully reflect the agent's behavior, case~\ref{ii}.
+A score around $0$ means that the latent clusters are strongly aligned with the observation space, the action space, or the untrained network, reflecting no abstraction, case~\ref{i}.
+A score close to $1$ indicates that the latent clusters are independent of the observation space, the action space, and the network's initialization, capturing abstractions that meaningfully reflect the agent's behavior, case~\ref{ii}.
+
+\subsection{Adjusted Clustering Universality}
+\label{subsec:adjusted_clustering_universality}
+
+As discussed above, \ClusteringUniversalityName alone does not indicate whether the recovered structure is meaningful.
+We therefore introduce the \AdjustedClusteringUniversalityName, which measures how much of the agreement between the different surrogate policies remains after accounting for the three trivial baselines.
+
+\begin{align}
+\scalebox{0.7}{%
+$\text{\AdjustedClusteringUniversalityName} = \text{\ClusteringUniversalityName} - \frac{1}{n} \sum_{i=1}^{n} \max \left( \left|A^{obs}_{i}\right|, \left|A^{act}_{i}\right|, \left|A^{untr}_{i}\right| \right)$%
+}
+\end{align}
+
+This metric ranges in $[-1, 1]$.
+A value close to $1$ indicates that surrogate policies converge toward a partition that is both highly reproducible across seeds and clearly not explained by the observation space, the action space, or the network's initialization, providing the strongest evidence for \RepresentationConvergenceHypothesisName.
+A value close to $0$, or negative, indicates that whatever agreement exists between independently trained surrogate policies is largely trivial: the surrogate policies converge, but toward a partition that could just as easily emerge from raw pixel similarity, from the action taken, or from an untrained network sharing the same architecture.
 
 % The results of applying \gls{car} and these metrics to concrete environments are presented in Chapter~\ref{chap:experiments}.

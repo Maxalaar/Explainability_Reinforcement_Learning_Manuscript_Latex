@@ -1,8 +1,9 @@
 \section{Software Implementation}
 \label{sec:experiments_software}
 
-\gls{dl} and \gls{rl} are inherently empirical fields, in which the effectiveness of a method is assessed through experimentation.
-For this reason, particular attention is given to the implementation of \gls{car}.
+For \gls{dl} and \gls{rl}, theoretical results are often difficult to apply to real-world cases.
+The effectiveness of methods in these fields is therefore primarily assessed through experimentation.
+Consequently, particular attention is given to the implementation of \gls{car}.
 It relies on established libraries that provide efficient implementations of its main components.
 The code is made publicly available as open-source to support reproducible replication of the reported results.\footnote{\url{https://github.com/Maxalaar/Clustering_Agent_Latent_Space}}
 
@@ -11,6 +12,7 @@ Each stage is an independent executable, and stages communicate through artifact
 This allows each stage to be rerun or inspected independently.
 The parameters of each experiment are gathered in a single configuration object, described in Section~\ref{sec:experiments_configuration}.
 Each result can therefore be traced back to the settings that produced it.
+The following subsections describe the purpose of each stage, its implementation, and the libraries used.
 
 \input{figures/experiments/pipeline.tex}
 
@@ -23,6 +25,10 @@ By default, the initial policy is trained using \gls{ppo} \cite{schulman2017prox
 Other RLlib algorithms, such as \gls{appo} \cite{espeholt2018impala}, \gls{dqn} \cite{mnih2013playingatarideepreinforcement}, and DreamerV3, can also be selected through the same configuration.
 
 The policy and critic networks are implemented using PyTorch \cite{paszke2019pytorch}.
+PyTorch is the standard deep learning frameworks and is widely used for developing and training neural networks.
+It provides GPU acceleration and supports a wide range of neural network architectures.
+This makes it well suited for implementing the different policy and critic architectures used in the experiments.
+
 The resulting policy and critic parameters are saved as a checkpoint together with the environment and training configurations.
 
 \subsection{Trajectory dataset generation}
@@ -42,7 +48,7 @@ The resulting dataset is used both to train the surrogate policies and to genera
 The third stage trains the surrogate policies using behavior cloning on the trajectory dataset.
 This provides a supervised learning approach for replicating the initial policy.
 The training procedure is implemented using PyTorch Lightning \cite{falcon2019lightning}.
-PyTorch Lightning provides a simple interface for supervised training while remaining compatible with PyTorch.
+PyTorch Lightning provides a simplified interface for training neural networks with PyTorch.
 It handles common training operations such as data loading, optimization, checkpointing, and GPU execution.
 
 Each surrogate policy is saved as a checkpoint together with the configuration used for training.
