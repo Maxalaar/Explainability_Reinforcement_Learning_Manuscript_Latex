@@ -18,9 +18,8 @@ The configuration of the Atari environments follows common practice in \gls{rl} 
 
 In each environment, the agent receives visual observations in the form of raw pixels.
 Each image is resized to $64 \times 64$ pixels and converted to grayscale to reduce memory requirements.
-An exception is made for Pac-Man, where color information is important for determining the behavior of other agents in the environment.
-The original color information is therefore preserved for this environment.
-
+% An exception is made for Pac-Man, where color information is important for determining the behavior of other agents in the environment.
+% The original color information is therefore preserved for this environment.
 To provide information about the dynamics of the environment, four consecutive observations are stacked along the channel dimension.
 The resulting observation has a shape of $64 \times 64 \times 4$.
 This allows the agent to infer the motion of objects from successive observations rather than relying on a single frame.
@@ -31,7 +30,6 @@ This provides sufficient temporal resolution for effective control while reducin
 
 The actions correspond to the different buttons available on the Atari controller.
 The resulting action space is therefore discrete.
-
 Since Atari games are fully deterministic, sticky actions are introduced to add stochasticity to the trajectories.
 With a probability of $0.05$, the environment repeats the action selected at the previous step instead of applying the new action.
 This prevents the agent from simply memorizing a fixed sequence of actions during training.
@@ -65,7 +63,7 @@ Each player leaves a solid trail behind a moving cursor, and the goal is to forc
 
 \subsection{Neural architecture}
 
-The surrogate policies use a convolutional neural network to process the visual observations.
+The surrogate policies use a convolutional \gls{nn} to process the visual observations.
 The convolutional part consists of four layers with $16$, $32$, $64$, and $128$ channels, using $4 \times 4$ kernels with a stride of $2$.
 Each convolutional layer is followed by a LeakyReLU activation.
 The resulting representation is then flattened and passed through a multilayer perceptron that produces the parameters of the action distribution.
@@ -73,8 +71,9 @@ The resulting representation is then flattened and passed through a multilayer p
 The architecture of the multilayer perceptron varies across environments.
 For Pong and Space Invaders, it contains a single hidden layer with $128$ units.
 For the other four environments, it contains three hidden layers with $512$, $256$, and $128$ units.
-Figure~\ref{fig:neural_architecture} illustrates both configurations.
 The size of the output layer matches the number of actions available in each environment: $4$ for Breakout, $18$ for Mario Bros, $9$ for Ms.\ Pac-Man, $6$ for Pong, $6$ for Space Invaders, and $5$ for Surround.
+
+Figure~\ref{fig:neural_architecture} illustrates both configurations.
 
 \input{figures/experiments/neural_architecture.tex}
 
@@ -88,7 +87,7 @@ The size of the output layer matches the number of actions available in each env
 
 Having defined the environments and neural architectures, the remaining parameters of the \gls{car} pipeline must now be specified.
 The main parameters shared across the experiments are summarized in Table~\ref{tab:experiments_parameters}.
-There are too many parameters to discuss them all in detail, as each stage of the pipeline introduces its own configuration choices.
+There are too many parameters to discuss them all in detail.
 
 \input{tables/experiments/experiments_parameters_table.tex}
 

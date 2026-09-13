@@ -7,7 +7,7 @@ To evaluate the effectiveness of \gls{car}, four evaluation metrics are introduc
     \item \textbf{\BehaviorReconstructionName} : it measures how well a surrogate policy faithfully reproduces the behavior of the initial policy by comparing their cumulative rewards.
     \item \textbf{\ClusteringUniversalityName} : it evaluates the stability of clusterings by measuring the similarity of clusters obtained from independently trained surrogate policies.
     \item \textbf{\AbstractionScoreName} : it quantifies the extent to which \gls{ls} clusters capture abstractions rather than directly reflecting the structure of observations, actions, or the network architecture prior to training.
-    \item \textbf{\AdjustedClusteringUniversalityName} : it combines the two previous metrics into a single measure of how much of the cross-seed agreement captured by \ClusteringUniversalityName cannot be explained away by any of the trivial baselines underlying \AbstractionScoreName.
+    \item \textbf{\AdjustedClusteringUniversalityName}: it combines the two previous metrics to measure the agreement between surrogate policies beyond what can be explained by the baselines used in \AbstractionScoreName.
 \end{itemize}
 
 The remainder of this section details the motivation for each metric and describes how they are calculated.
@@ -44,8 +44,8 @@ This means that if the rewards achieved are comparable, the surrogate policy is 
 \label{subsec:adjusted_rand_index}
 
 Within \gls{car}, concepts are assumed to correspond to clusters in the \gls{ls}.
-Combined with the \RepresentationConvergenceHypothesisName, this leads to a direct experimental prediction.
-If independently trained surrogate policies converge toward the same conceptual organization, clustering their \gls{lr} should produce similar partitions.
+Combined with the \RepresentationConvergenceHypothesisName, this suggests that independently trained surrogate policies should develop similar conceptual organizations.
+Their \gls{lr} should therefore produce similar clusterings when analyzed using the same clustering procedure.
 
 When a particular observation is processed by the network, it is expected to activate the same concept regardless of the specific neural implementation of the policy.
 If independently trained policies converge toward the same conceptual organization, a given observation should activate the same concept across all models.
@@ -156,14 +156,17 @@ The partitioning is therefore identical, resulting in an \gls{ari} of $1$.
 If \ClusteringUniversalityName is high, it becomes important to determine what underlies this stability.
 Two possibilities arise:
 \begin{enumerate}[label=(\roman*), ref=(\roman*)]
-    \item \label{i} the \gls{ls} offers no abstraction, as defined in Definition~\ref{def:abstraction}, either because it merely reproduces the structure of the observation space or action distribution, or because it reproduces a structure that is already present in the network architecture prior to any training;
-    \item \label{ii} the \gls{ls} captures similarities in decision-making processes, yielding behaviorally meaningful clusters.
+\item \label{i} the \gls{ls} provides no abstraction, as defined in Definition~\ref{def:abstraction}, because it either reproduces the observation space or action distribution, or reflects a structure already present in the network architecture before training;
+\item \label{ii} the \gls{ls} captures similarities in decision-making, resulting in behaviorally meaningful clusters.
 \end{enumerate}
+
 
 To distinguish among these cases, we introduce the \AbstractionScoreName.
 This metric contextualizes latent clusterings by examining how their patterns align with three reference baselines: the raw observation data, the action data, and an untrained network of the same architecture.
-We consider : $\mathcal{C}_{obs}$, the clustering in the observation space $\mathbb{O}$, and $\mathcal{C}_{act}$, the clustering in the action-space distribution parameters.
-The clusterings $\mathcal{C}_{obs}$ and $\mathcal{C}_{act}$ are performed using the same algorithm, distance metric, and hyperparameters as those used for $\mathcal{C}_{i}$ in the \gls{ls}, ensuring that any biases introduced by the clustering procedure itself are minimized.
+
+We consider $\mathcal{C}{obs}$, the clustering of the observation space $\mathbb{O}$, and $\mathcal{C}{act}$, the clustering of the action-distribution parameters.
+Both clusterings use the same algorithm, distance metric, and hyperparameters as those used for $\mathcal{C}_{i}$ in the \gls{ls}.
+This ensures that the three clusterings are obtained under the same conditions.
 
 The third baseline addresses the case where the \gls{ls} merely reflects an inductive bias of the network architecture rather than something learned.
 To this end, we introduce $m$ untrained networks sharing the same architecture as the surrogate policies, but with randomly initialized, never-updated weights.

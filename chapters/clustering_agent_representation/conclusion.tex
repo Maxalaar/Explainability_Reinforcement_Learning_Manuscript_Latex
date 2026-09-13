@@ -1,14 +1,19 @@
 \section{Conclusion}
 \label{sec:clustering_agent_representation_conclusion}
 
-The \gls{car} method implements the three hypotheses developed in this manuscript, the \MechanisticHypothesisName, the \ConceptHypothesisName, and the \RepresentationConvergenceHypothesisName.
-It assumes that neural policies can be explained through their internal mechanisms, that these mechanisms are organized as concepts in the \gls{ls}, and that independently trained policies converge toward an equivalent conceptual organization.
-The \ClusteringUniversalityName and \AbstractionScoreName metrics turn these assumptions into measurable quantities, which makes the hypotheses empirically testable.
-The experimental study reported in Chapter~\ref{chap:experiments} provides support for this hypothesis-driven approach.
+The \gls{car} method was developed to investigate how concepts are organized within the representations of \gls{rl} policies.
+It is based on three hypotheses introduced throughout this manuscript, the \MechanisticHypothesisName, the \ConceptHypothesisName, and the \RepresentationConvergenceHypothesisName.
 
-Beyond its role in testing these hypotheses, \gls{car} provides a general and automated method for analysing agent representations.
-Both the analysis procedure and the metrics are fully automated, requiring no manual intervention or environment-specific adjustments.
-This makes \gls{car} applicable to a wide range of \gls{rl} settings.
+\gls{car} translates these assumptions into an empirical analysis.
+Multiple surrogate policies are trained independently to reproduce the same policy.
+Their \gls{lr} are then clustered and compared to assess whether similar conceptual structures emerge across policies.
+The \ClusteringUniversalityName and \AbstractionScoreName provide quantitative measures for evaluating the consistency and abstraction of the resulting clusters.
+
+This makes \gls{car} a general procedure for analyzing agent representations.
+The analysis and evaluation metrics are fully automated and require no manual intervention or environment-specific adjustments.
+The method can therefore be applied to a wide range of \gls{rl} settings and provides a basis for systematically studying the internal representations of neural policies.
+
+The next chapter applies \gls{car} to several environments to evaluate its ability to identify meaningful conceptual structures.
 
 % A more fundamental limitation concerns the semantic interpretation of the clusters.
 % While \gls{car} provides a quantitative description of the structure present in the agent's representations, the meaning assigned to individual clusters still relies on manual interpretation.
