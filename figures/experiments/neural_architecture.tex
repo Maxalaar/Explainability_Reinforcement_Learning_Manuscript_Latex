@@ -22,13 +22,14 @@
 % is controlled only through this padding
 \providecommand{\NeuralArchCircleInnerSep}{3pt}
 
-% Offset of the label/circle A relative to the top-left corner of box A
+% Offset of the label/circle A relative to the TOP-RIGHT corner of box A.
+% (+X = vers la droite / extérieur, +Y = vers le haut)
 \providecommand{\NeuralArchLabelAOffsetX}{0.0cm}
 \providecommand{\NeuralArchLabelAOffsetY}{0.0cm}
 
-% Offset of the label/circle B relative to the top-left corner of box B
-\providecommand{\NeuralArchLabelBOffsetX}{0.1cm}
-\providecommand{\NeuralArchLabelBOffsetY}{0.1cm}
+% Offset of the label/circle B relative to the TOP-RIGHT corner of box B.
+\providecommand{\NeuralArchLabelBOffsetX}{0.0cm}
+\providecommand{\NeuralArchLabelBOffsetY}{0.0cm}
 
 % ============================================================
 % Figure
@@ -60,6 +61,7 @@
         circle,
         draw,
         thick,
+        fill=white,                       % fond blanc
         inner sep=\NeuralArchCircleInnerSep,
         font=\fontsize{\NeuralArchLabelSize pt}
                   {\dimexpr\NeuralArchLabelSize pt*6/5\relax}
@@ -158,9 +160,6 @@
 % --------------------------------------------------------
 % Flatten
 % --------------------------------------------------------
-% Drawn as a single wide dense bar (same shape convention as the
-% Dense boxes below) so the flattening operation reads clearly as
-% "all conv features concatenated into one vector".
 
 \pic[shift={(1.3,0,0)}] at (c4-east)
     {Box={
@@ -220,10 +219,6 @@
 % ------------------------------------------------------------
 % Box A
 % ------------------------------------------------------------
-% inner xsep/ysep on a \tikz fit node are symmetric, so an
-% asymmetric top/bottom margin needs the box built in two steps:
-% first fit tightly around the content, then grow that fit by
-% independent amounts on each side before drawing the outline.
 
 \node[
     fit=(aFc1-nearnorthwest)
@@ -246,15 +241,15 @@
 % ------------------------------------------------------------
 % Label A + circle
 % ------------------------------------------------------------
-% A single auto-sizing circle node: its radius follows the size of
-% the "A" glyph plus \NeuralArchCircleInnerSep, and its position is
-% freely adjustable via the \NeuralArchLabelAOffsetX/Y parameters.
+% Le centre du cercle est placé sur le coin HAUT-DROIT (north east)
+% de la boîte A. Les offsets A déplacent le cercle (avec la lettre)
+% par rapport à ce coin : +X vers la droite, +Y vers le haut.
 
 \node[
     archLabelCircle,
-    anchor=south east
+    anchor=center
 ] (labelA) at
-    ($(boxA.north west)+(\NeuralArchLabelAOffsetX,\NeuralArchLabelAOffsetY)$)
+    ($(boxA.north east)+(\NeuralArchLabelAOffsetX,\NeuralArchLabelAOffsetY)$)
     {\NeuralArchCircleLetter{A}};
 
 
@@ -354,12 +349,14 @@
 % ------------------------------------------------------------
 % Label B + circle
 % ------------------------------------------------------------
+% Idem pour le label B : centre du cercle placé sur le coin
+% HAUT-DROIT de la boîte B, ajustable via les offsets B.
 
 \node[
     archLabelCircle,
-    anchor=south east
+    anchor=center
 ] (labelB) at
-    ($(boxB.north west)+(\NeuralArchLabelBOffsetX,\NeuralArchLabelBOffsetY)$)
+    ($(boxB.north east)+(\NeuralArchLabelBOffsetX,\NeuralArchLabelBOffsetY)$)
     {\NeuralArchCircleLetter{B}};
 
 
