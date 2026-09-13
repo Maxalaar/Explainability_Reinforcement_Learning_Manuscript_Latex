@@ -164,13 +164,18 @@
 \pic[shift={(1.3,0,0)}] at (c4-east)
     {Box={
         name=flatten,
-        caption={\mbox{Flatten}},
+        caption=,                     % désactivé : on place le texte nous-même
         fill=FlattenColor,
         opacity=0.85,
         height=3,
         width=2,
         depth=42
     }};
+
+% Légende centrée sous la face avant, avec la taille
+\node[align=center, anchor=north]
+    at ($(flatten-south)+(0,-1.5)$)
+    { 18432 \\[2pt] \bfseries Flatten};
 
 \draw [connection] (c4-east) -- node {\midarrow} (flatten-west);
 
