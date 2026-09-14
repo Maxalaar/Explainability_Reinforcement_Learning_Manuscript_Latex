@@ -208,23 +208,31 @@
 % ---------------------------------------------------------------------------
 
 % Maximum tint (percent) of the heatmap at value = 1; kept low enough that
-% black/red text stays legible on top of it.
-\def\HeatCellMaxPct{55}
-\setlength{\fboxsep}{1pt}
+% black text stays legible on top of it.
+\newcommand{\HeatCellMaxPct}{55}
+% Cell padding: how much horizontal/vertical room surrounds each cell's
+% content. Tune these two to change the width/height of every cell at once.
+\newcommand{\ClusterKTableColSep}{1.2pt}
+\newcommand{\ClusterKTableRowSep}{1.5pt}
+% Thickness of the rules separating the header / data / aggregate zones.
+\newcommand{\ClusterKTableZoneRule}{1pt}
 
 % #1 = condition (0 or 1), #2 = one-argument wrapping macro, #3 = content
 \newcommand{\wrapif}[3]{\ifnum#1=1 #2{#3}\else#3\fi}
 
-% A data cell: its background is a genuine function of its value (the closer
-% to 1, the more saturated), computed here via pgfmath rather than
-% precomputed -- #1 = value, #2 = is column-best (0/1), #3 = is row-best
-% (0/1), #4 = is table-best (0/1).
-\newcommand{\DataCell}[4]{%
-  \pgfmathtruncatemacro{\heatcellpct}{round(max(0,min(1,#1))*\HeatCellMaxPct)}%
-  \colorbox{myblue!\heatcellpct}{%
-    \wrapif{#4}{\textcolor{red}}{\wrapif{#2}{\textbf}{\wrapif{#3}{\underline}{#1}}}%
-  }%
-}
+% The text of a data cell -- #1 = value, #2 = is column-best (0/1), #3 = is
+% row-best (0/1). Its background is set separately by \SetCell right before
+% it (tabularray requires \SetCell to appear literally first in the cell, so
+% it cannot be hidden inside this macro) -- see the heatmap computation
+% below, done live in LaTeX via \numexpr from the raw value.
+\newcommand{\CellText}[3]{\wrapif{#2}{\textbf}{\wrapif{#3}{\underline}{#1}}}
+
+% Background key for a data cell, e.g. \SetCell{bg=\HeatCellBg{97}} -- #1 is
+% the value scaled to an integer in hundredths (97 for 0.97, -22 for -0.22);
+% the tint percentage is computed live from it via integer arithmetic
+% (\numexpr), clamped to 0 below zero since only non-negative values are
+% tinted.
+\newcommand{\HeatCellBg}[1]{myblue!\ifnum#1>0 \the\numexpr(#1*\HeatCellMaxPct/100)\relax\else0\fi}
 
 % An aggregate "mean $\pm$ std" cell -- #1 = mean, #2 = std, #3 = is the best
 % mean of the aggregate row/column (0/1).
@@ -240,20 +248,20 @@
   \resizebox{\linewidth}{!}{%
   \begin{tblr}{
     colspec={|c|*{19}{c|}c|},
-    colsep=1.2pt,
-    rowsep=3pt,
+    colsep=\ClusterKTableColSep,
+    rowsep=\ClusterKTableRowSep,
     hlines,
     vlines,
-    hline{2} = {1pt},
-    hline{#1} = {1pt},
-    vline{2} = {1pt},
-    vline{21} = {1pt},
+    hline{2} = {\ClusterKTableZoneRule},
+    hline{#1} = {\ClusterKTableZoneRule},
+    vline{2} = {\ClusterKTableZoneRule},
+    vline{21} = {\ClusterKTableZoneRule},
     row{1} = {font=\bfseries, halign=c, valign=m},
     column{1} = {halign=c, valign=m},
     row{#1} = {font=\itshape},
     column{21} = {font=\itshape},
   }
-  \diagbox{Layer}{$K$} & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 & Mean $\pm$ Std \\
+  \diagbox[width=5em,height=2.8em,innerleftsep=1pt,innerrightsep=1pt]{\scriptsize Layer}{\scriptsize $K$} & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 & Mean $\pm$ Std \\
   #4
   \end{tblr}%
   }
