@@ -1,0 +1,80 @@
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+        \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Number of clusters},
+            ylabel={\gls{cu}},
+            grid=major,
+            xmin=1, xmax=20,
+            ymin=0, ymax=1,
+            ytick distance=0.25,
+            ymajorgrids=true,
+            width=\linewidth,
+            height=0.45\linewidth,
+        ]
+            \addplot[color=spaceInvadersColor, mark=\spaceInvadersMark, mark size=\spaceInvadersMarkSize] coordinates {
+                (2,0.31) (3,0.73) (4,0.92) (5,0.69) (6,0.61) (7,0.57) (8,0.64) (9,0.61) (10,0.61) (11,0.66) (12,0.58) (13,0.52) (14,0.56) (15,0.63) (16,0.67) (17,0.63) (18,0.63) (19,0.68) (20,0.64)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        }
+        \caption{\gls{cu} with respect to the number of clusters.}
+    \end{subfigure}
+
+    \vspace{1em}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+        \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Number of clusters},
+            ylabel={\gls{as}},
+            grid=major,
+            xmin=1, xmax=20,
+            ymin=0, ymax=1,
+            ytick distance=0.25,
+            ymajorgrids=true,
+            width=\linewidth,
+            height=0.45\linewidth,
+        ]
+            \addplot[color=spaceInvadersColor, mark=\spaceInvadersMark, mark size=\spaceInvadersMarkSize] coordinates {
+                (2,0.94) (3,0.80) (4,0.69) (5,0.71) (6,0.71) (7,0.75) (8,0.74) (9,0.74) (10,0.75) (11,0.69) (12,0.67) (13,0.68) (14,0.71) (15,0.68) (16,0.68) (17,0.70) (18,0.69) (19,0.74) (20,0.69)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        }
+        \caption{\gls{as} with respect to the number of clusters.}
+    \end{subfigure}
+
+    \vspace{1em}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \resizebox{\linewidth}{!}{
+        \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Number of clusters},
+            ylabel={\gls{acu}},
+            grid=major,
+            xmin=1, xmax=20,
+            ymin=-0.2, ymax=1,
+            ytick distance=0.2,
+            ymajorgrids=true,
+            width=\linewidth,
+            height=0.45\linewidth,
+        ]
+            \addplot[color=spaceInvadersColor, mark=\spaceInvadersMark, mark size=\spaceInvadersMarkSize] coordinates {
+                (2,0.26) (3,0.53) (4,0.61) (5,0.40) (6,0.32) (7,0.32) (8,0.38) (9,0.36) (10,0.35) (11,0.35) (12,0.26) (13,0.20) (14,0.27) (15,0.31) (16,0.36) (17,0.33) (18,0.32) (19,0.43) (20,0.34)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        }
+        \caption{\gls{acu} with respect to the number of clusters.}
+    \end{subfigure}
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} with respect to the number of clusters, for layer 7 of the Space Invaders surrogate policies (the layer with the highest average \gls{acu}).}
+    \label{fig:latent_space_curves_space_invaders}
+\end{figure}

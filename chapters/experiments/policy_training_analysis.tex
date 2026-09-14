@@ -1,0 +1,32 @@
+\section{Policy Training Analysis}
+\label{sec:experiments_policy_training_analysis}
+
+This section reports the results of training the initial and surrogate policies for \gls{car}, applied to the six environments.
+Section~\ref{ssec:initial_policy_training} verifies that the initial policies reach a competent level of play, while Section~\ref{ssec:surrogate_policy_training} evaluates whether the surrogate policies faithfully reproduce their behavior using the \BehaviorReconstructionName.
+
+\subsection{Initial policy training}
+\label{ssec:initial_policy_training}
+
+\input{figures/experiments/policy_training.tex}
+
+Figure~\ref{fig:initial_policy_training} shows how the initial policies improve during \gls{ppo} training.
+For each environment, the mean episode return is normalized so that $0\%$ and $100\%$ correspond to the lowest and highest mean return observed during that run.
+In every environment the return increases and then reaches a plateau, at which point training is stopped.
+The number of iterations required to reach this plateau varies from a few hundred, for Pong, to several thousand, for Surround and Ms.\ Pac-Man.
+For Ms.\ Pac-Man the return decreases after its peak.
+Since the best checkpoint is retained rather than the last one, this does not affect the policy that is subsequently analyzed.
+
+To confirm that the trained policies play competently, their scores are compared with the reference scores reported by \cite{machado2017revisitingarcadelearningenvironment}.
+Each initial policy reaches a score of the same order as these references, so it constitutes a reasonable target for imitation.
+
+\subsection{Surrogate policy training}
+\label{ssec:surrogate_policy_training}
+
+Figure~\ref{fig:surrogate_policy_training} shows, for each environment, the training action loss of the three surrogate policies.
+In every case the loss decreases smoothly, and the three independently trained policies follow almost identical trajectories, converging to the same value.
+
+We further evaluate the ability of the surrogate policies to replicate the behavior of the initial policies using the \BehaviorReconstructionName (Table~\ref{tab:behavior_reconstruction}).
+The surrogate policies reach a \BehaviorReconstructionName of $0.96$ on average over 100 evaluation episodes, ranging from $0.83$ for Breakout to $1.00$ for Ms.\ Pac-Man and Surround.
+They therefore reproduce the decisions of the initial policies closely enough for their latent representations to be analyzed in place of those of the initial policies.
+
+\input{tables/clustering_agent_representation/behavior_reconstruction.tex}
