@@ -8,10 +8,10 @@ For each environment and each analyzed layer, a random subset of 50,000 observat
 The following subsections report, for each environment, the evolution of \gls{cu}, \gls{as}, and \gls{acu} with respect to $K$, for the layer that maximizes the average \gls{acu} across $K$ -- i.e., the layer at which the agreement between independently trained surrogate policies is least explained by the observation space, the action space, or the network's initialization.
 The full breakdown across every analyzed layer is reported in Appendix~\ref{chap:appendix}.
 
+\input{figures/clustering_agent_representation/latent_space_curves_by_metric.tex}
+
 \subsection{Breakout}
 \label{ssec:latent_space_analysis_breakout}
-
-\input{figures/clustering_agent_representation/latent_space_curves_breakout.tex}
 
 For Breakout, \gls{acu} is maximized at layer 10, with $\gls{cu} = 0.59 \pm 0.06$, $\gls{as} = 0.82 \pm 0.05$, and $\gls{acu} = 0.41 \pm 0.06$ on average over $K$.
 As shown in Appendix~\ref{chap:appendix}, \gls{cu} is highest in the earliest layers and decreases with depth, while \gls{as} follows the opposite trend, so that \gls{acu} peaks once the representation has become sufficiently abstract without yet losing cross-seed stability.
@@ -21,8 +21,6 @@ As shown in Appendix~\ref{chap:appendix}, \gls{cu} is highest in the earliest la
 \subsection{Mario Bros}
 \label{ssec:latent_space_analysis_mario_bros}
 
-\input{figures/clustering_agent_representation/latent_space_curves_mario_bros.tex}
-
 For Mario Bros, \gls{acu} is maximized at the last analyzed layer (layer 14), with $\gls{cu} = 0.37 \pm 0.08$, $\gls{as} = 0.94 \pm 0.02$, and $\gls{acu} = 0.31 \pm 0.08$ on average over $K$.
 As shown in Appendix~\ref{chap:appendix}, \gls{as} increases monotonically with depth, reaching near-saturation in the last layer, while \gls{cu} decreases; \gls{acu} nonetheless keeps increasing with depth, indicating that the residual cross-seed agreement in the deepest layer is largely non-trivial.
 
@@ -30,8 +28,6 @@ As shown in Appendix~\ref{chap:appendix}, \gls{as} increases monotonically with 
 
 \subsection{Ms.\ Pac-Man}
 \label{ssec:latent_space_analysis_ms_pacman}
-
-\input{figures/clustering_agent_representation/latent_space_curves_ms_pacman.tex}
 
 For Ms.\ Pac-Man, \gls{acu} is maximized at the last analyzed layer (layer 14), with $\gls{cu} = 0.58 \pm 0.08$, $\gls{as} = 0.74 \pm 0.05$, and $\gls{acu} = 0.32 \pm 0.07$ on average over $K$.
 As shown in Appendix~\ref{chap:appendix}, the pattern mirrors Mario Bros: \gls{as} increases steadily with depth while \gls{cu} decreases, and \gls{acu} is highest in the deepest layer.
@@ -41,8 +37,6 @@ As shown in Appendix~\ref{chap:appendix}, the pattern mirrors Mario Bros: \gls{a
 \subsection{Pong}
 \label{ssec:latent_space_analysis_pong}
 
-\input{figures/clustering_agent_representation/latent_space_curves_pong.tex}
-
 For Pong, \gls{acu} is maximized at layer 7, with $\gls{cu} = 0.50 \pm 0.04$, $\gls{as} = 0.95 \pm 0.03$, and $\gls{acu} = 0.45 \pm 0.07$ on average over $K$ -- the highest \gls{acu} among the six environments.
 As shown in Appendix~\ref{chap:appendix}, \gls{as} already saturates from layer 5 onward, and \gls{acu} decreases again in the last analyzed layer (layer 10): unlike Mario Bros and Ms.\ Pac-Man, the most informative layer for Pong is not the deepest one.
 
@@ -51,8 +45,6 @@ As shown in Appendix~\ref{chap:appendix}, \gls{as} already saturates from layer 
 \subsection{Space Invaders}
 \label{ssec:latent_space_analysis_space_invaders}
 
-\input{figures/clustering_agent_representation/latent_space_curves_space_invaders.tex}
-
 For Space Invaders, \gls{acu} is maximized at layer 7, with $\gls{cu} = 0.63 \pm 0.11$, $\gls{as} = 0.73 \pm 0.06$, and $\gls{acu} = 0.35 \pm 0.09$ on average over $K$.
 As shown in Appendix~\ref{chap:appendix}, \gls{acu} decreases again toward the last analyzed layer (layer 10), following the same non-monotonic pattern observed for Pong.
 
@@ -60,8 +52,6 @@ As shown in Appendix~\ref{chap:appendix}, \gls{acu} decreases again toward the l
 
 \subsection{Surround}
 \label{ssec:latent_space_analysis_surround}
-
-\input{figures/clustering_agent_representation/latent_space_curves_surround.tex}
 
 For Surround, \gls{acu} is maximized at the last analyzed layer (layer 14), with $\gls{cu} = 0.54 \pm 0.10$, $\gls{as} = 0.77 \pm 0.07$, and $\gls{acu} = 0.31 \pm 0.06$ on average over $K$.
 As shown in Appendix~\ref{chap:appendix}, \gls{as} increases with depth while \gls{cu} fluctuates without a clear trend, and \gls{acu} is highest in the deepest layer.
