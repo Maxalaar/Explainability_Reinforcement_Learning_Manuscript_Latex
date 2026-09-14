@@ -1,21 +1,3 @@
-% Appendices are numbered separately from the chapters (Appendix 1, Appendix 2, ...)
-% rather than continuing the chapter count or using the default lettering (Appendix A, B, ...).
-\renewcommand{\thechapter}{\arabic{chapter}}
-% Allow several tables per page in this appendix (the main body is restricted
-% to one float per page by the topnumber/totalnumber settings in packages.tex).
-\setcounter{topnumber}{6}
-\setcounter{bottomnumber}{6}
-\setcounter{totalnumber}{6}
-\renewcommand{\topfraction}{0.98}
-\renewcommand{\bottomfraction}{0.98}
-\renewcommand{\textfraction}{0.02}
-\renewcommand{\floatpagefraction}{0.3}
-\setlength{\floatsep}{4pt plus 1pt minus 1pt}
-\setlength{\textfloatsep}{6pt plus 1pt minus 1pt}
-\setlength{\intextsep}{4pt plus 1pt minus 1pt}
-\setlength{\abovecaptionskip}{3pt}
-\setlength{\belowcaptionskip}{3pt}
-
 \chapter{Additional Results}
 \label{chap:appendix}
 
@@ -28,31 +10,31 @@ For each environment, one table is reported per metric, with the analyzed layers
 
 \section{Breakout}
 \label{sec:appendix_additional_results_breakout}
-\input{tables/appendix/additional_results/breakout.tex}
+\input{tables/additional_results/breakout.tex}
 
 \clearpage
 \section{Mario Bros}
 \label{sec:appendix_additional_results_mario_bros}
-\input{tables/appendix/additional_results/mario_bros.tex}
+\input{tables/additional_results/mario_bros.tex}
 
 \clearpage
 \section{Ms.\ Pac-Man}
 \label{sec:appendix_additional_results_ms_pacman}
-\input{tables/appendix/additional_results/ms_pacman.tex}
+\input{tables/additional_results/ms_pacman.tex}
 
 \clearpage
 \section{Pong}
 \label{sec:appendix_additional_results_pong}
-\input{tables/appendix/additional_results/pong.tex}
+\input{tables/additional_results/pong.tex}
 
 \clearpage
 \section{Space Invaders}
 \label{sec:appendix_additional_results_space_invaders}
-\input{tables/appendix/additional_results/space_invaders.tex}
+\input{tables/additional_results/space_invaders.tex}
 
 \clearpage
 \section{Surround}
 \label{sec:appendix_additional_results_surround}
-\input{tables/appendix/additional_results/surround.tex}
+\input{tables/additional_results/surround.tex}
 
 \end{landscape}
