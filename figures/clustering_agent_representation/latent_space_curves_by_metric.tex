@@ -2,6 +2,7 @@
     \centering
     \begin{subfigure}[b]{\textwidth}
         \centering
+        \captionsetup{skip=\SubfigCaptionSkip}
         \resizebox{\linewidth}{!}{
         \begin{tikzpicture}
         \begin{axis}[
@@ -38,10 +39,11 @@
         }
         \caption{\gls{cu} with respect to the number of clusters.}
     \end{subfigure}
-    \vspace{1em}
+    \vspace{\SubfigSpacing}
 
     \begin{subfigure}[b]{\textwidth}
         \centering
+        \captionsetup{skip=\SubfigCaptionSkip}
         \resizebox{\linewidth}{!}{
         \begin{tikzpicture}
         \begin{axis}[
@@ -78,10 +80,11 @@
         }
         \caption{\gls{as} with respect to the number of clusters.}
     \end{subfigure}
-    \vspace{1em}
+    \vspace{\SubfigSpacing}
 
     \begin{subfigure}[b]{\textwidth}
         \centering
+        \captionsetup{skip=\SubfigCaptionSkip}
         \resizebox{\linewidth}{!}{
         \begin{tikzpicture}
         \begin{axis}[
@@ -119,9 +122,11 @@
         \caption{\gls{acu} with respect to the number of clusters.}
     \end{subfigure}
 
-    \vspace{1em}
+    \vspace{\SubfigLegendSpacing}
     {\hypersetup{pdfborder={0 0 0}}\ref{policyTrainingLegend}}
 
-    \caption{\gls{cu}, \gls{as}, and \gls{acu} with respect to the number of clusters, for each of the six environments, for the layer that maximizes the average \gls{acu} in that environment (see Sections~\ref{ssec:latent_space_analysis_breakout}--\ref{ssec:latent_space_analysis_surround} for the specific layer and average values of each environment).}
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} with respect to the number of clusters, for each of the six environments, for the layer that maximizes the average \gls{acu} in that environment.}
     \label{fig:latent_space_curves_by_metric}
 \end{figure}
+
+% (see Sections~\ref{ssec:latent_space_analysis_breakout}--\ref{ssec:latent_space_analysis_surround} for the specific layer and average values of each environment)

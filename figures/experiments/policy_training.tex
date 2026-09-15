@@ -2,23 +2,23 @@
     \centering
     \begin{subfigure}[b]{\textwidth}
         \centering
-        \captionsetup{skip=2pt}
+        \captionsetup{skip=\SubfigCaptionSkip}
         \input{figures/experiments/initial_policy_training.tex}
         \caption{Training of the initial policies with \gls{ppo}.}
         \label{fig:initial_policy_training}
     \end{subfigure}
 
-    \vspace{2em}
+    \vspace{\SubfigSpacing}
 
     \begin{subfigure}[b]{\textwidth}
         \centering
-        \captionsetup{skip=2pt}
+        \captionsetup{skip=\SubfigCaptionSkip}
         \input{figures/experiments/surrogate_policy_training.tex}
         \caption{Training action loss of the surrogate policies.}
         \label{fig:surrogate_policy_training}
     \end{subfigure}
 
-    \vspace{1em}
+    \vspace{\SubfigLegendSpacing}
     {\hypersetup{pdfborder={0 0 0}}\ref{policyTrainingLegend}}
     \caption{Training of the initial and surrogate policies.}
     \label{fig:policy_training}

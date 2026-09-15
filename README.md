@@ -28,7 +28,7 @@ sudo apt install texlive-luatex texlive-fonts-recommended texlive-fonts-extra fo
 
 ## 🛠️ Compilation
 
-Always compile with **`latexmk`**, never with a bare `lualatex manuscript.tex`:
+Always compile with **`latexmk`**:
 
 ```bash
 latexmk manuscript.tex
