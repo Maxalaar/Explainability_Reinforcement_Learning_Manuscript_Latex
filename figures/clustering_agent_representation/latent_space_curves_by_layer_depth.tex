@@ -1,0 +1,143 @@
+% Spacing specific to this figure (tuned for its own subfigure heights --
+% do not share these with other multi-subfigure figures, see
+% figures/clustering_agent_representation/latent_space_curves_by_metric.tex
+% and figures/experiments/policy_training.tex for those figures' own copies).
+\newcommand{\LatentCurvesByDepthSubfigCaptionSkip}{0.1cm} % space between a subfigure's plot and its own caption
+\newcommand{\LatentCurvesByDepthSubfigSpacing}{-0.2cm}   % vertical space between consecutive subfigures
+\newcommand{\LatentCurvesByDepthSubfigLegendSpacing}{0.2cm} % vertical space between the last subfigure and the shared legend
+
+\begin{figure}[t]
+    \centering
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \captionsetup{skip=\LatentCurvesByDepthSubfigCaptionSkip}
+        \resizebox{\linewidth}{!}{
+        \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Layer depth},
+            ylabel={\gls{cu}},
+            grid=major,
+            xmin=1, xmax=8,
+            xtick distance=1,
+            ymin=0, ymax=1,
+            ytick distance=0.25,
+            ymajorgrids=true,
+            width=\linewidth,
+            height=0.4\linewidth,
+        ]
+            \addplot[color=breakoutColor, mark=\breakoutMark, mark size=\breakoutMarkSize] coordinates {
+                (1,0.85) (2,0.73) (3,0.57) (4,0.50) (5,0.50) (6,0.59) (7,0.50) (8,0.51)
+            };
+            \addplot[color=marioBrosColor, mark=\marioBrosMark, mark size=\marioBrosMarkSize] coordinates {
+                (1,0.62) (2,0.68) (3,0.62) (4,0.55) (5,0.55) (6,0.48) (7,0.40) (8,0.37)
+            };
+            \addplot[color=msPacmanColor, mark=\msPacmanMark, mark size=\msPacmanMarkSize] coordinates {
+                (1,0.78) (2,0.72) (3,0.68) (4,0.70) (5,0.70) (6,0.58) (7,0.51) (8,0.58)
+            };
+            \addplot[color=pongColor, mark=\pongMark, mark size=\pongMarkSize] coordinates {
+                (1,0.62) (2,0.65) (3,0.48) (4,0.50) (5,0.50) (6,0.31)
+            };
+            \addplot[color=spaceInvadersColor, mark=\spaceInvadersMark, mark size=\spaceInvadersMarkSize] coordinates {
+                (1,0.75) (2,0.81) (3,0.74) (4,0.63) (5,0.63) (6,0.49)
+            };
+            \addplot[color=surroundColor, mark=\surroundMark, mark size=\surroundMarkSize] coordinates {
+                (1,0.70) (2,0.58) (3,0.66) (4,0.65) (5,0.65) (6,0.59) (7,0.49) (8,0.54)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        }
+        \caption{\gls{cu} with respect to the layer depth.}
+    \end{subfigure}
+    \vspace{\LatentCurvesByDepthSubfigSpacing}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \captionsetup{skip=\LatentCurvesByDepthSubfigCaptionSkip}
+        \resizebox{\linewidth}{!}{
+        \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Layer depth},
+            ylabel={\gls{as}},
+            grid=major,
+            xmin=1, xmax=8,
+            xtick distance=1,
+            ymin=0, ymax=1,
+            ytick distance=0.25,
+            ymajorgrids=true,
+            width=\linewidth,
+            height=0.4\linewidth,
+        ]
+            \addplot[color=breakoutColor, mark=\breakoutMark, mark size=\breakoutMarkSize] coordinates {
+                (1,0.15) (2,0.28) (3,0.44) (4,0.76) (5,0.76) (6,0.82) (7,0.79) (8,0.76)
+            };
+            \addplot[color=marioBrosColor, mark=\marioBrosMark, mark size=\marioBrosMarkSize] coordinates {
+                (1,0.44) (2,0.54) (3,0.62) (4,0.66) (5,0.66) (6,0.71) (7,0.87) (8,0.94)
+            };
+            \addplot[color=msPacmanColor, mark=\msPacmanMark, mark size=\msPacmanMarkSize] coordinates {
+                (1,0.19) (2,0.27) (3,0.35) (4,0.41) (5,0.41) (6,0.55) (7,0.64) (8,0.74)
+            };
+            \addplot[color=pongColor, mark=\pongMark, mark size=\pongMarkSize] coordinates {
+                (1,0.33) (2,0.59) (3,0.91) (4,0.95) (5,0.95) (6,0.95)
+            };
+            \addplot[color=spaceInvadersColor, mark=\spaceInvadersMark, mark size=\spaceInvadersMarkSize] coordinates {
+                (1,0.28) (2,0.45) (3,0.54) (4,0.72) (5,0.72) (6,0.74)
+            };
+            \addplot[color=surroundColor, mark=\surroundMark, mark size=\surroundMarkSize] coordinates {
+                (1,0.27) (2,0.45) (3,0.56) (4,0.49) (5,0.49) (6,0.57) (7,0.72) (8,0.77)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        }
+        \caption{\gls{as} with respect to the layer depth.}
+    \end{subfigure}
+    \vspace{\LatentCurvesByDepthSubfigSpacing}
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \captionsetup{skip=\LatentCurvesByDepthSubfigCaptionSkip}
+        \resizebox{\linewidth}{!}{
+        \begin{tikzpicture}
+        \begin{axis}[
+            xlabel={Layer depth},
+            ylabel={\gls{acu}},
+            grid=major,
+            xmin=1, xmax=8,
+            xtick distance=1,
+            ymin=-0.2, ymax=1,
+            ytick distance=0.2,
+            ymajorgrids=true,
+            width=\linewidth,
+            height=0.4\linewidth,
+        ]
+            \addplot[color=breakoutColor, mark=\breakoutMark, mark size=\breakoutMarkSize] coordinates {
+                (1,0.00) (2,0.01) (3,0.01) (4,0.27) (5,0.27) (6,0.41) (7,0.29) (8,0.27)
+            };
+            \addplot[color=marioBrosColor, mark=\marioBrosMark, mark size=\marioBrosMarkSize] coordinates {
+                (1,0.06) (2,0.22) (3,0.24) (4,0.21) (5,0.21) (6,0.19) (7,0.27) (8,0.31)
+            };
+            \addplot[color=msPacmanColor, mark=\msPacmanMark, mark size=\msPacmanMarkSize] coordinates {
+                (1,-0.04) (2,-0.01) (3,0.04) (4,0.10) (5,0.10) (6,0.14) (7,0.15) (8,0.32)
+            };
+            \addplot[color=pongColor, mark=\pongMark, mark size=\pongMarkSize] coordinates {
+                (1,-0.05) (2,0.24) (3,0.39) (4,0.45) (5,0.45) (6,0.27)
+            };
+            \addplot[color=spaceInvadersColor, mark=\spaceInvadersMark, mark size=\spaceInvadersMarkSize] coordinates {
+                (1,0.03) (2,0.25) (3,0.28) (4,0.35) (5,0.35) (6,0.24)
+            };
+            \addplot[color=surroundColor, mark=\surroundMark, mark size=\surroundMarkSize] coordinates {
+                (1,-0.02) (2,0.03) (3,0.22) (4,0.14) (5,0.14) (6,0.16) (7,0.21) (8,0.31)
+            };
+        \end{axis}
+        \end{tikzpicture}
+        }
+        \caption{\gls{acu} with respect to the layer depth.}
+    \end{subfigure}
+
+    \vspace{\LatentCurvesByDepthSubfigLegendSpacing}
+    {\hypersetup{pdfborder={0 0 0}}\ref{policyTrainingLegend}}
+
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} averaged over the number of clusters $K \in [2,20]$, with respect to the depth of the analyzed layer, for each of the six environments.}
+    \label{fig:latent_space_curves_by_layer_depth}
+\end{figure}
+
+% (see Appendix~\ref{chap:appendix} for the full per-layer, per-$K$ values underlying this figure)

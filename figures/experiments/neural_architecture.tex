@@ -36,21 +36,15 @@
 \providecommand{\NeuralArchNumTextSize}{11}       % pt
 \providecommand{\NeuralArchNumBubbleSize}{0.7cm}
 
-% --- Big "A" bubble ---------------------------------------------------
-% Anchor = the top-right corner of box A.
-\providecommand{\NeuralArchLabelABubbleOffsetX}{0cm}
-\providecommand{\NeuralArchLabelABubbleOffsetY}{0cm}
-\providecommand{\NeuralArchLabelATextOffsetX}{-0.1cm}
-\providecommand{\NeuralArchLabelATextOffsetY}{0cm}
-
-% --- Big "B" bubble ---------------------------------------------------
-% Anchor = the top-right corner of box B.
-\providecommand{\NeuralArchLabelBBubbleOffsetX}{0cm}
-\providecommand{\NeuralArchLabelBBubbleOffsetY}{0cm}
-\providecommand{\NeuralArchLabelBTextOffsetX}{-0.1cm}
-\providecommand{\NeuralArchLabelBTextOffsetY}{0cm}
-
-% --- Size shared by both big bubbles (A and B) -----------------------
+% --- Big "A"/"B" bubbles ------------------------------------------------
+% One common set of parameters for all four of them: the in-diagram A, the
+% in-diagram B, and their two counterparts in the legend below. Anchor = the
+% top-right corner of box A/B in the diagram, or the local origin of the
+% legend's own little picture (see the Legend section).
+\providecommand{\NeuralArchLetterBubbleOffsetX}{0cm}
+\providecommand{\NeuralArchLetterBubbleOffsetY}{0cm}
+\providecommand{\NeuralArchLetterTextOffsetX}{-0.1cm}
+\providecommand{\NeuralArchLetterTextOffsetY}{0cm}
 \providecommand{\NeuralArchLetterTextSize}{18}    % pt
 \providecommand{\NeuralArchLetterBubbleSize}{0.8cm}
 
@@ -78,9 +72,14 @@
 % Bubbles: shared style + fonts + placement macro
 % --------------------------------------------------------
 
+% Drawn as a \draw path rather than a \node: a second \node here (alongside
+% the text node below) desyncs from its text specifically when this whole
+% bubble sits inside a legend node using a non-"center" anchor (TikZ
+% typesets that node's content twice -- once to measure, once to render --
+% and two sibling \node's positions can drift apart between those passes).
+% A path has no such anchor bookkeeping, so it stays put.
 \tikzset{
-    bubbleDraw/.style={
-        circle,
+    bubblePath/.style={
         draw,
         thick,
         fill=white
@@ -105,11 +104,13 @@
 
 % A bubble: independent bubble + text nodes, both placed relative to the
 % same anchor coordinate, so either can be moved without moving the other.
-% #1 = anchor coordinate        #2 = bubble offset (X,Y)   #3 = bubble size
-% #4 = text offset (X,Y)        #5 = text font              #6 = text content
-\newcommand{\NeuralArchBubble}[6]{%
-    \node[bubbleDraw, minimum size=#3] at ($(#1)+(#2)$) {};
-    \node[font=#5, inner sep=0pt, anchor=center] at ($(#1)+(#4)$) {#6};
+% The text node is named (#1) so it can be used as a \tikz baseline anchor,
+% e.g. when reusing the same bubble inline in the legend.
+% #1 = text node name           #2 = anchor coordinate     #3 = bubble offset (X,Y)
+% #4 = bubble size              #5 = text offset (X,Y)     #6 = text font   #7 = text content
+\newcommand{\NeuralArchBubble}[7]{%
+    \draw[bubblePath] ($(#2)+(#3)$) circle ({(#4)/2});
+    \node[font=#6, inner sep=0pt, anchor=center] (#1) at ($(#2)+(#5)$) {#7};
 }
 
 % Small numbered bubble (1-5, 6a, 6b/7b/8b), anchored on box #3's "-north".
@@ -121,14 +122,20 @@
     O{\NeuralArchNumBubbleOffsetX,\NeuralArchNumBubbleOffsetY}
     O{\NeuralArchNumTextOffsetX,\NeuralArchNumTextOffsetY}
     m m}{%
-    \NeuralArchBubble{#3-north}{#1}{\NeuralArchNumBubbleSize}{#2}{\NeuralArchNumFont}{#4}%
+    \NeuralArchBubble{numtext-#3}{#3-north}{#1}{\NeuralArchNumBubbleSize}{#2}{\NeuralArchNumFont}{#4}%
 }
 
-% Big "A"/"B" bubble, anchored on a given box corner.
-% #1 = anchor coordinate (e.g. boxA.north east)
-% #2 = (X,Y) bubble offset   #3 = (X,Y) text offset   #4 = letter (A or B)
-\newcommand{\NeuralArchBigLabel}[4]{%
-    \NeuralArchBubble{#1}{#2}{\NeuralArchLetterBubbleSize}{#3}{\NeuralArchLetterFont}{\NeuralArchCircleLetter{#4}}%
+% Big "A"/"B" bubble -- used identically for the in-diagram A/B and for
+% their legend counterparts, so all four share the same parameters.
+% #1 = optional (X,Y) bubble offset, overriding \NeuralArchLetterBubbleOffsetX/Y
+% #2 = optional (X,Y) text offset, overriding \NeuralArchLetterTextOffsetX/Y
+% #3 = anchor coordinate (e.g. boxA.north east, or 0,0 in the legend)
+% #4 = letter (A or B)
+\NewDocumentCommand{\NeuralArchBigLabel}{
+    O{\NeuralArchLetterBubbleOffsetX,\NeuralArchLetterBubbleOffsetY}
+    O{\NeuralArchLetterTextOffsetX,\NeuralArchLetterTextOffsetY}
+    m m}{%
+    \NeuralArchBubble{lettertext-#4}{#3}{#1}{\NeuralArchLetterBubbleSize}{#2}{\NeuralArchLetterFont}{\NeuralArchCircleLetter{#4}}%
 }
 
 
@@ -328,14 +335,11 @@
 % ------------------------------------------------------------
 % Label A + bubble
 % ------------------------------------------------------------
-% Anchor = coin HAUT-DROIT (north east) de la boîte A. Les offsets A
-% (voir section Paramètres/Bulles) déplacent la bulle et le texte
-% indépendamment par rapport à ce coin.
+% Anchor = coin HAUT-DROIT (north east) de la boîte A. Les paramètres
+% partagés des bulles A/B (voir section Paramètres/Bulles) déplacent la
+% bulle et le texte indépendamment par rapport à ce coin.
 
-\NeuralArchBigLabel{boxA.north east}
-    {\NeuralArchLabelABubbleOffsetX,\NeuralArchLabelABubbleOffsetY}
-    {\NeuralArchLabelATextOffsetX,\NeuralArchLabelATextOffsetY}
-    {A}
+\NeuralArchBigLabel{boxA.north east}{A}
 
 
 % ============================================================
@@ -437,25 +441,15 @@
 % ------------------------------------------------------------
 % Label B + bubble
 % ------------------------------------------------------------
-% Idem pour le label B : ancre = coin HAUT-DROIT de la boîte B.
+% Idem pour le label B : ancre = coin HAUT-DROIT de la boîte B, mêmes
+% paramètres partagés que le label A.
 
-\NeuralArchBigLabel{boxB.north east}
-    {\NeuralArchLabelBBubbleOffsetX,\NeuralArchLabelBBubbleOffsetY}
-    {\NeuralArchLabelBTextOffsetX,\NeuralArchLabelBTextOffsetY}
-    {B}
+\NeuralArchBigLabel{boxB.north east}{B}
 
 
 % ============================================================
 % Legend
 % ============================================================
-
-\tikzset{
-    legendBubble/.style={
-        bubbleDraw,
-        minimum size=\NeuralArchLetterBubbleSize,
-        font=\NeuralArchLetterFont
-    }
-}
 
 \node[
     align=center,
@@ -463,16 +457,17 @@
     yshift=-0.3cm
 ] at (current bounding box.south) {
 
-    % Circle A
-    \tikz[baseline=(legendA.base)]{
-        \node[legendBubble] (legendA) {\NeuralArchCircleLetter{A}};
+    % Circle A -- same \NeuralArchBigLabel macro and parameters as the
+    % in-diagram A, anchored on the local origin of this mini picture.
+    \tikz[baseline=(lettertext-A.base)]{
+        \NeuralArchBigLabel{0,0}{A}
     }
     \quad Pong, Space Invaders
     \qquad\qquad
 
-    % Circle B
-    \tikz[baseline=(legendB.base)]{
-        \node[legendBubble] (legendB) {\NeuralArchCircleLetter{B}};
+    % Circle B -- idem, same macro and parameters as the in-diagram B.
+    \tikz[baseline=(lettertext-B.base)]{
+        \NeuralArchBigLabel{0,0}{B}
     }
     \quad Breakout, Mario Bros, Ms.\ Pac-Man, Surround
 
