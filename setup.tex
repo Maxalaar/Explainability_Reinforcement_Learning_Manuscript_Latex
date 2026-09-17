@@ -66,6 +66,13 @@
   myhypothesis
 }{hyp}
 
+% Defined here, before \newacronym below, since the CU/AS/ACU acronym
+% descriptions reference these macros directly.
+\newcommand{\BehaviorReconstructionName}{\textit{Behavior Reconstruction}\xspace}
+\newcommand{\ClusteringUniversalityName}{\textit{Clustering Universality}\xspace}
+\newcommand{\AbstractionScoreName}{\textit{Abstraction Score}\xspace}
+\newcommand{\AdjustedClusteringUniversalityName}{\textit{Adjusted Clustering Universality}\xspace}
+
 \makeglossaries
 \setglossarystyle{index}
 \setabbreviationstyle[acronym]{long-short}
@@ -95,9 +102,9 @@
 \newacronym{mdp}{MDP}{Markov Decision Processes}
 \newacronym{ari}{ARI}{Adjusted Rand Index}
 \newacronym{ri}{RI}{Rand Index}
-\newacronym{cu}{CU}{Clustering Universality}
-\newacronym{as}{AS}{Abstraction Score}
-\newacronym{acu}{ACU}{Adjusted Clustering Universality}
+\newacronym{cu}{CU}{\ClusteringUniversalityName}
+\newacronym{as}{AS}{\AbstractionScoreName}
+\newacronym{acu}{ACU}{\AdjustedClusteringUniversalityName}
 \newacronym{gmm}{GMM}{Gaussian Mixture Model}
 \newacronym{bc}{BC}{Behavioral Cloning}
 
@@ -121,12 +128,6 @@
 
 \newcommand{\methodName}{Clustering Agent Representation\xspace}
 \newcommand{\emphasize}[1]{\textbf{#1}}
-
-\newcommand{\BehaviorReconstructionName}{\textit{Behavior Reconstruction}\xspace}
-\newcommand{\ClusteringUniversalityName}{\textit{Clustering Universality}\xspace}
-\newcommand{\AbstractionScoreName}{\textit{Abstraction Score}\xspace}
-\newcommand{\AdjustedClusteringUniversalityName}{\textit{Adjusted Clustering Universality}\xspace}
-
 
 \newcommand{\ConceptHypothesisName}{\textit{Concept Hypothesis}~(Hyp.~\ref{hyp:concept})\xspace}
 \newcommand{\SuperpositionHypothesisName}{\textit{Superposition Hypothesis}~(Hyp.~\ref{hyp:superposition})\xspace}

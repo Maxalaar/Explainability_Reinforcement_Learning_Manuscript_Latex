@@ -1,11 +1,12 @@
 \section{Latent Space Analysis}
 \label{sec:experiments_latent_space_analysis}
 
-With the behavioral fidelity of the surrogate policies established in Section~\ref{ssec:surrogate_policy_training}, this section analyzes their latent representations using \gls{cu}, \gls{as}, and \gls{acu}.
-Unlike the single-layer analysis reported previously, the representation extracted after every convolutional layer of the surrogate policies is now considered, so that the effect of depth on the recovered conceptual structure can be assessed.
-For each environment and each analyzed layer, a random subset of 50,000 observations is embedded into the \gls{ls} of each surrogate policy, and the resulting point cloud $\textcolor{myblue}{\mathcal{E}}$ is partitioned with $k$-means clustering \cite{macqueen1967multivariate} for every number of clusters $K \in [2,20]$.
+This section analyzes their \gls{ls} using \gls{cu}, \gls{as}, and \gls{acu}.
+For each environment and each layer, a random subset of 20,000 observations is embedded into the \gls{ls} of each surrogate policy, and the resulting point cloud $\textcolor{myblue}{\mathcal{E}}$ is partitioned with $k$-means clustering \cite{macqueen1967multivariate} for every number of clusters $K \in [2,20]$.
 
-The following subsections report, for each environment, the evolution of \gls{cu}, \gls{as}, and \gls{acu} with respect to $K$, for the layer that maximizes the average \gls{acu} across $K$ -- i.e., the layer at which the agreement between independently trained surrogate policies is least explained by the observation space, the action space, or the network's initialization.
+For each environment, the results are reported for the layer that achieves the highest average \gls{acu} across the tested values of $K$.
+This layer is therefore the one for which the agreement between independently trained surrogate policies is least explained by the observation space, the action space, or the network initialization.
+The following subsections then report the evolution of \gls{cu}, \gls{as}, and \gls{acu} with respect to $K$ for this layer.
 The full breakdown across every analyzed layer is reported in Appendix~\ref{chap:appendix}.
 
 \input{figures/clustering_agent_representation/latent_space_curves_by_metric.tex}
@@ -66,11 +67,3 @@ Across all six environments, \gls{cu} tends to be highest in the earliest layers
 For Mario Bros, Ms.\ Pac-Man, and Surround, this optimum is reached at the last analyzed layer, suggesting that further gains might be observed by analyzing even deeper representations.
 For Breakout, Pong, and Space Invaders, in contrast, \gls{acu} peaks at an intermediate layer and decreases again toward the last one, indicating that the deepest representation is not always the most informative for \gls{car}.
 This confirms that the layer at which the analysis is performed is not a neutral methodological choice and should itself be selected according to \gls{acu} rather than fixed a priori to the last convolutional layer, as was done in the single-layer analysis reported in earlier work.
-
-% TODO: extend with the additional experimental material planned for this chapter:
-% - ablation studies: clustering algorithm (K-means, GMM, deep embedding clustering),
-%   distance measure, with/without action loss
-% - qualitative analysis of the discovered clusters for the five environments that do not yet
-%   have one (only Mario Bros currently has hand-labeled clusters, see
-%   figures/clustering_agent_representation/semantic_granularity.tex), and a decision on whether
-%   to integrate it per-environment or in a dedicated section

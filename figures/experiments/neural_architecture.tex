@@ -2,11 +2,8 @@
 % Parameters
 % ============================================================
 
-% General text size (in pt)
+% General text size (in pt), used for the box captions/shapes.
 \providecommand{\NeuralArchTextSize}{14}
-
-% Size of labels A and B only (in pt)
-\providecommand{\NeuralArchLabelSize}{18}
 
 % Horizontal shift of heads A and B
 \providecommand{\NeuralArchBoxShiftX}{0.2cm}
@@ -17,31 +14,45 @@
 \providecommand{\NeuralArchBoxMarginYTop}{1cm}
 \providecommand{\NeuralArchBoxMarginYBottom}{2.2cm}
 
-% Padding between the "A"/"B" letter and its surrounding circle; the
-% circle itself is a node that auto-fits around the letter, so its size
-% is controlled only through this padding
-\providecommand{\NeuralArchCircleInnerSep}{3pt}
+% ------------------------------------------------------------
+% Bubbles
+% ------------------------------------------------------------
+% There are two kinds of bubble (circle + text) in the diagram: the small
+% numbered ones (1-5, 6a, 6b/7b/8b) and the two big "A"/"B" ones. For both,
+% the same four things can be set independently:
+%   - the BUBBLE's position, as an offset from its anchor point
+%   - the TEXT's position, as an offset from the SAME anchor point
+%   - the TEXT size
+%   - the BUBBLE size
+% The bubble and the text are two separate nodes, so moving one does not
+% move the other. (+X = right, +Y = up.)
 
-% Size of the small numbered circles marking each analyzed latent space
-% (1-5, 6a, 6b/7b/8b), and their padding.
-\providecommand{\NeuralArchNumLabelSize}{11}
-\providecommand{\NeuralArchNumCircleInnerSep}{2pt}
+% --- Small numbered bubbles -----------------------------------------------
+% Anchor = the "-north" point of the box each one marks.
+\providecommand{\NeuralArchNumBubbleOffsetX}{0.06cm}
+\providecommand{\NeuralArchNumBubbleOffsetY}{0.45cm}
+\providecommand{\NeuralArchNumTextOffsetX}{0cm}
+\providecommand{\NeuralArchNumTextOffsetY}{0.45cm}
+\providecommand{\NeuralArchNumTextSize}{11}       % pt
+\providecommand{\NeuralArchNumBubbleSize}{0.7cm}
 
-% Default position of every numbered circle, as an offset from the TOP-CENTER
-% (the box's "-north" anchor) of the box it marks. (+X = right, +Y = up.)
-% Used unless a call to \NeuralArchNumLabel overrides it for a single label,
-% e.g. \NeuralArchNumLabel[0.2cm,0.5cm]{c1}{1}.
-\providecommand{\NeuralArchNumLabelOffsetX}{0cm}
-\providecommand{\NeuralArchNumLabelOffsetY}{0.3cm}
+% --- Big "A" bubble ---------------------------------------------------
+% Anchor = the top-right corner of box A.
+\providecommand{\NeuralArchLabelABubbleOffsetX}{0cm}
+\providecommand{\NeuralArchLabelABubbleOffsetY}{0cm}
+\providecommand{\NeuralArchLabelATextOffsetX}{-0.1cm}
+\providecommand{\NeuralArchLabelATextOffsetY}{0cm}
 
-% Offset of the label/circle A relative to the TOP-RIGHT corner of box A.
-% (+X = vers la droite / extérieur, +Y = vers le haut)
-\providecommand{\NeuralArchLabelAOffsetX}{0.0cm}
-\providecommand{\NeuralArchLabelAOffsetY}{0.0cm}
+% --- Big "B" bubble ---------------------------------------------------
+% Anchor = the top-right corner of box B.
+\providecommand{\NeuralArchLabelBBubbleOffsetX}{0cm}
+\providecommand{\NeuralArchLabelBBubbleOffsetY}{0cm}
+\providecommand{\NeuralArchLabelBTextOffsetX}{-0.1cm}
+\providecommand{\NeuralArchLabelBTextOffsetY}{0cm}
 
-% Offset of the label/circle B relative to the TOP-RIGHT corner of box B.
-\providecommand{\NeuralArchLabelBOffsetX}{0.0cm}
-\providecommand{\NeuralArchLabelBOffsetY}{0.0cm}
+% --- Size shared by both big bubbles (A and B) -----------------------
+\providecommand{\NeuralArchLetterTextSize}{18}    % pt
+\providecommand{\NeuralArchLetterBubbleSize}{0.8cm}
 
 % ============================================================
 % Figure
@@ -64,52 +75,60 @@
 \selectfont
 
 % --------------------------------------------------------
-% Style for the auto-sizing A/B circle nodes (shared by the
-% in-diagram labels and the legend, so both stay consistent)
+% Bubbles: shared style + fonts + placement macro
 % --------------------------------------------------------
 
 \tikzset{
-    archLabelCircle/.style={
+    bubbleDraw/.style={
         circle,
         draw,
         thick,
-        fill=white,                       % fond blanc
-        inner sep=\NeuralArchCircleInnerSep,
-        font=\fontsize{\NeuralArchLabelSize pt}
-                  {\dimexpr\NeuralArchLabelSize pt*6/5\relax}
-                  \selectfont\bfseries
+        fill=white
     }
+}
+
+\newcommand{\NeuralArchNumFont}{%
+    \fontsize{\NeuralArchNumTextSize pt}
+             {\dimexpr\NeuralArchNumTextSize pt*6/5\relax}
+             \selectfont\bfseries
+}
+\newcommand{\NeuralArchLetterFont}{%
+    \fontsize{\NeuralArchLetterTextSize pt}
+             {\dimexpr\NeuralArchLetterTextSize pt*6/5\relax}
+             \selectfont\bfseries
 }
 
 % This font/size optically centers a bit right of the box TikZ computes
 % for a single bold capital, so re-centering it needs a small symmetric
-% kern (shifts the ink without changing the measured width, so the
-% auto-sizing circle radius is unaffected).
+% kern (shifts the ink without changing the measured width).
 \newcommand{\NeuralArchCircleLetter}[1]{\kern-0.75pt#1\kern0.75pt}
 
-% --------------------------------------------------------
-% Style for the small numbered-latent-space circles (1-5, 6a, 6b/7b/8b).
-% Placed above a box via its "-north" anchor, see \NeuralArchNumLabel below.
-% --------------------------------------------------------
-
-\tikzset{
-    numLabelCircle/.style={
-        circle,
-        draw,
-        thick,
-        fill=white,
-        inner sep=\NeuralArchNumCircleInnerSep,
-        font=\fontsize{\NeuralArchNumLabelSize pt}
-                  {\dimexpr\NeuralArchNumLabelSize pt*6/5\relax}
-                  \selectfont\bfseries
-    }
+% A bubble: independent bubble + text nodes, both placed relative to the
+% same anchor coordinate, so either can be moved without moving the other.
+% #1 = anchor coordinate        #2 = bubble offset (X,Y)   #3 = bubble size
+% #4 = text offset (X,Y)        #5 = text font              #6 = text content
+\newcommand{\NeuralArchBubble}[6]{%
+    \node[bubbleDraw, minimum size=#3] at ($(#1)+(#2)$) {};
+    \node[font=#5, inner sep=0pt, anchor=center] at ($(#1)+(#4)$) {#6};
 }
 
-% #1 = optional (X,Y) offset overriding \NeuralArchNumLabelOffsetX/Y for this
-%      one label, e.g. \NeuralArchNumLabel[0.2cm,0.5cm]{c1}{1}
-% #2 = box name, #3 = label text (e.g. 1, 2, ..., 6a, 6b, 7b, 8b)
-\NewDocumentCommand{\NeuralArchNumLabel}{O{\NeuralArchNumLabelOffsetX,\NeuralArchNumLabelOffsetY} m m}{%
-    \node[numLabelCircle, anchor=south] at ($(#2-north)+(#1)$) {#3};%
+% Small numbered bubble (1-5, 6a, 6b/7b/8b), anchored on box #3's "-north".
+% #1 = optional (X,Y) bubble offset, overriding \NeuralArchNumBubbleOffsetX/Y
+% #2 = optional (X,Y) text offset, overriding \NeuralArchNumTextOffsetX/Y
+% #3 = box name, #4 = label text
+% e.g. \NeuralArchNumLabel[0.2cm,0.5cm][0cm,0.3cm]{c1}{1}
+\NewDocumentCommand{\NeuralArchNumLabel}{
+    O{\NeuralArchNumBubbleOffsetX,\NeuralArchNumBubbleOffsetY}
+    O{\NeuralArchNumTextOffsetX,\NeuralArchNumTextOffsetY}
+    m m}{%
+    \NeuralArchBubble{#3-north}{#1}{\NeuralArchNumBubbleSize}{#2}{\NeuralArchNumFont}{#4}%
+}
+
+% Big "A"/"B" bubble, anchored on a given box corner.
+% #1 = anchor coordinate (e.g. boxA.north east)
+% #2 = (X,Y) bubble offset   #3 = (X,Y) text offset   #4 = letter (A or B)
+\newcommand{\NeuralArchBigLabel}[4]{%
+    \NeuralArchBubble{#1}{#2}{\NeuralArchLetterBubbleSize}{#3}{\NeuralArchLetterFont}{\NeuralArchCircleLetter{#4}}%
 }
 
 
@@ -120,14 +139,18 @@
 \pic[shift={(0,0,0)}] at (0,0,0)
     {Box={
         name=obs,
-        caption=Observation,
-        xlabel={{"4",""}},
+        caption=,                     % désactivé : on place le texte nous-même (shape + nom)
+        xlabel={{"",""}},
         zlabel=,
         fill=ObservationColor,
         height=42,
         width=6,
         depth=42
     }};
+
+\node[align=center, anchor=north]
+    at ($(obs-south)+(0,-1.5)$)
+    {64 $\times$ 64 $\times$ 4 \\[2pt] \bfseries Observation};
 
 
 % --------------------------------------------------------
@@ -138,7 +161,7 @@
     {Box={
         name=c1,
         caption=,                     % désactivé : on place le texte nous-même (shape + nom)
-        xlabel={{"16",""}},
+        xlabel={{"",""}},
         zlabel=,
         fill=ConvColor,
         height=34,
@@ -158,7 +181,7 @@
     {Box={
         name=c2,
         caption=,
-        xlabel={{"32",""}},
+        xlabel={{"",""}},
         zlabel=,
         fill=ConvColor,
         height=26,
@@ -178,7 +201,7 @@
     {Box={
         name=c3,
         caption=,
-        xlabel={{"64",""}},
+        xlabel={{"",""}},
         zlabel=,
         fill=ConvColor,
         height=18,
@@ -198,7 +221,7 @@
     {Box={
         name=c4,
         caption=,
-        xlabel={{"128",""}},
+        xlabel={{"",""}},
         zlabel=,
         fill=ConvColor,
         height=12,
@@ -303,18 +326,16 @@
 
 
 % ------------------------------------------------------------
-% Label A + circle
+% Label A + bubble
 % ------------------------------------------------------------
-% Le centre du cercle est placé sur le coin HAUT-DROIT (north east)
-% de la boîte A. Les offsets A déplacent le cercle (avec la lettre)
-% par rapport à ce coin : +X vers la droite, +Y vers le haut.
+% Anchor = coin HAUT-DROIT (north east) de la boîte A. Les offsets A
+% (voir section Paramètres/Bulles) déplacent la bulle et le texte
+% indépendamment par rapport à ce coin.
 
-\node[
-    archLabelCircle,
-    anchor=center
-] (labelA) at
-    ($(boxA.north east)+(\NeuralArchLabelAOffsetX,\NeuralArchLabelAOffsetY)$)
-    {\NeuralArchCircleLetter{A}};
+\NeuralArchBigLabel{boxA.north east}
+    {\NeuralArchLabelABubbleOffsetX,\NeuralArchLabelABubbleOffsetY}
+    {\NeuralArchLabelATextOffsetX,\NeuralArchLabelATextOffsetY}
+    {A}
 
 
 % ============================================================
@@ -414,22 +435,27 @@
 
 
 % ------------------------------------------------------------
-% Label B + circle
+% Label B + bubble
 % ------------------------------------------------------------
-% Idem pour le label B : centre du cercle placé sur le coin
-% HAUT-DROIT de la boîte B, ajustable via les offsets B.
+% Idem pour le label B : ancre = coin HAUT-DROIT de la boîte B.
 
-\node[
-    archLabelCircle,
-    anchor=center
-] (labelB) at
-    ($(boxB.north east)+(\NeuralArchLabelBOffsetX,\NeuralArchLabelBOffsetY)$)
-    {\NeuralArchCircleLetter{B}};
+\NeuralArchBigLabel{boxB.north east}
+    {\NeuralArchLabelBBubbleOffsetX,\NeuralArchLabelBBubbleOffsetY}
+    {\NeuralArchLabelBTextOffsetX,\NeuralArchLabelBTextOffsetY}
+    {B}
 
 
 % ============================================================
 % Legend
 % ============================================================
+
+\tikzset{
+    legendBubble/.style={
+        bubbleDraw,
+        minimum size=\NeuralArchLetterBubbleSize,
+        font=\NeuralArchLetterFont
+    }
+}
 
 \node[
     align=center,
@@ -439,14 +465,14 @@
 
     % Circle A
     \tikz[baseline=(legendA.base)]{
-        \node[archLabelCircle] (legendA) {\NeuralArchCircleLetter{A}};
+        \node[legendBubble] (legendA) {\NeuralArchCircleLetter{A}};
     }
     \quad Pong, Space Invaders
     \qquad\qquad
 
     % Circle B
     \tikz[baseline=(legendB.base)]{
-        \node[archLabelCircle] (legendB) {\NeuralArchCircleLetter{B}};
+        \node[legendBubble] (legendB) {\NeuralArchCircleLetter{B}};
     }
     \quad Breakout, Mario Bros, Ms.\ Pac-Man, Surround
 
