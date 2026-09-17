@@ -4,6 +4,7 @@
 \newcommand{\LatentCurvesSubfigCaptionSkip}{0.1cm} % space between a subfigure's plot and its own caption
 \newcommand{\LatentCurvesSubfigSpacing}{-0.2cm}   % vertical space between consecutive subfigures
 \newcommand{\LatentCurvesSubfigLegendSpacing}{0.2cm} % vertical space between the last subfigure and the shared legend
+\newcommand{\LatentCurvesSubfigHeight}{0.28\linewidth} % height of each subfigure's plot (controls this figure's overall scale)
 
 \begin{figure}[t]
     \centering
@@ -21,7 +22,7 @@
             ytick distance=0.25,
             ymajorgrids=true,
             width=\linewidth,
-            height=0.28\linewidth,
+            height=\LatentCurvesSubfigHeight,
         ]
             \addplot[color=breakoutColor, mark=\breakoutMark, mark size=\breakoutMarkSize] coordinates {
                 (2,0.66) (3,0.57) (4,0.65) (5,0.79) (6,0.59) (7,0.62) (8,0.56) (9,0.56) (10,0.58) (11,0.64) (12,0.59) (13,0.55) (14,0.55) (15,0.54) (16,0.59) (17,0.60) (18,0.53) (19,0.55) (20,0.55)
@@ -62,7 +63,7 @@
             ytick distance=0.25,
             ymajorgrids=true,
             width=\linewidth,
-            height=0.28\linewidth,
+            height=\LatentCurvesSubfigHeight,
         ]
             \addplot[color=breakoutColor, mark=\breakoutMark, mark size=\breakoutMarkSize] coordinates {
                 (2,0.62) (3,0.83) (4,0.74) (5,0.82) (6,0.85) (7,0.85) (8,0.85) (9,0.85) (10,0.83) (11,0.82) (12,0.85) (13,0.85) (14,0.84) (15,0.83) (16,0.83) (17,0.83) (18,0.84) (19,0.85) (20,0.83)
@@ -103,7 +104,7 @@
             ytick distance=0.2,
             ymajorgrids=true,
             width=\linewidth,
-            height=0.28\linewidth,
+            height=\LatentCurvesSubfigHeight,
         ]
             \addplot[color=breakoutColor, mark=\breakoutMark, mark size=\breakoutMarkSize] coordinates {
                 (2,0.28) (3,0.40) (4,0.39) (5,0.61) (6,0.43) (7,0.47) (8,0.41) (9,0.41) (10,0.42) (11,0.46) (12,0.45) (13,0.40) (14,0.39) (15,0.37) (16,0.42) (17,0.43) (18,0.36) (19,0.40) (20,0.38)
