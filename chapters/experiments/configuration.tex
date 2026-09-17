@@ -79,26 +79,15 @@ Throughout the remainder of this chapter, the analyzed representations are numbe
 
 \input{figures/experiments/neural_architecture.tex}
 
-% The latent space analyzed by \gls{car} is not restricted to a specific layer or architecture.
-% Any latent space produced by the network can be analyzed using the same methodology.
-% In the experiments presented in this chapter, the default analysis considers the representation produced by the last convolutional layer.
-% The layer-wise analysis additionally considers the representations produced by the hidden layers of the multilayer perceptron.
-% The final output layer is excluded because it directly produces the action-distribution parameters.
+\subsection{Other \gls{car} parameters}
 
-\subsection{Parameters}
-
-Having defined the environments and neural architectures, the remaining parameters of the \gls{car} pipeline must now be specified.
-The main parameters shared across the experiments are summarized in Table~\ref{tab:experiments_parameters}.
-There are too many parameters to discuss them all in detail.
+Several other parameters must be defined for the different stages of the \gls{car} pipeline.
+These parameters are less critical to the overall methodology than those discussed above, but they still need to be specified to reproduce the experiments.
+Since each stage introduces its own configuration choices, there are too many parameters to discuss them all in detail.
+The main parameters used across the experiments are summarized in Table~\ref{tab:experiments_parameters}.
 
 \input{tables/experiments/experiments_parameters_table.tex}
 
-Given the large number of possible configurations, it is not feasible to evaluate all possible combinations.
-The choices made in this work are therefore based primarily on standard practices from the literature and on practical experience.
-Whenever possible, we used the simplest suitable configuration.
-For the clustering algorithm and distance metric in particular, the simplest suitable choices are used to establish a baseline.
-
-These choices do not restrict the \gls{car} methodology itself.
-Most components can be replaced or configured differently depending on the application.
-The evaluation metrics provide an objective basis for comparing these alternatives and determining which configurations produce the most consistent and meaningful results.
-
+These settings are specific to the experiments presented in this chapter and do not restrict the \gls{car} methodology itself.
+The different stages of the pipeline are modular and can be configured or replaced depending on the application.
+The evaluation metrics provide an objective basis for comparing these alternatives and assessing their effect on the consistency and meaningfulness of the resulting clusters.
