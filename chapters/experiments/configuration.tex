@@ -35,6 +35,8 @@ This reduces the number of decisions required during an episode while maintainin
 \input{figures/experiments/environments.tex}
 
 The experiments use the six environments described below::
+\begingroup
+\renewenvironment{samepage}{}{}
 \begin{itemize}
     \item \textbf{Breakout:} The agent moves a paddle at the bottom of the screen (Figure~\ref{fig:environment_breakout}) to bounce a ball into a wall of bricks.
     Each broken brick scores one point, and the ball speeds up as the wall is cleared.
@@ -58,6 +60,7 @@ The experiments use the six environments described below::
     \item \textbf{Surround:} A two-player game on a grid (Figure~\ref{fig:environment_surround}) in which each player leaves a trail behind a moving cursor.
     The goal is to force the opponent to crash into a trail.
 \end{itemize}
+\endgroup
 
 \subsection{Neural architecture}
 
