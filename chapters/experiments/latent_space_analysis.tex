@@ -6,9 +6,9 @@ For each environment and each layer, a random subset of 20,000 observations is e
 
 \input{figures/clustering_agent_representation/latent_space_curves_by_layer_depth.tex}
 
-Figure~\ref{fig:latent_space_curves_by_layer_depth} makes this pattern explicit by averaging \gls{cu}, \gls{as}, and \gls{acu} over $K \in [2,20]$ for every analyzed layer of each environment, and reporting the resulting averages with respect to the depth of that layer.
-\gls{cu} decreases with depth in every environment, most sharply over the first few layers, while \gls{as} increases with depth, in both cases consistently with the trend described above.
-\gls{acu} increases with depth for Mario Bros, Ms.\ Pac-Man, and Surround, for which the last analyzed layer is the most informative, whereas it peaks at an intermediate depth and decreases again for Breakout, Pong, and Space Invaders.
+Figure~\ref{fig:latent_space_curves_by_layer_depth} reports, for each environment, \gls{cu}, \gls{as}, and \gls{acu} averaged over $K \in [2,20]$ with respect to the depth of the analyzed layer.
+In every environment, \gls{cu} tends to be highest in the earliest layers and to decrease with depth, while \gls{as} follows the opposite trend, increasing with depth as the representation becomes less tied to the raw observation, the action distribution, and the network's initialization.
+\gls{acu}, which combines both effects, therefore increases with depth for Mario Bros, Ms.\ Pac-Man, and Surround, for which the last analyzed layer is the most informative, whereas it peaks at an intermediate depth and decreases again for Breakout, Pong, and Space Invaders.
 
 For each environment, the results are reported for the layer that achieves the highest average \gls{acu} across the tested values of $K$.
 This layer is therefore the one for which the agreement between independently trained surrogate policies is least explained by the observation space, the action space, or the network initialization.
@@ -64,12 +64,3 @@ For Surround, \gls{acu} is maximized at the last analyzed layer (layer 8b), with
 As shown in Appendix~\ref{chap:appendix}, \gls{as} increases with depth while \gls{cu} fluctuates without a clear trend, and \gls{acu} is highest in the deepest layer.
 
 \FloatBarrier
-
-\subsection{Discussion}
-\label{ssec:latent_space_analysis_discussion}
-
-Across all six environments, \gls{cu} tends to be highest in the earliest layers and to decrease with depth, while \gls{as} follows the opposite trend, increasing with depth as the representation becomes less tied to the raw observation, the action distribution, and the network's initialization.
-\gls{acu}, which combines both effects, therefore peaks once the representation is abstract enough for \gls{as} to be high, but before \gls{cu} has decayed too much.
-For Mario Bros, Ms.\ Pac-Man, and Surround, this optimum is reached at the last analyzed layer, suggesting that further gains might be observed by analyzing even deeper representations.
-For Breakout, Pong, and Space Invaders, in contrast, \gls{acu} peaks at an intermediate layer and decreases again toward the last one, indicating that the deepest representation is not always the most informative for \gls{car}.
-This confirms that the layer at which the analysis is performed is not a neutral methodological choice and should itself be selected according to \gls{acu} rather than fixed a priori to the last convolutional layer, as was done in the single-layer analysis reported in earlier work.
