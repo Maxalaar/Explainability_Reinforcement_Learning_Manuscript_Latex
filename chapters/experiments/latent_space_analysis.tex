@@ -1,18 +1,22 @@
 \section{Quantitative Analysis}
 \label{sec:experiments_latent_space_analysis}
 
-This section analyzes their \gls{ls} using \gls{cu}, \gls{as}, and \gls{acu}.
-For each environment and each layer, a random subset of 20,000 observations is embedded into the \gls{ls} of each surrogate policy, and the resulting point cloud $\textcolor{myblue}{\mathcal{E}}$ is partitioned with $k$-means clustering \cite{macqueen1967multivariate} for every number of clusters $K \in [2,20]$.
-
-\input{figures/clustering_agent_representation/latent_space_curves_by_layer_depth.tex}
+This section analyzes the \gls{ls} of the surrogate policies using \gls{cu}, \gls{as}, and \gls{acu}.
+For each environment and each layer, a random subset of 20,000 observations is embedded into the \gls{ls} of each surrogate policy, and the resulting point cloud $\textcolor{myblue}{\mathcal{E}}$ is partitioned using $k$-means clustering \cite{macqueen1967multivariate} for each number of clusters $K \in [2,20]$.
+The main results are presented in this section, while the full breakdown across all analyzed layers is reported in Appendix~\ref{chap}.
 
 Figure~\ref{fig:latent_space_curves_by_layer_depth} reports, for each environment, \gls{cu}, \gls{as}, and \gls{acu} averaged over $K \in [2,20]$ with respect to the depth of the analyzed layer.
 In every environment, \gls{cu} tends to be highest in the earliest layers and to decrease with depth, while \gls{as} follows the opposite trend, increasing with depth as the representation becomes less tied to the raw observation, the action distribution, and the network's initialization.
 \gls{acu}, which combines both effects, therefore increases with depth for \MarioBrosName, \MsPacManName, and \SurroundName, for which the last analyzed layer is the most informative, whereas it peaks at an intermediate depth and decreases again for \BreakoutName, \PongName, and \SpaceInvadersName.
 
+\input{figures/clustering_agent_representation/latent_space_curves_by_layer_depth.tex}
+
+The linear fit of the environment-average curve confirms these trends: \gls{cu} decreases roughly linearly with depth, from $0.72$ at the first layer to $0.50$ at the last (slope $\approx -0.04$ per layer), while \gls{as} increases at a comparable rate in the opposite direction, from $0.28$ to $0.80$ (slope $\approx +0.07$ per layer).
+\gls{acu} increases more moderately on average, from $0.00$ to $0.30$ (slope $\approx +0.03$ per layer), indicating that, despite the environment-specific peaks and decreases described above, deeper representations tend on average to offer a better trade-off between \gls{cu} and \gls{as}.
+
 For each environment, the results are reported for the layer that achieves the highest average \gls{acu} across the tested values of $K$.
 This layer is therefore the one for which the agreement between independently trained surrogate policies is least explained by the observation space, the action space, or the network initialization.
-Table~\ref{tab:latent_space_best_layer} reports this layer for each environment, together with the corresponding average \gls{cu}, \gls{as}, and \gls{acu} over $K$; the evolution of these three metrics with respect to $K$ for that layer is then shown in Figure~\ref{fig:latent_space_curves_by_metric}, and the full breakdown across every analyzed layer is reported in Appendix~\ref{chap:appendix}.
+Table~\ref{tab:latent_space_best_layer} reports this layer for each environment, together with the corresponding average \gls{cu}, \gls{as}, and \gls{acu} over $K$; the evolution of these three metrics with respect to $K$ for that layer is then shown in Figure~\ref{fig:latent_space_curves_by_metric}.
 
 \input{tables/clustering_agent_representation/latent_space_best_layer.tex}
 

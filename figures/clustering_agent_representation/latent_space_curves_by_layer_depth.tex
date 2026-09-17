@@ -44,6 +44,7 @@
             \addplot[color=surroundColor, mark=\surroundMark, mark size=\surroundMarkSize] coordinates {
                 (1,0.70) (2,0.58) (3,0.66) (4,0.65) (5,0.65) (6,0.59) (7,0.49) (8,0.54)
             };
+            \addplot[black, dashed, thick, domain=1:8, samples=2, forget plot] {-0.036*x+0.748};
         \end{axis}
         \end{tikzpicture}
         }
@@ -86,6 +87,7 @@
             \addplot[color=surroundColor, mark=\surroundMark, mark size=\surroundMarkSize] coordinates {
                 (1,0.27) (2,0.45) (3,0.56) (4,0.49) (5,0.49) (6,0.57) (7,0.72) (8,0.77)
             };
+            \addplot[black, dashed, thick, domain=1:8, samples=2, forget plot] {0.069*x+0.302};
         \end{axis}
         \end{tikzpicture}
         }
@@ -128,6 +130,7 @@
             \addplot[color=surroundColor, mark=\surroundMark, mark size=\surroundMarkSize] coordinates {
                 (1,-0.02) (2,0.03) (3,0.22) (4,0.14) (5,0.14) (6,0.16) (7,0.21) (8,0.31)
             };
+            \addplot[black, dashed, thick, domain=1:8, samples=2, forget plot] {0.033*x+0.049};
         \end{axis}
         \end{tikzpicture}
         }
@@ -137,7 +140,7 @@
     \vspace{\LatentCurvesByDepthSubfigLegendSpacing}
     {\hypersetup{pdfborder={0 0 0}}\ref{policyTrainingLegend}}
 
-    \caption{\gls{cu}, \gls{as}, and \gls{acu} averaged over the number of clusters $K \in [2,20]$, with respect to the depth of the analyzed layer, for each of the six environments.}
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} averaged over the number of clusters $K \in [2,20]$, with respect to the depth of the analyzed layer, for each of the six environments. The dashed black line is a linear least-squares fit of the curve averaged over the six environments.}
     \label{fig:latent_space_curves_by_layer_depth}
 \end{figure}
 
