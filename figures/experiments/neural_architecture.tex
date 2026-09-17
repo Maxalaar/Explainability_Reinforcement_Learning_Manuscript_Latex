@@ -22,6 +22,18 @@
 % is controlled only through this padding
 \providecommand{\NeuralArchCircleInnerSep}{3pt}
 
+% Size of the small numbered circles marking each analyzed latent space
+% (1-5, 6a, 6b/7b/8b), and their padding.
+\providecommand{\NeuralArchNumLabelSize}{11}
+\providecommand{\NeuralArchNumCircleInnerSep}{2pt}
+
+% Default position of every numbered circle, as an offset from the TOP-CENTER
+% (the box's "-north" anchor) of the box it marks. (+X = right, +Y = up.)
+% Used unless a call to \NeuralArchNumLabel overrides it for a single label,
+% e.g. \NeuralArchNumLabel[0.2cm,0.5cm]{c1}{1}.
+\providecommand{\NeuralArchNumLabelOffsetX}{0cm}
+\providecommand{\NeuralArchNumLabelOffsetY}{0.3cm}
+
 % Offset of the label/circle A relative to the TOP-RIGHT corner of box A.
 % (+X = vers la droite / extérieur, +Y = vers le haut)
 \providecommand{\NeuralArchLabelAOffsetX}{0.0cm}
@@ -75,6 +87,31 @@
 % auto-sizing circle radius is unaffected).
 \newcommand{\NeuralArchCircleLetter}[1]{\kern-0.75pt#1\kern0.75pt}
 
+% --------------------------------------------------------
+% Style for the small numbered-latent-space circles (1-5, 6a, 6b/7b/8b).
+% Placed above a box via its "-north" anchor, see \NeuralArchNumLabel below.
+% --------------------------------------------------------
+
+\tikzset{
+    numLabelCircle/.style={
+        circle,
+        draw,
+        thick,
+        fill=white,
+        inner sep=\NeuralArchNumCircleInnerSep,
+        font=\fontsize{\NeuralArchNumLabelSize pt}
+                  {\dimexpr\NeuralArchNumLabelSize pt*6/5\relax}
+                  \selectfont\bfseries
+    }
+}
+
+% #1 = optional (X,Y) offset overriding \NeuralArchNumLabelOffsetX/Y for this
+%      one label, e.g. \NeuralArchNumLabel[0.2cm,0.5cm]{c1}{1}
+% #2 = box name, #3 = label text (e.g. 1, 2, ..., 6a, 6b, 7b, 8b)
+\NewDocumentCommand{\NeuralArchNumLabel}{O{\NeuralArchNumLabelOffsetX,\NeuralArchNumLabelOffsetY} m m}{%
+    \node[numLabelCircle, anchor=south] at ($(#2-north)+(#1)$) {#3};%
+}
+
 
 % --------------------------------------------------------
 % Observation
@@ -100,7 +137,7 @@
 \pic[shift={(2,0,0)}] at (obs-east)
     {Box={
         name=c1,
-        caption=Conv,
+        caption=,                     % désactivé : on place le texte nous-même (shape + nom)
         xlabel={{"16",""}},
         zlabel=,
         fill=ConvColor,
@@ -109,13 +146,18 @@
         depth=34
     }};
 
+\node[align=center, anchor=north]
+    at ($(c1-south)+(0,-1.5)$)
+    {31 $\times$ 31 $\times$ 16 \\[2pt] \bfseries Conv};
+\NeuralArchNumLabel{c1}{1}
+
 \draw [connection] (obs-east) -- node {\midarrow} (c1-west);
 
 
 \pic[shift={(1.5,0,0)}] at (c1-east)
     {Box={
         name=c2,
-        caption=Conv,
+        caption=,
         xlabel={{"32",""}},
         zlabel=,
         fill=ConvColor,
@@ -124,13 +166,18 @@
         depth=26
     }};
 
+\node[align=center, anchor=north]
+    at ($(c2-south)+(0,-1.5)$)
+    {14 $\times$ 14 $\times$ 32 \\[2pt] \bfseries Conv};
+\NeuralArchNumLabel{c2}{2}
+
 \draw [connection] (c1-east) -- node {\midarrow} (c2-west);
 
 
 \pic[shift={(1.5,0,0)}] at (c2-east)
     {Box={
         name=c3,
-        caption=Conv,
+        caption=,
         xlabel={{"64",""}},
         zlabel=,
         fill=ConvColor,
@@ -139,13 +186,18 @@
         depth=18
     }};
 
+\node[align=center, anchor=north]
+    at ($(c3-south)+(0,-1.5)$)
+    {6 $\times$ 6 $\times$ 64 \\[2pt] \bfseries Conv};
+\NeuralArchNumLabel{c3}{3}
+
 \draw [connection] (c2-east) -- node {\midarrow} (c3-west);
 
 
 \pic[shift={(1.5,0,0)}] at (c3-east)
     {Box={
         name=c4,
-        caption=Conv,
+        caption=,
         xlabel={{"128",""}},
         zlabel=,
         fill=ConvColor,
@@ -153,6 +205,11 @@
         width=16,
         depth=12
     }};
+
+\node[align=center, anchor=north]
+    at ($(c4-south)+(0,-1.5)$)
+    {2 $\times$ 2 $\times$ 128 \\[2pt] \bfseries Conv};
+\NeuralArchNumLabel{c4}{4}
 
 \draw [connection] (c3-east) -- node {\midarrow} (c4-west);
 
@@ -175,7 +232,8 @@
 % Légende centrée sous la face avant, avec la taille
 \node[align=center, anchor=north]
     at ($(flatten-south)+(0,-1.5)$)
-    { 18432 \\[2pt] \bfseries Flatten};
+    { 512 \\[2pt] \bfseries Flatten};
+\NeuralArchNumLabel{flatten}{5}
 
 \draw [connection] (c4-east) -- node {\midarrow} (flatten-west);
 
@@ -196,6 +254,7 @@
         width=2,
         depth=16
     }};
+\NeuralArchNumLabel{aFc1}{6a}
 
 \draw [connection] (flatten-east) -- node {\midarrow} (aFc1-west);
 
@@ -274,6 +333,7 @@
         width=2,
         depth=30
     }};
+\NeuralArchNumLabel{bFc1}{6b}
 
 \draw [connection] (flatten-east) -- node {\midarrow} (bFc1-west);
 
@@ -288,6 +348,7 @@
         width=2,
         depth=22
     }};
+\NeuralArchNumLabel{bFc2}{7b}
 
 \draw [connection]
     (bFc1-east) -- node {\midarrow} (bFc2-west);
@@ -303,6 +364,7 @@
         width=2,
         depth=16
     }};
+\NeuralArchNumLabel{bFc3}{8b}
 
 \draw [connection]
     (bFc2-east) -- node {\midarrow} (bFc3-west);

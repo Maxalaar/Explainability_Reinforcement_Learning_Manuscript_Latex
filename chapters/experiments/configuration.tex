@@ -73,7 +73,8 @@ For Pong and Space Invaders, it contains a single hidden layer with $128$ units.
 For the other four environments, it contains three hidden layers with $512$, $256$, and $128$ units.
 The size of the output layer matches the number of actions available in each environment: $4$ for Breakout, $18$ for Mario Bros, $9$ for Ms.\ Pac-Man, $6$ for Pong, $6$ for Space Invaders, and $5$ for Surround.
 
-Figure~\ref{fig:neural_architecture} illustrates both configurations.
+Figure~\ref{fig:neural_architecture} illustrates both configurations, together with the shape of the representation produced by each convolutional layer.
+Throughout the remainder of this chapter, the analyzed representations are numbered $1$ to $5$ for the four convolutional layers and the flattened representation, which are common to all six environments; the representations produced by the multilayer perceptron are then numbered $6\text{a}$ for Pong and Space Invaders (single hidden layer), or $6\text{b}$, $7\text{b}$, and $8\text{b}$ for the other four environments (three hidden layers).
 
 \input{figures/experiments/neural_architecture.tex}
 
