@@ -1,19 +1,21 @@
 \section{Software Implementation}
 \label{sec:experiments_software}
 
-For \gls{dl} and \gls{rl}, theoretical results are often difficult to apply to real-world cases.
-The effectiveness of methods in these fields is therefore primarily assessed through experimentation.
-Consequently, particular attention is given to the implementation of \gls{car}.
+This section details the experimental evaluation of the proposed method.
+\gls{dl} and \gls{rl} are strongly empirical fields, where experimental evaluation plays an important role in assessing how methods perform in practice.
+Particular attention is therefore given to the implementation of \gls{car}.
 It relies on established libraries that provide efficient implementations of its main components.
+Table~\ref{tab} summarizes the libraries used throughout the pipeline.
 The code is made publicly available as open-source to support reproducible replication of the reported results.\footnote{\url{https://github.com/Maxalaar/Clustering_Agent_Latent_Space}}
 
-\gls{car} is organized as a pipeline of five stages, shown in Figure~\ref{fig:car_pipeline}.
-Each stage is an independent executable, and stages communicate through artifacts written to disk.
-This allows each stage to be rerun or inspected independently.
-The parameters of each experiment are gathered in a single configuration object, described in Section~\ref{sec:experiments_configuration}.
-The following subsections describe the purpose of each stage, its implementation, and the libraries used.
+The \gls{car} implementation is organized as a pipeline of five stages, illustrated in Figure~\ref{fig:car_pipeline}.
+Each stage performs a specific operation and produces the artifacts required by the subsequent stages.
+The stages are implemented as independent executables allowing each stage to be rerun independently.
+The following subsections describe the purpose and implementation of each stage, as well as the libraries used.
 
 \input{figures/experiments/pipeline.tex}
+
+\input{tables/experiments/software_libraries_table.tex}
 
 \subsection{Initial policy training}
 
@@ -24,11 +26,9 @@ By default, the initial policy is trained using \gls{ppo} \cite{schulman2017prox
 Other RLlib algorithms, such as \gls{appo} \cite{espeholt2018impala}, \gls{dqn} \cite{mnih2013playingatarideepreinforcement}, and DreamerV3 \cite{hafner2023masteringdiversedomainsworld}, can also be selected through the same configuration.
 
 The policy and critic networks are implemented using PyTorch \cite{paszke2019pytorch}.
-PyTorch is the standard deep learning frameworks and is widely used for developing and training neural networks.
-It provides GPU acceleration and supports a wide range of neural network architectures.
+PyTorch is the standard deep learning frameworks and is widely used for developing and training \gls{nn}.
+It provides GPU acceleration and supports a wide range of \gls{nn} architectures.
 This makes it well suited for implementing the different policy and critic architectures used in the experiments.
-
-The resulting policy and critic parameters are saved as a checkpoint together with the environment and training configurations.
 
 \subsection{Trajectory dataset generation}
 
@@ -40,17 +40,13 @@ Trajectories are stored as Parquet files \cite{arrow}.
 Its columnar structure allows efficient data access and supports concurrent processing.
 This is useful here because the datasets contain around one million observation--action pairs and cannot be loaded entirely into memory.
 
-The resulting dataset is used both to train the surrogate policies and to generate the latent representations analyzed by \gls{car}.
-
 \subsection{Surrogate policy training}
 
 The third stage trains the surrogate policies using behavior cloning on the trajectory dataset.
 This provides a supervised learning approach for replicating the initial policy.
 The training procedure is implemented using PyTorch Lightning \cite{falcon2019lightning}.
-PyTorch Lightning provides a simplified interface for training neural networks with PyTorch.
+PyTorch Lightning provides a simplified interface for training \gls{nn} with PyTorch.
 It handles common training operations such as data loading, optimization, checkpointing, and GPU execution.
-
-Each surrogate policy is saved as a checkpoint together with the configuration used for training.
 
 \subsection{Surrogate policy evaluation}
 
@@ -74,6 +70,3 @@ This reduces the computational cost and allows point clouds containing tens of t
 
 The resulting partitions are used to compute the \ClusteringUniversalityName and the \AbstractionScoreName.
 The stage also produces the material required for the qualitative analysis, including the clustered point clouds and the cluster assignment of each observation.
-
-Table~\ref{tab:software_libraries} summarizes the main third-party libraries used in the pipeline.
-\input{tables/experiments/software_libraries_table.tex}
