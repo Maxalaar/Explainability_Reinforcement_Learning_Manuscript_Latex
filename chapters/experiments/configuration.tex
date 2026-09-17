@@ -2,31 +2,25 @@
 \label{sec:experiments_configuration}
 
 This section describes the configuration of the experiments reported in this chapter.
-It covers the environments, the neural architecture of the policies, and the main parameters of each pipeline stage.
+It covers the environments, the neural architectures used, and the main parameters of the pipeline.
 
 \subsection{Environments}
 
 All experiments presented in this manuscript use environments from the Atari benchmark \cite{Bellemare_2013}, accessed through the Arcade Learning Environment.
-The use of Atari environments offers several advantages.
-First, Atari is a widely used benchmark in the \gls{rl} community, with many studies using these environments as standard evaluation settings.
-This makes the experimental results easier to compare with existing work.
-Second, these environments were not specifically designed for \gls{rl}, which reduces the risk of introducing biases related to the design of the environments themselves.
-Finally, the benchmark provides a diverse set of well-known environments with varying levels of complexity.
-This diversity makes it possible to evaluate \gls{car} across different types of tasks and levels of difficulty.
+The use of Atari environments offers several advantages:
+
+\begin{itemize}
+\item \textbf{Standard benchmark:} Atari is widely used in the \gls{rl} community, making the experimental results easier to compare with existing work.
+\item \textbf{Limited environment-specific bias:} The environments were not specifically designed for \gls{rl}, reducing the risk of introducing biases related to their design.
+\item \textbf{Diversity:} The benchmark provides a diverse set of well-known environments with different types of tasks and levels of complexity, allowing \gls{car} to be evaluated under different conditions.
+\end{itemize}
 
 The configuration of the Atari environments follows common practice in \gls{rl} research \cite{machado2017revisitingarcadelearningenvironment}.
-
 In each environment, the agent receives visual observations in the form of raw pixels.
 Each image is resized to $64 \times 64$ pixels and converted to grayscale to reduce memory requirements.
-% An exception is made for Pac-Man, where color information is important for determining the behavior of other agents in the environment.
-% The original color information is therefore preserved for this environment.
 To provide information about the dynamics of the environment, four consecutive observations are stacked along the channel dimension.
 The resulting observation has a shape of $64 \times 64 \times 4$.
-This allows the agent to infer the motion of objects from successive observations rather than relying on a single frame.
-
-Frame skipping is also used to reduce the duration of each episode.
-The agent selects a new action every five frames, while the selected action is repeated for the intervening frames.
-This provides sufficient temporal resolution for effective control while reducing the number of decisions required during an episode.
+This allows the agent to infer the motion of objects from successive observations.
 
 The actions correspond to the different buttons available on the Atari controller.
 The resulting action space is therefore discrete.
@@ -34,32 +28,36 @@ Since Atari games are fully deterministic, sticky actions are introduced to add 
 With a probability of $0.05$, the environment repeats the action selected at the previous step instead of applying the new action.
 This prevents the agent from simply memorizing a fixed sequence of actions during training.
 
-With the environment configuration established, the objective of each environment is described below.
-Figure~\ref{fig:environments} provides an overview of the six environments used in the experiments.
+To reduce the duration of each episode, frame skipping is used.
+The agent selects a new action every five frames and repeats it for the following frames.
+This reduces the number of decisions required during an episode while maintaining sufficient temporal resolution for effective control.
 
 \input{figures/experiments/environments.tex}
 
-\paragraph{Breakout.}
-The agent moves a paddle at the bottom of the screen (Figure~\ref{fig:environment_breakout}) to bounce a ball into a wall of bricks, each broken brick scoring a point, and the ball speeding up as the wall is cleared.
+The experiments use the six environments described below::
+\begin{itemize}
+    \item \textbf{Breakout:} The agent moves a paddle at the bottom of the screen (Figure~\ref{fig:environment_breakout}) to bounce a ball into a wall of bricks.
+    Each broken brick scores one point, and the ball speeds up as the wall is cleared.
+    \allowbreak
 
-\paragraph{Mario Bros.}
-A single-screen platform game (Figure~\ref{fig:environment_mario_bros}).
-The player clears each phase by hitting enemies from below to flip them, then kicking them off the platforms before they recover.
-A central POW block flips every enemy at once but can only be used a few times per phase.
+    \item \textbf{Mario Bros.:} A single-screen platform game (Figure~\ref{fig:environment_mario_bros}) in which the player clears each phase by hitting enemies from below to flip them, then kicking them off the platforms before they recover.
+    A central POW block can flip all enemies at once but can only be used a few times per phase.
+    \allowbreak
 
-\paragraph{Ms.\ Pac-Man.}
-The player moves through a maze (Figure~\ref{fig:environment_ms_pacman}), eating pellets while avoiding four ghosts, with power pellets briefly making the ghosts edible.
-The maze structure and the many possible local situations, such as a nearby ghost, an intersection, or an active power pellet, produce a large number of distinguishable states.
+    \item \textbf{Ms.\ Pac-Man:} The player moves through a maze (Figure~\ref{fig:environment_ms_pacman}), eating pellets while avoiding four ghosts.
+    Power pellets temporarily make the ghosts edible.
+    \allowbreak
 
-\paragraph{Pong.}
-A minimal two-player game (Figure~\ref{fig:environment_pong}) in which the agent controls one paddle and must send the ball past the opponent.
+    \item \textbf{Pong:} A two-player game (Figure~\ref{fig:environment_pong}) in which the agent controls one paddle and must send the ball past the opponent.
+    \allowbreak
 
-\paragraph{Space Invaders.}
-The agent moves a cannon along the bottom of the screen (Figure~\ref{fig:environment_space_invaders}), firing at descending rows of aliens while dodging their shots and using destructible shields, with a bonus saucer occasionally crossing the top.
+    \item \textbf{Space Invaders:} The agent moves a cannon along the bottom of the screen (Figure~\ref{fig:environment_space_invaders}), firing at descending rows of aliens while avoiding their shots and using destructible shields.
+    A bonus saucer occasionally crosses the top of the screen.
+    \allowbreak
 
-\paragraph{Surround.}
-A two-player game on a grid (Figure~\ref{fig:environment_surround}).
-Each player leaves a solid trail behind a moving cursor, and the goal is to force the opponent to crash into a trail or a wall.
+    \item \textbf{Surround:} A two-player game on a grid (Figure~\ref{fig:environment_surround}) in which each player leaves a trail behind a moving cursor.
+    The goal is to force the opponent to crash into a trail.
+\end{itemize}
 
 \subsection{Neural architecture}
 
