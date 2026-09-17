@@ -1,0 +1,52 @@
+\begin{figure}[t]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tikzpicture}
+
+    \node (ligne_1) at (0, 0) {};
+
+    \node[] at ($(ligne_1) + (-2.25cm, 0cm)$) {
+    \begin{minipage}{4.5cm}
+        \centering
+        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/space_invaders/qualitative/cluster_3/image_1.png}
+        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/space_invaders/qualitative/cluster_3/image_2.png}
+
+        \small Start of the episode.
+    \end{minipage}
+    };
+
+    \node[] at ($(ligne_1) + (2.25cm, 0cm)$) {
+    \begin{minipage}{4.5cm}
+        \centering
+        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/space_invaders/qualitative/cluster_1/image_1.png}
+        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/space_invaders/qualitative/cluster_1/image_2.png}
+
+        \small Middle of the episode.
+    \end{minipage}
+    };
+
+    \node[] at ($(ligne_1) + (-2.25cm, -3.5cm)$) {
+    \begin{minipage}{4.5cm}
+        \centering
+        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/space_invaders/qualitative/cluster_0/image_1.png}
+        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/space_invaders/qualitative/cluster_0/image_2.png}
+
+        \small The left column has been cleared; the flying saucer occasionally appears.
+    \end{minipage}
+    };
+
+    \node[] at ($(ligne_1) + (2.25cm, -3.5cm)$) {
+    \begin{minipage}{4.5cm}
+        \centering
+        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/space_invaders/qualitative/cluster_2/image_1.png}
+        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/space_invaders/qualitative/cluster_2/image_2.png}
+
+        \small Late in the episode, few invaders remain.
+    \end{minipage}
+    };
+
+    \end{tikzpicture}
+    }
+    \caption{Clusters identified by \gls{car} in the Space Invaders environment (layer 4, $K=4$).}
+    \label{fig:qualitative_space_invaders}
+\end{figure}

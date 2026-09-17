@@ -1,0 +1,42 @@
+\begin{figure}[t]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tikzpicture}
+
+    \node (ligne_1) at (0, 0) {};
+
+    \node[] at ($(ligne_1) + (-4.5cm, 0cm)$) {
+    \begin{minipage}{4.5cm}
+        \centering
+        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_0/image_1.png}
+        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_0/image_2.png}
+
+        \small Mario fights enemies on the left side of the screen.
+    \end{minipage}
+    };
+
+    \node[] at ($(ligne_1) + (0cm, 0cm)$) {
+    \begin{minipage}{4.5cm}
+        \centering
+        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_1/image_1.png}
+        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_1/image_2.png}
+
+        \small Mario hits the POW block.
+    \end{minipage}
+    };
+
+    \node[] at ($(ligne_1) + (4.5cm, 0cm)$) {
+    \begin{minipage}{4.5cm}
+        \centering
+        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_2/image_1.png}
+        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_2/image_2.png}
+
+        \small Mario fights enemies on the right side of the screen.
+    \end{minipage}
+    };
+
+    \end{tikzpicture}
+    }
+    \caption{Clusters identified by \gls{car} in the Mario Bros environment (layer 3, $K=3$).}
+    \label{fig:qualitative_mario_bros}
+\end{figure}
