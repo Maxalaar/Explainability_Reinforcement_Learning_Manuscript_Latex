@@ -1,8 +1,15 @@
+% Spacing specific to this figure (tuned for its own subfigure heights --
+% do not share these with other multi-subfigure figures, see
+% figures/experiments/policy_training.tex for that figure's own copies).
+\newcommand{\LatentCurvesSubfigCaptionSkip}{0.1cm} % space between a subfigure's plot and its own caption
+\newcommand{\LatentCurvesSubfigSpacing}{-0.2cm}   % vertical space between consecutive subfigures
+\newcommand{\LatentCurvesSubfigLegendSpacing}{0.2cm} % vertical space between the last subfigure and the shared legend
+
 \begin{figure}[t]
     \centering
     \begin{subfigure}[b]{\textwidth}
         \centering
-        \captionsetup{skip=\SubfigCaptionSkip}
+        \captionsetup{skip=\LatentCurvesSubfigCaptionSkip}
         \resizebox{\linewidth}{!}{
         \begin{tikzpicture}
         \begin{axis}[
@@ -39,11 +46,11 @@
         }
         \caption{\gls{cu} with respect to the number of clusters.}
     \end{subfigure}
-    \vspace{\SubfigSpacing}
+    \vspace{\LatentCurvesSubfigSpacing}
 
     \begin{subfigure}[b]{\textwidth}
         \centering
-        \captionsetup{skip=\SubfigCaptionSkip}
+        \captionsetup{skip=\LatentCurvesSubfigCaptionSkip}
         \resizebox{\linewidth}{!}{
         \begin{tikzpicture}
         \begin{axis}[
@@ -80,11 +87,11 @@
         }
         \caption{\gls{as} with respect to the number of clusters.}
     \end{subfigure}
-    \vspace{\SubfigSpacing}
+    \vspace{\LatentCurvesSubfigSpacing}
 
     \begin{subfigure}[b]{\textwidth}
         \centering
-        \captionsetup{skip=\SubfigCaptionSkip}
+        \captionsetup{skip=\LatentCurvesSubfigCaptionSkip}
         \resizebox{\linewidth}{!}{
         \begin{tikzpicture}
         \begin{axis}[
@@ -122,7 +129,7 @@
         \caption{\gls{acu} with respect to the number of clusters.}
     \end{subfigure}
 
-    \vspace{\SubfigLegendSpacing}
+    \vspace{\LatentCurvesSubfigLegendSpacing}
     {\hypersetup{pdfborder={0 0 0}}\ref{policyTrainingLegend}}
 
     \caption{\gls{cu}, \gls{as}, and \gls{acu} with respect to the number of clusters, for each of the six environments, for the layer that maximizes the average \gls{acu} in that environment.}

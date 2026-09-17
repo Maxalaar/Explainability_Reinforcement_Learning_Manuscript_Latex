@@ -1,24 +1,32 @@
+% Spacing specific to this figure (tuned for its own subfigure heights --
+% do not share these with other multi-subfigure figures, see
+% figures/clustering_agent_representation/latent_space_curves_by_metric.tex
+% for that figure's own copies).
+\newcommand{\PolicyTrainingSubfigCaptionSkip}{-0.4cm} % space between a subfigure's plot and its own caption
+\newcommand{\PolicyTrainingSubfigSpacing}{0.4cm}   % vertical space between consecutive subfigures
+\newcommand{\PolicyTrainingSubfigLegendSpacing}{0.2cm} % vertical space between the last subfigure and the shared legend
+
 \begin{figure}[t]
     \centering
     \begin{subfigure}[b]{\textwidth}
         \centering
-        \captionsetup{skip=\SubfigCaptionSkip}
+        \captionsetup{skip=\PolicyTrainingSubfigCaptionSkip}
         \input{figures/experiments/initial_policy_training.tex}
         \caption{Training of the initial policies with \gls{ppo}.}
         \label{fig:initial_policy_training}
     \end{subfigure}
 
-    \vspace{\SubfigSpacing}
+    \vspace{\PolicyTrainingSubfigSpacing}
 
     \begin{subfigure}[b]{\textwidth}
         \centering
-        \captionsetup{skip=\SubfigCaptionSkip}
+        \captionsetup{skip=\PolicyTrainingSubfigCaptionSkip}
         \input{figures/experiments/surrogate_policy_training.tex}
         \caption{Training action loss of the surrogate policies.}
         \label{fig:surrogate_policy_training}
     \end{subfigure}
 
-    \vspace{\SubfigLegendSpacing}
+    \vspace{\PolicyTrainingSubfigLegendSpacing}
     {\hypersetup{pdfborder={0 0 0}}\ref{policyTrainingLegend}}
     \caption{Training of the initial and surrogate policies.}
     \label{fig:policy_training}

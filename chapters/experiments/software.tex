@@ -21,7 +21,7 @@ The first stage trains the initial policy using RLlib \cite{moritz2018ray, liang
 RLlib provides scalable implementations of \gls{rl} algorithms and supports distributed training.
 The use of RLlib also allows \gls{car} to be applied to environments implemented using the Gymnasium interface \cite{towers2024gymnasium}.
 By default, the initial policy is trained using \gls{ppo} \cite{schulman2017proximalpolicyoptimizationalgorithms}.
-Other RLlib algorithms, such as \gls{appo} \cite{espeholt2018impala}, \gls{dqn} \cite{mnih2013playingatarideepreinforcement}, and DreamerV3, can also be selected through the same configuration.
+Other RLlib algorithms, such as \gls{appo} \cite{espeholt2018impala}, \gls{dqn} \cite{mnih2013playingatarideepreinforcement}, and DreamerV3 \cite{hafner2023masteringdiversedomainsworld}, can also be selected through the same configuration.
 
 The policy and critic networks are implemented using PyTorch \cite{paszke2019pytorch}.
 PyTorch is the standard deep learning frameworks and is widely used for developing and training neural networks.
