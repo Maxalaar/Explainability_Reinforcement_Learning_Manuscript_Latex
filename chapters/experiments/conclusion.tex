@@ -8,8 +8,8 @@ Together, these results provide empirical support for the \RepresentationConverg
 
 Across all six environments, \gls{cu} tends to be highest in the earliest layers and to decrease with depth, while \gls{as} follows the opposite trend, increasing with depth as the representation becomes less tied to the raw observation, the action distribution, and the network's initialization (Figure~\ref{fig:latent_space_curves_by_layer_depth}).
 \gls{acu}, which combines both effects, therefore peaks once the representation is abstract enough for \gls{as} to be high, but before \gls{cu} has decayed too much.
-For Mario Bros, Ms.\ Pac-Man, and Surround, this optimum is reached at the last analyzed layer, suggesting that further gains might be observed by analyzing even deeper representations.
-For Breakout, Pong, and Space Invaders, in contrast, \gls{acu} peaks at an intermediate layer and decreases again toward the last one, indicating that the deepest representation is not always the most informative for \gls{car}.
+For \MarioBrosName, \MsPacManName, and \SurroundName, this optimum is reached at the last analyzed layer, suggesting that further gains might be observed by analyzing even deeper representations.
+For \BreakoutName, \PongName, and \SpaceInvadersName, in contrast, \gls{acu} peaks at an intermediate layer and decreases again toward the last one, indicating that the deepest representation is not always the most informative for \gls{car}.
 This confirms that the layer at which the analysis is performed is not a neutral methodological choice and should itself be selected according to \gls{acu} rather than fixed a priori to the last convolutional layer, as was done in the single-layer analysis reported in earlier work.
 
 Several other methodological choices have not yet been evaluated.

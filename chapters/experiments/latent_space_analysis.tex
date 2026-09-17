@@ -8,7 +8,7 @@ For each environment and each layer, a random subset of 20,000 observations is e
 
 Figure~\ref{fig:latent_space_curves_by_layer_depth} reports, for each environment, \gls{cu}, \gls{as}, and \gls{acu} averaged over $K \in [2,20]$ with respect to the depth of the analyzed layer.
 In every environment, \gls{cu} tends to be highest in the earliest layers and to decrease with depth, while \gls{as} follows the opposite trend, increasing with depth as the representation becomes less tied to the raw observation, the action distribution, and the network's initialization.
-\gls{acu}, which combines both effects, therefore increases with depth for Mario Bros, Ms.\ Pac-Man, and Surround, for which the last analyzed layer is the most informative, whereas it peaks at an intermediate depth and decreases again for Breakout, Pong, and Space Invaders.
+\gls{acu}, which combines both effects, therefore increases with depth for \MarioBrosName, \MsPacManName, and \SurroundName, for which the last analyzed layer is the most informative, whereas it peaks at an intermediate depth and decreases again for \BreakoutName, \PongName, and \SpaceInvadersName.
 
 For each environment, the results are reported for the layer that achieves the highest average \gls{acu} across the tested values of $K$.
 This layer is therefore the one for which the agreement between independently trained surrogate policies is least explained by the observation space, the action space, or the network initialization.
@@ -18,7 +18,7 @@ Table~\ref{tab:latent_space_best_layer} reports this layer for each environment,
 
 \input{figures/clustering_agent_representation/latent_space_curves_by_metric.tex}
 
-The best layer is the last analyzed one for Mario Bros, Ms.\ Pac-Man, and Surround, consistent with the increase of \gls{acu} with depth observed for these environments in Figure~\ref{fig:latent_space_curves_by_layer_depth}, whereas it is an intermediate layer for Breakout, Pong, and Space Invaders.
-Pong reaches the highest \gls{acu} ($0.45 \pm 0.07$) among the six environments, combining a moderate \gls{cu} with an \gls{as} that saturates from layer 3 onward, while Mario Bros combines the highest \gls{as} ($0.94 \pm 0.02$) with the lowest \gls{cu} ($0.37 \pm 0.08$), yielding one of the lowest \gls{acu} values.
+The best layer is the last analyzed one for \MarioBrosName, \MsPacManName, and \SurroundName, consistent with the increase of \gls{acu} with depth observed for these environments in Figure~\ref{fig:latent_space_curves_by_layer_depth}, whereas it is an intermediate layer for \BreakoutName, \PongName, and \SpaceInvadersName.
+\PongName reaches the highest \gls{acu} ($0.45 \pm 0.07$) among the six environments, combining a moderate \gls{cu} with an \gls{as} that saturates from layer 3 onward, while \MarioBrosName combines the highest \gls{as} ($0.94 \pm 0.02$) with the lowest \gls{cu} ($0.37 \pm 0.08$), yielding one of the lowest \gls{acu} values.
 
 \FloatBarrier

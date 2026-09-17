@@ -5,7 +5,7 @@ The metrics reported in Section~\ref{sec:experiments_latent_space_analysis} eval
 This section complements them with a qualitative, hand-labeled inspection of the clusters obtained for each environment, in the spirit of Figure~\ref{fig:semantic_granularity}.
 For each environment, $k$-means is applied to a fixed layer and number of clusters $K$, chosen for the interpretability of the resulting groupings rather than for the highest \gls{acu}, and a sample of observations from each cluster is inspected to propose a semantic label.
 
-\subsection{Breakout}
+\subsection{\BreakoutName}
 
 \input{figures/clustering_agent_representation/qualitative_breakout.tex}
 
@@ -14,7 +14,7 @@ The clustering separates the beginning of the episode into three clusters distin
 
 \FloatBarrier
 
-\subsection{Mario Bros}
+\subsection{\MarioBrosName}
 
 \input{figures/clustering_agent_representation/qualitative_mario_bros.tex}
 
@@ -23,16 +23,16 @@ Rather than separating phases of the episode, the clustering separates the side 
 
 \FloatBarrier
 
-\subsection{Ms.\ Pac-Man}
+\subsection{\MsPacManName}
 
 \input{figures/clustering_agent_representation/qualitative_ms_pacman.tex}
 
 Figure~\ref{fig:qualitative_ms_pacman} shows the clusters obtained at layer 6b with $K=3$.
-Unlike Mario Bros, the clustering here separates the coarse temporal phase of the episode, tracked through the score and the number of pellets remaining in the maze, rather than a spatial feature of the observation.
+Unlike \MarioBrosName, the clustering here separates the coarse temporal phase of the episode, tracked through the score and the number of pellets remaining in the maze, rather than a spatial feature of the observation.
 
 \FloatBarrier
 
-\subsection{Pong}
+\subsection{\PongName}
 
 \input{figures/clustering_agent_representation/qualitative_pong.tex}
 
@@ -42,7 +42,7 @@ This is an instance of over-segmentation, in which increasing $K$ duplicates exi
 
 \FloatBarrier
 
-\subsection{Space Invaders}
+\subsection{\SpaceInvadersName}
 
 \input{figures/clustering_agent_representation/qualitative_space_invaders.tex}
 
@@ -51,7 +51,7 @@ Three clusters track the coarse progression of the episode, from the initial, in
 
 \FloatBarrier
 
-\subsection{Surround}
+\subsection{\SurroundName}
 
 \input{figures/clustering_agent_representation/qualitative_surround.tex}
 

@@ -38,26 +38,26 @@ The experiments use the six environments described below::
 \begingroup
 \renewenvironment{samepage}{}{}
 \begin{itemize}
-    \item \textbf{Breakout:} The agent moves a paddle at the bottom of the screen (Figure~\ref{fig:environment_breakout}) to bounce a ball into a wall of bricks.
+    \item \BreakoutName: The agent moves a paddle at the bottom of the screen (Figure~\ref{fig:environment_breakout}) to bounce a ball into a wall of bricks.
     Each broken brick scores one point, and the ball speeds up as the wall is cleared.
     \allowbreak
 
-    \item \textbf{Mario Bros.:} A single-screen platform game (Figure~\ref{fig:environment_mario_bros}) in which the player clears each phase by hitting enemies from below to flip them, then kicking them off the platforms before they recover.
+    \item \MarioBrosName.: A single-screen platform game (Figure~\ref{fig:environment_mario_bros}) in which the player clears each phase by hitting enemies from below to flip them, then kicking them off the platforms before they recover.
     A central POW block can flip all enemies at once but can only be used a few times per phase.
     \allowbreak
 
-    \item \textbf{Ms.\ Pac-Man:} The player moves through a maze (Figure~\ref{fig:environment_ms_pacman}), eating pellets while avoiding four ghosts.
+    \item \MsPacManName: The player moves through a maze (Figure~\ref{fig:environment_ms_pacman}), eating pellets while avoiding four ghosts.
     Power pellets temporarily make the ghosts edible.
     \allowbreak
 
-    \item \textbf{Pong:} A two-player game (Figure~\ref{fig:environment_pong}) in which the agent controls one paddle and must send the ball past the opponent.
+    \item \PongName: A two-player game (Figure~\ref{fig:environment_pong}) in which the agent controls one paddle and must send the ball past the opponent.
     \allowbreak
 
-    \item \textbf{Space Invaders:} The agent moves a cannon along the bottom of the screen (Figure~\ref{fig:environment_space_invaders}), firing at descending rows of aliens while avoiding their shots and using destructible shields.
+    \item \SpaceInvadersName: The agent moves a cannon along the bottom of the screen (Figure~\ref{fig:environment_space_invaders}), firing at descending rows of aliens while avoiding their shots and using destructible shields.
     A bonus saucer occasionally crosses the top of the screen.
     \allowbreak
 
-    \item \textbf{Surround:} A two-player game on a grid (Figure~\ref{fig:environment_surround}) in which each player leaves a trail behind a moving cursor.
+    \item \SurroundName: A two-player game on a grid (Figure~\ref{fig:environment_surround}) in which each player leaves a trail behind a moving cursor.
     The goal is to force the opponent to crash into a trail.
 \end{itemize}
 \endgroup
@@ -70,12 +70,12 @@ Each convolutional layer is followed by a LeakyReLU activation.
 The resulting representation is then flattened and passed through a multilayer perceptron that produces the parameters of the action distribution.
 
 The architecture of the multilayer perceptron varies across environments.
-For Pong and Space Invaders, it contains a single hidden layer with $128$ units.
+For \PongName and \SpaceInvadersName, it contains a single hidden layer with $128$ units.
 For the other four environments, it contains three hidden layers with $512$, $256$, and $128$ units.
-The size of the output layer matches the number of actions available in each environment: $4$ for Breakout, $18$ for Mario Bros, $9$ for Ms.\ Pac-Man, $6$ for Pong, $6$ for Space Invaders, and $5$ for Surround.
+The size of the output layer matches the number of actions available in each environment: $4$ for \BreakoutName, $18$ for \MarioBrosName, $9$ for \MsPacManName, $6$ for \PongName, $6$ for \SpaceInvadersName, and $5$ for \SurroundName.
 
 Figure~\ref{fig:neural_architecture} illustrates both configurations, together with the shape of the representation produced by each convolutional layer.
-Throughout the remainder of this chapter, the analyzed representations are numbered $1$ to $5$ for the four convolutional layers and the flattened representation, which are common to all six environments; the representations produced by the multilayer perceptron are then numbered $6\text{a}$ for Pong and Space Invaders (single hidden layer), or $6\text{b}$, $7\text{b}$, and $8\text{b}$ for the other four environments (three hidden layers).
+Throughout the remainder of this chapter, the analyzed representations are numbered $1$ to $5$ for the four convolutional layers and the flattened representation, which are common to all six environments; the representations produced by the multilayer perceptron are then numbered $6\text{a}$ for \PongName and \SpaceInvadersName (single hidden layer), or $6\text{b}$, $7\text{b}$, and $8\text{b}$ for the other four environments (three hidden layers).
 
 \input{figures/experiments/neural_architecture.tex}
 
