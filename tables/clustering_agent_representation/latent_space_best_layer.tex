@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering
+\resizebox{0.8\linewidth}{!}{
+    \begin{tblr}{
+        colspec={|c|c|c|c|c|},
+        hlines,
+        vlines,
+        row{1} = {font=\bfseries, halign=c, valign=m}
+    }
+        Environment     & Layer & \gls{cu}        & \gls{as}        & \gls{acu}       \\
+        Breakout        & 6b    & 0.59 $\pm$0.06  & 0.82 $\pm$0.05  & 0.41 $\pm$0.06  \\
+        Mario Bros      & 8b    & 0.37 $\pm$0.08  & 0.94 $\pm$0.02  & 0.31 $\pm$0.08  \\
+        Ms.\ Pac-Man    & 8b    & 0.58 $\pm$0.08  & 0.74 $\pm$0.05  & 0.32 $\pm$0.07  \\
+        Pong            & 4     & 0.50 $\pm$0.04  & 0.95 $\pm$0.03  & 0.45 $\pm$0.07  \\
+        Space Invaders  & 4     & 0.63 $\pm$0.11  & 0.73 $\pm$0.06  & 0.35 $\pm$0.09  \\
+        Surround        & 8b    & 0.54 $\pm$0.10  & 0.77 $\pm$0.07  & 0.31 $\pm$0.06  \\
+    \end{tblr}
+}
+\caption{Layer that maximizes the average \gls{acu} across $K \in [2,20]$ for each environment, together with the corresponding average \gls{cu}, \gls{as}, and \gls{acu} over $K$.}
+\label{tab:latent_space_best_layer}
+\end{table}

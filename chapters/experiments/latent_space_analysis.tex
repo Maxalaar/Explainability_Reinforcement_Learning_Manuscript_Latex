@@ -12,55 +12,13 @@ In every environment, \gls{cu} tends to be highest in the earliest layers and to
 
 For each environment, the results are reported for the layer that achieves the highest average \gls{acu} across the tested values of $K$.
 This layer is therefore the one for which the agreement between independently trained surrogate policies is least explained by the observation space, the action space, or the network initialization.
-The following subsections then report the evolution of \gls{cu}, \gls{as}, and \gls{acu} with respect to $K$ for this layer.
-The full breakdown across every analyzed layer is reported in Appendix~\ref{chap:appendix}.
+Table~\ref{tab:latent_space_best_layer} reports this layer for each environment, together with the corresponding average \gls{cu}, \gls{as}, and \gls{acu} over $K$; the evolution of these three metrics with respect to $K$ for that layer is then shown in Figure~\ref{fig:latent_space_curves_by_metric}, and the full breakdown across every analyzed layer is reported in Appendix~\ref{chap:appendix}.
+
+\input{tables/clustering_agent_representation/latent_space_best_layer.tex}
 
 \input{figures/clustering_agent_representation/latent_space_curves_by_metric.tex}
 
-\subsection{Breakout}
-\label{ssec:latent_space_analysis_breakout}
-
-For Breakout, \gls{acu} is maximized at layer 6b, with $\gls{cu} = 0.59 \pm 0.06$, $\gls{as} = 0.82 \pm 0.05$, and $\gls{acu} = 0.41 \pm 0.06$ on average over $K$.
-As shown in Appendix~\ref{chap:appendix}, \gls{cu} is highest in the earliest layers and decreases with depth, while \gls{as} follows the opposite trend, so that \gls{acu} peaks once the representation has become sufficiently abstract without yet losing cross-seed stability.
-
-\FloatBarrier
-
-\subsection{Mario Bros}
-\label{ssec:latent_space_analysis_mario_bros}
-
-For Mario Bros, \gls{acu} is maximized at the last analyzed layer (layer 8b), with $\gls{cu} = 0.37 \pm 0.08$, $\gls{as} = 0.94 \pm 0.02$, and $\gls{acu} = 0.31 \pm 0.08$ on average over $K$.
-As shown in Appendix~\ref{chap:appendix}, \gls{as} increases monotonically with depth, reaching near-saturation in the last layer, while \gls{cu} decreases; \gls{acu} nonetheless keeps increasing with depth, indicating that the residual cross-seed agreement in the deepest layer is largely non-trivial.
-
-\FloatBarrier
-
-\subsection{Ms.\ Pac-Man}
-\label{ssec:latent_space_analysis_ms_pacman}
-
-For Ms.\ Pac-Man, \gls{acu} is maximized at the last analyzed layer (layer 8b), with $\gls{cu} = 0.58 \pm 0.08$, $\gls{as} = 0.74 \pm 0.05$, and $\gls{acu} = 0.32 \pm 0.07$ on average over $K$.
-As shown in Appendix~\ref{chap:appendix}, the pattern mirrors Mario Bros: \gls{as} increases steadily with depth while \gls{cu} decreases, and \gls{acu} is highest in the deepest layer.
-
-\FloatBarrier
-
-\subsection{Pong}
-\label{ssec:latent_space_analysis_pong}
-
-For Pong, \gls{acu} is maximized at layer 4, with $\gls{cu} = 0.50 \pm 0.04$, $\gls{as} = 0.95 \pm 0.03$, and $\gls{acu} = 0.45 \pm 0.07$ on average over $K$ -- the highest \gls{acu} among the six environments.
-As shown in Appendix~\ref{chap:appendix}, \gls{as} already saturates from layer 3 onward, and \gls{acu} decreases again in the last analyzed layer (layer 6a): unlike Mario Bros and Ms.\ Pac-Man, the most informative layer for Pong is not the deepest one.
-
-\FloatBarrier
-
-\subsection{Space Invaders}
-\label{ssec:latent_space_analysis_space_invaders}
-
-For Space Invaders, \gls{acu} is maximized at layer 4, with $\gls{cu} = 0.63 \pm 0.11$, $\gls{as} = 0.73 \pm 0.06$, and $\gls{acu} = 0.35 \pm 0.09$ on average over $K$.
-As shown in Appendix~\ref{chap:appendix}, \gls{acu} decreases again toward the last analyzed layer (layer 6a), following the same non-monotonic pattern observed for Pong.
-
-\FloatBarrier
-
-\subsection{Surround}
-\label{ssec:latent_space_analysis_surround}
-
-For Surround, \gls{acu} is maximized at the last analyzed layer (layer 8b), with $\gls{cu} = 0.54 \pm 0.10$, $\gls{as} = 0.77 \pm 0.07$, and $\gls{acu} = 0.31 \pm 0.06$ on average over $K$.
-As shown in Appendix~\ref{chap:appendix}, \gls{as} increases with depth while \gls{cu} fluctuates without a clear trend, and \gls{acu} is highest in the deepest layer.
+The best layer is the last analyzed one for Mario Bros, Ms.\ Pac-Man, and Surround, consistent with the increase of \gls{acu} with depth observed for these environments in Figure~\ref{fig:latent_space_curves_by_layer_depth}, whereas it is an intermediate layer for Breakout, Pong, and Space Invaders.
+Pong reaches the highest \gls{acu} ($0.45 \pm 0.07$) among the six environments, combining a moderate \gls{cu} with an \gls{as} that saturates from layer 3 onward, while Mario Bros combines the highest \gls{as} ($0.94 \pm 0.02$) with the lowest \gls{cu} ($0.37 \pm 0.08$), yielding one of the lowest \gls{acu} values.
 
 \FloatBarrier

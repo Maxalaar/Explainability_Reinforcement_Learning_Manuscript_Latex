@@ -12,7 +12,7 @@
 % independently so the box can be made asymmetric)
 \providecommand{\NeuralArchBoxMarginX}{2cm}
 \providecommand{\NeuralArchBoxMarginYTop}{1cm}
-\providecommand{\NeuralArchBoxMarginYBottom}{2.2cm}
+\providecommand{\NeuralArchBoxMarginYBottom}{0.4cm}
 
 % ------------------------------------------------------------
 % Bubbles
@@ -47,6 +47,17 @@
 \providecommand{\NeuralArchLetterTextOffsetY}{0cm}
 \providecommand{\NeuralArchLetterTextSize}{18}    % pt
 \providecommand{\NeuralArchLetterBubbleSize}{0.9cm}
+
+% ------------------------------------------------------------
+% Layer captions (the "shape + name" text below every layer: Observation,
+% Conv1-4, Flatten, and the Dense layers of both heads)
+% ------------------------------------------------------------
+% Each caption sits a FIXED gap below its OWN box's "-south" anchor (not on
+% a shared row), so it stays visually attached to its own layer regardless
+% of how tall that layer's box is.
+\providecommand{\NeuralArchLayerCaptionOffsetY}{-1.5}
+\providecommand{\NeuralArchLayerCaptionTextSize}{14}  % pt, the (non-bold) dimension line
+\providecommand{\NeuralArchLayerCaptionSkip}{2pt}     % gap between the dimension and name lines
 
 % ============================================================
 % Figure
@@ -138,6 +149,27 @@
     \NeuralArchBubble{lettertext-#4}{#3}{#1}{\NeuralArchLetterBubbleSize}{#2}{\NeuralArchLetterFont}{\NeuralArchCircleLetter{#4}}%
 }
 
+% --------------------------------------------------------
+% Layer captions: shape + name below Observation/Conv/Flatten, all on one
+% shared row (see \NeuralArchLayerCaptionRefBox above).
+% --------------------------------------------------------
+
+\newcommand{\NeuralArchLayerCaptionFont}{%
+    \fontsize{\NeuralArchLayerCaptionTextSize pt}
+             {\dimexpr\NeuralArchLayerCaptionTextSize pt*6/5\relax}
+             \selectfont
+}
+
+% #1 = box name   #2 = dimension text (not bold)   #3 = layer name (bold)
+% Named "layercap-#1" so it can be included in a \node[fit=...] (e.g. the
+% dashed boxes around heads A/B), since it extends below its box and would
+% otherwise be ignored by a fit computed from the box's own corners alone.
+\newcommand{\NeuralArchLayerCaption}[3]{%
+    \node[align=center, anchor=north, font=\NeuralArchLayerCaptionFont]
+        (layercap-#1) at ($(#1-south)+(0,\NeuralArchLayerCaptionOffsetY)$)
+        {#2 \\[\NeuralArchLayerCaptionSkip] \bfseries #3};
+}
+
 
 % --------------------------------------------------------
 % Observation
@@ -155,9 +187,7 @@
         depth=42
     }};
 
-\node[align=center, anchor=north]
-    at ($(obs-south)+(0,-1.5)$)
-    {64 $\times$ 64 $\times$ 4 \\[2pt] \bfseries Observation};
+\NeuralArchLayerCaption{obs}{64 $\times$ 64 $\times$ 4}{Observation}
 
 
 % --------------------------------------------------------
@@ -176,9 +206,7 @@
         depth=34
     }};
 
-\node[align=center, anchor=north]
-    at ($(c1-south)+(0,-1.5)$)
-    {31 $\times$ 31 $\times$ 16 \\[2pt] \bfseries Conv};
+\NeuralArchLayerCaption{c1}{31 $\times$ 31 $\times$ 16}{Conv}
 \NeuralArchNumLabel{c1}{1}
 
 \draw [connection] (obs-east) -- node {\midarrow} (c1-west);
@@ -196,9 +224,7 @@
         depth=26
     }};
 
-\node[align=center, anchor=north]
-    at ($(c2-south)+(0,-1.5)$)
-    {14 $\times$ 14 $\times$ 32 \\[2pt] \bfseries Conv};
+\NeuralArchLayerCaption{c2}{14 $\times$ 14 $\times$ 32}{Conv}
 \NeuralArchNumLabel{c2}{2}
 
 \draw [connection] (c1-east) -- node {\midarrow} (c2-west);
@@ -216,9 +242,7 @@
         depth=18
     }};
 
-\node[align=center, anchor=north]
-    at ($(c3-south)+(0,-1.5)$)
-    {6 $\times$ 6 $\times$ 64 \\[2pt] \bfseries Conv};
+\NeuralArchLayerCaption{c3}{6 $\times$ 6 $\times$ 64}{Conv}
 \NeuralArchNumLabel{c3}{3}
 
 \draw [connection] (c2-east) -- node {\midarrow} (c3-west);
@@ -236,9 +260,7 @@
         depth=12
     }};
 
-\node[align=center, anchor=north]
-    at ($(c4-south)+(0,-1.5)$)
-    {2 $\times$ 2 $\times$ 128 \\[2pt] \bfseries Conv};
+\NeuralArchLayerCaption{c4}{2 $\times$ 2 $\times$ 128}{Conv}
 \NeuralArchNumLabel{c4}{4}
 
 \draw [connection] (c3-east) -- node {\midarrow} (c4-west);
@@ -259,10 +281,7 @@
         depth=42
     }};
 
-% Légende centrée sous la face avant, avec la taille
-\node[align=center, anchor=north]
-    at ($(flatten-south)+(0,-1.5)$)
-    { 512 \\[2pt] \bfseries Flatten};
+\NeuralArchLayerCaption{flatten}{512}{Flatten}
 \NeuralArchNumLabel{flatten}{5}
 
 \draw [connection] (c4-east) -- node {\midarrow} (flatten-west);
@@ -277,13 +296,14 @@
 ] at (flatten-east)
     {Box={
         name=aFc1,
-        caption={Dense 128},
+        caption=,
         fill=FcColor,
         opacity=0.7,
         height=3,
         width=2,
         depth=16
     }};
+\NeuralArchLayerCaption{aFc1}{128}{Dense}
 \NeuralArchNumLabel{aFc1}{6a}
 
 \draw [connection] (flatten-east) -- node {\midarrow} (aFc1-west);
@@ -318,7 +338,8 @@
     fit=(aFc1-nearnorthwest)
         (aFc1-farsouthwest)
         (aOut-nearsoutheast)
-        (aOut-farnortheast),
+        (aOut-farnortheast)
+        (layercap-aFc1),
     inner sep=0pt
 ] (boxA-fit) {};
 
@@ -351,13 +372,14 @@
 ] at (flatten-east)
     {Box={
         name=bFc1,
-        caption={Dense 512},
+        caption=,
         fill=FcColor,
         opacity=0.7,
         height=3,
         width=2,
         depth=30
     }};
+\NeuralArchLayerCaption{bFc1}{512}{Dense}
 \NeuralArchNumLabel{bFc1}{6b}
 
 \draw [connection] (flatten-east) -- node {\midarrow} (bFc1-west);
@@ -366,13 +388,14 @@
 \pic[shift={(1.5,0,0)}] at (bFc1-east)
     {Box={
         name=bFc2,
-        caption={Dense 256},
+        caption=,
         fill=FcColor,
         opacity=0.7,
         height=3,
         width=2,
         depth=22
     }};
+\NeuralArchLayerCaption{bFc2}{256}{Dense}
 \NeuralArchNumLabel{bFc2}{7b}
 
 \draw [connection]
@@ -382,13 +405,14 @@
 \pic[shift={(1.5,0,0)}] at (bFc2-east)
     {Box={
         name=bFc3,
-        caption={Dense 128},
+        caption=,
         fill=FcColor,
         opacity=0.7,
         height=3,
         width=2,
         depth=16
     }};
+\NeuralArchLayerCaption{bFc3}{128}{Dense}
 \NeuralArchNumLabel{bFc3}{8b}
 
 \draw [connection]
@@ -424,7 +448,10 @@
     fit=(bFc1-nearnorthwest)
         (bFc1-farsouthwest)
         (bOut-nearsoutheast)
-        (bOut-farnortheast),
+        (bOut-farnortheast)
+        (layercap-bFc1)
+        (layercap-bFc2)
+        (layercap-bFc3),
     inner sep=0pt
 ] (boxB-fit) {};
 
