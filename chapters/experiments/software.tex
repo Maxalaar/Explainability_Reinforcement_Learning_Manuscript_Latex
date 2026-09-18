@@ -5,15 +5,17 @@ This section details the experimental evaluation of the proposed method.
 \gls{dl} and \gls{rl} are strongly empirical fields, where experimental evaluation plays an important role in assessing how methods perform in practice.
 Particular attention is therefore given to the implementation of \gls{car}.
 It relies on established libraries that provide efficient implementations of its main components.
-Table~\ref{tab} summarizes the libraries used throughout the pipeline.
 The code is made publicly available as open-source to support reproducible replication of the reported results.\footnote{\url{https://github.com/Maxalaar/Clustering_Agent_Latent_Space}}
 
-The \gls{car} implementation is organized as a pipeline of five stages, illustrated in Figure~\ref{fig:car_pipeline}.
+The \gls{car} implementation is organized as a pipeline of five stages.
 Each stage performs a specific operation and produces the artifacts required by the subsequent stages.
 The stages are implemented as independent executables allowing each stage to be rerun independently.
-The following subsections describe the purpose and implementation of each stage, as well as the libraries used.
+The \gls{car} pipeline is illustrated in Figure~\ref{fig:car_pipeline}, and Table~\ref{tab:software_libraries} summarizes the libraries used throughout the pipeline.
+The remainder of this section describes the purpose and implementation of each stage.
 
 \input{figures/experiments/pipeline.tex}
+
+\FloatBarrier
 
 \input{tables/experiments/software_libraries_table.tex}
 
