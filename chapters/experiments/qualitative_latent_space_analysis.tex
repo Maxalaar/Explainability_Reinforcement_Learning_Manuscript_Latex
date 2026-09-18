@@ -10,6 +10,7 @@ The selected clustering should also achieve a sufficiently high \gls{acu}, indic
 Finally, the number of clusters must remain small enough to allow the resulting clusters to be examined manually.
 These criteria provide a practical basis for selecting clusterings that are both quantitatively meaningful and suitable for qualitative analysis.
 
+\newpage
 \subsection{\BreakoutName}
 
 \input{figures/clustering_agent_representation/qualitative_breakout.tex}
@@ -17,8 +18,7 @@ These criteria provide a practical basis for selecting clusterings that are both
 Figure~\ref{fig:qualitative_breakout} shows the clusters obtained at layer 6b with $K=5$.
 The clustering separates the beginning of the episode into three clusters distinguished mainly by the paddle's position, and isolates two more advanced game states, one in which the agent has dug a tunnel through the left side of the wall and one in which the ball is behind the wall.
 
-\FloatBarrier
-
+\newpage
 \subsection{\MarioBrosName}
 
 \input{figures/clustering_agent_representation/qualitative_mario_bros.tex}
@@ -26,8 +26,7 @@ The clustering separates the beginning of the episode into three clusters distin
 Figure~\ref{fig:qualitative_mario_bros} shows the clusters obtained at layer 3 with $K=3$.
 Rather than separating phases of the episode, the clustering separates the side of the screen on which Mario is fighting enemies, together with a third cluster corresponding to hitting the POW block, a fixed, recognizable location in the level.
 
-\FloatBarrier
-
+\newpage
 \subsection{\MsPacManName}
 
 \input{figures/clustering_agent_representation/qualitative_ms_pacman.tex}
@@ -35,8 +34,7 @@ Rather than separating phases of the episode, the clustering separates the side 
 Figure~\ref{fig:qualitative_ms_pacman} shows the clusters obtained at layer 6b with $K=3$.
 Unlike \MarioBrosName, the clustering here separates the coarse temporal phase of the episode, tracked through the score and the number of pellets remaining in the maze, rather than a spatial feature of the observation.
 
-\FloatBarrier
-
+\newpage
 \subsection{\PongName}
 
 \input{figures/clustering_agent_representation/qualitative_pong.tex}
@@ -45,8 +43,7 @@ Figure~\ref{fig:qualitative_pong} shows the clusters obtained at layer 4 with $K
 Inspection of the six clusters reveals only three distinct semantics, each split into two clusters: the ball near the bottom of the field, the ball crossing the court above the opponent's paddle left behind at the bottom, and the ball near the top of the field close to the player's paddle.
 This is an instance of over-segmentation, in which increasing $K$ duplicates existing concepts instead of revealing new ones, consistent with the drop of \gls{cu} observed at high $K$ for this environment in Figure~\ref{fig:latent_space_curves_by_metric}.
 
-\FloatBarrier
-
+\newpage
 \subsection{\SpaceInvadersName}
 
 \input{figures/clustering_agent_representation/qualitative_space_invaders.tex}
@@ -54,8 +51,7 @@ This is an instance of over-segmentation, in which increasing $K$ duplicates exi
 Figure~\ref{fig:qualitative_space_invaders} shows the clusters obtained at layer 4 with $K=4$.
 Three clusters track the coarse progression of the episode, from the initial, intact formation of invaders to the sparse, late-game configurations, while the fourth isolates a more specific behavior in which the agent has cleared the leftmost column and is positioned to catch the flying saucer that occasionally crosses the top of the screen.
 
-\FloatBarrier
-
+\newpage
 \subsection{\SurroundName}
 
 \input{figures/clustering_agent_representation/qualitative_surround.tex}
@@ -63,4 +59,4 @@ Three clusters track the coarse progression of the episode, from the initial, in
 Figure~\ref{fig:qualitative_surround} shows the clusters obtained at layer 8b with $K=4$.
 Besides the start of the episode, the clustering separates configurations by the region of the level occupied by the agent's trail, from a small trail confined to the bottom-left, to one running along the top after arriving from the left, to a dense trail that has grown from the top-left toward the bottom and is closing in on the final enclosure between the two players.
 
-\FloatBarrier
+\newpage
