@@ -2,8 +2,13 @@
 \label{sec:experiments_qualitative_latent_space_analysis}
 
 The metrics reported in Section~\ref{sec:experiments_latent_space_analysis} evaluate the \gls{ls} clusterings quantitatively but do not indicate what the resulting clusters actually represent.
-This section complements them with a qualitative, hand-labeled inspection of the clusters obtained for each environment, in the spirit of Figure~\ref{fig:semantic_granularity}.
-For each environment, $k$-means is applied to a fixed layer and number of clusters $K$, chosen for the interpretability of the resulting groupings rather than for the highest \gls{acu}, and a sample of observations from each cluster is inspected to propose a semantic label.
+This section complements them with a qualitative, hand-labeled inspection of the clusters obtained for each environment.
+
+To select the clusterings for the qualitative analysis, several criteria are considered.
+First, clusterings with very few clusters, such as two clusters, are excluded because they provide an overly coarse representation of the latent space.
+The selected clustering should also achieve a sufficiently high \gls{acu}, indicating a good balance between consistency and abstraction.
+Finally, the number of clusters must remain small enough to allow the resulting clusters to be examined manually.
+These criteria provide a practical basis for selecting clusterings that are both quantitatively meaningful and suitable for qualitative analysis.
 
 \subsection{\BreakoutName}
 
