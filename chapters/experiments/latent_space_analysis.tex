@@ -2,23 +2,25 @@
 \label{sec:experiments_latent_space_analysis}
 
 This section analyzes the \gls{ls} of the surrogate policies using \gls{cu}, \gls{as}, and \gls{acu}.
-The analysis is conducted from two complementary perspectives.
-First, the evolution of these metrics across the different layers is examined to study the effect of representation depth.
-Second, for each environment, the layer achieving the highest average \gls{acu} is selected and analyzed in more detail across different numbers of clusters.
-
-To sample the \gls{ls}, a random subset of 20,000 observations is selected for each environment.
-The same subset is then embedded into the \gls{ls} of each surrogate policy at each analyzed layer.
+To do so, a random subset of $20\,000$ observations is selected for each environment.
+This subset is then embedded into the \gls{ls} of each surrogate policy at each analyzed layer.
+This produces a point cloud for each combination of environment, surrogate policy, and layer.
 Each point cloud is partitioned using $k$-means clustering \cite{macqueen1967multivariate} for each number of clusters from $2$ to $20$.
+
 The three metrics are then computed from these point clouds and their corresponding clusterings.
 The full results across all environments and analyzed layers are reported in Appendix~\ref{chap:appendix}.
+Two complementary analyses are then conducted on these results.
+First, the evolution of the three metrics across the different layers is examined to study the effect of representation depth.
+Second, for each environment, the layer achieving the highest average \gls{acu} is selected and analyzed in more detail across the different numbers of clusters.
 
 \subsection{Analysis across layers}
 
 The first analysis examines how the three metrics evolve with the depth of the analyzed layer.
-For each environment, \gls{cu}, \gls{as}, and \gls{acu} are averaged over the tested cluster numbers.
+For each layer, \gls{cu}, \gls{as}, and \gls{acu} are averaged over the tested cluster numbers.
 Figure~\ref{fig:latent_space_curves_by_layer_depth} reports these averages as a function of layer depth.
 
-Across environments, \gls{cu} tends to be highest in the earliest layers and decreases with depth, while \gls{as} follows the opposite trend and increases as the representation becomes less tied to the raw observation, the action distribution, and the network's initialization.
+Across environments, \gls{cu} tends to be highest in the earliest layers and decreases with depth.
+\gls{as} follows the opposite trend and increases as the representation becomes less tied to the raw observation, the action distribution, and the network's initialization.
 As \gls{acu} combines these two effects, its evolution depends on the environment.
 
 The corresponding linear fits show that \gls{cu} decreases from $0.72$ at the first layer to $0.50$ at the last, with a slope of approximately $-0.04$ per layer, while \gls{as} increases from $0.28$ to $0.80$, with a slope of approximately $+0.07$ per layer.
@@ -29,14 +31,11 @@ This suggests that, despite the environment-specific variations, deeper represen
 
 \subsection{Analysis of the selected layers}
 
-The second analysis focuses on the layer that provides the best trade-off between consistency and abstraction for each environment.
+The second analysis examines the effect of the number of clusters on the three metrics.
 For each environment, the layer with the highest average \gls{acu} across the tested cluster numbers is selected.
 Table~\ref{tab:latent_space_best_layer} reports the selected layer, together with the corresponding average \gls{cu}, \gls{as}, and \gls{acu}.
 
-The selected layer is the last analyzed layer for \MarioBrosName, \MsPacManName, and \SurroundName, while an intermediate layer is selected for \BreakoutName, \PongName, and \SpaceInvadersName.
-The metrics for these selected layers are then examined across the different numbers of clusters.
 Figure~\ref{fig:latent_space_curves_by_metric} reports the evolution of \gls{cu}, \gls{as}, and \gls{acu} as the number of clusters varies.
-
 \PongName achieves the highest average \gls{acu} among the six environments, with a value of $0.45 \pm 0.07$.
 This results from a moderate \gls{cu} combined with an \gls{as} that saturates from the third layer onward.
 In contrast, \MarioBrosName achieves the highest \gls{as}, with $0.94 \pm 0.02$, but also the lowest \gls{cu}, with $0.37 \pm 0.08$.
