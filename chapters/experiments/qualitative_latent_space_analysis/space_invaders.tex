@@ -1,0 +1,27 @@
+\newpage
+\subsection{\SpaceInvadersName}
+
+Two clusterings are examined for \SpaceInvadersName, obtained at layer 4 with $K=4$ and at layer 2 with $K=5$.
+At the deeper layer, three clusters track the coarse progression of the episode, from the initial, intact formation of invaders to the sparse, late-game configurations, while the fourth isolates a more specific behavior in which the agent has cleared the leftmost column and is positioned to catch the flying saucer that occasionally crosses the top of the screen.
+At the shallower layer, the clustering still tracks the progression of the episode through the density of the invader formation, and separately re-isolates the cleared-left-column configuration associated with the flying saucer as its own cluster, indicating that this specific behavior remains a salient feature of the \gls{ls} across layers.
+The finer clustering at layer 2 achieves a lower \gls{acu} than the coarser one at layer 4.
+
+\begin{table}[H]
+    \centering
+    \begin{tblr}{
+        colspec={|c|c|c|c|c|},
+        hlines,
+        vlines,
+        row{1} = {font=\bfseries, halign=c, valign=m}
+    }
+        Layer & $K$ & \gls{cu}       & \gls{as}       & \gls{acu}      \\
+        4     & 4   & 0.92 $\pm$0.01 & 0.69 $\pm$0.00 & 0.61 $\pm$0.00 \\
+        2     & 5   & 0.92 $\pm$0.02 & 0.49 $\pm$0.01 & 0.41 $\pm$0.01 \\
+    \end{tblr}
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} for the two clusterings analyzed in the \SpaceInvadersName environment.}
+    \label{tab:qualitative_space_invaders_metrics}
+\end{table}
+
+\input{figures/clustering_agent_representation/qualitative_space_invaders.tex}
+
+\input{figures/clustering_agent_representation/qualitative_space_invaders_alt.tex}

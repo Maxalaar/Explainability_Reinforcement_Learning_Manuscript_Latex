@@ -1,0 +1,28 @@
+\newpage
+\subsection{\PongName}
+
+Two clusterings are examined for \PongName, obtained at layer 2 with $K=2$ and at layer 4 with $K=6$.
+At the much shallower layer, the two resulting clusters correspond only to the paddles' vertical position on screen, near the top or near the bottom, rather than a higher-level concept such as the ball's position.
+This coarse, low-level partition achieves a near-perfect \gls{acu}, illustrating that a highly consistent and reproducible clustering is not necessarily semantically informative.
+At the deeper layer, inspection of the six clusters reveals only three distinct semantics, each split into two clusters: the ball near the bottom of the field, the ball crossing the court above the opponent's paddle left behind at the bottom, and the ball near the top of the field close to the player's paddle.
+This is an instance of over-segmentation, in which increasing $K$ duplicates existing concepts instead of revealing new ones, consistent with the drop of \gls{cu} observed at high $K$ for this environment in Figure~\ref{fig:latent_space_curves_by_metric}.
+
+\begin{table}[H]
+    \centering
+    \begin{tblr}{
+        colspec={|c|c|c|c|c|},
+        hlines,
+        vlines,
+        row{1} = {font=\bfseries, halign=c, valign=m}
+    }
+        Layer & $K$ & \gls{cu}       & \gls{as}       & \gls{acu}      \\
+        2     & 2   & 1.00 $\pm$0.00 & 1.00 $\pm$0.00 & 1.00 $\pm$0.00 \\
+        4     & 6   & 0.44 $\pm$0.04 & 0.97 $\pm$0.00 & 0.41 $\pm$0.00 \\
+    \end{tblr}
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} for the two clusterings analyzed in the \PongName environment.}
+    \label{tab:qualitative_pong_metrics}
+\end{table}
+
+\input{figures/clustering_agent_representation/qualitative_pong_alt.tex}
+
+\input{figures/clustering_agent_representation/qualitative_pong.tex}

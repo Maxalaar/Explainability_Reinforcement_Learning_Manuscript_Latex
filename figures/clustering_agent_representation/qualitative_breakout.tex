@@ -1,62 +1,25 @@
 \begin{figure}[H]
-    \centering
-    \resizebox{\textwidth}{!}{
-    \begin{tikzpicture}
-
-    \node (ligne_1) at (0, 0) {};
-
-    \node[anchor=north] at ($(ligne_1) + (-4.5cm, 0cm)$) {
-    \begin{minipage}{4.5cm}
-        \centering
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_0/image_1.png}
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_0/image_2.png}
-
-        \small Digging a tunnel through the left side of the wall.
-    \end{minipage}
-    };
-
-    \node[anchor=north] at ($(ligne_1) + (0cm, 0cm)$) {
-    \begin{minipage}{4.5cm}
-        \centering
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_1/image_1.png}
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_1/image_2.png}
-
-        \small Start of the episode, paddle on the right.
-    \end{minipage}
-    };
-
-    \node[anchor=north] at ($(ligne_1) + (4.5cm, 0cm)$) {
-    \begin{minipage}{4.5cm}
-        \centering
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_2/image_1.png}
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_2/image_2.png}
-
-        \small The ball is behind the brick wall.
-    \end{minipage}
-    };
-
-    \node[anchor=north] at ($(ligne_1) + (-2.25cm, -4.2cm)$) {
-    \begin{minipage}{4.5cm}
-        \centering
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_3/image_1.png}
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_3/image_2.png}
-
-        \small Start of the episode, paddle not on the right.
-    \end{minipage}
-    };
-
-    \node[anchor=north] at ($(ligne_1) + (2.25cm, -4.2cm)$) {
-    \begin{minipage}{4.5cm}
-        \centering
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_4/image_1.png}
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_4/image_2.png}
-
-        \small Start of the episode.
-    \end{minipage}
-    };
-
-    \end{tikzpicture}
-    }
+    \qualitativeClusterFigureSetup
+    \qualitativeClusterTwo
+        {figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_0/image_1.png}
+        {figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_0/image_2.png}
+        {Digging a tunnel through the left side of the wall.}
+    \qualitativeClusterTwo
+        {figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_1/image_1.png}
+        {figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_1/image_2.png}
+        {Start of the episode, paddle on the right.}
+    \qualitativeClusterTwo
+        {figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_2/image_1.png}
+        {figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_2/image_2.png}
+        {The ball is behind the brick wall.}
+    \qualitativeClusterTwo
+        {figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_3/image_1.png}
+        {figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_3/image_2.png}
+        {Start of the episode, paddle not on the right.}
+    \qualitativeClusterTwo
+        {figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_4/image_1.png}
+        {figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_4/image_2.png}
+        {Start of the episode.}
     \caption{Clusters identified by \gls{car} in the \BreakoutName environment (layer 6b, $K=5$).}
     \label{fig:qualitative_breakout}
 \end{figure}

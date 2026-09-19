@@ -1,0 +1,27 @@
+\newpage
+\subsection{\MsPacManName}
+
+Two clusterings are examined for \MsPacManName, obtained at layer 6b with $K=3$ and at layer 4 with $K=5$.
+At the deeper layer, unlike \MarioBrosName, the clustering separates the coarse temporal phase of the episode, tracked through the score and the number of pellets remaining in the maze, rather than a spatial feature of the observation.
+At the shallower layer, the clustering remains organized around the score and the number of remaining lives, but two of the five clusters correspond to the same score and life count and are visually indistinguishable, an instance of over-segmentation similar to the one observed for \PongName.
+The duplicated cluster is reflected by the lower \gls{acu} at layer 4 compared to layer 6b, consistent with the redundant concept it introduces.
+
+\begin{table}[H]
+    \centering
+    \begin{tblr}{
+        colspec={|c|c|c|c|c|},
+        hlines,
+        vlines,
+        row{1} = {font=\bfseries, halign=c, valign=m}
+    }
+        Layer & $K$ & \gls{cu}       & \gls{as}       & \gls{acu}      \\
+        6b    & 3   & 0.88 $\pm$0.01 & 0.52 $\pm$0.01 & 0.40 $\pm$0.01 \\
+        4     & 5   & 0.88 $\pm$0.01 & 0.47 $\pm$0.00 & 0.35 $\pm$0.00 \\
+    \end{tblr}
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} for the two clusterings analyzed in the \MsPacManName environment.}
+    \label{tab:qualitative_ms_pacman_metrics}
+\end{table}
+
+\input{figures/clustering_agent_representation/qualitative_ms_pacman.tex}
+
+\input{figures/clustering_agent_representation/qualitative_ms_pacman_alt.tex}

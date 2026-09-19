@@ -1,0 +1,27 @@
+\newpage
+\subsection{\SurroundName}
+
+Two clusterings are examined for \SurroundName, obtained at layer 8b with $K=4$ and at layer 7b with $K=6$.
+At the deeper layer, besides the start of the episode, the clustering separates configurations by the region of the level occupied by the agent's trail, from a small trail confined to the bottom-left, to one running along the top after arriving from the left, to a dense trail that has grown from the top-left toward the bottom and is closing in on the final enclosure between the two players.
+At the shallower layer, as for \PongName at $K=6$, this is an instance of over-segmentation: only four distinct trail configurations are visible among the six clusters, two of which are each duplicated.
+The duplicated clusters leave \gls{cu}, \gls{as}, and \gls{acu} essentially unchanged from the $K=4$ clustering at layer 8b.
+
+\begin{table}[H]
+    \centering
+    \begin{tblr}{
+        colspec={|c|c|c|c|c|},
+        hlines,
+        vlines,
+        row{1} = {font=\bfseries, halign=c, valign=m}
+    }
+        Layer & $K$ & \gls{cu}       & \gls{as}       & \gls{acu}      \\
+        8b    & 4   & 0.67 $\pm$0.02 & 0.71 $\pm$0.02 & 0.38 $\pm$0.02 \\
+        7b    & 6   & 0.67 $\pm$0.04 & 0.71 $\pm$0.04 & 0.38 $\pm$0.04 \\
+    \end{tblr}
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} for the two clusterings analyzed in the \SurroundName environment.}
+    \label{tab:qualitative_surround_metrics}
+\end{table}
+
+\input{figures/clustering_agent_representation/qualitative_surround.tex}
+
+\input{figures/clustering_agent_representation/qualitative_surround_alt.tex}

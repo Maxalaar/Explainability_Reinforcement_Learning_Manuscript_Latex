@@ -1,42 +1,17 @@
 \begin{figure}[H]
-    \centering
-    \resizebox{\textwidth}{!}{
-    \begin{tikzpicture}
-
-    \node (ligne_1) at (0, 0) {};
-
-    \node[anchor=north] at ($(ligne_1) + (-4.5cm, 0cm)$) {
-    \begin{minipage}{4.5cm}
-        \centering
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_0/image_1.png}
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_0/image_2.png}
-
-        \small Mario fights enemies on the left side of the screen.
-    \end{minipage}
-    };
-
-    \node[anchor=north] at ($(ligne_1) + (0cm, 0cm)$) {
-    \begin{minipage}{4.5cm}
-        \centering
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_1/image_1.png}
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_1/image_2.png}
-
-        \small Mario hits the POW block.
-    \end{minipage}
-    };
-
-    \node[anchor=north] at ($(ligne_1) + (4.5cm, 0cm)$) {
-    \begin{minipage}{4.5cm}
-        \centering
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_2/image_1.png}
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_2/image_2.png}
-
-        \small Mario fights enemies on the right side of the screen.
-    \end{minipage}
-    };
-
-    \end{tikzpicture}
-    }
+    \qualitativeClusterFigureSetup
+    \qualitativeClusterTwo
+        {figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_0/image_1.png}
+        {figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_0/image_2.png}
+        {Mario fights enemies on the left side of the screen.}
+    \qualitativeClusterTwo
+        {figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_1/image_1.png}
+        {figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_1/image_2.png}
+        {Mario hits the POW block.}
+    \qualitativeClusterTwo
+        {figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_2/image_1.png}
+        {figures/clustering_agent_representation/pictures/mario_bros/qualitative/cluster_2/image_2.png}
+        {Mario fights enemies on the right side of the screen.}
     \caption{Clusters identified by \gls{car} in the \MarioBrosName environment (layer 3, $K=3$).}
     \label{fig:qualitative_mario_bros}
 \end{figure}

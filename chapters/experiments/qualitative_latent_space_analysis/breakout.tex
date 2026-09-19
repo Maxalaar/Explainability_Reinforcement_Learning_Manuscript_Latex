@@ -1,0 +1,27 @@
+\newpage
+\subsection{\BreakoutName}
+
+Two clusterings are examined for \BreakoutName, obtained at layer 4 with $K=2$ and at layer 6b with $K=5$.
+At the shallower layer, with only two clusters, the partition reduces to a coarse temporal split between the intact wall at the beginning of the episode and the partially broken wall observed once bricks have been cleared.
+At the deeper layer, with five clusters, the partition is more fine-grained: it separates the beginning of the episode into three clusters distinguished mainly by the paddle's position, and isolates two more advanced game states, one in which the agent has dug a tunnel through the left side of the wall and one in which the ball is behind the wall.
+The coarser clustering achieves a higher \gls{acu} than the finer one, at the cost of the more specific semantics it identifies.
+
+\begin{table}[H]
+    \centering
+    \begin{tblr}{
+        colspec={|c|c|c|c|c|},
+        hlines,
+        vlines,
+        row{1} = {font=\bfseries, halign=c, valign=m}
+    }
+        Layer & $K$ & \gls{cu}       & \gls{as}       & \gls{acu}      \\
+        4     & 2   & 0.99 $\pm$0.00 & 0.88 $\pm$0.00 & 0.87 $\pm$0.00 \\
+        6b    & 5   & 0.79 $\pm$0.03 & 0.82 $\pm$0.01 & 0.61 $\pm$0.01 \\
+    \end{tblr}
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} for the two clusterings analyzed in the \BreakoutName environment.}
+    \label{tab:qualitative_breakout_metrics}
+\end{table}
+
+\input{figures/clustering_agent_representation/qualitative_breakout_alt.tex}
+
+\input{figures/clustering_agent_representation/qualitative_breakout.tex}

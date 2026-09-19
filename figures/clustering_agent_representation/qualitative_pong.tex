@@ -1,72 +1,29 @@
 \begin{figure}[H]
-    \centering
-    \resizebox{\textwidth}{!}{
-    \begin{tikzpicture}
-
-    \node (ligne_1) at (0, 0) {};
-
-    \node[anchor=north] at ($(ligne_1) + (-4.5cm, 0cm)$) {
-    \begin{minipage}{4.5cm}
-        \centering
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/pong/qualitative/cluster_0/image_1.png}
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/pong/qualitative/cluster_0/image_2.png}
-
-        \small Cluster 1: the ball is near the bottom of the field.
-    \end{minipage}
-    };
-
-    \node[anchor=north] at ($(ligne_1) + (0cm, 0cm)$) {
-    \begin{minipage}{4.5cm}
-        \centering
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/pong/qualitative/cluster_1/image_1.png}
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/pong/qualitative/cluster_1/image_2.png}
-
-        \small Cluster 2: the ball crosses above the opponent's paddle, left behind at the bottom.
-    \end{minipage}
-    };
-
-    \node[anchor=north] at ($(ligne_1) + (4.5cm, 0cm)$) {
-    \begin{minipage}{4.5cm}
-        \centering
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/pong/qualitative/cluster_4/image_1.png}
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/pong/qualitative/cluster_4/image_2.png}
-
-        \small Cluster 3: the ball is near the top of the field, close to the player's paddle.
-    \end{minipage}
-    };
-
-    \node[anchor=north] (g5) at ($(ligne_1) + (-4.5cm, -4.2cm)$) {
-    \begin{minipage}{4.5cm}
-        \centering
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/pong/qualitative/cluster_2/image_1.png}
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/pong/qualitative/cluster_2/image_2.png}
-
-        \small Cluster 4: same as cluster 1.
-    \end{minipage}
-    };
-
-    \node[anchor=north] at ($(ligne_1) + (0cm, -4.2cm)$) {
-    \begin{minipage}{4.5cm}
-        \centering
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/pong/qualitative/cluster_3/image_1.png}
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/pong/qualitative/cluster_3/image_2.png}
-
-        \small Cluster 5: same as cluster 2.
-    \end{minipage}
-    };
-
-    \node[anchor=north] at ($(ligne_1) + (4.5cm, -4.2cm)$) {
-    \begin{minipage}{4.5cm}
-        \centering
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/pong/qualitative/cluster_5/image_1.png}
-        \includegraphics[width=2cm]{figures/clustering_agent_representation/pictures/pong/qualitative/cluster_5/image_2.png}
-
-        \small Cluster 6: same as cluster 3.
-    \end{minipage}
-    };
-
-    \end{tikzpicture}
-    }
-    \caption{Clusters identified by \gls{car} in the \PongName environment (layer 4, $K=6$). The bottom row duplicates the semantics of the top row, illustrating over-segmentation at this value of $K$.}
+    \qualitativeClusterFigureSetup
+    \qualitativeClusterTwo
+        {figures/clustering_agent_representation/pictures/pong/qualitative/cluster_0/image_1.png}
+        {figures/clustering_agent_representation/pictures/pong/qualitative/cluster_0/image_2.png}
+        {Cluster 1: the ball is near the bottom of the field.}
+    \qualitativeClusterTwo
+        {figures/clustering_agent_representation/pictures/pong/qualitative/cluster_1/image_1.png}
+        {figures/clustering_agent_representation/pictures/pong/qualitative/cluster_1/image_2.png}
+        {Cluster 2: the ball crosses above the opponent's paddle, left behind at the bottom.}
+    \qualitativeClusterTwo
+        {figures/clustering_agent_representation/pictures/pong/qualitative/cluster_4/image_1.png}
+        {figures/clustering_agent_representation/pictures/pong/qualitative/cluster_4/image_2.png}
+        {Cluster 3: the ball is near the top of the field, close to the player's paddle.}
+    \qualitativeClusterTwo
+        {figures/clustering_agent_representation/pictures/pong/qualitative/cluster_2/image_1.png}
+        {figures/clustering_agent_representation/pictures/pong/qualitative/cluster_2/image_2.png}
+        {Cluster 4: same as cluster 1.}
+    \qualitativeClusterTwo
+        {figures/clustering_agent_representation/pictures/pong/qualitative/cluster_3/image_1.png}
+        {figures/clustering_agent_representation/pictures/pong/qualitative/cluster_3/image_2.png}
+        {Cluster 5: same as cluster 2.}
+    \qualitativeClusterTwo
+        {figures/clustering_agent_representation/pictures/pong/qualitative/cluster_5/image_1.png}
+        {figures/clustering_agent_representation/pictures/pong/qualitative/cluster_5/image_2.png}
+        {Cluster 6: same as cluster 3.}
+    \caption{Clusters identified by \gls{car} in the \PongName environment (layer 4, $K=6$). Clusters 4--6 duplicate the semantics of clusters 1--3, illustrating over-segmentation at this value of $K$.}
     \label{fig:qualitative_pong}
 \end{figure}
