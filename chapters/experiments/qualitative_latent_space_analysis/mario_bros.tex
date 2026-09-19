@@ -1,12 +1,13 @@
 \newpage
 \subsection{\MarioBrosName}
 
-Two clusterings are examined for \MarioBrosName (Table~\ref{tab:qualitative_mario_bros_metrics}), obtained at layer 3 with $K=3$ and at layer 8b with $K=4$.
+Two clusterings are examined for \MarioBrosName (Table~\ref{tab:qualitative_mario_bros_metrics}), both obtained at layer 3, with $K=3$ and $K=5$.
+The layer being the same, this comparison isolates the effect of $K$.
 
-At layer 3 (Figure~\ref{fig:qualitative_mario_bros}), the partition is organized around where the action takes place: it separates the side of the screen on which Mario fights enemies, left (cluster A) or right (cluster C), and isolates the situations in which the POW block is present (cluster B), a fixed and recognizable element of the level.
-At layer 8b (Figure~\ref{fig:qualitative_mario_bros_alt}), the clusters no longer follow these concepts.
-They mostly reflect Mario's position in the level, a low-level concept, and some of them are hard to distinguish visually (clusters E and G).
-The two clusterings reach a similar \gls{acu} ($0.50$ and $0.47$), but for opposite reasons: the one at layer 3 is highly consistent across surrogate policies (\gls{cu} of $0.84$) but stays close to the raw observation (\gls{as} of $0.66$), whereas the one at layer 8b is very abstract (\gls{as} of $0.98$) but not consistently recovered across retrained surrogates (\gls{cu} of $0.49$).
+With $K=3$ (Figure~\ref{fig:qualitative_mario_bros}), the partition is organized around where the action takes place: it separates the side of the screen on which Mario fights enemies, left (cluster A) or right (cluster C), and isolates the situations in which the POW block is present (cluster B), a fixed and recognizable element of the level.
+With $K=5$ (Figure~\ref{fig:qualitative_mario_bros_alt}), the POW block is still isolated (cluster E), but the partition no longer separates the left from the right side of the screen.
+It distinguishes instead finer situations, mostly located on the left side of the level: Mario on the top-left platform (cluster D), attacking the enemies at the top left (cluster F), and hitting enemies from below (cluster H), together with a cluster in which Mario simply moves through the level (cluster G).
+Increasing $K$ from $3$ to $5$ lowers \gls{cu} ($0.84$ to $0.75$) and \gls{acu} ($0.50$ to $0.40$), while \gls{as} is unchanged ($0.66$ and $0.65$): the finer partition is less reproducible across surrogate policies, without being more abstract.
 
 \vfill
 \begin{table}[H]
@@ -24,11 +25,12 @@ The two clusterings reach a similar \gls{acu} ($0.50$ and $0.47$), but for oppos
         A & \SetCell[c=4]{l} Mario fights enemies on the left side of the screen. & & & \\
         B & \SetCell[c=4]{l} The POW block is present. & & & \\
         C & \SetCell[c=4]{l} Mario fights enemies on the right side of the screen. & & & \\
-        Layer 8b & $K=4$ & \gls{cu} 0.49 $\pm$0.02 & \gls{as} 0.98 $\pm$0.01 & \gls{acu} 0.47 $\pm$0.01 \\
-        D & \SetCell[c=4]{l} Mario in the lower-left part of the level. & & & \\
-        E & \SetCell[c=4]{l} Mario on the middle levels, enemies in the upper part of the screen. & & & \\
-        F & \SetCell[c=4]{l} Mario near the POW block, or on the upper right platform. & & & \\
-        G & \SetCell[c=4]{l} Mario in the upper-middle part of the level. & & & \\
+        Layer 3 & $K=5$ & \gls{cu} 0.75 $\pm$0.06 & \gls{as} 0.65 $\pm$0.01 & \gls{acu} 0.40 $\pm$0.01 \\
+        D & \SetCell[c=4]{l} Mario is on the top-left platform. & & & \\
+        E & \SetCell[c=4]{l} The POW block is present. & & & \\
+        F & \SetCell[c=4]{l} Mario attacks the enemies at the top right. & & & \\
+        G & \SetCell[c=4]{l} Mario moves through the level. & & & \\
+        H & \SetCell[c=4]{l} Mario hits enemies from below on the left side. & & & \\
     \end{tblr}
     \caption{\gls{cu}, \gls{as}, and \gls{acu} of the two clusterings analyzed in the \MarioBrosName environment, followed by the description of the clusters shown in Figures~\ref{fig:qualitative_mario_bros} and~\ref{fig:qualitative_mario_bros_alt}.}
     \label{tab:qualitative_mario_bros_metrics}
