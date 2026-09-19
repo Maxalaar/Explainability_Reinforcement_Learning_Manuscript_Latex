@@ -22,6 +22,34 @@ The finer clustering at layer 2 achieves a lower \gls{acu} than the coarser one 
     \label{tab:qualitative_space_invaders_metrics}
 \end{table}
 
+\begin{table}[H]
+    \centering
+    \begin{tblr}{
+        width=\linewidth,
+        colspec={|c|X[l]|},
+        hlines,
+        vlines,
+        row{1} = {font=\bfseries, halign=c, valign=m}
+    }
+        Cluster & Description \\
+        \SetCell[c=2]{c,font=\itshape} Layer 4, $K=4$ & \\
+        A & Start of the episode. \\
+        B & Middle of the episode. \\
+        C & The left column has been cleared; the flying saucer occasionally appears. \\
+        D & Late in the episode, few invaders remain. \\
+        \SetCell[c=2]{c,font=\itshape} Layer 2, $K=5$ & \\
+        E & Formation nearly intact. \\
+        F & Formation partially thinned. \\
+        G & Formation reorganized, three lives left. \\
+        H & Left column cleared, flying saucer visible. \\
+        I & Formation reduced to two columns. \\
+    \end{tblr}
+    \caption{Description of the clusters shown in Figures~\ref{fig:qualitative_space_invaders} and~\ref{fig:qualitative_space_invaders_alt}.}
+    \label{tab:qualitative_space_invaders_clusters}
+\end{table}
+
+\newpage
+
 \input{figures/clustering_agent_representation/qualitative_space_invaders.tex}
 
 \input{figures/clustering_agent_representation/qualitative_space_invaders_alt.tex}

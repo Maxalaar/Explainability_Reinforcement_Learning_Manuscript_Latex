@@ -6,22 +6,36 @@ At the shallower layer, with only two clusters, the partition reduces to a coars
 At the deeper layer, with five clusters, the partition is more fine-grained: it separates the beginning of the episode into three clusters distinguished mainly by the paddle's position, and isolates two more advanced game states, one in which the agent has dug a tunnel through the left side of the wall and one in which the ball is behind the wall.
 The coarser clustering achieves a higher \gls{acu} than the finer one, at the cost of the more specific semantics it identifies.
 
+\vfill
 \begin{table}[H]
     \centering
     \begin{tblr}{
-        colspec={|c|c|c|c|c|},
-        hlines,
-        vlines,
-        row{1} = {font=\bfseries, halign=c, valign=m}
+        colspec={c c c c c},
+        rowsep=2pt,
+        hline{1,Z} = {1pt},
+        hline{4} = {0.5pt},
+        hline{2,5} = {0.3pt},
+        row{1,4} = {bg=black!8, font=\bfseries},
+        column{1} = {font=\bfseries}
     }
-        Layer & $K$ & \gls{cu}       & \gls{as}       & \gls{acu}      \\
-        4     & 2   & 0.99 $\pm$0.00 & 0.88 $\pm$0.00 & 0.87 $\pm$0.00 \\
-        6b    & 5   & 0.79 $\pm$0.03 & 0.82 $\pm$0.01 & 0.61 $\pm$0.01 \\
+        \SetCell[c=2]{l} Layer 4 $\cdot$ $K=2$ & & \gls{cu} 0.99 $\pm$0.00 & \gls{as} 0.88 $\pm$0.00 & \gls{acu} 0.87 $\pm$0.00 \\
+        A & \SetCell[c=4]{l} Intact wall, start of the episode. & & & \\
+        B & \SetCell[c=4]{l} Wall partially broken. & & & \\
+        \SetCell[c=2]{l} Layer 6b $\cdot$ $K=5$ & & \gls{cu} 0.79 $\pm$0.03 & \gls{as} 0.82 $\pm$0.01 & \gls{acu} 0.61 $\pm$0.01 \\
+        C & \SetCell[c=4]{l} Digging a tunnel through the left side of the wall. & & & \\
+        D & \SetCell[c=4]{l} Start of the episode, paddle on the right. & & & \\
+        E & \SetCell[c=4]{l} The ball is behind the brick wall. & & & \\
+        F & \SetCell[c=4]{l} Start of the episode, paddle not on the right. & & & \\
+        G & \SetCell[c=4]{l} Start of the episode. & & & \\
     \end{tblr}
-    \caption{\gls{cu}, \gls{as}, and \gls{acu} for the two clusterings analyzed in the \BreakoutName environment.}
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} of the two clusterings analyzed in the \BreakoutName environment, followed by the description of the clusters shown in Figures~\ref{fig:qualitative_breakout_alt} and~\ref{fig:qualitative_breakout}.}
     \label{tab:qualitative_breakout_metrics}
 \end{table}
+\vfill
 
+\newpage
+\vspace*{\fill}
 \input{figures/clustering_agent_representation/qualitative_breakout_alt.tex}
 
 \input{figures/clustering_agent_representation/qualitative_breakout.tex}
+\vfill

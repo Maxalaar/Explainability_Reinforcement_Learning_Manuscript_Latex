@@ -12,7 +12,7 @@ These criteria provide a practical basis for selecting clusterings that are both
 
 For each environment, a second clustering, obtained at a different layer and a different number of clusters, is also examined to illustrate how the semantic content of the partition changes with these two parameters.
 
-\newcommand{\qualitativeClusterImageScale}{0.13}
+\newcommand{\qualitativeClusterImageScale}{0.20}
 
 \newlength{\qualitativeClusterImageWidth}
 \settowidth{\qualitativeClusterImageWidth}{\includegraphics[scale=\qualitativeClusterImageScale]{figures/clustering_agent_representation/pictures/breakout/qualitative/cluster_0/image_1.png}}
@@ -36,27 +36,18 @@ For each environment, a second clustering, obtained at a different layer and a d
     \setlength{\lineskip}{\qualitativeClusterRowGap}%
 }
 
-% A cluster shown with two example screenshots, always kept on the same line.
+% A cluster shown with two example screenshots, always kept on the same line, labeled with a letter.
 \newcommand{\qualitativeClusterTwo}[3]{%
     \begin{minipage}[t]{\dimexpr 2\qualitativeClusterImageWidth+\qualitativeClusterImageGap\relax}
         \centering
         \includegraphics[scale=\qualitativeClusterImageScale]{#1}\hspace{\qualitativeClusterImageGap}\includegraphics[scale=\qualitativeClusterImageScale]{#2}\par
-        \small #3
-    \end{minipage}\hspace{\qualitativeClusterGap}%
-}
-
-% A cluster shown with a single example screenshot.
-\newcommand{\qualitativeClusterOne}[2]{%
-    \begin{minipage}[t]{\qualitativeClusterImageWidth}
-        \centering
-        \includegraphics[scale=\qualitativeClusterImageScale]{#1}\par
-        \footnotesize #2
+        \small\textbf{#3}
     \end{minipage}\hspace{\qualitativeClusterGap}%
 }
 
 \input{chapters/experiments/qualitative_latent_space_analysis/breakout.tex}
-\input{chapters/experiments/qualitative_latent_space_analysis/mario_bros.tex}
-\input{chapters/experiments/qualitative_latent_space_analysis/ms_pacman.tex}
-\input{chapters/experiments/qualitative_latent_space_analysis/pong.tex}
-\input{chapters/experiments/qualitative_latent_space_analysis/space_invaders.tex}
-\input{chapters/experiments/qualitative_latent_space_analysis/surround.tex}
+% \input{chapters/experiments/qualitative_latent_space_analysis/mario_bros.tex}
+% \input{chapters/experiments/qualitative_latent_space_analysis/ms_pacman.tex}
+% \input{chapters/experiments/qualitative_latent_space_analysis/pong.tex}
+% \input{chapters/experiments/qualitative_latent_space_analysis/space_invaders.tex}
+% \input{chapters/experiments/qualitative_latent_space_analysis/surround.tex}

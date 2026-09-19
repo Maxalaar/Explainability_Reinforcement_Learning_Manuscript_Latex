@@ -22,6 +22,32 @@ This is reflected by the much lower \gls{cu} at layer 8b, indicating that this f
     \label{tab:qualitative_mario_bros_metrics}
 \end{table}
 
+\begin{table}[H]
+    \centering
+    \begin{tblr}{
+        width=\linewidth,
+        colspec={|c|X[l]|},
+        hlines,
+        vlines,
+        row{1} = {font=\bfseries, halign=c, valign=m}
+    }
+        Cluster & Description \\
+        \SetCell[c=2]{c,font=\itshape} Layer 3, $K=3$ & \\
+        A & Mario fights enemies on the left side of the screen. \\
+        B & Mario hits the POW block. \\
+        C & Mario fights enemies on the right side of the screen. \\
+        \SetCell[c=2]{c,font=\itshape} Layer 8b, $K=4$ & \\
+        D & Near the POW block, enemy in the upper right. \\
+        E & Mid-screen, enemy in the upper left. \\
+        F & Near the POW block, enemy in the upper left. \\
+        G & Nearly identical to cluster E. \\
+    \end{tblr}
+    \caption{Description of the clusters shown in Figures~\ref{fig:qualitative_mario_bros} and~\ref{fig:qualitative_mario_bros_alt}.}
+    \label{tab:qualitative_mario_bros_clusters}
+\end{table}
+
+\newpage
+
 \input{figures/clustering_agent_representation/qualitative_mario_bros.tex}
 
 \input{figures/clustering_agent_representation/qualitative_mario_bros_alt.tex}

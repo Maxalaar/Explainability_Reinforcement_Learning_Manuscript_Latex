@@ -22,6 +22,33 @@ The duplicated cluster is reflected by the lower \gls{acu} at layer 4 compared t
     \label{tab:qualitative_ms_pacman_metrics}
 \end{table}
 
+\begin{table}[H]
+    \centering
+    \begin{tblr}{
+        width=\linewidth,
+        colspec={|c|X[l]|},
+        hlines,
+        vlines,
+        row{1} = {font=\bfseries, halign=c, valign=m}
+    }
+        Cluster & Description \\
+        \SetCell[c=2]{c,font=\itshape} Layer 6b, $K=3$ & \\
+        A & Start of the episode. \\
+        B & Middle of the episode. \\
+        C & End of the episode. \\
+        \SetCell[c=2]{c,font=\itshape} Layer 4, $K=5$ & \\
+        D & Score 6850, one life left. \\
+        E & Score 9040, no lives left. \\
+        F & Score 20, two lives left. \\
+        G & Same as cluster D. \\
+        H & Score reset to 0, two lives left. \\
+    \end{tblr}
+    \caption{Description of the clusters shown in Figures~\ref{fig:qualitative_ms_pacman} and~\ref{fig:qualitative_ms_pacman_alt}.}
+    \label{tab:qualitative_ms_pacman_clusters}
+\end{table}
+
+\newpage
+
 \input{figures/clustering_agent_representation/qualitative_ms_pacman.tex}
 
 \input{figures/clustering_agent_representation/qualitative_ms_pacman_alt.tex}

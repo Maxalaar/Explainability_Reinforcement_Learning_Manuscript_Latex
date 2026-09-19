@@ -23,6 +23,33 @@ This is an instance of over-segmentation, in which increasing $K$ duplicates exi
     \label{tab:qualitative_pong_metrics}
 \end{table}
 
+\begin{table}[H]
+    \centering
+    \begin{tblr}{
+        width=\linewidth,
+        colspec={|c|X[l]|},
+        hlines,
+        vlines,
+        row{1} = {font=\bfseries, halign=c, valign=m}
+    }
+        Cluster & Description \\
+        \SetCell[c=2]{c,font=\itshape} Layer 2, $K=2$ & \\
+        A & Paddles near the bottom. \\
+        B & Paddles near the top. \\
+        \SetCell[c=2]{c,font=\itshape} Layer 4, $K=6$ & \\
+        C & The ball is near the bottom of the field. \\
+        D & The ball crosses above the opponent's paddle, left behind at the bottom. \\
+        E & The ball is near the top of the field, close to the player's paddle. \\
+        F & Same as cluster C. \\
+        G & Same as cluster D. \\
+        H & Same as cluster E. \\
+    \end{tblr}
+    \caption{Description of the clusters shown in Figures~\ref{fig:qualitative_pong_alt} and~\ref{fig:qualitative_pong}.}
+    \label{tab:qualitative_pong_clusters}
+\end{table}
+
+\newpage
+
 \input{figures/clustering_agent_representation/qualitative_pong_alt.tex}
 
 \input{figures/clustering_agent_representation/qualitative_pong.tex}

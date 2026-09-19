@@ -22,6 +22,35 @@ The duplicated clusters leave \gls{cu}, \gls{as}, and \gls{acu} essentially unch
     \label{tab:qualitative_surround_metrics}
 \end{table}
 
+\begin{table}[H]
+    \centering
+    \begin{tblr}{
+        width=\linewidth,
+        colspec={|c|X[l]|},
+        hlines,
+        vlines,
+        row{1} = {font=\bfseries, halign=c, valign=m}
+    }
+        Cluster & Description \\
+        \SetCell[c=2]{c,font=\itshape} Layer 8b, $K=4$ & \\
+        A & Start of the episode. \\
+        B & The agent's trail remains confined to the bottom-left area. \\
+        C & The agent moves along the top of the level, arriving from the left. \\
+        D & The trail grows from the top-left toward the bottom, closing in on the final enclosure. \\
+        \SetCell[c=2]{c,font=\itshape} Layer 7b, $K=6$ & \\
+        E & Trail looping up from the bottom-left. \\
+        F & Trail arriving from the left along the top. \\
+        G & Short diagonal trail toward the top right. \\
+        H & Start of the episode, empty board. \\
+        I & Same as cluster F. \\
+        J & Same as cluster H. \\
+    \end{tblr}
+    \caption{Description of the clusters shown in Figures~\ref{fig:qualitative_surround} and~\ref{fig:qualitative_surround_alt}.}
+    \label{tab:qualitative_surround_clusters}
+\end{table}
+
+\newpage
+
 \input{figures/clustering_agent_representation/qualitative_surround.tex}
 
 \input{figures/clustering_agent_representation/qualitative_surround_alt.tex}
