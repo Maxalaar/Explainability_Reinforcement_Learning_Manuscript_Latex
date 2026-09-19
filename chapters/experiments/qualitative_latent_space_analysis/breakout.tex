@@ -1,10 +1,14 @@
 \newpage
 \subsection{\BreakoutName}
 
-Two clusterings are examined for \BreakoutName, obtained at layer 4 with $K=2$ and at layer 6b with $K=5$.
-At the shallower layer, with only two clusters, the partition reduces to a coarse split according to the position of the ball relative to the brick wall, either below it or having passed behind it.
-At the deeper layer, with five clusters, the partition is more fine-grained: it separates the beginning of the episode into three clusters distinguished mainly by the paddle's position, and isolates two more advanced game states, one in which the agent has dug a tunnel through the left side of the wall and one in which the ball is behind the wall.
-The coarser clustering achieves a higher \gls{acu} than the finer one, at the cost of the more specific semantics it identifies.
+Two clusterings are examined for \BreakoutName (Table~\ref{tab:qualitative_breakout_metrics}), obtained at layer 4 with $K=2$ and at layer 6b with $K=5$.
+Since both the layer and $K$ differ, the comparison below is descriptive rather than a controlled study of $K$ alone.
+We call high-level concepts those that relate to the progress of the game and its key events, and low-level concepts those that relate to the immediate position of objects on the screen.
+
+At $K=2$ (Figure~\ref{fig:qualitative_breakout_alt}), the partition captures a single high-level concept: the position of the ball relative to the brick wall, either below it (cluster A) or having passed behind it (cluster B), the strategic event that lets the ball clear bricks on its own.
+At $K=5$ (Figure~\ref{fig:qualitative_breakout}), the partition also isolates the ball behind the wall (cluster E) as well as the digging of a tunnel through the left side of the wall (cluster C), and it adds low-level concepts: the beginning of the episode is split according to the position of the paddle (clusters D, F, and G).
+The clustering with $K=2$ is almost perfectly reproducible across surrogate policies (\gls{cu} of $0.99$, \gls{acu} of $0.87$), whereas the one with $K=5$ is less consistent (\gls{cu} of $0.79$, \gls{acu} of $0.61$) but exposes information that the former does not.
+A higher \gls{acu} therefore reflects a more stable partition, not a semantically richer one.
 
 \vfill
 \begin{table}[H]
