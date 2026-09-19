@@ -29,20 +29,26 @@ For each environment, a second clustering, obtained at a different layer and a d
 \newlength{\qualitativeClusterRowGap}
 \setlength{\qualitativeClusterRowGap}{0.3cm}
 
+% The gap is inserted before every cluster except the first one of a figure, so that
+% no row carries a trailing gap and every row is centered on the same axis.
+\newif\ifqualitativeFirstCluster
+
 % Start of every cluster figure: centers the clusters and applies the row spacing.
 \newcommand{\qualitativeClusterFigureSetup}{%
     \centering
     \setlength{\lineskiplimit}{1000pt}%
     \setlength{\lineskip}{\qualitativeClusterRowGap}%
+    \qualitativeFirstClustertrue
 }
 
 % A cluster shown with two example screenshots, always kept on the same line, labeled with a letter.
 \newcommand{\qualitativeClusterTwo}[3]{%
+    \ifqualitativeFirstCluster\qualitativeFirstClusterfalse\else\hspace{\qualitativeClusterGap}\fi
     \begin{minipage}[t]{\dimexpr 2\qualitativeClusterImageWidth+\qualitativeClusterImageGap\relax}
         \centering
         \includegraphics[scale=\qualitativeClusterImageScale]{#1}\hspace{\qualitativeClusterImageGap}\includegraphics[scale=\qualitativeClusterImageScale]{#2}\par
         \small\textbf{#3}
-    \end{minipage}\hspace{\qualitativeClusterGap}%
+    \end{minipage}%
 }
 
 \input{chapters/experiments/qualitative_latent_space_analysis/breakout.tex}
