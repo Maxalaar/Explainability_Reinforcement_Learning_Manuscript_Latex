@@ -3,9 +3,10 @@
 
 Two clusterings are examined for \MsPacManName (Table~\ref{tab:qualitative_ms_pacman_metrics}), obtained at layer 6b with $K=3$ and at layer 4 with $K=5$.
 
-Both clusterings are organized around the same high-level concept, the progress of the episode, tracked through the score and the number of pellets remaining in the maze, rather than a spatial feature of the observation as in \MarioBrosName.
-With $K=3$ (Figure~\ref{fig:qualitative_ms_pacman}), the partition separates the start (cluster A), the middle (cluster B), and the end (cluster C) of the episode.
-With $K=5$ (Figure~\ref{fig:qualitative_ms_pacman_alt}), the same axis is cut more finely: the very start of the episode with a null score (cluster D), the early episode in which most pellets remain (cluster E), two clusters of the late episode in which few pellets remain (clusters F and G), which are hard to distinguish visually, and the end of the episode (cluster H).
+Both clusterings are organized around high-level concepts: the progress of the episode, tracked through the score and the number of pellets remaining in the maze, and the state of the game, rather than a spatial feature of the observation as in \MarioBrosName.
+With $K=3$ (Figure~\ref{fig:qualitative_ms_pacman}), the partition separates the start (cluster B), the middle (cluster A), and the end (cluster C) of the episode.
+With $K=5$ (Figure~\ref{fig:qualitative_ms_pacman_alt}), the partition splits the start of the episode into the initial animation, during which the character cannot move (cluster H), and the beginning of actual play (cluster F).
+It isolates a situation specific to the game mechanics, in which Pac-Man is in booster mode and waits in front of the ghost spawn to eat the ghosts (cluster D), and it separates the end of the episode, when at most one power pellet remains, into two similar clusters (clusters E and G).
 The two clusterings are equally consistent across surrogate policies (\gls{cu} of $0.88$ in both cases), but the one at layer 4 is less abstract (\gls{as} of $0.47$ against $0.52$), which lowers its \gls{acu} ($0.35$ against $0.40$).
 
 \vfill
@@ -21,15 +22,15 @@ The two clusterings are equally consistent across surrogate policies (\gls{cu} o
         column{1} = {font=\bfseries}
     }
         Layer 6b & $K=3$ & \gls{cu} 0.88 $\pm$0.01 & \gls{as} 0.52 $\pm$0.01 & \gls{acu} 0.40 $\pm$0.01 \\
-        A & \SetCell[c=4]{l} Start of the episode. & & & \\
-        B & \SetCell[c=4]{l} Middle of the episode. & & & \\
+        A & \SetCell[c=4]{l} Middle of the episode. & & & \\
+        B & \SetCell[c=4]{l} Start of the episode. & & & \\
         C & \SetCell[c=4]{l} End of the episode. & & & \\
         Layer 4 & $K=5$ & \gls{cu} 0.88 $\pm$0.01 & \gls{as} 0.47 $\pm$0.00 & \gls{acu} 0.35 $\pm$0.00 \\
-        D & \SetCell[c=4]{l} Very start of the episode, null score. & & & \\
-        E & \SetCell[c=4]{l} Early in the episode, most pellets remain. & & & \\
-        F & \SetCell[c=4]{l} Late in the episode, few pellets remain. & & & \\
-        G & \SetCell[c=4]{l} Late in the episode, few pellets remain (hard to distinguish from cluster F). & & & \\
-        H & \SetCell[c=4]{l} End of the episode, almost no pellets remain. & & & \\
+        D & \SetCell[c=4]{l} Pac-Man is in booster mode and waits in front of the ghost spawn to eat the ghosts. & & & \\
+        E & \SetCell[c=4]{l} End of the episode, at most one power pellet remains (similar to cluster G). & & & \\
+        F & \SetCell[c=4]{l} Start of the episode. & & & \\
+        G & \SetCell[c=4]{l} End of the episode, at most one power pellet remains (similar to cluster E). & & & \\
+        H & \SetCell[c=4]{l} Start-of-episode animation, the character cannot move. & & & \\
     \end{tblr}
     \caption{\gls{cu}, \gls{as}, and \gls{acu} of the two clusterings analyzed in the \MsPacManName environment, followed by the description of the clusters shown in Figures~\ref{fig:qualitative_ms_pacman} and~\ref{fig:qualitative_ms_pacman_alt}.}
     \label{tab:qualitative_ms_pacman_metrics}
