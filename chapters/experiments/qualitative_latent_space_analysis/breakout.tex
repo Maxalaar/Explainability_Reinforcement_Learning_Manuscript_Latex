@@ -2,7 +2,7 @@
 \subsection{\BreakoutName}
 
 Two clusterings are examined for \BreakoutName, obtained at layer 4 with $K=2$ and at layer 6b with $K=5$.
-At the shallower layer, with only two clusters, the partition reduces to a coarse temporal split between the intact wall at the beginning of the episode and the partially broken wall observed once bricks have been cleared.
+At the shallower layer, with only two clusters, the partition reduces to a coarse split according to the position of the ball relative to the brick wall, either below it or having passed behind it.
 At the deeper layer, with five clusters, the partition is more fine-grained: it separates the beginning of the episode into three clusters distinguished mainly by the paddle's position, and isolates two more advanced game states, one in which the agent has dug a tunnel through the left side of the wall and one in which the ball is behind the wall.
 The coarser clustering achieves a higher \gls{acu} than the finer one, at the cost of the more specific semantics it identifies.
 
@@ -19,14 +19,14 @@ The coarser clustering achieves a higher \gls{acu} than the finer one, at the co
         column{1} = {font=\bfseries}
     }
         \SetCell[c=2]{l} Layer 4 $\cdot$ $K=2$ & & \gls{cu} 0.99 $\pm$0.00 & \gls{as} 0.88 $\pm$0.00 & \gls{acu} 0.87 $\pm$0.00 \\
-        A & \SetCell[c=4]{l} Intact wall, start of the episode. & & & \\
-        B & \SetCell[c=4]{l} Wall partially broken. & & & \\
+        A & \SetCell[c=4]{l} The ball is below the brick wall. & & & \\
+        B & \SetCell[c=4]{l} The ball passes behind the brick wall. & & & \\
         \SetCell[c=2]{l} Layer 6b $\cdot$ $K=5$ & & \gls{cu} 0.79 $\pm$0.03 & \gls{as} 0.82 $\pm$0.01 & \gls{acu} 0.61 $\pm$0.01 \\
         C & \SetCell[c=4]{l} Digging a tunnel through the left side of the wall. & & & \\
         D & \SetCell[c=4]{l} Start of the episode, paddle on the right. & & & \\
         E & \SetCell[c=4]{l} The ball is behind the brick wall. & & & \\
-        F & \SetCell[c=4]{l} Start of the episode, paddle not on the right. & & & \\
-        G & \SetCell[c=4]{l} Start of the episode. & & & \\
+        F & \SetCell[c=4]{l} Start of the episode, paddle in the middle. & & & \\
+        G & \SetCell[c=4]{l} Start of the episode, paddle on the left. & & & \\
     \end{tblr}
     \caption{\gls{cu}, \gls{as}, and \gls{acu} of the two clusterings analyzed in the \BreakoutName environment, followed by the description of the clusters shown in Figures~\ref{fig:qualitative_breakout_alt} and~\ref{fig:qualitative_breakout}.}
     \label{tab:qualitative_breakout_metrics}
