@@ -2,9 +2,11 @@
 \subsection{\SurroundName}
 
 Two clusterings are examined for \SurroundName (Table~\ref{tab:qualitative_surround_metrics}), obtained at layer 8b with $K=4$ and at layer 7b with $K=6$.
-At the deeper layer, besides the start of the episode, the clustering separates configurations by the region of the level occupied by the agent's trail, from a small trail confined to the bottom-left, to one running along the top after arriving from the left, to a dense trail that has grown from the top-left toward the bottom and is closing in on the final enclosure between the two players.
-At the shallower layer, this is an instance of over-segmentation: only four distinct trail configurations are visible among the six clusters, two of which are each duplicated.
-The duplicated clusters leave \gls{cu}, \gls{as}, and \gls{acu} essentially unchanged from the $K=4$ clustering at layer 8b.
+Both partitions combine three kinds of concepts: the start of the episode (clusters B and J), its outcome, when the opponent loses (clusters D and F), and the region of the level in which the player moves.
+
+At layer 8b (Figure~\ref{fig:qualitative_surround}), this region is described coarsely: the trail of the player is either confined to the bottom-left area (cluster A) or runs along the top of the level after arriving from the left (cluster C).
+At layer 7b (Figure~\ref{fig:qualitative_surround_alt}), it is refined into lower-level concepts: the player moves in the upper-left corner (cluster E) or in the lower-left corner (cluster G), the end of the game is played in the lower-left corner (cluster H), and the player crosses the level from the top left to the bottom right (cluster I).
+Both clusterings reach the same \gls{cu}, \gls{as}, and \gls{acu} ($0.67$, $0.71$, and $0.38$): the refinement neither improves nor degrades the metrics, although the variability across surrogate policies is larger with $K=6$ (standard deviation of $0.04$ against $0.02$).
 
 \vfill
 \begin{table}[H]
@@ -24,14 +26,14 @@ The duplicated clusters leave \gls{cu}, \gls{as}, and \gls{acu} essentially unch
         A & The agent's trail remains confined to the bottom-left area. \\
         B & Start of the episode. \\
         C & The agent moves along the top of the level, arriving from the left. \\
-        D & The trail grows from the top-left toward the bottom, closing in on the final enclosure. \\
+        D & The opponent loses by running into a trail. \\
         \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 7b}\makebox[1.4cm][l]{$K=6$}\makebox[2.75cm][l]{\gls{cu} 0.67 $\pm$0.04}\makebox[2.75cm][l]{\gls{as} 0.71 $\pm$0.04}\gls{acu} 0.38 $\pm$0.04 & \\
-        E & Trail looping up from the bottom-left. \\
-        F & Trail arriving from the left along the top. \\
-        G & Short diagonal trail toward the top right. \\
-        H & Start of the episode, empty board. \\
-        I & Same as cluster F. \\
-        J & Same as cluster H. \\
+        E & The player moves in the upper-left corner. \\
+        F & The opponent loses the confrontation. \\
+        G & The player moves in the lower-left corner. \\
+        H & The end of the game is played in the lower-left corner. \\
+        I & The player starts at the top left and ends at the bottom right. \\
+        J & Start of the episode. \\
     \end{tblr}
     \caption{\gls{cu}, \gls{as}, and \gls{acu} of the two clusterings analyzed in the \SurroundName environment, followed by the description of the clusters shown in Figures~\ref{fig:qualitative_surround} and~\ref{fig:qualitative_surround_alt}.}
     \label{tab:qualitative_surround_metrics}
