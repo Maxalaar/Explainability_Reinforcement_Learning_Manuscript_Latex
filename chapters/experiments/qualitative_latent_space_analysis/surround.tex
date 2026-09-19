@@ -1,43 +1,31 @@
 \newpage
 \subsection{\SurroundName}
 
-Two clusterings are examined for \SurroundName, obtained at layer 8b with $K=4$ and at layer 7b with $K=6$.
+Two clusterings are examined for \SurroundName (Table~\ref{tab:qualitative_surround_metrics}), obtained at layer 8b with $K=4$ and at layer 7b with $K=6$.
 At the deeper layer, besides the start of the episode, the clustering separates configurations by the region of the level occupied by the agent's trail, from a small trail confined to the bottom-left, to one running along the top after arriving from the left, to a dense trail that has grown from the top-left toward the bottom and is closing in on the final enclosure between the two players.
-At the shallower layer, as for \PongName at $K=6$, this is an instance of over-segmentation: only four distinct trail configurations are visible among the six clusters, two of which are each duplicated.
+At the shallower layer, this is an instance of over-segmentation: only four distinct trail configurations are visible among the six clusters, two of which are each duplicated.
 The duplicated clusters leave \gls{cu}, \gls{as}, and \gls{acu} essentially unchanged from the $K=4$ clustering at layer 8b.
 
-\begin{table}[H]
-    \centering
-    \begin{tblr}{
-        colspec={|c|c|c|c|c|},
-        hlines,
-        vlines,
-        row{1} = {font=\bfseries, halign=c, valign=m}
-    }
-        Layer & $K$ & \gls{cu}       & \gls{as}       & \gls{acu}      \\
-        8b    & 4   & 0.67 $\pm$0.02 & 0.71 $\pm$0.02 & 0.38 $\pm$0.02 \\
-        7b    & 6   & 0.67 $\pm$0.04 & 0.71 $\pm$0.04 & 0.38 $\pm$0.04 \\
-    \end{tblr}
-    \caption{\gls{cu}, \gls{as}, and \gls{acu} for the two clusterings analyzed in the \SurroundName environment.}
-    \label{tab:qualitative_surround_metrics}
-\end{table}
-
+\vfill
 \begin{table}[H]
     \centering
     \begin{tblr}{
         width=\linewidth,
-        colspec={|c|X[l]|},
-        hlines,
-        vlines,
-        row{1} = {font=\bfseries, halign=c, valign=m}
+        colspec={Q[c,wd=1.6cm] X[l]},
+        cells = {valign=m},
+        rowsep=2pt,
+        hline{1,Z} = {1pt},
+        hline{6} = {0.5pt},
+        hline{2,7} = {0.3pt},
+        row{1,6} = {bg=black!8, font=\bfseries},
+        column{1} = {font=\bfseries}
     }
-        Cluster & Description \\
-        \SetCell[c=2]{c,font=\itshape} Layer 8b, $K=4$ & \\
-        A & Start of the episode. \\
-        B & The agent's trail remains confined to the bottom-left area. \\
+        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 8b}\makebox[1.4cm][l]{$K=4$}\makebox[2.75cm][l]{\gls{cu} 0.67 $\pm$0.02}\makebox[2.75cm][l]{\gls{as} 0.71 $\pm$0.02}\gls{acu} 0.38 $\pm$0.02 & \\
+        A & The agent's trail remains confined to the bottom-left area. \\
+        B & Start of the episode. \\
         C & The agent moves along the top of the level, arriving from the left. \\
         D & The trail grows from the top-left toward the bottom, closing in on the final enclosure. \\
-        \SetCell[c=2]{c,font=\itshape} Layer 7b, $K=6$ & \\
+        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 7b}\makebox[1.4cm][l]{$K=6$}\makebox[2.75cm][l]{\gls{cu} 0.67 $\pm$0.04}\makebox[2.75cm][l]{\gls{as} 0.71 $\pm$0.04}\gls{acu} 0.38 $\pm$0.04 & \\
         E & Trail looping up from the bottom-left. \\
         F & Trail arriving from the left along the top. \\
         G & Short diagonal trail toward the top right. \\
@@ -45,12 +33,14 @@ The duplicated clusters leave \gls{cu}, \gls{as}, and \gls{acu} essentially unch
         I & Same as cluster F. \\
         J & Same as cluster H. \\
     \end{tblr}
-    \caption{Description of the clusters shown in Figures~\ref{fig:qualitative_surround} and~\ref{fig:qualitative_surround_alt}.}
-    \label{tab:qualitative_surround_clusters}
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} of the two clusterings analyzed in the \SurroundName environment, followed by the description of the clusters shown in Figures~\ref{fig:qualitative_surround} and~\ref{fig:qualitative_surround_alt}.}
+    \label{tab:qualitative_surround_metrics}
 \end{table}
+\vfill
 
 \newpage
-
+\vspace*{\fill}
 \input{figures/clustering_agent_representation/qualitative_surround.tex}
 
 \input{figures/clustering_agent_representation/qualitative_surround_alt.tex}
+\vfill
