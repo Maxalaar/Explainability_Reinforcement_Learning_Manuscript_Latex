@@ -13,7 +13,9 @@ Increasing $K$ from $3$ to $5$ lowers \gls{cu} ($0.84$ to $0.75$) and \gls{acu} 
 \begin{table}[H]
     \centering
     \begin{tblr}{
-        colspec={c c c c c},
+        width=\linewidth,
+        colspec={Q[c,wd=1.6cm] X[l]},
+        cells = {valign=m},
         rowsep=2pt,
         hline{1,Z} = {1pt},
         hline{5} = {0.5pt},
@@ -21,16 +23,16 @@ Increasing $K$ from $3$ to $5$ lowers \gls{cu} ($0.84$ to $0.75$) and \gls{acu} 
         row{1,5} = {bg=black!8, font=\bfseries},
         column{1} = {font=\bfseries}
     }
-        Layer 3 & $K=3$ & \gls{cu} 0.84 $\pm$0.04 & \gls{as} 0.66 $\pm$0.00 & \gls{acu} 0.50 $\pm$0.00 \\
-        A & \SetCell[c=4]{l} Mario fights enemies on the left side of the screen. & & & \\
-        B & \SetCell[c=4]{l} The POW block is present. & & & \\
-        C & \SetCell[c=4]{l} Mario fights enemies on the right side of the screen. & & & \\
-        Layer 3 & $K=5$ & \gls{cu} 0.75 $\pm$0.06 & \gls{as} 0.65 $\pm$0.01 & \gls{acu} 0.40 $\pm$0.01 \\
-        D & \SetCell[c=4]{l} Mario is on the top-left platform. & & & \\
-        E & \SetCell[c=4]{l} The POW block is present. & & & \\
-        F & \SetCell[c=4]{l} Mario attacks the enemies at the top right. & & & \\
-        G & \SetCell[c=4]{l} Mario moves through the level. & & & \\
-        H & \SetCell[c=4]{l} Mario hits enemies from below on the left side. & & & \\
+        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 3}\makebox[1.4cm][l]{$K=3$}\makebox[2.75cm][l]{\gls{cu} 0.84 $\pm$0.04}\makebox[2.75cm][l]{\gls{as} 0.66 $\pm$0.00}\gls{acu} 0.50 $\pm$0.00 & \\
+        A & Mario fights enemies on the left side of the screen. \\
+        B & The POW block is present. \\
+        C & Mario fights enemies on the right side of the screen. \\
+        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 3}\makebox[1.4cm][l]{$K=5$}\makebox[2.75cm][l]{\gls{cu} 0.75 $\pm$0.06}\makebox[2.75cm][l]{\gls{as} 0.65 $\pm$0.01}\gls{acu} 0.40 $\pm$0.01 & \\
+        D & Mario is on the top-left platform. \\
+        E & The POW block is present. \\
+        F & Mario attacks the enemies at the top right. \\
+        G & Mario moves through the level. \\
+        H & Mario hits enemies from below on the left side. \\
     \end{tblr}
     \caption{\gls{cu}, \gls{as}, and \gls{acu} of the two clusterings analyzed in the \MarioBrosName environment, followed by the description of the clusters shown in Figures~\ref{fig:qualitative_mario_bros} and~\ref{fig:qualitative_mario_bros_alt}.}
     \label{tab:qualitative_mario_bros_metrics}
