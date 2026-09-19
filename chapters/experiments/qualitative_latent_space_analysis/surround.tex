@@ -6,7 +6,7 @@ Both partitions combine three kinds of concepts: the start of the episode (clust
 
 At layer 8b (Figure~\ref{fig:qualitative_surround}), this region is described coarsely: the trail of the player is either confined to the bottom-left area (cluster A) or runs along the top of the level after arriving from the left (cluster C).
 At layer 7b (Figure~\ref{fig:qualitative_surround_alt}), it is refined into lower-level concepts: the player moves in the upper-left corner (cluster E) or in the lower-left corner (cluster G), the end of the game is played in the lower-left corner (cluster H), and the player crosses the level from the top left to the bottom right (cluster I).
-Both clusterings reach the same \gls{cu}, \gls{as}, and \gls{acu} ($0.67$, $0.71$, and $0.38$): the refinement neither improves nor degrades the metrics, although the variability across surrogate policies is larger with $K=6$ (standard deviation of $0.04$ against $0.02$).
+Both clusterings reach the same \gls{cu}, \gls{as}, and \gls{acu} ($0.67$, $0.71$, and $0.38$): the refinement neither improves nor degrades the metrics.
 
 \vfill
 \begin{table}[H]
@@ -22,12 +22,12 @@ Both clusterings reach the same \gls{cu}, \gls{as}, and \gls{acu} ($0.67$, $0.71
         row{1,6} = {bg=black!8, font=\bfseries},
         column{1} = {font=\bfseries}
     }
-        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 8b}\makebox[1.4cm][l]{$K=4$}\makebox[2.75cm][l]{\gls{cu} 0.67 $\pm$0.02}\makebox[2.75cm][l]{\gls{as} 0.71 $\pm$0.02}\gls{acu} 0.38 $\pm$0.02 & \\
+        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 8b}\makebox[1.4cm][l]{$K=4$}\makebox[2.75cm][l]{\gls{cu} 0.67}\makebox[2.75cm][l]{\gls{as} 0.71}\gls{acu} 0.38 & \\
         A & The agent's trail remains confined to the bottom-left area. \\
         B & Start of the episode. \\
         C & The agent moves along the top of the level, arriving from the left. \\
         D & The opponent loses by running into a trail. \\
-        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 7b}\makebox[1.4cm][l]{$K=6$}\makebox[2.75cm][l]{\gls{cu} 0.67 $\pm$0.04}\makebox[2.75cm][l]{\gls{as} 0.71 $\pm$0.04}\gls{acu} 0.38 $\pm$0.04 & \\
+        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 7b}\makebox[1.4cm][l]{$K=6$}\makebox[2.75cm][l]{\gls{cu} 0.67}\makebox[2.75cm][l]{\gls{as} 0.71}\gls{acu} 0.38 & \\
         E & The player moves in the upper-left corner. \\
         F & The opponent loses the confrontation. \\
         G & The player moves in the lower-left corner. \\

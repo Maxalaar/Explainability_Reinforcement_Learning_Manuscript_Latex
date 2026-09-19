@@ -7,7 +7,7 @@ At layer 2 (Figure~\ref{fig:qualitative_pong_alt}), the partition separates the 
 This relates to a high-level quantity, the progress of the game, but it is captured only through its display at the top of the screen: the partition reflects a visual feature of the observation that says nothing about the way the agent plays.
 It is nonetheless perfectly reproducible and perfectly abstract (\gls{cu}, \gls{as}, and \gls{acu} of $1.00$).
 At layer 3 (Figure~\ref{fig:qualitative_pong}), the partition follows instead the vertical position of the ball, at the top (cluster C), in the middle (cluster D), or at the bottom (cluster E) of the field, a low-level concept that directly determines where the agent must place its paddle.
-This clustering is less consistent across surrogate policies (\gls{cu} of $0.67 \pm 0.15$) and reaches a lower \gls{acu} ($0.65$).
+This clustering is less consistent across surrogate policies (\gls{cu} of $0.67$) and reaches a lower \gls{acu} ($0.65$).
 The clustering with the best metrics is therefore not the most informative about the behavior of the agent: \gls{acu} measures the quality of a partition, not the relevance of its semantics.
 
 \vfill
@@ -24,10 +24,10 @@ The clustering with the best metrics is therefore not the most informative about
         row{1,4} = {bg=black!8, font=\bfseries},
         column{1} = {font=\bfseries}
     }
-        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 2}\makebox[1.4cm][l]{$K=2$}\makebox[2.75cm][l]{\gls{cu} 1.00 $\pm$0.00}\makebox[2.75cm][l]{\gls{as} 1.00 $\pm$0.00}\gls{acu} 1.00 $\pm$0.00 & \\
+        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 2}\makebox[1.4cm][l]{$K=2$}\makebox[2.75cm][l]{\gls{cu} 1.00}\makebox[2.75cm][l]{\gls{as} 1.00}\gls{acu} 1.00 & \\
         A & The player's score has two digits. \\
         B & The player's score has one digit. \\
-        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 3}\makebox[1.4cm][l]{$K=3$}\makebox[2.75cm][l]{\gls{cu} 0.67 $\pm$0.15}\makebox[2.75cm][l]{\gls{as} 0.98 $\pm$0.01}\gls{acu} 0.65 $\pm$0.01 & \\
+        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 3}\makebox[1.4cm][l]{$K=3$}\makebox[2.75cm][l]{\gls{cu} 0.67}\makebox[2.75cm][l]{\gls{as} 0.98}\gls{acu} 0.65 & \\
         C & The ball is at the top. \\
         D & The ball is in the middle. \\
         E & The ball is at the bottom. \\
