@@ -1,55 +1,47 @@
 \newpage
 \subsection{\SpaceInvadersName}
 
-Two clusterings are examined for \SpaceInvadersName, obtained at layer 4 with $K=4$ and at layer 2 with $K=5$.
-At the deeper layer, three clusters track the coarse progression of the episode, from the initial, intact formation of invaders to the sparse, late-game configurations, while the fourth isolates a more specific behavior in which the agent has cleared the leftmost column and is positioned to catch the flying saucer that occasionally crosses the top of the screen.
-At the shallower layer, the clustering still tracks the progression of the episode through the density of the invader formation, and separately re-isolates the cleared-left-column configuration associated with the flying saucer as its own cluster, indicating that this specific behavior remains a salient feature of the \gls{ls} across layers.
-The finer clustering at layer 2 achieves a lower \gls{acu} than the coarser one at layer 4.
+Two clusterings are examined for \SpaceInvadersName (Table~\ref{tab:qualitative_space_invaders_metrics}), obtained at layer 4 with $K=4$ and at layer 2 with $K=5$.
+Both partitions combine two kinds of high-level concepts: the progress of the episode and specific behaviors of the agent.
 
-\begin{table}[H]
-    \centering
-    \begin{tblr}{
-        colspec={|c|c|c|c|c|},
-        hlines,
-        vlines,
-        row{1} = {font=\bfseries, halign=c, valign=m}
-    }
-        Layer & $K$ & \gls{cu}       & \gls{as}       & \gls{acu}      \\
-        4     & 4   & 0.92 $\pm$0.01 & 0.69 $\pm$0.00 & 0.61 $\pm$0.00 \\
-        2     & 5   & 0.92 $\pm$0.02 & 0.49 $\pm$0.01 & 0.41 $\pm$0.01 \\
-    \end{tblr}
-    \caption{\gls{cu}, \gls{as}, and \gls{acu} for the two clusterings analyzed in the \SpaceInvadersName environment.}
-    \label{tab:qualitative_space_invaders_metrics}
-\end{table}
+At layer 4 (Figure~\ref{fig:qualitative_space_invaders}), three clusters track the progression of the episode, from the start (cluster D) to the middle (cluster B) and the end (cluster C) of the episode, while the fourth isolates a behavior in which the agent has cleared the leftmost column and is positioned to catch the flying saucer that occasionally crosses the top of the screen (cluster A).
+At layer 2 (Figure~\ref{fig:qualitative_space_invaders_alt}), the progression is again tracked by three clusters, the start (cluster G), the middle (cluster F), and the end (cluster I) of the episode, but the behavior is now split in two: attacking the first two columns of the formation (cluster E) and trying to catch the flying saucer (cluster H).
+The two clusterings are equally consistent across surrogate policies (\gls{cu} of $0.92$ in both cases), but the one at layer 2 is less abstract (\gls{as} of $0.49$ against $0.69$), which lowers its \gls{acu} ($0.41$ against $0.61$).
 
+\vfill
 \begin{table}[H]
     \centering
     \begin{tblr}{
         width=\linewidth,
-        colspec={|c|X[l]|},
-        hlines,
-        vlines,
-        row{1} = {font=\bfseries, halign=c, valign=m}
+        colspec={Q[c,wd=1.6cm] X[l]},
+        cells = {valign=m},
+        rowsep=2pt,
+        hline{1,Z} = {1pt},
+        hline{6} = {0.5pt},
+        hline{2,7} = {0.3pt},
+        row{1,6} = {bg=black!8, font=\bfseries},
+        column{1} = {font=\bfseries}
     }
-        Cluster & Description \\
-        \SetCell[c=2]{c,font=\itshape} Layer 4, $K=4$ & \\
-        A & Start of the episode. \\
+        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 4}\makebox[1.4cm][l]{$K=4$}\makebox[2.75cm][l]{\gls{cu} 0.92 $\pm$0.01}\makebox[2.75cm][l]{\gls{as} 0.69 $\pm$0.00}\gls{acu} 0.61 $\pm$0.00 & \\
+        A & The left column has been cleared; the flying saucer occasionally appears. \\
         B & Middle of the episode. \\
-        C & The left column has been cleared; the flying saucer occasionally appears. \\
-        D & Late in the episode, few invaders remain. \\
-        \SetCell[c=2]{c,font=\itshape} Layer 2, $K=5$ & \\
-        E & Formation nearly intact. \\
-        F & Formation partially thinned. \\
-        G & Formation reorganized, three lives left. \\
-        H & Left column cleared, flying saucer visible. \\
-        I & Formation reduced to two columns. \\
+        C & End of the episode. \\
+        D & Start of the episode. \\
+        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 2}\makebox[1.4cm][l]{$K=5$}\makebox[2.75cm][l]{\gls{cu} 0.92 $\pm$0.02}\makebox[2.75cm][l]{\gls{as} 0.49 $\pm$0.01}\gls{acu} 0.41 $\pm$0.01 & \\
+        E & Attacks the first two columns of the formation. \\
+        F & Middle of the episode. \\
+        G & Start of the episode. \\
+        H & Tries to catch the flying saucer. \\
+        I & End of the episode. \\
     \end{tblr}
-    \caption{Description of the clusters shown in Figures~\ref{fig:qualitative_space_invaders} and~\ref{fig:qualitative_space_invaders_alt}.}
-    \label{tab:qualitative_space_invaders_clusters}
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} of the two clusterings analyzed in the \SpaceInvadersName environment, followed by the description of the clusters shown in Figures~\ref{fig:qualitative_space_invaders} and~\ref{fig:qualitative_space_invaders_alt}.}
+    \label{tab:qualitative_space_invaders_metrics}
 \end{table}
+\vfill
 
 \newpage
-
+\vspace*{\fill}
 \input{figures/clustering_agent_representation/qualitative_space_invaders.tex}
 
 \input{figures/clustering_agent_representation/qualitative_space_invaders_alt.tex}
+\vfill
