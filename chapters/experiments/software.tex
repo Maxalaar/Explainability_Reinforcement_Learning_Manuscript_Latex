@@ -28,8 +28,8 @@ By default, the initial policy is trained using \gls{ppo} \cite{schulman2017prox
 Other RLlib algorithms, such as \gls{appo} \cite{espeholt2018impala}, \gls{dqn} \cite{mnih2013playingatarideepreinforcement}, and DreamerV3 \cite{hafner2023masteringdiversedomainsworld}, can also be selected through the same configuration.
 
 The policy and critic networks are implemented using PyTorch \cite{paszke2019pytorch}.
-PyTorch is the standard deep learning frameworks and is widely used for developing and training \gls{nn}.
-It provides GPU acceleration and supports a wide range of \gls{nn} architectures.
+PyTorch is the standard \gls{dl} framework and is widely used for developing and training \gls{nn}.
+It provides \gls{gpu} acceleration and supports a wide range of \gls{nn} architectures.
 This makes it well suited for implementing the different policy and critic architectures used in the experiments.
 
 \subsection{Trajectory dataset generation}
@@ -44,11 +44,11 @@ This is useful here because the datasets contain around one million observation-
 
 \subsection{Surrogate policy training}
 
-The third stage trains the surrogate policies using behavior cloning on the trajectory dataset.
+The third stage trains the surrogate policies using \gls{bc} on the trajectory dataset.
 This provides a supervised learning approach for replicating the initial policy.
 The training procedure is implemented using PyTorch Lightning \cite{falcon2019lightning}.
 PyTorch Lightning provides a simplified interface for training \gls{nn} with PyTorch.
-It handles common training operations such as data loading, optimization, checkpointing, and GPU execution.
+It handles common training operations such as data loading, optimization, checkpointing, and \gls{gpu} execution.
 
 \subsection{Surrogate policy evaluation}
 
@@ -58,16 +58,16 @@ Its mean cumulative reward over multiple episodes is compared with that of the i
 Evaluation episodes are collected using parallel environment runners.
 
 This stage computes the \BehaviorReconstructionName.
-It therefore verifies that the surrogate policies reproduce the behavior of the initial policy sufficiently well before their latent representations are analyzed.
+It therefore verifies that the surrogate policies reproduce the behavior of the initial policy sufficiently well before their \glspl{lr} are analyzed.
 If a surrogate does not meet the required level of behavior reconstruction, its training can be repeated.
 
 \subsection{Latent space analysis}
 
 The fifth stage performs the main analysis of \gls{car}.
-The trajectory dataset and trained surrogate policies are used to generate the latent representations.
+The trajectory dataset and trained surrogate policies are used to generate the \glspl{lr}.
 These representations form the point clouds that are analyzed using clustering algorithms.
 
-The clustering step relies on the cuML library \cite{raschka2020cuml}, which provides GPU-accelerated clustering algorithms.
+The clustering step relies on the cuML library \cite{raschka2020cuml}, which provides \gls{gpu}-accelerated clustering algorithms.
 This reduces the computational cost and allows point clouds containing tens of thousands of representations to be analyzed.
 
 The resulting partitions are used to compute the \ClusteringUniversalityName and the \AbstractionScoreName.

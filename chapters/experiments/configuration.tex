@@ -64,12 +64,12 @@ The experiments use the six environments described below:
 
 \subsection{Neural architecture}
 
-The surrogate policies use a convolutional \gls{nn} to process the visual observations.
+The surrogate policies use a \gls{cnn} to process the visual observations.
 The convolutional part consists of four layers with $16$, $32$, $64$, and $128$ channels, using $4 \times 4$ kernels with a stride of $2$.
 Each convolutional layer is followed by a LeakyReLU activation.
-The resulting representation is then flattened and passed through a multilayer perceptron that produces the parameters of the action distribution.
+The resulting representation is then flattened and passed through a \gls{mlp} that produces the parameters of the action distribution.
 
-The architecture of the multilayer perceptron varies across environments.
+The architecture of the \gls{mlp} varies across environments.
 For \PongName and \SpaceInvadersName, it contains a single hidden layer with $128$ units.
 For the other four environments, it contains three hidden layers with $512$, $256$, and $128$ units.
 The size of the output layer matches the number of actions available in each environment: $4$ for \BreakoutName, $18$ for \MarioBrosName, $9$ for \MsPacManName, $6$ for \PongName, $6$ for \SpaceInvadersName, and $5$ for \SurroundName.
@@ -78,7 +78,7 @@ Figure~\ref{fig:neural_architecture} illustrates both configurations, together w
 Throughout the remainder of this chapter, the analyzed representations are numbered from $1$ to $5$.
 These representations correspond to the four convolutional layers and the flattened representation, which are common to all six environments.
 
-The representations produced by the multilayer perceptron are numbered separately.
+The representations produced by the \gls{mlp} are numbered separately.
 For \PongName and \SpaceInvadersName, which use a single hidden layer, the representation is numbered $6\text{a}$.
 For the other four environments, which use three hidden layers, the representations are numbered $6\text{b}$, $7\text{b}$, and $8\text{b}$.
 
