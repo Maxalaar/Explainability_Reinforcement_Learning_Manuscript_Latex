@@ -6,7 +6,7 @@ To evaluate the effectiveness of \gls{car}, four evaluation metrics are introduc
 \begin{itemize}
     \item \textbf{\BehaviorReconstructionName} : it measures how well a surrogate policy faithfully reproduces the behavior of the initial policy by comparing their cumulative rewards.
     \item \textbf{\ClusteringUniversalityName} : it evaluates the stability of clusterings by measuring the similarity of clusters obtained from independently trained surrogate policies.
-    \item \textbf{\AbstractionScoreName} : it quantifies the extent to which \gls{ls} clusters capture abstractions rather than directly reflecting the structure of observations, actions, or the network architecture prior to training.
+    \item \textbf{\AbstractionScoreName} : it quantifies the extent to which \gls{ls} clusters capture abstractions rather than directly reflecting the structure of observations, of the action distribution, or the network architecture prior to training.
     \item \textbf{\AdjustedClusteringUniversalityName}: it combines the two previous metrics to measure the agreement between surrogate policies beyond what can be explained by the baselines used in \AbstractionScoreName.
 \end{itemize}
 
@@ -162,9 +162,11 @@ Two possibilities arise:
 
 
 To distinguish among these cases, we introduce the \AbstractionScoreName.
-This metric contextualizes latent clusterings by examining how their patterns align with three reference baselines: the raw observation data, the action data, and an untrained network of the same architecture.
+This metric contextualizes latent clusterings by examining how their patterns align with three reference baselines: the raw observations, the action distribution of the initial policy, and an untrained network of the same architecture.
 
-We consider $\mathcal{C}{obs}$, the clustering of the observation space $\mathbb{O}$, and $\mathcal{C}{act}$, the clustering of the action-distribution parameters.
+We consider $\mathcal{C}_{obs}$, the clustering of the observation space $\mathbb{O}$, and $\mathcal{C}_{act}$, the clustering of the action distribution of the initial policy.
+Concretely, $\mathcal{C}_{act}$ is computed on the parameters of this distribution (the logits, before the softmax) produced by the initial policy for the same observations, which are precisely the quantities the surrogate policies are trained to reproduce.
+We cluster these continuous parameters rather than the sampled discrete action, since a discrete action takes only a few distinct values, which would limit the number of clusters that can be distinguished.
 Both clusterings use the same algorithm, distance metric, and hyperparameters as those used for $\mathcal{C}_{i}$ in the \gls{ls}.
 This ensures that the three clusterings are obtained under the same conditions.
 
@@ -190,8 +192,8 @@ $\text{\AbstractionScoreName} = 1 - \frac{1}{n} \sum_{i=1}^{n} \max \left( \left
 \end{align}
 
 The \AbstractionScoreName ranges from $[0, 1]$.
-A score around $0$ means that the latent clusters are strongly aligned with the observation space, the action space, or the untrained network, reflecting no abstraction, case~\ref{i}.
-A score close to $1$ indicates that the latent clusters are independent of the observation space, the action space, and the network's initialization, capturing abstractions that meaningfully reflect the agent's behavior, case~\ref{ii}.
+A score around $0$ means that the latent clusters are strongly aligned with the observation space, the action distribution, or the untrained network, reflecting no abstraction, case~\ref{i}.
+A score close to $1$ indicates that the latent clusters are independent of the observation space, the action distribution, and the network's initialization, capturing abstractions that meaningfully reflect the agent's behavior, case~\ref{ii}.
 
 \subsection{Adjusted Clustering Universality}
 \label{subsec:adjusted_clustering_universality}
@@ -215,7 +217,7 @@ $\vcenter{\hbox{\shortstack{\textit{Adjusted}\\\textit{Clustering}\\\textit{Univ
 \end{align}
 
 This metric ranges in $[-1, 1]$.
-A value close to $1$ indicates that surrogate policies converge toward a partition that is both highly reproducible across seeds and clearly not explained by the observation space, the action space, or the network's initialization, providing the strongest evidence for \RepresentationConvergenceHypothesisName.
-A value close to $0$, or negative, indicates that whatever agreement exists between independently trained surrogate policies is largely trivial: the surrogate policies converge, but toward a partition that could just as easily emerge from raw pixel similarity, from the action taken, or from an untrained network sharing the same architecture.
+A value close to $1$ indicates that surrogate policies converge toward a partition that is both highly reproducible across seeds and clearly not explained by the observation space, the action distribution, or the network's initialization, providing the strongest evidence for \RepresentationConvergenceHypothesisName.
+A value close to $0$, or negative, indicates that whatever agreement exists between independently trained surrogate policies is largely trivial: the surrogate policies converge, but toward a partition that could just as easily emerge from raw pixel similarity, from the action distribution of the initial policy, or from an untrained network sharing the same architecture.
 
 % The results of applying \gls{car} and these metrics to concrete environments are presented in Chapter~\ref{chap:experiments}.
