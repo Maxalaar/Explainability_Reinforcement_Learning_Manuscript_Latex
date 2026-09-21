@@ -3,16 +3,20 @@
 
 Two clusterings are examined for \SurroundName (Table~\ref{tab:qualitative_surround_metrics}), obtained at layer 8b with $K=4$ and at layer 7b with $K=6$.
 
-At layer 8b (Figure~\ref{fig:qualitative_surround}), the partition combines three types of concepts.
-The start of the episode is captured by cluster B, the outcome of the episode, when the opponent loses, by cluster D, and the region of the level in which the player moves by clusters A and C.
-This region is described coarsely, with the player's trail either confined to the bottom-left area (cluster A) or running along the top of the level after arriving from the left (cluster C).
+At layer 8b (Figure~\ref{fig:qualitative_surround}), the partition captures the start of the episode in (cluster B).
+The outcome of the episode, when the opponent loses, is captured in (cluster D).
+The player's trail is confined to the bottom-left area in (cluster A).
+The player reaches the top of the level from the left and then moves along the top in (cluster C).
 
-At layer 7b (Figure~\ref{fig:qualitative_surround_alt}), the partition again captures the start of the episode (cluster J) and its outcome, when the opponent loses (cluster F).
-The region of the level is described in greater detail, with the player moving in the upper-left corner (cluster E) or in the lower-left corner (cluster G).
-The end of the game is also isolated in the lower-left corner (cluster H), while cluster I captures situations in which the player crosses the level from the top left to the bottom right.
+At layer 7b (Figure~\ref{fig:qualitative_surround_alt}), the partition again captures the start of the episode in (cluster J).
+The outcome of the episode, when the opponent loses, is captured in (cluster F).
+The player moves in the upper-left corner in (cluster E).
+The player moves in the lower-left corner in (cluster G).
+The end of the game is played in the lower-left corner in (cluster H).
+The player crosses the level from the top left to the bottom right in (cluster I).
 
-Both clusterings reach the same \gls{cu}, \gls{as}, and \gls{acu}, with values of $0.67$, $0.71$, and $0.38$, respectively.
-The refinement therefore neither improves nor degrades the metrics.
+The clustering at layer 8b has a \gls{cu} of $0.67$, a \gls{as} of $0.71$, and a \gls{acu} of $0.38$.
+The clustering at layer 7b reaches the same values, with a \gls{cu} of $0.67$, a \gls{as} of $0.71$, and a \gls{acu} of $0.38$.
 
 \vfill
 \begin{table}[H]

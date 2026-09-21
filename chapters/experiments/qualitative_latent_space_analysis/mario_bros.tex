@@ -2,18 +2,22 @@
 \subsection{\MarioBrosName}
 
 Two clusterings are examined for \MarioBrosName (Table~\ref{tab:qualitative_mario_bros_metrics}), both obtained at layer 3, with $K=3$ and $K=5$.
-Since the layer is the same, this comparison isolates the effect of $K$.
 
 With $K=3$ (Figure~\ref{fig:qualitative_mario_bros}), the partition is organized around the location of the action.
-It separates the side of the screen on which Mario fights enemies, with the left side forming cluster A and the right side forming cluster C.
-It also isolates situations in which the POW block is present in cluster B, corresponding to a fixed and recognizable element of the level.
+Mario fights enemies on the left side of the screen in (cluster A).
+He fights enemies on the right side of the screen in (cluster C).
+The POW block is present in (cluster B), isolating a fixed and recognizable element of the level.
 
-With $K=5$ (Figure~\ref{fig:qualitative_mario_bros_alt}), the POW block is still isolated in cluster E, but the partition no longer separates the left and right sides of the screen.
-It distinguishes finer situations, mostly located on the left side of the level.
-These include Mario on the top-left platform in cluster D, attacking enemies at the top left in cluster F, and hitting enemies from below in cluster H.
-Cluster G corresponds to situations in which Mario moves through the level.
+With $K=5$ (Figure~\ref{fig:qualitative_mario_bros_alt}), the partition provides a more detailed description of the situations occurring in the level.
+Mario is on the top-left platform in (cluster D).
+Mario attacks enemies at the top left in (cluster F).
+Mario hits enemies from below in (cluster H).
+Mario simply moves through the level in (cluster G).
+The POW block remains isolated in (cluster E).
 
-Increasing $K$ from $3$ to $5$ lowers \gls{cu} from $0.84$ to $0.75$ and leaves \gls{as} nearly unchanged at $0.66$ and $0.65$, resulting in a decrease in \gls{acu} from $0.50$ to $0.40$.
+Increasing $K$ from $3$ to $5$ lowers \gls{cu} from $0.84$ to $0.75$.
+The \gls{as} remains nearly unchanged, with values of $0.66$ and $0.65$.
+This results in a decrease in \gls{acu} from $0.50$ to $0.40$.
 
 \vfill
 \begin{table}[H]

@@ -3,19 +3,16 @@
 
 Two clusterings are examined for \BreakoutName (Table~\ref{tab:qualitative_breakout_metrics}), obtained at layer 4 with $K=2$ and at layer 6b with $K=5$.
 
-At layer 4 (Figure~\ref{fig:qualitative_breakout_alt}), the partition captures the position of the ball relative to the brick wall, with the ball below the wall in cluster A and having passed behind it in cluster B.
-The latter corresponds to the point at which the ball can continue clearing bricks without further interaction with the paddle.
+At layer 4 (Figure~\ref{fig:qualitative_breakout_alt}), the partition captures the position of the ball relative to the brick wall.
+The ball remains below the wall in (cluster A).
+The ball has passed behind the wall in (cluster B), allowing it to continue clearing bricks without further interaction with the paddle.
 
-At layer 6b (Figure~\ref{fig:qualitative_breakout}), the partition also isolates the ball behind the wall in cluster E and the digging of a tunnel through the left side of the wall in cluster C.
-It also distinguishes different paddle positions at the beginning of the episode in clusters D, F, and G.
+At layer 6b (Figure~\ref{fig:qualitative_breakout}), the partition again isolates situations in which the ball has passed behind the wall (cluster E).
+It also identifies the digging of a tunnel through the left side of the wall (cluster C).
+Finally, it distinguishes different paddle positions at the beginning of the episode (clusters D, F, and G).
 
 The clustering at layer 4 with $K=2$ is almost perfectly reproducible across surrogate policies, with a \gls{cu} of $0.99$ and an \gls{acu} of $0.87$.
 The clustering at layer 6b with $K=5$ is less consistent, with a \gls{cu} of $0.79$ and an \gls{acu} of $0.61$, but reveals additional information about the organization of the \gls{ls}.
-
-% Increasing the number of clusters therefore provides a more detailed partition of the latent space.
-% The cluster corresponding to the ball having passed behind the wall is subdivided into several clusters that capture more specific situations.
-% However, these additional distinctions are associated with less clearly defined semantic boundaries, which reduces the consistency of the clustering across surrogate policies and consequently lowers \gls{acu}.
-% A similar effect is observed in several other environments.
 
 \vfill
 \begin{table}[H]

@@ -2,18 +2,21 @@
 \subsection{\MsPacManName}
 
 Two clusterings are examined for \MsPacManName (Table~\ref{tab:qualitative_ms_pacman_metrics}), obtained at layer 6b with $K=3$ and at layer 4 with $K=5$.
-Both clusterings capture the progress of the episode and the state of the game, rather than a specific spatial feature of the observation as observed in \MarioBrosName.
 
-With $K=3$ (Figure~\ref{fig:qualitative_ms_pacman}), the partition separates the start of the episode in cluster B, the middle in cluster A, and the end in cluster C.
+With $K=3$ (Figure~\ref{fig:qualitative_ms_pacman}), the partition captures the progress and state of the game rather than a specific spatial feature of the observation.
+The start of the episode is captured in (cluster B).
+The middle of the episode is captured in (cluster A).
+The end of the episode is captured in (cluster C).
 
 With $K=5$ (Figure~\ref{fig:qualitative_ms_pacman_alt}), the partition provides a more detailed description of the episode.
-It separates the initial animation, during which the character cannot move, into cluster H and the beginning of actual play into cluster F.
-It also isolates a situation specific to the game mechanics, in which Pac-Man is in booster mode and waits in front of the ghost spawn to eat the ghosts in cluster D.
-Finally, it separates the end of the episode, when at most one power pellet remains, into two similar clusters, E and G.
+The initial animation, during which the character cannot move, is isolated in (cluster H).
+The beginning of actual play is captured in (cluster F).
+A situation specific to the game mechanics, in which Pac-Man is in booster mode and waits in front of the ghost spawn to eat the ghosts, is isolated in (cluster D).
+The end of the episode, when at most one power pellet remains, is separated into two similar clusters (clusters E and G).
 
-The two clusterings have the same \gls{cu} of $0.88$, while the clustering at layer 4 has a lower \gls{as} of $0.47$ compared with $0.52$ at layer 6b.
+The two clusterings have the same \gls{cu} of $0.88$.
+The clustering at layer 4 has a lower \gls{as} of $0.47$ compared with $0.52$ at layer 6b.
 This results in a lower \gls{acu} of $0.35$ compared with $0.40$.
-
 
 \vfill
 \begin{table}[H]

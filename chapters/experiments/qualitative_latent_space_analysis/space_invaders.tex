@@ -3,14 +3,21 @@
 
 Two clusterings are examined for \SpaceInvadersName (Table~\ref{tab:qualitative_space_invaders_metrics}), obtained at layer 4 with $K=4$ and at layer 2 with $K=5$.
 
-At layer 4 (Figure~\ref{fig:qualitative_space_invaders}), three clusters track the progression of the episode, from the start (cluster D) to the middle (cluster B) and the end (cluster C).
-The fourth cluster isolates a behavior in which the agent has cleared the leftmost column and is positioned to catch the flying saucer that occasionally crosses the top of the screen (cluster A).
+At layer 4 (Figure~\ref{fig:qualitative_space_invaders}), the partition tracks the progression of the episode.
+The start of the episode is captured in (cluster D).
+The middle of the episode is captured in (cluster B).
+The end of the episode is captured in (cluster C).
+A specific behavior in which the agent has cleared the leftmost column and is positioned to catch the flying saucer that occasionally crosses the top of the screen is captured in (cluster A).
 
-At layer 2 (Figure~\ref{fig:qualitative_space_invaders_alt}), three clusters again track the progression of the episode, from the start (cluster G) to the middle (cluster F) and the end (cluster I).
-The behavior is now split between attacking the first two columns of the formation (cluster E) and trying to catch the flying saucer (cluster H).
+At layer 2 (Figure~\ref{fig:qualitative_space_invaders_alt}), the partition again tracks the progression of the episode.
+The start of the episode is captured in (cluster G).
+The middle of the episode is captured in (cluster F).
+The end of the episode is captured in (cluster I).
+Attacking the first two columns of the formation is captured in (cluster E).
+Trying to catch the flying saucer is captured in (cluster H).
 
-The two clusterings are equally consistent across surrogate policies, with a \gls{cu} of $0.92$ in both cases.
-The clustering at layer 2 is less abstract, with a \gls{as} of $0.49$ compared with $0.69$ at layer 4, resulting in a lower \gls{acu} of $0.41$ compared with $0.61$.
+The clustering at layer 4 has a \gls{cu} of $0.92$ and a \gls{as} of $0.69$, resulting in a \gls{acu} of $0.61$.
+The clustering at layer 2 has the same \gls{cu} of $0.92$, but a lower \gls{as} of $0.49$, resulting in a lower \gls{acu} of $0.41$.
 
 \vfill
 \begin{table}[H]

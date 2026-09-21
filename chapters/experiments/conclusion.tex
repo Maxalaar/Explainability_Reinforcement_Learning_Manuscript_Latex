@@ -2,22 +2,30 @@
 \label{sec:experiments_conclusion}
 
 The quantitative results show that \gls{car} often recovers similar clusterings across independently trained surrogate policies.
-In many of the tested configurations, the \gls{cu} exceeds $0.5$, indicating that the latent representations developed by different policies contain sufficiently similar structures to produce comparable partitions \cite{amezquita2020orchestrating}.
-This result supports the \RepresentationConvergenceHypothesisName, which assumes that independently trained networks tend to develop similar conceptual organizations when solving the same task.
-However, \gls{cu} generally decreases with the depth of the network.
-The stability of the representations is therefore progressively reduced in deeper layers.
+In many of the tested configurations, the \gls{cu} exceeds $0.5$, indicating that the latent representations developed by different policies contain sufficiently similar structures \cite{amezquita2020orchestrating}.
+A similar trend is observed across all six environments, with \gls{cu} generally decreasing as the depth of the network increases.
+Considering only \gls{cu} would consequently lead to focusing mainly on the earliest layers of the network.
 
 The \gls{as} provides an important complement to this observation.
-The earliest layers tend to achieve high \gls{cu}, but also exhibit low levels of abstraction because their representations remain strongly related to the observations, the action distribution, and the initial network structure.
-Considering \gls{cu} alone would therefore favor the earliest layers without necessarily identifying the most meaningful representations.
+The earliest layers tend to achieve high \gls{cu}, but also exhibit low levels of abstraction.
+Their representations remain strongly related to the observations, the action distribution, and the initial structure of the network.
+The abstraction of the representation must therefore also be taken into account when selecting the layers to analyze.
 The \gls{acu} addresses this limitation by combining consistency and abstraction into a single measure.
-It therefore provides a practical criterion for identifying regions of the latent space that offer a useful balance between these two properties.
-The metric is also fully automated and can be applied consistently across different environments and network configurations.
-Increasing the number of clusters generally reduces \gls{acu}, as finer partitions tend to be less stable across surrogate policies.
-At the same time, these finer partitions reveal more specific distinctions between situations encountered during the simulations.
-This highlights a trade-off between the stability of the recovered concepts and the level of detail captured by the clustering.
+It therefore provides a practical criterion for identifying representations that offer a useful balance between these two properties.
 
 The qualitative analysis complements these quantitative results by showing that the identified clusters can correspond to interpretable properties of the environment and of the agent's behavior.
-Across the different environments, clusters capture recurring aspects such as the progression of an episode, specific game situations, and patterns related to the agent's behavior.
-Increasing the number of clusters generally produces a finer description of these situations, although the resulting distinctions are often less consistently recovered across surrogate policies.
-Together, these results support the assumptions underlying \gls{car} and show that the proposed metrics provide a practical way to identify and compare meaningful latent-space organizations across independently trained policies.
+Across the different environments, the clusters capture recurring aspects such as the progression of an episode, specific game situations, and patterns related to the agent's behavior.
+These observations provide qualitative support for the semantic meaningfulness of the structures identified by \gls{car}.
+
+The qualitative analysis shows that increasing the number of clusters allows more specific situations to be captured.
+However, this also reduces the stability of the resulting partitions across surrogate policies.
+This can be explained by the fact that the semantic boundaries between specific situations become less clear.
+Idependently trained surrogate policies are less likely to place the same observations in the same clusters.
+This highlights a trade-off between recovering stable concepts and capturing finer distinctions between situations.
+Selecting an appropriate number of clusters therefore requires balancing these two objectives.
+
+Together, these results support the assumptions underlying \gls{car} and show that the proposed metrics provide a practical way to identify and compare latent-space organizations across independently trained policies.
+The clusterings show consistent convergence across independently trained surrogate policies.
+This convergence cannot be explained solely by the simple baselines.
+The clusters therefore capture some degree of abstraction.
+It provides empirical support for the \RepresentationConvergenceHypothesisName and for the hypotheses on which it is based.

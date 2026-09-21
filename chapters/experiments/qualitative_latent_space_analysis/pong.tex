@@ -3,12 +3,16 @@
 
 Two clusterings are examined for \PongName (Table~\ref{tab:qualitative_pong_metrics}), obtained at layer 2 with $K=2$ and at layer 3 with $K=3$.
 
-At layer 2 (Figure~\ref{fig:qualitative_pong_alt}), the partition separates the observations according to whether the player's score has one or two digits (clusters A and B).
+At layer 2 (Figure~\ref{fig:qualitative_pong_alt}), the partition separates the observations according to the number of digits in the player's score.
+A one-digit score corresponds to (cluster A).
+A two-digit score corresponds to (cluster B).
 This reflects the progress of the game, but only through its visual display at the top of the screen.
 The partition therefore captures a feature of the observation that provides no information about how the agent plays.
 
 At layer 3 (Figure~\ref{fig:qualitative_pong}), the partition instead follows the vertical position of the ball.
-It distinguishes situations in which the ball is at the top (cluster C), in the middle (cluster D), or at the bottom (cluster E) of the field.
+The ball is at the top of the field in (cluster C).
+It is in the middle of the field in (cluster D).
+It is at the bottom of the field in (cluster E).
 This feature directly determines where the agent needs to place its paddle.
 
 The clustering at layer 2 is perfectly reproducible and perfectly abstract, with \gls{cu}, \gls{as}, and \gls{acu} all equal to $1.00$.
