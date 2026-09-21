@@ -1,31 +1,29 @@
 \section{Conclusion}
 \label{sec:experiments_conclusion}
 
-The quantitative results show that \gls{car} often recovers similar clusterings across independently trained surrogate policies.
-In many of the tested configurations, the \gls{cu} exceeds $0.5$, indicating that the latent representations developed by different policies contain sufficiently similar structures \cite{amezquita2020orchestrating}.
-A similar trend is observed across all six environments, with \gls{cu} generally decreasing as the depth of the network increases.
-Considering only \gls{cu} would consequently lead to focusing mainly on the earliest layers of the network.
+The quantitative results show that \gls{car} consistently recovers similar clustering structures across independently trained surrogate policies.
+Across the six environments, the \gls{cu} frequently exceeds $0.5$, indicating that independently trained policies can develop latent representations with sufficiently similar structural organization \cite{amezquita2020orchestrating}.
+A consistent trend in \gls{cu} is observed across network depth, with values generally decreasing in deeper layers.
+Considering consistency alone would therefore favor the earliest layers of the network.
 
-The \gls{as} provides an important complement to this observation.
-The earliest layers tend to achieve high \gls{cu}, but also exhibit low levels of abstraction.
-Their representations remain strongly related to the observations, the action distribution, and the initial structure of the network.
-The abstraction of the representation must therefore also be taken into account when selecting the layers to analyze.
-The \gls{acu} addresses this limitation by combining consistency and abstraction into a single measure.
-It therefore provides a practical criterion for identifying representations that offer a useful balance between these two properties.
+To complement this analysis, the level of abstraction of these representations must also be considered.
+For this purpose, \gls{as} is analyzed and shows that the earliest layers tend to exhibit lower levels of abstraction.
+Their representations remain strongly related to the observations and the initial structure of the network.
 
-The qualitative analysis complements these quantitative results by showing that the identified clusters can correspond to interpretable properties of the environment and of the agent's behavior.
-Across the different environments, the clusters capture recurring aspects such as the progression of an episode, specific game situations, and patterns related to the agent's behavior.
-These observations provide qualitative support for the semantic meaningfulness of the structures identified by \gls{car}.
+This highlights the importance of considering both consistency and abstraction when identifying meaningful latent representations.
+The \gls{acu} addresses this limitation by combining these two properties into a single measure, providing a practical criterion for identifying layers that achieve a suitable balance between representational consistency and abstraction.
 
-The qualitative analysis shows that increasing the number of clusters allows more specific situations to be captured.
-However, this also reduces the stability of the resulting partitions across surrogate policies.
-This can be explained by the fact that the semantic boundaries between specific situations become less clear.
-Idependently trained surrogate policies are less likely to place the same observations in the same clusters.
-This highlights a trade-off between recovering stable concepts and capturing finer distinctions between situations.
-Selecting an appropriate number of clusters therefore requires balancing these two objectives.
+The qualitative analysis complements these quantitative findings by showing that the clusters identified by \gls{car} correspond to interpretable properties of the environment and of the agent's behavior.
+Across the different environments, the clusters capture recurring aspects such as episode progression, specific game situations, and behavioral patterns.
+These observations provide qualitative evidence that the structures recovered by \gls{car} can reflect semantically aspects of the underlying task.
 
-Together, these results support the assumptions underlying \gls{car} and show that the proposed metrics provide a practical way to identify and compare latent-space organizations across independently trained policies.
-The clusterings show consistent convergence across independently trained surrogate policies.
-This convergence cannot be explained solely by the simple baselines.
-The clusters therefore capture some degree of abstraction.
-It provides empirical support for the \RepresentationConvergenceHypothesisName and for the hypotheses on which it is based.
+The qualitative analysis also reveals a trade-off associated with the number of clusters.
+Increasing the number of clusters allows more specific situations to be distinguished, but tends to reduce the stability of the resulting partitions across surrogate policies.
+As the clusters become more fine-grained, the semantic boundaries between neighboring situations become less clearly defined, making independently trained policies less likely to assign the same observations to identical clusters.
+The choice of the number of clusters therefore involves a trade-off between recovering stable, shared concepts and capturing finer distinctions between situations.
+
+Overall, these results provide empirical support for the assumptions underlying \gls{car}.
+Independently trained surrogate policies exhibit a degree of convergence in the organization of their \gls{lr} that cannot be explained solely by the considered baselines.
+At the same time, the qualitative correspondence between clusters and meaningful properties of the environment.
+Taken together, these findings provide empirical support for the \RepresentationConvergenceHypothesisName.
+
