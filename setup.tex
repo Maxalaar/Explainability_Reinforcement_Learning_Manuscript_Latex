@@ -257,6 +257,10 @@
 % content. Tune these two to change the width/height of every cell at once.
 \newcommand{\ClusterKTableColSep}{1.2pt}
 \newcommand{\ClusterKTableRowSep}{1.5pt}
+% Tables with more rows (8 layers, i.e. 10 rows) get a tighter row padding so
+% that their natural aspect ratio comes close to that of the shorter ones:
+% every table then ends up with the same size and font scale in the same box.
+\newcommand{\ClusterKTableRowSepTall}{0.6pt}
 % Thickness of the rules separating the header / data / aggregate zones.
 \newcommand{\ClusterKTableZoneRule}{1pt}
 
@@ -281,6 +285,22 @@
 % mean of the aggregate row/column (0/1).
 \newcommand{\MeanCell}[3]{\wrapif{#3}{\textbf}{#1} $\pm$\,#2}
 
+% Vertical budget of the metric-vs-K tables, so that each environment of the
+% appendix fits on \ClusterKTablesPerPage tables per (landscape) page, i.e. two
+% pages for the six tables of an environment. A table is scaled down (aspect
+% ratio kept) whenever its natural height would exceed
+%   (\textheight - heading allowance) / tables per page - caption overhead,
+% \textheight being the landscape height when used inside the landscape
+% environment. If the tables come out too small, lower the two allowances; if
+% an environment still spills onto a third page, raise them.
+\newcommand{\ClusterKTablesPerPage}{3}
+% Room taken by the section heading on the first page of an environment.
+\newcommand{\ClusterKTableHeadingAllowance}{45pt}
+% Caption line plus the spacing around one table.
+\newcommand{\ClusterKTableCaptionOverhead}{32pt}
+\newlength{\ClusterKTableMaxHeight}
+\newsavebox{\ClusterKTableBox}
+
 % Shared skeleton of a metric-vs-K table -- #1 = index of the last (Mean +-
 % Std) row, #2 = caption, #3 = label suffix, #4 = data rows (including the
 % trailing Mean +- Std row). In draft mode (\draftfigurestrue) the data is
@@ -299,11 +319,12 @@
   \begin{table}[H]
   \centering
   \scriptsize
-  \resizebox{\linewidth}{!}{%
+  \setlength{\ClusterKTableMaxHeight}{\dimexpr(\textheight-\ClusterKTableHeadingAllowance)/\ClusterKTablesPerPage-\ClusterKTableCaptionOverhead\relax}%
+  \sbox{\ClusterKTableBox}{%
   \begin{tblr}{
     colspec={|c|*{19}{c|}c|},
     colsep=\ClusterKTableColSep,
-    rowsep=\ClusterKTableRowSep,
+    rowsep=\ifnum#1>8 \ClusterKTableRowSepTall\else\ClusterKTableRowSep\fi,
     hlines,
     vlines,
     hline{2} = {\ClusterKTableZoneRule},
@@ -318,7 +339,8 @@
   \diagbox[width=5em,height=2.8em,innerleftsep=1pt,innerrightsep=1pt]{\scriptsize Layer}{\scriptsize $K$} & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 & Mean $\pm$ Std \\
   #4
   \end{tblr}%
-  }
+  }%
+  \resizebox*{\linewidth}{\ClusterKTableMaxHeight}{\usebox{\ClusterKTableBox}}%
   \caption{#2}
   \label{tab:appendix_additional_results_#3}
   \end{table}

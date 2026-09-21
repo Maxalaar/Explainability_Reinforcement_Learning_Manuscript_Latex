@@ -7,6 +7,12 @@ For each environment, one table is reported per metric and per baseline, with th
 
 \clearpage
 \begin{landscape}
+% Tighter spacing around the tables (local to this environment) so that the
+% six tables of an environment fit on two pages; see the height budget in
+% setup.tex (\ClusterKTableMaxHeight).
+\setlength{\intextsep}{4pt plus 1pt minus 1pt}
+\setlength{\abovecaptionskip}{3pt}
+\setlength{\belowcaptionskip}{0pt}
 
 \section{\BreakoutName}
 \label{sec:appendix_additional_results_breakout}
