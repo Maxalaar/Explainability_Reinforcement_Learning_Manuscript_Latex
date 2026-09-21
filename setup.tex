@@ -197,18 +197,51 @@
 }
 
 
-\setcounter{topnumber}{6}
-\setcounter{bottomnumber}{6}
-\setcounter{totalnumber}{6}
-\renewcommand{\topfraction}{0.98}
-\renewcommand{\bottomfraction}{0.98}
-\renewcommand{\textfraction}{0.02}
-\renewcommand{\floatpagefraction}{0.3}
-\setlength{\floatsep}{4pt plus 1pt minus 1pt}
-\setlength{\textfloatsep}{6pt plus 1pt minus 1pt}
-\setlength{\intextsep}{4pt plus 1pt minus 1pt}
-\setlength{\abovecaptionskip}{3pt}
-\setlength{\belowcaptionskip}{3pt}
+% Compact float layout, meant for the Experiments chapter only (see
+% chapters/experiments/experiments.tex): up to 6 floats per page, tighter
+% spacing. Everywhere else the strict layout of packages.tex applies (one
+% float per page, at the top). \DisableCompactFloats restores it, saving the
+% skips first so that the values in force before are put back exactly.
+\newskip\savedfloatsep
+\newskip\savedtextfloatsep
+\newskip\savedintextsep
+\newlength\savedabovecaptionskip
+\newlength\savedbelowcaptionskip
+\newcommand{\EnableCompactFloats}{%
+  \FloatBarrier
+  \setlength{\savedfloatsep}{\floatsep}%
+  \setlength{\savedtextfloatsep}{\textfloatsep}%
+  \setlength{\savedintextsep}{\intextsep}%
+  \setlength{\savedabovecaptionskip}{\abovecaptionskip}%
+  \setlength{\savedbelowcaptionskip}{\belowcaptionskip}%
+  \setcounter{topnumber}{6}%
+  \setcounter{bottomnumber}{6}%
+  \setcounter{totalnumber}{6}%
+  \renewcommand{\topfraction}{0.98}%
+  \renewcommand{\bottomfraction}{0.98}%
+  \renewcommand{\textfraction}{0.02}%
+  \renewcommand{\floatpagefraction}{0.3}%
+  \setlength{\floatsep}{4pt plus 1pt minus 1pt}%
+  \setlength{\textfloatsep}{6pt plus 1pt minus 1pt}%
+  \setlength{\intextsep}{4pt plus 1pt minus 1pt}%
+  \setlength{\abovecaptionskip}{3pt}%
+  \setlength{\belowcaptionskip}{3pt}%
+}
+\newcommand{\DisableCompactFloats}{%
+  \FloatBarrier
+  \setcounter{topnumber}{1}%
+  \setcounter{bottomnumber}{0}%
+  \setcounter{totalnumber}{1}%
+  \renewcommand{\topfraction}{0.9}%
+  \renewcommand{\bottomfraction}{0.3}%
+  \renewcommand{\textfraction}{0.1}%
+  \renewcommand{\floatpagefraction}{0.5}%
+  \setlength{\floatsep}{\savedfloatsep}%
+  \setlength{\textfloatsep}{\savedtextfloatsep}%
+  \setlength{\intextsep}{\savedintextsep}%
+  \setlength{\abovecaptionskip}{\savedabovecaptionskip}%
+  \setlength{\belowcaptionskip}{\savedbelowcaptionskip}%
+}
 
 % ---------------------------------------------------------------------------
 % Shared building blocks for the metric-vs-K tables of Appendix~\ref{chap:appendix}
