@@ -250,8 +250,19 @@
 
 % Shared skeleton of a metric-vs-K table -- #1 = index of the last (Mean +-
 % Std) row, #2 = caption, #3 = label suffix, #4 = data rows (including the
-% trailing Mean +- Std row).
+% trailing Mean +- Std row). In draft mode (\draftfigurestrue) the data is
+% not typeset: a placeholder keeping the caption and label is emitted instead,
+% since these tables are very slow to compile.
 \newcommand{\ClusterKTable}[4]{%
+  \ifdraftfigures
+  \begin{table}[H]
+  \centering
+  \fbox{\parbox[c][3cm][c]{0.6\linewidth}{\centering\itshape
+    Heavy table skipped in draft mode}}
+  \caption{#2}
+  \label{tab:appendix_additional_results_#3}
+  \end{table}
+  \else
   \begin{table}[H]
   \centering
   \scriptsize
@@ -278,4 +289,5 @@
   \caption{#2}
   \label{tab:appendix_additional_results_#3}
   \end{table}
+  \fi
 }
