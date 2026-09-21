@@ -4,15 +4,14 @@
 The metrics reported in Section~\ref{sec:experiments_latent_space_analysis} evaluate the \gls{ls} clusterings quantitatively but do not indicate what the resulting clusters actually represent.
 This section complements them with a qualitative, hand-labeled inspection of the clusters obtained for each environment.
 
-To select the clusterings for the qualitative analysis, several criteria are considered.
-First, clusterings with very few clusters, such as two clusters, are excluded because they provide an overly coarse representation of the latent space.
-The selected clustering should also achieve a sufficiently high \gls{acu}, indicating a good balance between consistency and abstraction.
-Finally, the number of clusters must remain small enough to allow the resulting clusters to be examined manually.
-These criteria provide a practical basis for selecting clusterings that are both quantitatively meaningful and suitable for qualitative analysis.
-
-For each environment, a second clustering, obtained with a different number of clusters and, in most cases, at a different layer, is also examined to illustrate how the semantic content of the partition changes with these parameters.
-When the layer differs between the two clusterings, the comparison is descriptive rather than a controlled study of $K$ alone.
-The clusters are described using two kinds of concepts: high-level concepts relate to the progress of the game and its key events, while low-level concepts relate to the immediate position of objects on the screen.
+For each environment, two clusterings are selected for the qualitative analysis.
+They are obtained using two different numbers of clusters and may correspond to different layers of the network.
+The choice of the layer and the number of clusters is based on the following criteria:
+\begin{itemize}
+\item \textbf{High \gls{acu}:} The selected clustering should achieve a sufficiently high \gls{acu}, indicating a good balance between consistency and abstraction.
+\item \textbf{Manual analysis:} The number of clusters must remain small enough to allow the resulting clusters to be examined manually.
+\item \textbf{Limited use of two-cluster partitions:} Clusterings with two clusters often achieve a high \gls{acu}, but provide limited information about the organization of the \gls{ls}. Therefore, at most one of the two selected clusterings uses two clusters, while the other uses a larger number of clusters to provide a more detailed view of the latent space.
+\end{itemize}
 
 \newcommand{\qualitativeClusterImageScale}{0.20}
 

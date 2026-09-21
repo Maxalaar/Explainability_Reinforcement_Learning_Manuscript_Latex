@@ -2,12 +2,18 @@
 \subsection{\MarioBrosName}
 
 Two clusterings are examined for \MarioBrosName (Table~\ref{tab:qualitative_mario_bros_metrics}), both obtained at layer 3, with $K=3$ and $K=5$.
-The layer being the same, this comparison isolates the effect of $K$.
+Since the layer is the same, this comparison isolates the effect of $K$.
 
-With $K=3$ (Figure~\ref{fig:qualitative_mario_bros}), the partition is organized around where the action takes place: it separates the side of the screen on which Mario fights enemies, left (cluster A) or right (cluster C), and isolates the situations in which the POW block is present (cluster B), a fixed and recognizable element of the level.
-With $K=5$ (Figure~\ref{fig:qualitative_mario_bros_alt}), the POW block is still isolated (cluster E), but the partition no longer separates the left from the right side of the screen.
-It distinguishes instead finer situations, mostly located on the left side of the level: Mario on the top-left platform (cluster D), attacking the enemies at the top left (cluster F), and hitting enemies from below (cluster H), together with a cluster in which Mario simply moves through the level (cluster G).
-Increasing $K$ from $3$ to $5$ lowers \gls{cu} ($0.84$ to $0.75$) and \gls{acu} ($0.50$ to $0.40$), while \gls{as} is unchanged ($0.66$ and $0.65$): the finer partition is less reproducible across surrogate policies, without being more abstract.
+With $K=3$ (Figure~\ref{fig:qualitative_mario_bros}), the partition is organized around the location of the action.
+It separates the side of the screen on which Mario fights enemies, with the left side forming cluster A and the right side forming cluster C.
+It also isolates situations in which the POW block is present in cluster B, corresponding to a fixed and recognizable element of the level.
+
+With $K=5$ (Figure~\ref{fig:qualitative_mario_bros_alt}), the POW block is still isolated in cluster E, but the partition no longer separates the left and right sides of the screen.
+It distinguishes finer situations, mostly located on the left side of the level.
+These include Mario on the top-left platform in cluster D, attacking enemies at the top left in cluster F, and hitting enemies from below in cluster H.
+Cluster G corresponds to situations in which Mario moves through the level.
+
+Increasing $K$ from $3$ to $5$ lowers \gls{cu} from $0.84$ to $0.75$ and leaves \gls{as} nearly unchanged at $0.66$ and $0.65$, resulting in a decrease in \gls{acu} from $0.50$ to $0.40$.
 
 \vfill
 \begin{table}[H]
@@ -34,7 +40,7 @@ Increasing $K$ from $3$ to $5$ lowers \gls{cu} ($0.84$ to $0.75$) and \gls{acu} 
         G & Mario moves through the level. \\
         H & Mario hits enemies from below on the left side. \\
     \end{tblr}
-    \caption{\gls{cu}, \gls{as}, and \gls{acu} of the two clusterings analyzed in the \MarioBrosName environment, followed by the description of the clusters shown in Figures~\ref{fig:qualitative_mario_bros} and~\ref{fig:qualitative_mario_bros_alt}.}
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} of the two clusterings analyzed in the \MarioBrosName environment.}
     \label{tab:qualitative_mario_bros_metrics}
 \end{table}
 \vfill

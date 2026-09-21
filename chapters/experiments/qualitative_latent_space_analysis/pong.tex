@@ -4,11 +4,15 @@
 Two clusterings are examined for \PongName (Table~\ref{tab:qualitative_pong_metrics}), obtained at layer 2 with $K=2$ and at layer 3 with $K=3$.
 
 At layer 2 (Figure~\ref{fig:qualitative_pong_alt}), the partition separates the observations according to whether the player's score has one or two digits (clusters A and B).
-This relates to a high-level quantity, the progress of the game, but it is captured only through its display at the top of the screen: the partition reflects a visual feature of the observation that says nothing about the way the agent plays.
-It is nonetheless perfectly reproducible and perfectly abstract (\gls{cu}, \gls{as}, and \gls{acu} of $1.00$).
-At layer 3 (Figure~\ref{fig:qualitative_pong}), the partition follows instead the vertical position of the ball, at the top (cluster C), in the middle (cluster D), or at the bottom (cluster E) of the field, a low-level concept that directly determines where the agent must place its paddle.
-This clustering is less consistent across surrogate policies (\gls{cu} of $0.67$) and reaches a lower \gls{acu} ($0.65$).
-The clustering with the best metrics is therefore not the most informative about the behavior of the agent: \gls{acu} measures the quality of a partition, not the relevance of its semantics.
+This reflects the progress of the game, but only through its visual display at the top of the screen.
+The partition therefore captures a feature of the observation that provides no information about how the agent plays.
+
+At layer 3 (Figure~\ref{fig:qualitative_pong}), the partition instead follows the vertical position of the ball.
+It distinguishes situations in which the ball is at the top (cluster C), in the middle (cluster D), or at the bottom (cluster E) of the field.
+This feature directly determines where the agent needs to place its paddle.
+
+The clustering at layer 2 is perfectly reproducible and perfectly abstract, with \gls{cu}, \gls{as}, and \gls{acu} all equal to $1.00$.
+The clustering at layer 3 is less consistent, with a \gls{cu} of $0.67$, and reaches a lower \gls{acu} of $0.65$.
 
 \vfill
 \begin{table}[H]
@@ -32,7 +36,7 @@ The clustering with the best metrics is therefore not the most informative about
         D & The ball is in the middle. \\
         E & The ball is at the bottom. \\
     \end{tblr}
-    \caption{\gls{cu}, \gls{as}, and \gls{acu} of the two clusterings analyzed in the \PongName environment, followed by the description of the clusters shown in Figures~\ref{fig:qualitative_pong_alt} and~\ref{fig:qualitative_pong}.}
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} of the two clusterings analyzed in the \PongName environment.}
     \label{tab:qualitative_pong_metrics}
 \end{table}
 \vfill

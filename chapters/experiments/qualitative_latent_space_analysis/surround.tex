@@ -2,11 +2,17 @@
 \subsection{\SurroundName}
 
 Two clusterings are examined for \SurroundName (Table~\ref{tab:qualitative_surround_metrics}), obtained at layer 8b with $K=4$ and at layer 7b with $K=6$.
-Both partitions combine three kinds of concepts: the start of the episode (clusters B and J), its outcome, when the opponent loses (clusters D and F), and the region of the level in which the player moves.
 
-At layer 8b (Figure~\ref{fig:qualitative_surround}), this region is described coarsely: the trail of the player is either confined to the bottom-left area (cluster A) or runs along the top of the level after arriving from the left (cluster C).
-At layer 7b (Figure~\ref{fig:qualitative_surround_alt}), it is refined into lower-level concepts: the player moves in the upper-left corner (cluster E) or in the lower-left corner (cluster G), the end of the game is played in the lower-left corner (cluster H), and the player crosses the level from the top left to the bottom right (cluster I).
-Both clusterings reach the same \gls{cu}, \gls{as}, and \gls{acu} ($0.67$, $0.71$, and $0.38$): the refinement neither improves nor degrades the metrics.
+At layer 8b (Figure~\ref{fig:qualitative_surround}), the partition combines three types of concepts.
+The start of the episode is captured by cluster B, the outcome of the episode, when the opponent loses, by cluster D, and the region of the level in which the player moves by clusters A and C.
+This region is described coarsely, with the player's trail either confined to the bottom-left area (cluster A) or running along the top of the level after arriving from the left (cluster C).
+
+At layer 7b (Figure~\ref{fig:qualitative_surround_alt}), the partition again captures the start of the episode (cluster J) and its outcome, when the opponent loses (cluster F).
+The region of the level is described in greater detail, with the player moving in the upper-left corner (cluster E) or in the lower-left corner (cluster G).
+The end of the game is also isolated in the lower-left corner (cluster H), while cluster I captures situations in which the player crosses the level from the top left to the bottom right.
+
+Both clusterings reach the same \gls{cu}, \gls{as}, and \gls{acu}, with values of $0.67$, $0.71$, and $0.38$, respectively.
+The refinement therefore neither improves nor degrades the metrics.
 
 \vfill
 \begin{table}[H]
@@ -35,7 +41,7 @@ Both clusterings reach the same \gls{cu}, \gls{as}, and \gls{acu} ($0.67$, $0.71
         I & The player starts at the top left and ends at the bottom right. \\
         J & Start of the episode. \\
     \end{tblr}
-    \caption{\gls{cu}, \gls{as}, and \gls{acu} of the two clusterings analyzed in the \SurroundName environment, followed by the description of the clusters shown in Figures~\ref{fig:qualitative_surround} and~\ref{fig:qualitative_surround_alt}.}
+    \caption{\gls{cu}, \gls{as}, and \gls{acu} of the two clusterings analyzed in the \SurroundName environment.}
     \label{tab:qualitative_surround_metrics}
 \end{table}
 \vfill
