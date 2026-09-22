@@ -1,0 +1,54 @@
+% Compiles every metric-vs-K table of the appendix once, one cropped page per
+% table, into tables/additional_results/tables.pdf, and records which page
+% holds which table in tables/additional_results/tables_pages.tex (read by
+% setup.tex). Run it with build_tables.sh from the project root; it must be
+% re-run whenever the data of a table or cluster_k_table_core.tex changes.
+% (The standalone class with the `multi' option was not used: under LuaLaTeX it
+% merges all the environments on a single page.)
+\documentclass{article}
+\pagestyle{empty}
+
+% Same fonts and packages as the manuscript (see packages.tex / setup.tex).
+\usepackage{fontspec}
+\setmainfont{Latin Modern Roman}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{ulem}
+\usepackage{tabularray}
+\usepackage{diagbox}
+\usepackage{etoolbox}
+\colorlet{myblue}{blue!80!black}
+
+\input{tables/additional_results/cluster_k_table_core}
+
+\newcounter{ClusterKPageNumber}
+\newwrite\ClusterKPageMap
+% Relative to the output directory (tables/additional_results, see build_tables.sh).
+\immediate\openout\ClusterKPageMap=tables_pages.tex
+
+% Same signature as the \ClusterKTable of setup.tex: only the body is used
+% (the caption and the label stay in the manuscript). Each table is ship out
+% by hand as one page whose size is exactly that of the table, so no cropping
+% is needed.
+\pdfvariable horigin=0pt
+\pdfvariable vorigin=0pt
+\newsavebox{\ClusterKBuildBox}
+\newcommand{\ClusterKTable}[4]{%
+  \stepcounter{ClusterKPageNumber}%
+  \immediate\write\ClusterKPageMap{\string\csdef{ClusterKPage@#3}{\arabic{ClusterKPageNumber}}}%
+  \sbox{\ClusterKBuildBox}{\ClusterKTableBody{#1}{#4}}%
+  \pagewidth=\wd\ClusterKBuildBox
+  \pageheight=\dimexpr\ht\ClusterKBuildBox+\dp\ClusterKBuildBox\relax
+  \shipout\vtop{\vskip0pt\box\ClusterKBuildBox}%
+}
+
+\begin{document}
+\input{tables/additional_results/breakout.tex}
+\input{tables/additional_results/mario_bros.tex}
+\input{tables/additional_results/ms_pacman.tex}
+\input{tables/additional_results/pong.tex}
+\input{tables/additional_results/space_invaders.tex}
+\input{tables/additional_results/surround.tex}
+\immediate\closeout\ClusterKPageMap
+\end{document}

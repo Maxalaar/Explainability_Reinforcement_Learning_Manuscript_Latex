@@ -1,0 +1,67 @@
+% ---------------------------------------------------------------------------
+% Core of the metric-vs-K tables of Appendix~\ref{chap:appendix}: cell macros
+% and the table body itself. Kept in its own file because it is shared by
+% setup.tex (live typesetting) and by build_tables.tex, which compiles every
+% table once into tables/additional_results/tables.pdf (see setup.tex).
+% Only relies on xcolor (with \myblue), tabularray, diagbox, amsmath.
+% ---------------------------------------------------------------------------
+
+% Maximum tint (percent) of the heatmap at value = 1; kept low enough that
+% black text stays legible on top of it.
+\newcommand{\HeatCellMaxPct}{55}
+% Cell padding: how much horizontal/vertical room surrounds each cell's
+% content. Tune these two to change the width/height of every cell at once.
+\newcommand{\ClusterKTableColSep}{1.2pt}
+\newcommand{\ClusterKTableRowSep}{1.5pt}
+% Tables with more rows (8 layers, i.e. 10 rows) get a tighter row padding so
+% that their natural aspect ratio comes close to that of the shorter ones:
+% every table then ends up with the same size and font scale in the same box.
+\newcommand{\ClusterKTableRowSepTall}{0.6pt}
+% Thickness of the rules separating the header / data / aggregate zones.
+\newcommand{\ClusterKTableZoneRule}{1pt}
+
+% #1 = condition (0 or 1), #2 = one-argument wrapping macro, #3 = content
+\newcommand{\wrapif}[3]{\ifnum#1=1 #2{#3}\else#3\fi}
+
+% The text of a data cell -- #1 = value, #2 = is column-best (0/1), #3 = is
+% row-best (0/1). Its background is set separately by \SetCell right before
+% it (tabularray requires \SetCell to appear literally first in the cell, so
+% it cannot be hidden inside this macro) -- see the heatmap computation
+% below, done live in LaTeX via \numexpr from the raw value.
+\newcommand{\CellText}[3]{\wrapif{#2}{\textbf}{\wrapif{#3}{\underline}{#1}}}
+
+% Background key for a data cell, e.g. \SetCell{bg=\HeatCellBg{97}} -- #1 is
+% the value scaled to an integer in hundredths (97 for 0.97, -22 for -0.22);
+% the tint percentage is computed live from it via integer arithmetic
+% (\numexpr), clamped to 0 below zero since only non-negative values are
+% tinted.
+\newcommand{\HeatCellBg}[1]{myblue!\ifnum#1>0 \the\numexpr(#1*\HeatCellMaxPct/100)\relax\else0\fi}
+
+% An aggregate "mean $\pm$ std" cell -- #1 = mean, #2 = std, #3 = is the best
+% mean of the aggregate row/column (0/1).
+\newcommand{\MeanCell}[3]{\wrapif{#3}{\textbf}{#1} $\pm$\,#2}
+
+% The table itself -- #1 = index of the last (Mean +- Std) row, #2 = data rows
+% (including the trailing Mean +- Std row).
+\newcommand{\ClusterKTableBody}[2]{%
+  {\scriptsize
+  \begin{tblr}{
+    colspec={|c|*{19}{c|}c|},
+    colsep=\ClusterKTableColSep,
+    rowsep=\ifnum#1>8 \ClusterKTableRowSepTall\else\ClusterKTableRowSep\fi,
+    hlines,
+    vlines,
+    hline{2} = {\ClusterKTableZoneRule},
+    hline{#1} = {\ClusterKTableZoneRule},
+    vline{2} = {\ClusterKTableZoneRule},
+    vline{21} = {\ClusterKTableZoneRule},
+    row{1} = {font=\bfseries, halign=c, valign=m},
+    column{1} = {halign=c, valign=m},
+    row{#1} = {font=\itshape},
+    column{21} = {font=\itshape},
+  }
+  \diagbox[width=5em,height=2.8em,innerleftsep=1pt,innerrightsep=1pt]{\scriptsize Layer}{\scriptsize $K$} & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 & Mean $\pm$ Std \\
+  #2
+  \end{tblr}%
+  }%
+}
