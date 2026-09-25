@@ -1,47 +1,60 @@
 \section{Research Questions}
 \label{sec:research_questions}
 
-To address the research problem formulated in the previous section, we identified three research questions that structure the work presented in this manuscript.
+To address the research problem formulated in the previous section, we identified four research questions that structure the work presented in this manuscript.
 
-The first challenge concerns the organization of existing research in Explainable Reinforcement Learning.
+The first challenge concerns the analysis of latent representations themselves.
+Numerous methods have been proposed to analyze the latent spaces learned by neural networks, including probing, interpretable directions, sparse autoencoders, and clustering.
+These methods originate from different research communities and are rarely compared within a common framework.
+Yet each of them relies, often implicitly, on assumptions about how concepts are structured within the latent space, for instance that concepts correspond to linear directions or to distinct regions of the space.
+These assumptions determine which structures a method is able to detect and which it will necessarily miss.
+Making them explicit is therefore a prerequisite for choosing a method suited to the analysis of the internal representations of reinforcement learning agents.
+This observation leads to our first research question:
+
+\begin{researchquestion}{}{latent_space}
+How can existing latent space analysis methods be organized according to the assumptions they make about how concepts are structured in neural networks?
+\end{researchquestion}
+
+The second challenge concerns the organization of existing research in Explainable Reinforcement Learning.
 The number of works in the \gls{xrl} field has increased substantially in recent years.
 This growing body of literature makes it increasingly difficult to obtain a coherent overview of the approaches developed in the field.
 Several taxonomies and classification frameworks have therefore been proposed to organize existing \gls{xrl} methods.
 However, these taxonomies often rely on approaches initially developed for explainability in supervised settings.
 They therefore tend to apply \gls{xai} categories to reinforcement learning without considering its specific characteristics.
-This observation leads to our first research question:
+This observation leads to our second research question:
 
 \begin{researchquestion}{}{taxonomy}
 How can existing \gls{xrl} techniques be organized into a taxonomy that accounts for the specificities of \gls{rl}?
 \end{researchquestion}
 
-The analysis of existing \gls{xrl} approaches also reveals a second limitation.
+The analysis of existing \gls{xrl} approaches also reveals a third limitation.
 Among existing methods for explaining reinforcement learning agents, few adopt a mechanistic perspective that investigates the internal representations learned by the agent.
 This is particularly interesting in reinforcement learning, where agents learn to represent their environment through their interactions with it.
 Understanding these representations can provide insights into how information is processed over time and how it contributes to the agent's decisions.
 Mechanistic analysis can therefore provide a complementary way of explaining agent behavior by identifying the internal mechanisms that connect observations to actions.
-This observation leads to our second research question:
+This observation leads to our third research question:
 
 \begin{researchquestion}{}{mechanisms}
 How can the internal representations of neural networks be exploited to identify the mechanisms underlying the decision-making process of reinforcement learning agents?
 \end{researchquestion}
 
-The analysis of existing \gls{xrl} methods highlights a third challenge concerning the evaluation of explanations.
+The analysis of existing \gls{xrl} methods highlights a fourth challenge concerning the evaluation of explanations.
 Although numerous approaches have been proposed to explain the behavior of RL agents, there is no widely accepted set of objective criteria for evaluating the quality and relevance of the explanations they produce.
 Existing evaluations often rely on user studies or qualitative analyses, making it difficult to systematically assess the validity of an explanation approach.
 
 This issue is particularly important for approaches that seek to explain agent behavior by analyzing latent representations.
 Multiple hypotheses can be proposed about how information is structured within a latent space, and it is therefore important to have objective criteria that make it possible to assess and compare these competing hypotheses.
 There is therefore a need for objective and reproducible criteria that can determine whether an explanation accurately captures the mechanisms underlying the agent's behavior.
-This leads to our third research question:
+This leads to our fourth research question:
 
 \begin{researchquestion}{}{evaluation}
 How can the quality and relevance of explanations produced for reinforcement learning agents be objectively quantified?
 \end{researchquestion}
 
-Together, these three research questions define the structure of this manuscript.
-Research Question~\ref{rq:taxonomy} addresses the organization of the existing \gls{xrl} literature and establishes a framework for understanding the field.
-Research Question~\ref{rq:mechanisms} builds on this analysis by investigating how the internal representations of neural networks can be exploited to provide mechanistic explanations of RL agent behavior.
+Together, these four research questions define the structure of this manuscript.
+Research Question~\ref{rq:latent_space} addresses the organization of existing latent space analysis methods and identifies the assumptions on which each of them relies.
+Research Question~\ref{rq:taxonomy} addresses in the same way the organization of the existing \gls{xrl} literature and establishes a framework for understanding the field.
+Research Question~\ref{rq:mechanisms} builds on these two analyses by investigating how the internal representations of neural networks can be exploited to provide mechanistic explanations of RL agent behavior.
 Research Question~\ref{rq:evaluation} addresses the complementary problem of determining how such explanations can be evaluated objectively.
 
 
