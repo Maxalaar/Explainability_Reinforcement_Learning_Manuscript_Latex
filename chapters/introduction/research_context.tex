@@ -26,10 +26,20 @@ The goal of XRL is to develop methods that produce explanations that improve our
 Such explanations can serve several purposes, including increasing human trust and facilitating the adoption of RL agents in real-world settings, identifying errors and biases, and verifying that previously identified problems have been effectively corrected.
 
 Several approaches have been proposed to improve the explainability of artificial intelligence systems.
-This manuscript presents methods from these different approaches, while placing particular emphasis on the mechanistic approach to explainability.
-In mechanistic explainability seeks to investigate the internal mechanisms underlying the agent's decision-making process.
+This manuscript presents methods from these different approaches, while placing particular emphasis on the mechanistic approach to explainability, which we refer to as \gls{me} (Definition~\ref{def:mechanistic_explainability}).
+\gls{me} seeks to investigate the internal mechanisms underlying the agent's decision-making process.
 The objective is to understand how information is represented, transformed, and propagated within the neural network.
 From this perspective, explainability is not achieved despite the use of neural networks, but through them.
+
+\begin{definition}{Mechanistic Explainability}{mechanistic_explainability}
+\gls{me} is the approach that seeks to explain the behavior of an artificial intelligence system by analyzing its internal mechanisms, that is, how information is represented, transformed, and propagated within its neural network.
+\end{definition}
+
+In the literature, this approach is generally referred to as mechanistic interpretability \cite{olah2020zoom}.
+We deliberately use the term explainability instead.
+In the framework adopted in this manuscript (Section~\ref{sec:explanation}), information is interpretable only if it can be directly understood by a human without any additional transformation.
+The internal mechanisms of a neural network do not satisfy this condition, since they must first be transformed into explanations through an explainability method.
+The term explainability therefore describes more accurately what this approach produces.
 
 This perspective naturally leads to the study of the intermediate representations learned by neural networks.
 These representations are referred to as latent representations.

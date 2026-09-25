@@ -49,8 +49,8 @@
 
 \tcbset{
   myhypothesis/.style={
-    colback=orange!5,
-    colframe=orange!70!black,
+    colback=mygreen!5,
+    colframe=mygreen!60,
     boxrule=0.5pt,
     arc=3pt,
     left=6pt,
@@ -68,8 +68,8 @@
 
 \tcbset{
   myresearchquestion/.style={
-    colback=teal!5,
-    colframe=teal!70,
+    colback=myblue!5,
+    colframe=myblue!60,
     boxrule=0.5pt,
     arc=3pt,
     left=6pt,
@@ -85,8 +85,16 @@
   myresearchquestion
 }{rq}
 
+\tcbset{
+  myproblemstatement/.style={
+    mydefinition,
+    colback=myred!5,
+    colframe=myred!60
+  }
+}
+
 \newtcolorbox{problemstatement}{
-  mydefinition,
+  myproblemstatement,
   title={Problem Statement}
 }
 
