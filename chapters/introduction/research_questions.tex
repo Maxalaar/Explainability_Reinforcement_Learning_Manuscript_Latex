@@ -1,14 +1,11 @@
 \section{Research Questions}
 \label{sec:research_questions}
 
-To develop an \gls{xrl} method based on \gls{me}, we need to answer the research questions developed in this section.
-
 The first question concerns the analysis of \glspl{lr} themselves.
 Numerous methods have been proposed to analyze the \glspl{ls} learned by \glspl{nn}.
 These methods originate from different research communities and are rarely compared within a common framework.
-Yet each of them relies, often implicitly, on assumptions about how concepts are structured within the \gls{ls}.
+Yet each of them relies on assumptions about how concepts are structured within the \gls{ls}.
 These assumptions determine which structures a method is able to detect and which it will necessarily miss.
-Making them explicit is therefore a prerequisite for choosing a method suited to the analysis of the internal representations of \gls{rl} agents.
 This observation leads to our first research question:
 
 \begin{researchquestion}{}{latent_space}
@@ -18,7 +15,6 @@ What approaches have been proposed in the literature to analyze the internal wor
 The second question concerns the organization of existing research in \gls{xrl}.
 Several taxonomies have been proposed to organize existing \gls{xrl} methods \cite{puiutta2020explainable, milani2022explainable}.
 However, these taxonomies often rely on approaches initially developed for explainability in supervised settings.
-They therefore tend to apply \gls{xai} categories to \gls{rl} without considering its specific characteristics.
 As a result, the organization of existing \gls{xrl} methods remains ambiguous, making it difficult to structure the field.
 This observation leads to our second research question:
 
@@ -48,10 +44,4 @@ This leads to our fourth research question:
 How can the quality and relevance of explanations produced for \gls{rl} agents be objectively quantified?
 \end{researchquestion}
 
-Together, these four research questions define the structure of this manuscript.
-Research Question~\ref{rq:latent_space} addresses the organization of existing \gls{ls} analysis methods and identifies the assumptions on which each of them relies.
-Research Question~\ref{rq:taxonomy} addresses the organization of the existing \gls{xrl} literature.
-Research Question~\ref{rq:mechanisms} builds on these two analyses by investigating how the internal representations of \glspl{nn} can be exploited to provide mechanistic explanations of \gls{rl} agent behavior.
-Research Question~\ref{rq:evaluation} addresses the complementary problem of determining how such explanations can be evaluated objectively.
-
-
+Together, these four research questions define the objectives of the manuscript.

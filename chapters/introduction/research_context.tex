@@ -1,11 +1,10 @@
 \section{Research Context}
 \label{sec:research_context}
 
-As no one can have failed to notice in recent years, \gls{ai} has advanced rapidly.
+As is evident in recent years, \gls{ai} has advanced rapidly.
 This progress is driven largely by major developments in \gls{dl}.
-This type of approach relies on artificial \glspl{nn} to learn directly from data \cite{goodfellow2016deep}.
+This type of approach relies on artificial \glspl{nn} to automate an increasing number of tasks \cite{goodfellow2016deep}.
 These networks are connectionist models in which information is represented and transformed through patterns of interactions among interconnected elementary computational units \cite{rumelhart1986learning}.
-This property makes neural networks highly versatile, enabling their successful application across an increasing number of domains.
 
 Among the fields that have been transformed by \gls{dl} is \gls{rl}.
 The purpose of \gls{rl} is to enable an agent to learn how to make decisions through interactions with an environment \cite{sutton2018reinforcement}.
@@ -21,7 +20,7 @@ From an external perspective, we observe sets of sequences of interactions betwe
 However, when interactions unfold over long sequences or take place in environments with complex dynamics, these observations are not sufficient to infer the strategy developed by the agent.
 
 An alternative approach is to analyze the agent itself.
-However, due to their connectionist nature, \gls{nn} that model the agent's policy are not directly interpretable.
+Due to their connectionist nature, \gls{nn} that model the agent's policy are not directly interpretable.
 The information behind a decision is distributed across many units and connections making it impossible to trace.
 \Glspl{nn} are therefore often regarded as "black box" models \cite{guidotti2018survey}.
 
@@ -31,13 +30,13 @@ In the specific context of \gls{rl}, this research area is referred to as \gls{x
 Such explanations can serve several purposes, including increasing human trust and facilitating the adoption of \gls{rl} agents in real-world settings, identifying errors and biases, and verifying that previously identified problems have been effectively corrected \cite{arrieta2020explainable, milani2022explainable}.
 
 This manuscript presents \gls{xrl} methods from different approaches to provide a broader view of the field.
-Particular emphasis is placed on the mechanistic approach to explainability, which we refer to as \gls{me} (Definition~\ref{def:mechanistic_explainability}).
+However, a particular emphasis is placed on the mechanistic approach to explainability, which we refer to as \gls{me} (Definition~\ref{def:mechanistic_explainability}).
 Although still relatively underexplored, this approach seems particularly promising to us.
 In \gls{me}, the goal is to understand how information is represented, transformed, and propagated within the \gls{nn}.
 From this perspective, explainability is not achieved despite the use of \glspl{nn}, but through them.
 
 \begin{definition}{Mechanistic Explainability}{mechanistic_explainability}
-\gls{me} is the approach that seeks to explain the behavior of an \gls{nn} by analyzing its internal mechanisms, that is, how information is represented, transformed, and propagated within its \gls{nn}.
+\gls{me} is the approach that seeks to explain the behavior of an \gls{nn} by analyzing its internal mechanisms.
 \end{definition}
 
 To understand how \glspl{nn} work internally, \gls{me} studies the intermediate representations learned by these networks.
