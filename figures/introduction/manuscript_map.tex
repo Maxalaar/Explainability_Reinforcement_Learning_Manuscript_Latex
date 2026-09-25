@@ -32,9 +32,17 @@
         \draw[->, thick] (car) -- (exp);
 
         % Legend: each label sits inside its color swatch, sized to its text.
-        \node[legend, draw=mygreen, fill=mygreen!12] (legend_sv) at (5.5, -2.8) {Survey};
-        \node[legend, draw=myblue,  fill=myblue!12, left=0.8cm of legend_sv]  (legend_bg) {Technical background};
-        \node[legend, draw=myred,   fill=myred!12,  right=0.8cm of legend_sv] (legend_me) {Method};
+        % The three swatches have different widths, so they are laid out in a
+        % matrix whose center is placed on the horizontal center of the figure
+        % (x = 5.5, midway between the left edge of the first chapter box and
+        % the right edge of the last one; ampersand replacement is needed because
+        % the picture sits inside \resizebox). Centering only the middle swatch
+        % would leave the legend as a whole shifted to the left.
+        \matrix[ampersand replacement=\&, column sep=0.8cm, inner sep=0pt] at (5.5, -2.8) {
+            \node[legend, draw=myblue,  fill=myblue!12]  {Technical background}; \&
+            \node[legend, draw=mygreen, fill=mygreen!12] {Survey}; \&
+            \node[legend, draw=myred,   fill=myred!12]   {Method}; \\
+        };
 
         \end{tikzpicture}
     }
