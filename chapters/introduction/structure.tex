@@ -1,22 +1,61 @@
 \section{Manuscript Structure}
 \label{sec:manuscript_structure}
 
-The chapters of this manuscript fall into three categories, distinguished throughout by color (Figure~\ref{fig:introduction_manuscript_map}):
+This manuscript is an account of the research conducted throughout this work, written for the reviewers and jury members who will evaluate it.
+It is nevertheless intended to remain as accessible as possible to readers with a background in artificial intelligence.
+To this end, the background chapters introduce and recall the concepts on which the subsequent chapters rely, allowing readers familiar with \gls{dl} or \gls{rl} to follow the manuscript without having to consult external material.
+
+The manuscript is organized into a sequence of chapters, each addressing a specific topic related to the research questions introduced previously.
+The chapters are divided into three categories, distinguished by color in Figure~\ref{fig:introduction_manuscript_map}:
 
 \begin{itemize}
-    \item[]\textcolor{myblue}{Technical background} chapters recall how a field already established in the literature works, without claiming any original contribution: \gls{dl} (Chapter~\ref{chap:deep_learning}) and \gls{rl} (Chapter~\ref{chap:reinforcement_learning}).
-    \item[]\textcolor{mygreen}{Survey} chapters review the state of the art on a specific question.
-    Their contribution lies not only in the content they cover but, just as much, in how it is organized.
-    To our knowledge, the way each of these chapters structures its literature is unique.
-    This applies to our review of latent-space analysis methods (Chapter~\ref{chap:latent_space}) and to our taxonomy of \gls{xrl} techniques (Chapter~\ref{chap:explainability_reinforcement_learning}).
-    \item[]\textcolor{myred}{Method} chapters present our contribution to \gls{xrl}. They are split in two parts: the description of \gls{car} (Chapter~\ref{chap:clustering_agent_representation}) and its experimental evaluation (Chapter~\ref{chap:experiments}).
+\item[] \textcolor{myblue}{Technical background} chapters introduce fundamental concepts and established techniques required to understand the subsequent contributions.
+\item[] \textcolor{mygreen}{Survey} chapters review and organize the existing literature around a specific research question.
+The organization adopted in each of these surveys are original and therefore constitute contributions of this manuscript.
+\item[] \textcolor{myred}{Method} chapters present CAR, our mechanistic explainability method for reinforcement learning.
+\end{itemize}
+
+The chapters of the manuscript are organized as follows:
+
+\begin{itemize}
+\item[] \textbf{Chapter~\ref{chap:deep_learning} --- Deep Learning.}
+This chapter introduces the fundamental concepts of deep learning and artificial neural networks.
+It establishes the notation and key concepts used throughout the manuscript and provides the necessary background for understanding the neural network.
+
+\item[] \textbf{Chapter~\ref{chap:latent_space} --- Latent Space Analysis.}
+This chapter provides a survey of existing approaches for analyzing the latent spaces learned by neural networks.
+It reviews the different techniques used to characterize and interpret latent representations.
+
+\item[] \textbf{Chapter~\ref{chap:reinforcement_learning} --- Reinforcement Learning.}
+This chapter introduces the fundamental concepts of reinforcement learning.
+It presents the formal framework by  introduces the main concepts, notation and algorithm required to study reinforcement learning.
+
+\item[] \textbf{Chapter~\ref{chap:explainability_reinforcement_learning} --- Explainability in Reinforcement Learning.}
+This chapter reviews existing approaches to explainability in reinforcement learning.
+It provides a structured overview of the \gls{xrl} literature.
+This chapter addresses the first research question.
+
+\item[] \textbf{Chapter~\ref{chap:clustering_agent_representation} --- The CAR Method.}
+This chapter presents our proposed approach to explainability in reinforcement learning.
+The method builds on the analysis of latent representations and aims to identify the internal mechanisms underlying the behavior of RL agents.
+This chapter constitutes the methodological contribution of the manuscript and addresses the second research question.
+
+\item[] \textbf{Chapter~\ref{chap:experiments} --- Experimental Evaluation of the CAR Method.}
+This chapter presents the implementation and experimental evaluation of the proposed method.
+It describes the experimental protocol and analyzes the results obtained with the CAR method.
+This chapter studies the relevance of the criteria used to evaluate the results produced by the CAR method, addressing the third research question.
+
+\item[] \textbf{Conclusion.}
+The final chapter summarizes the main contributions of the manuscript, discusses the limitations of the proposed approaches, and presents possible directions for future research.
+
 \end{itemize}
 
 \input{figures/introduction/manuscript_map.tex}
 
-This manuscript is, first and foremost, the account of a body of research, written for the reviewers and the jury who will examine it.
-It is nonetheless written to be as accessible as possible.
-The background chapters restate the concepts they rely on, so that any reader familiar with \gls{dl} or \gls{rl} can follow the manuscript without consulting external material.
-Readers already familiar with a given field may skip its background chapter directly: Chapter~\ref{chap:deep_learning} for \gls{dl}, Chapter~\ref{chap:reinforcement_learning} for \gls{rl}.
-Readers primarily interested in explainability can move directly to Chapters~\ref{chap:latent_space} and~\ref{chap:explainability_reinforcement_learning}, and readers interested only in our method can follow the minimal path Chapter~\ref{chap:latent_space}~$\rightarrow$~Chapter~\ref{chap:clustering_agent_representation}~$\rightarrow$~Chapter~\ref{chap:experiments}, referring back to earlier chapters as needed.
-Notation and acronyms used throughout the manuscript are collected in the glossary at the end of the document.
+The organization of the manuscript also allows readers to follow different reading paths depending on their background and interests.
+Readers already familiar with a given field may skip its corresponding background chapter and directly consult the chapters that build upon it.
+For instance, readers familiar with \gls{dl} or \gls{rl} may skip Chapter~\ref{chap:deep_learning} or Chapter~\ref{chap:reinforcement_learning}, respectively.
+
+The notation and acronyms used throughout the manuscript are collected in the glossary at the end of the document.
+
+Having described the overall structure of the manuscript, we can now turn to its first technical chapter, which introduces the major developments that have shaped modern artificial intelligence: deep learning.
