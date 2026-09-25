@@ -7,6 +7,13 @@
             legend/.style={rectangle, draw, rounded corners, font=\small,
                            inner xsep=8pt, inner ysep=5pt},
             >={Stealth},
+            % Each category has its own color AND its own border style, so the
+            % figure stays readable in grayscale: dashed for technical
+            % background, solid for surveys, double line for the method.
+            background/.style={draw=myblue,  fill=myblue!12, dashed, line width=1pt},
+            survey/.style={draw=mygreen, fill=mygreen!12},
+            method/.style={draw=myred,   fill=myred!12, double=myred!12,
+                           double distance=1.6pt},
         ]
 
         % Chapter number (small, on top) followed by the chapter name in bold.
@@ -14,12 +21,12 @@
 
         % Two parallel tracks, deep learning (top) and reinforcement learning
         % (bottom), which converge on the method chapter.
-        \node[chapter, draw=myblue,  fill=myblue!12]  (dl)   at (0, 1.1)   {\chapterbox{chap:deep_learning}{Deep\\Learning}};
-        \node[chapter, draw=mygreen, fill=mygreen!12] (ls)   at (3.5, 1.1) {\chapterbox{chap:latent_space}{Latent\\Space}};
-        \node[chapter, draw=myblue,  fill=myblue!12]  (rl)   at (0, -1.1)  {\chapterbox{chap:reinforcement_learning}{Reinforcement\\Learning}};
-        \node[chapter, draw=mygreen, fill=mygreen!12] (xrl)  at (3.5, -1.1){\chapterbox{chap:explainability_reinforcement_learning}{Explainability\\in \gls{rl}}};
-        \node[chapter, draw=myred,   fill=myred!12]   (car)  at (7.5, 0)   {\chapterbox{chap:clustering_agent_representation}{\gls{car}\\Method}};
-        \node[chapter, draw=myred,   fill=myred!12]   (exp)  at (11, 0)    {\chapterbox{chap:experiments}{Experiments}};
+        \node[chapter, background]  (dl)   at (0, 1.1)   {\chapterbox{chap:deep_learning}{Deep\\Learning}};
+        \node[chapter, survey] (ls)   at (3.5, 1.1) {\chapterbox{chap:latent_space}{Latent\\Space}};
+        \node[chapter, background]  (rl)   at (0, -1.1)  {\chapterbox{chap:reinforcement_learning}{Reinforcement\\Learning}};
+        \node[chapter, survey] (xrl)  at (3.5, -1.1){\chapterbox{chap:explainability_reinforcement_learning}{Explainability\\in \gls{rl}}};
+        \node[chapter, method]   (car)  at (7.5, 0)   {\chapterbox{chap:clustering_agent_representation}{\gls{car}\\Method}};
+        \node[chapter, method]   (exp)  at (11, 0)    {\chapterbox{chap:experiments}{Experiments}};
 
         % Within each track.
         \draw[->, thick] (dl)  -- (ls);
@@ -31,17 +38,10 @@
 
         \draw[->, thick] (car) -- (exp);
 
-        % Legend: each label sits inside its color swatch, sized to its text.
-        % The three swatches have different widths, so they are laid out in a
-        % matrix whose center is placed on the horizontal center of the figure
-        % (x = 5.5, midway between the left edge of the first chapter box and
-        % the right edge of the last one; ampersand replacement is needed because
-        % the picture sits inside \resizebox). Centering only the middle swatch
-        % would leave the legend as a whole shifted to the left.
         \matrix[ampersand replacement=\&, column sep=0.8cm, inner sep=0pt] at (5.5, -2.8) {
-            \node[legend, draw=myblue,  fill=myblue!12]  {Technical background}; \&
-            \node[legend, draw=mygreen, fill=mygreen!12] {Survey}; \&
-            \node[legend, draw=myred,   fill=myred!12]   {Method}; \\
+            \node[legend, background]  {Technical background}; \&
+            \node[legend, survey] {Survey}; \&
+            \node[legend, method]   {Method}; \\
         };
 
         \end{tikzpicture}
