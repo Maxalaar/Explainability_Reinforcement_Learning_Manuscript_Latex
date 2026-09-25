@@ -3,17 +3,15 @@
 
 To address these three research questions, this manuscript is based on two main contributions published in peer-reviewed journals.
 
-The first contribution addresses RQ1.
-We first clarify what explainability aims to achieve in general, to provide a clear frame of reference, before rigorously defining the key concepts of this new organization: sources of explanation, explainability techniques, explanation form, and explanation subject.
+The first contribution \cite{alaarabiou:hal-04685607} addresses RQ1.
+An extended English version was also submitted for review and accepted for publication \cite{alaarabiou2026taxonomy}.
+In this contribution, we first clarify what explainability means in reinforcement learning by providing a clear frame of reference.
+We then rigorously define the concepts of this new organization, including sources of explanation, explainability techniques, explanation form, and explanation subject.
 Building on these concepts, we conduct a comprehensive analysis of the state of the art in \gls{xrl} (Chapter~\ref{chap:explainability_reinforcement_learning}).
 
-\paragraph{}Contribution 1 is presented in \cite{alaarabiou:hal-04685607} and, in an extended English version submitted for review, in \cite{alaarabiou2026taxonomy}.
-
-The second contribution addresses RQ2 and RQ3.
+The second contribution \cite{alaarabiou2026car} addresses RQ2 and RQ3.
 It introduces \gls{car}, an \gls{xrl} method that exploits the mechanistic properties of \gls{dl}.
 By analyzing the \gls{lr} that \gls{nn} build, \gls{car} produces explanations in the form of clusters of states that are similar from the agent's own perspective.
 We further show that this representation remains stable across training, indicating that the agent develops an objective representation of a given task.
 This simplifies the study of agent-environment dynamics that would otherwise be intractable if every state had to be analyzed individually.
 The method is presented together with objective evaluation metrics and a series of experiments that demonstrate its effectiveness (Chapters~\ref{chap:latent_space}, \ref{chap:clustering_agent_representation} and \ref{chap:experiments}).
-
-\paragraph{}Contribution 2 is presented, submitted for review, in \cite{alaarabiou2026car}.
