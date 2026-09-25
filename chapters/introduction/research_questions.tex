@@ -4,7 +4,7 @@
 To address the research problem formulated in the previous section, we identified four research questions that structure the work presented in this manuscript.
 
 The first challenge concerns the analysis of \glspl{lr} themselves.
-Numerous methods have been proposed to analyze the \glspl{ls} learned by \glspl{nn}, including probing, interpretable directions, \glspl{sae}, and clustering.
+Numerous methods have been proposed to analyze the \glspl{ls} learned by \glspl{nn}, including probing \cite{li2024emergentworldrepresentationsexploring}, interpretable directions \cite{voynov2020unsuperviseddiscoveryinterpretabledirections}, \glspl{sae} \cite{bricken2023monosemanticity}, and clustering \cite{ren_deep_2022}.
 These methods originate from different research communities and are rarely compared within a common framework.
 Yet each of them relies, often implicitly, on assumptions about how concepts are structured within the \gls{ls}, for instance that concepts correspond to linear directions or to distinct regions of the space.
 These assumptions determine which structures a method is able to detect and which it will necessarily miss.
@@ -16,9 +16,9 @@ How can existing \gls{ls} analysis methods be organized according to the assumpt
 \end{researchquestion}
 
 The second challenge concerns the organization of existing research in \gls{xrl}.
-The number of works in the \gls{xrl} field has increased substantially in recent years.
+The number of works in the \gls{xrl} field has increased substantially in recent years \cite{milani2022explainable}.
 This growing body of literature makes it increasingly difficult to obtain a coherent overview of the approaches developed in the field.
-Several taxonomies and classification frameworks have therefore been proposed to organize existing \gls{xrl} methods.
+Several taxonomies and classification frameworks have therefore been proposed to organize existing \gls{xrl} methods \cite{puiutta2020explainable, milani2022explainable}.
 However, these taxonomies often rely on approaches initially developed for explainability in supervised settings.
 They therefore tend to apply \gls{xai} categories to \gls{rl} without considering its specific characteristics.
 This observation leads to our second research question:
@@ -40,7 +40,7 @@ How can the internal representations of \glspl{nn} be exploited to identify the 
 
 The analysis of existing \gls{xrl} methods highlights a fourth challenge concerning the evaluation of explanations.
 Although numerous approaches have been proposed to explain the behavior of \gls{rl} agents, there is no widely accepted set of objective criteria for evaluating the quality and relevance of the explanations they produce.
-Existing evaluations often rely on user studies or qualitative analyses, making it difficult to systematically assess the validity of an explanation approach.
+Existing evaluations often rely on user studies or qualitative analyses, making it difficult to systematically assess the validity of an explanation approach \cite{doshivelez2017rigorous, milani2022explainable}.
 
 This issue is particularly important for approaches that seek to explain agent behavior by analyzing \glspl{lr}.
 Multiple hypotheses can be proposed about how information is structured within a \gls{ls}, and it is therefore important to have objective criteria that make it possible to assess and compare these competing hypotheses.

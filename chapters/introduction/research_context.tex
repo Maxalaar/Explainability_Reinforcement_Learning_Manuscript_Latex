@@ -2,30 +2,30 @@
 \label{sec:research_context}
 
 \Gls{ai} has advanced rapidly in recent years, driven largely by major developments in \gls{dl}.
-This type of approach relies on artificial \glspl{nn} to learn complex tasks directly from data.
-These networks are connectionist models in which information is represented and transformed through patterns of interactions among interconnected computational units.
-This approach has led to significant advances across a wide range of domains, too numerous to list here.
+This type of approach relies on artificial \glspl{nn} to learn complex tasks directly from data \cite{goodfellow2016deep}.
+These networks are connectionist models in which information is represented and transformed through patterns of interactions among interconnected computational units \cite{rumelhart1986learning}.
+This approach has led to significant advances across a wide range of domains, too numerous to list here \cite{krizhevsky2012imagenet, jumper2021highly, brown2020language}.
 
 Among the fields that have been transformed by \gls{dl} is \gls{rl}, which is the main subject of this manuscript.
-The goal of \gls{rl} is to enable an agent to learn how to make decisions through interactions with an environment.
+The goal of \gls{rl} is to enable an agent to learn how to make decisions through interactions with an environment \cite{sutton2018reinforcement}.
 At each step, the agent observes the current state of the environment and selects an action.
 This action changes the state of the environment and results in a reward.
 The objective of the agent is then to learn a policy that maximizes the cumulative rewards obtained over time.
 \Glspl{nn} provide a powerful means of representing such policies and enable agents to learn increasingly complex behaviors.
-Their use has consequently made it possible to apply \gls{rl} to problems that were previously intractable to address.
+Their use has consequently made it possible to apply \gls{rl} to problems that were previously intractable to address \cite{mnih2013playingatarideepreinforcement, silver2017mastering, openai2019dota2largescale}.
 
 When an agent learns to act in complex environments, it can develop strategies that are themselves highly complex.
 Although such agents can achieve strong performance, these strategies can be difficult for an observer to understand.
 Examining the \gls{nn} that models the agent's policy does not make it to produce explanations.
 The information underlying a decision is distributed across many units and connections, making it imposible to trace decision-making process by simply following the flow of information through the network.
-\Glspl{nn} are therefore often regarded as "black box" models.
+\Glspl{nn} are therefore often regarded as "black box" models \cite{guidotti2018survey}.
 
-These challenges have led to the emergence of \gls{xai}.
-In the specific context of \gls{rl}, this research area is referred to as \gls{xrl}.
+These challenges have led to the emergence of \gls{xai} \cite{gunning2019darpa, arrieta2020explainable}.
+In the specific context of \gls{rl}, this research area is referred to as \gls{xrl} \cite{puiutta2020explainable, milani2022explainable}.
 The goal of \gls{xrl} is to develop methods that produce explanations that improve our understanding of agent behavior.
-Such explanations can serve several purposes, including increasing human trust and facilitating the adoption of \gls{rl} agents in real-world settings, identifying errors and biases, and verifying that previously identified problems have been effectively corrected.
+Such explanations can serve several purposes, including increasing human trust and facilitating the adoption of \gls{rl} agents in real-world settings, identifying errors and biases, and verifying that previously identified problems have been effectively corrected \cite{arrieta2020explainable, milani2022explainable}.
 
-Several approaches have been proposed to improve the explainability of \gls{ai} systems.
+Several approaches have been proposed to improve the explainability of \gls{ai} systems \cite{guidotti2018survey, arrieta2020explainable}.
 This manuscript presents methods from these different approaches, while placing particular emphasis on the mechanistic approach to explainability, which we refer to as \gls{me} (Definition~\ref{def:mechanistic_explainability}).
 \gls{me} seeks to investigate the internal mechanisms underlying the agent's decision-making process.
 The objective is to understand how information is represented, transformed, and propagated within the \gls{nn}.
@@ -35,14 +35,14 @@ From this perspective, explainability is not achieved despite the use of \glspl{
 \gls{me} is the approach that seeks to explain the behavior of an \gls{ai} system by analyzing its internal mechanisms, that is, how information is represented, transformed, and propagated within its \gls{nn}.
 \end{definition}
 
-In the literature, this approach is generally referred to as mechanistic interpretability \cite{olah2020zoom}.
+In the literature, this approach is generally referred to as mechanistic interpretability \cite{olah2020zoom, bereska2024mechanisticinterpretabilityaisafety}.
 We deliberately use the term explainability instead.
 In the framework adopted in this manuscript (Section~\ref{sec:explanation}), information is interpretable only if it can be directly understood by a human without any additional transformation.
 The internal mechanisms of a \gls{nn} do not satisfy this condition, since they must first be transformed into explanations through an explainability method.
 The term explainability therefore describes more accurately what this approach produces.
 
 This perspective naturally leads to the study of the intermediate representations learned by \glspl{nn}.
-These representations are referred to as \glspl{lr}.
+These representations are referred to as \glspl{lr} \cite{bengio2014representationlearningreviewnew}.
 They result from the successive transformations applied to the input information between the input and output of the network and therefore play an intermediate role in the agent's decision-making process.
 Analyzing their structure can provide insights into how information relevant to decision-making is organized within the network.
 It can also help identify the mechanisms through which observations are transformed into the actions selected by the agent.
