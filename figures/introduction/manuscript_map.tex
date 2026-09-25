@@ -1,0 +1,45 @@
+\begin{figure}[t]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tikzpicture}[
+            chapter/.style={rectangle, draw, rounded corners, minimum height=1.4cm,
+                            minimum width=2.6cm, align=center, font=\small, text width=2.3cm},
+            >={Stealth},
+        ]
+
+        \node[chapter, draw=myblue,  fill=myblue!12]  (dl)   at (0, 0)    {Deep\\Learning};
+        \node[chapter, draw=mygreen, fill=mygreen!12] (ls)   at (3.2, 0)  {Latent\\Space};
+        \node[chapter, draw=myblue,  fill=myblue!12]  (rl)   at (6.4, 0) {Reinforcement\\Learning};
+        \node[chapter, draw=mygreen, fill=mygreen!12] (xrl)  at (9.6, 0) {Explainability\\in \gls{rl}};
+        \node[chapter, draw=myred,   fill=myred!12]   (car)  at (12.8, 0) {\gls{car}\\(method)};
+        \node[chapter, draw=myred,   fill=myred!12]   (exp)  at (16, 0)  {Experiments};
+
+        % Reading order.
+        \draw[->, thick] (dl)  -- (ls);
+        \draw[->, thick] (ls)  -- (rl);
+        \draw[->, thick] (rl)  -- (xrl);
+        \draw[->, thick] (xrl) -- (car);
+        \draw[->, thick] (car) -- (exp);
+
+        % The method chapter draws on both survey chapters, routed above the
+        % main chain at two different heights (absolute coordinates, so the
+        % two elbowed paths stay clear of the intermediate boxes and of
+        % each other) rather than through them.
+        \draw[->, dashed, mygreen!60!black]
+            (3.2, 0.7) -- (3.2, 1.7) -- (12.9, 1.7) -- (12.9, 0.7);
+        \draw[->, dashed, mygreen!60!black]
+            (9.6, 0.7) -- (9.6, 1.15) -- (12.6, 1.15) -- (12.6, 0.7);
+
+        % Legend.
+        \node[chapter, draw=myblue,  fill=myblue!12]  (legend_bg) at (1.6, -2.6)  {};
+        \node[right=1pt of legend_bg, text width=5cm, font=\small] {Technical background};
+        \node[chapter, draw=mygreen, fill=mygreen!12] (legend_sv) at (7.5, -2.6) {};
+        \node[right=1pt of legend_sv, text width=3cm, font=\small] {Survey};
+        \node[chapter, draw=myred,   fill=myred!12]   (legend_me) at (12, -2.6)  {};
+        \node[right=1pt of legend_me, text width=3cm, font=\small] {Method};
+
+        \end{tikzpicture}
+    }
+    \caption{Structure of the manuscript. Plain arrows show the reading order; dashed arrows show that the \glsxtrshort{car} chapter builds on both survey chapters.}
+    \label{fig:introduction_manuscript_map}
+\end{figure}
