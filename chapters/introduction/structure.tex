@@ -2,7 +2,7 @@
 \label{sec:manuscript_structure}
 
 This manuscript is an account of the research conducted throughout this work, written for the reviewers and jury members who will evaluate it.
-It is nevertheless intended to remain as accessible as possible to readers with a background in artificial intelligence.
+It is nevertheless intended to remain as accessible as possible to readers with a background in \gls{ai}.
 To this end, the background chapters introduce and recall the concepts on which the subsequent chapters rely, allowing readers familiar with \gls{dl} or \gls{rl} to follow the manuscript without having to consult external material.
 
 The manuscript is organized into a sequence of chapters, each addressing a specific topic related to the research questions introduced previously.
@@ -14,39 +14,39 @@ The chapters are divided into three categories, distinguished by color in Figure
 \item[] \textcolor{myblue}{Technical background} chapters introduce fundamental concepts and established techniques required to understand the subsequent contributions.
 \item[] \textcolor{mygreen}{Survey} chapters review and organize the existing literature around a specific research question.
 The organization adopted in each of these surveys are original and therefore constitute contributions of this manuscript.
-\item[] \textcolor{myred}{Method} chapters present CAR, our \gls{me} method for reinforcement learning.
+\item[] \textcolor{myred}{Method} chapters present \gls{car}, our \gls{me} method for \gls{rl}.
 \end{itemize}
 
 The chapters of the manuscript are organized as follows:
 
 \begin{description}[style=nextline, leftmargin=1.5em, itemsep=0.5em]
 \item[\textcolor{myblue}{Chapter~\ref{chap:deep_learning}}\enspace Deep Learning]
-This chapter introduces the fundamental concepts of deep learning and artificial neural networks.
-It establishes the notation and key concepts used throughout the manuscript and provides the necessary background for understanding the neural network.
+This chapter introduces the fundamental concepts of \gls{dl} and artificial \glspl{nn}.
+It establishes the notation and key concepts used throughout the manuscript and provides the necessary background for understanding \glspl{nn}.
 
 \item[\textcolor{mygreen}{Chapter~\ref{chap:latent_space}}\enspace Latent Space Analysis]
-This chapter provides a survey of existing approaches for analyzing the latent spaces learned by neural networks.
-It reviews the different techniques used to characterize and interpret latent representations.
+This chapter provides a survey of existing approaches for analyzing the \glspl{ls} learned by \glspl{nn}.
+It reviews the different techniques used to characterize and interpret \glspl{lr}.
 This chapter addresses Research Question~\ref{rq:latent_space}.
 
 \item[\textcolor{myblue}{Chapter~\ref{chap:reinforcement_learning}}\enspace Reinforcement Learning]
-This chapter introduces the fundamental concepts of reinforcement learning.
-It presents the formal framework by  introduces the main concepts, notation and algorithm required to study reinforcement learning.
+This chapter introduces the fundamental concepts of \gls{rl}.
+It presents the formal framework and introduces the main concepts, notation and algorithms required to study \gls{rl}.
 
 \item[\textcolor{mygreen}{Chapter~\ref{chap:explainability_reinforcement_learning}}\enspace Explainability in Reinforcement Learning]
-This chapter reviews existing approaches to explainability in reinforcement learning.
+This chapter reviews existing approaches to explainability in \gls{rl}.
 It provides a structured overview of the \gls{xrl} literature.
 This chapter addresses Research Question~\ref{rq:taxonomy}.
 
 \item[\textcolor{myred}{Chapter~\ref{chap:clustering_agent_representation}}\enspace The CAR Method]
-This chapter presents our proposed approach to explainability in reinforcement learning.
-The method builds on the analysis of latent representations and aims to identify the internal mechanisms underlying the behavior of RL agents.
+This chapter presents our proposed approach to explainability in \gls{rl}.
+The method builds on the analysis of \glspl{lr} and aims to identify the internal mechanisms underlying the behavior of \gls{rl} agents.
 This chapter constitutes the methodological contribution of the manuscript and addresses Research Question~\ref{rq:mechanisms}.
 
 \item[\textcolor{myred}{Chapter~\ref{chap:experiments}}\enspace Experimental Evaluation of the CAR Method]
 This chapter presents the implementation and experimental evaluation of the proposed method.
-It describes the experimental protocol and analyzes the results obtained with the CAR method.
-This chapter studies the relevance of the criteria used to evaluate the results produced by the CAR method, addressing Research Question~\ref{rq:evaluation}.
+It describes the experimental protocol and analyzes the results obtained with the \gls{car} method.
+This chapter studies the relevance of the criteria used to evaluate the results produced by the \gls{car} method, addressing Research Question~\ref{rq:evaluation}.
 
 \item[Conclusion]
 The final chapter summarizes the main contributions of the manuscript, discusses the limitations of the proposed approaches, and presents possible directions for future research.
@@ -59,4 +59,4 @@ For instance, readers familiar with \gls{dl} or \gls{rl} may skip Chapter~\ref{c
 
 The notation and acronyms used throughout the manuscript are collected in the glossary at the end of the document.
 
-Having described the overall structure of the manuscript, we can now turn to its first technical chapter, which introduces the major developments that have shaped modern artificial intelligence: deep learning.
+Having described the overall structure of the manuscript, we can now turn to its first technical chapter, which introduces the major developments that have shaped modern \gls{ai}: \gls{dl}.
