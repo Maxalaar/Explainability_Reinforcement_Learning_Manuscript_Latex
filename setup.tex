@@ -66,6 +66,30 @@
   myhypothesis
 }{hyp}
 
+\tcbset{
+  myresearchquestion/.style={
+    colback=teal!5,
+    colframe=teal!70,
+    boxrule=0.5pt,
+    arc=3pt,
+    left=6pt,
+    right=6pt,
+    top=4pt,
+    bottom=6pt,
+    fonttitle=\bfseries,
+    coltitle=black
+  }
+}
+
+\newtcbtheorem{researchquestion}{Research Question}{
+  myresearchquestion
+}{rq}
+
+\newtcolorbox{problemstatement}{
+  mydefinition,
+  title={Problem Statement}
+}
+
 % Defined here, before \newacronym below, since the CU/AS/ACU acronym
 % descriptions reference these macros directly.
 \newcommand{\BehaviorReconstructionName}{\textit{Behavior Reconstruction}\xspace}

@@ -11,9 +11,9 @@ However, these taxonomies often rely on approaches initially developed for expla
 They therefore tend to apply \gls{xai} categories to reinforcement learning without considering its specific characteristics.
 This observation leads to our first research question:
 
-\begin{quote}
-\textbf{RQ1: How can existing \gls{xrl} techniques be organized into a taxonomy that accounts for the specificities of \gls{rl}?}
-\end{quote}
+\begin{researchquestion}{}{taxonomy}
+How can existing \gls{xrl} techniques be organized into a taxonomy that accounts for the specificities of \gls{rl}?
+\end{researchquestion}
 
 The analysis of existing \gls{xrl} approaches also reveals a second limitation.
 Among existing methods for explaining reinforcement learning agents, few adopt a mechanistic perspective that investigates the internal representations learned by the agent.
@@ -22,9 +22,9 @@ Understanding these representations can provide insights into how information is
 Mechanistic analysis can therefore provide a complementary way of explaining agent behavior by identifying the internal mechanisms that connect observations to actions.
 This observation leads to our second research question:
 
-\begin{quote}
-\textbf{RQ2: How can the internal representations of neural networks be exploited to identify the mechanisms underlying the decision-making process of reinforcement learning agents?}
-\end{quote}
+\begin{researchquestion}{}{mechanisms}
+How can the internal representations of neural networks be exploited to identify the mechanisms underlying the decision-making process of reinforcement learning agents?
+\end{researchquestion}
 
 The analysis of existing \gls{xrl} methods highlights a third challenge concerning the evaluation of explanations.
 Although numerous approaches have been proposed to explain the behavior of RL agents, there is no widely accepted set of objective criteria for evaluating the quality and relevance of the explanations they produce.
@@ -35,13 +35,13 @@ Multiple hypotheses can be proposed about how information is structured within a
 There is therefore a need for objective and reproducible criteria that can determine whether an explanation accurately captures the mechanisms underlying the agent's behavior.
 This leads to our third research question:
 
-\begin{quote}
-\textbf{RQ3: How can the quality and relevance of explanations produced for reinforcement learning agents be objectively quantified?}
-\end{quote}
+\begin{researchquestion}{}{evaluation}
+How can the quality and relevance of explanations produced for reinforcement learning agents be objectively quantified?
+\end{researchquestion}
 
 Together, these three research questions define the structure of this manuscript.
-The first question addresses the organization of the existing \gls{xrl} literature and establishes a framework for understanding the field.
-The second builds on this analysis by investigating how the internal representations of neural networks can be exploited to provide mechanistic explanations of RL agent behavior.
-The third addresses the complementary problem of determining how such explanations can be evaluated objectively.
+Research Question~\ref{rq:taxonomy} addresses the organization of the existing \gls{xrl} literature and establishes a framework for understanding the field.
+Research Question~\ref{rq:mechanisms} builds on this analysis by investigating how the internal representations of neural networks can be exploited to provide mechanistic explanations of RL agent behavior.
+Research Question~\ref{rq:evaluation} addresses the complementary problem of determining how such explanations can be evaluated objectively.
 
 
