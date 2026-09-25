@@ -1,26 +1,25 @@
 \section{Research Questions}
 \label{sec:research_questions}
 
-To address the research problem formulated in the previous section, we identified four research questions that structure the work presented in this manuscript.
+To develop an \gls{xrl} method based on \gls{me}, we need to answer the research questions developed in this section.
 
-The first challenge concerns the analysis of \glspl{lr} themselves.
-Numerous methods have been proposed to analyze the \glspl{ls} learned by \glspl{nn}, including probing \cite{li2024emergentworldrepresentationsexploring}, interpretable directions \cite{voynov2020unsuperviseddiscoveryinterpretabledirections}, \glspl{sae} \cite{bricken2023monosemanticity}, and clustering \cite{ren_deep_2022}.
+The first question concerns the analysis of \glspl{lr} themselves.
+Numerous methods have been proposed to analyze the \glspl{ls} learned by \glspl{nn}.
 These methods originate from different research communities and are rarely compared within a common framework.
-Yet each of them relies, often implicitly, on assumptions about how concepts are structured within the \gls{ls}, for instance that concepts correspond to linear directions or to distinct regions of the space.
+Yet each of them relies, often implicitly, on assumptions about how concepts are structured within the \gls{ls}.
 These assumptions determine which structures a method is able to detect and which it will necessarily miss.
 Making them explicit is therefore a prerequisite for choosing a method suited to the analysis of the internal representations of \gls{rl} agents.
 This observation leads to our first research question:
 
 \begin{researchquestion}{}{latent_space}
-How can existing \gls{ls} analysis methods be organized according to the assumptions they make about how concepts are structured in \glspl{nn}?
+What approaches have been proposed in the literature to analyze the internal workings of \glspl{nn}?
 \end{researchquestion}
 
-The second challenge concerns the organization of existing research in \gls{xrl}.
-The number of works in the \gls{xrl} field has increased substantially in recent years \cite{milani2022explainable}.
-This growing body of literature makes it increasingly difficult to obtain a coherent overview of the approaches developed in the field.
-Several taxonomies and classification frameworks have therefore been proposed to organize existing \gls{xrl} methods \cite{puiutta2020explainable, milani2022explainable}.
+The second question concerns the organization of existing research in \gls{xrl}.
+Several taxonomies have been proposed to organize existing \gls{xrl} methods \cite{puiutta2020explainable, milani2022explainable}.
 However, these taxonomies often rely on approaches initially developed for explainability in supervised settings.
 They therefore tend to apply \gls{xai} categories to \gls{rl} without considering its specific characteristics.
+As a result, the organization of existing \gls{xrl} methods remains ambiguous, making it difficult to structure the field.
 This observation leads to our second research question:
 
 \begin{researchquestion}{}{taxonomy}
@@ -28,23 +27,21 @@ How can existing \gls{xrl} techniques be organized into a taxonomy that accounts
 \end{researchquestion}
 
 The analysis of existing \gls{xrl} approaches also reveals a third limitation.
-Among existing methods for explaining \gls{rl} agents, few adopt a mechanistic perspective that investigates the internal representations learned by the agent.
-This is particularly interesting in \gls{rl}, where agents learn to represent their environment through their interactions with it.
-Understanding these representations can provide insights into how information is processed over time and how it contributes to the agent's decisions.
-Mechanistic analysis can therefore provide a complementary way of explaining agent behavior by identifying the internal mechanisms that connect observations to actions.
+Among existing methods for explaining \gls{rl} agents, few adopt a mechanistic perspective.
+Understanding \gls{lr} provide insights into how information is represented within the network and, in turn, help explain agent behavior.
 This observation leads to our third research question:
 
 \begin{researchquestion}{}{mechanisms}
 How can the internal representations of \glspl{nn} be exploited to identify the mechanisms underlying the decision-making process of \gls{rl} agents?
 \end{researchquestion}
 
-The analysis of existing \gls{xrl} methods highlights a fourth challenge concerning the evaluation of explanations.
+The analysis of existing \gls{xrl} methods highlights a fourth question concerning the evaluation of explanations.
 Although numerous approaches have been proposed to explain the behavior of \gls{rl} agents, there is no widely accepted set of objective criteria for evaluating the quality and relevance of the explanations they produce.
 Existing evaluations often rely on user studies or qualitative analyses, making it difficult to systematically assess the validity of an explanation approach \cite{doshivelez2017rigorous, milani2022explainable}.
 
 This issue is particularly important for approaches that seek to explain agent behavior by analyzing \glspl{lr}.
-Multiple hypotheses can be proposed about how information is structured within a \gls{ls}, and it is therefore important to have objective criteria that make it possible to assess and compare these competing hypotheses.
-There is therefore a need for objective and reproducible criteria that can determine whether an explanation accurately captures the mechanisms underlying the agent's behavior.
+Multiple hypotheses can be proposed about how information is structured within a \gls{ls}.
+It is therefore important to define objective criteria for comparing these competing hypotheses.
 This leads to our fourth research question:
 
 \begin{researchquestion}{}{evaluation}
@@ -53,7 +50,7 @@ How can the quality and relevance of explanations produced for \gls{rl} agents b
 
 Together, these four research questions define the structure of this manuscript.
 Research Question~\ref{rq:latent_space} addresses the organization of existing \gls{ls} analysis methods and identifies the assumptions on which each of them relies.
-Research Question~\ref{rq:taxonomy} addresses in the same way the organization of the existing \gls{xrl} literature and establishes a framework for understanding the field.
+Research Question~\ref{rq:taxonomy} addresses the organization of the existing \gls{xrl} literature.
 Research Question~\ref{rq:mechanisms} builds on these two analyses by investigating how the internal representations of \glspl{nn} can be exploited to provide mechanistic explanations of \gls{rl} agent behavior.
 Research Question~\ref{rq:evaluation} addresses the complementary problem of determining how such explanations can be evaluated objectively.
 

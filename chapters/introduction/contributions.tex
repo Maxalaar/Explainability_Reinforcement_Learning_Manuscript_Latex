@@ -2,23 +2,19 @@
 \label{sec:contributions}
 
 To address these four research questions, this manuscript is based on three main contributions.
-Two of them have been published in peer-reviewed journals, while the third is, for the moment, specific to this manuscript.
+Two of them have been published in peer-reviewed conference, while the third is, for the moment, specific to this manuscript.
 
 The first contribution addresses Research Question~\ref{rq:latent_space}.
 It has not yet been published and is, for the moment, specific to this manuscript.
-In this contribution, we make explicit the working hypothesis that implicitly underlies much of the literature on \gls{ls} analysis, which we refer to as the \ConceptHypothesisName, and we define its main components.
+In this contribution, we make explicit the working hypothesis that implicitly underlies much of the literature on \gls{ls} analysis, which we refer to as the \ConceptHypothesisName.
 We then organize existing \gls{ls} analysis methods into four families, namely probing, interpretable directions, superposition, and clustering, according to the assumptions they make about the \gls{cs}.
-This analysis shows that clustering is the only family that does not rely on a linear \gls{cs}, which motivates the approach adopted in the rest of this manuscript (Chapter~\ref{chap:latent_space}).
 
-The second contribution \cite{alaarabiou:hal-04685607} addresses Research Question~\ref{rq:taxonomy}.
-An extended English version was also submitted for review and accepted for publication \cite{alaarabiou2026taxonomy}.
+The second contribution addresses Research Question~\ref{rq:taxonomy}.
+This contribution takes the form of a first paper \cite{alaarabiou:hal-04685607} and an extended English version \cite{alaarabiou2026taxonomy}, both of which were submitted for review and accepted for publication.
 In this contribution, we first clarify what explainability means in \gls{rl} by providing a clear frame of reference.
-We then rigorously define the concepts of this new organization, including sources of explanation, explainability techniques, explanation form, and explanation subject.
-Building on these concepts, we conduct a comprehensive analysis of the state of the art in \gls{xrl} (Chapter~\ref{chap:explainability_reinforcement_learning}).
+Building on these frame, we then conduct a comprehensive analysis of the state of the art in \gls{xrl}.
 
-The third contribution \cite{alaarabiou2026car} addresses Research Questions~\ref{rq:mechanisms} and~\ref{rq:evaluation}.
-It introduces \gls{car}, an \gls{xrl} method that exploits the mechanistic properties of \gls{dl}.
-By analyzing the \glspl{lr} that \glspl{nn} build, \gls{car} produces explanations in the form of clusters of states that are similar from the agent's own perspective.
+The third contribution addresses Research Questions~\ref{rq:mechanisms} and~\ref{rq:evaluation}.
+In \cite{alaarabiou2026car}, we introduce \gls{car}, an \gls{xrl} method based on the principles of \gls{me}.
+By analyzing the \glspl{lr}, \gls{car} produces explanations in the form of clusters of states that are similar from the agent's own perspective.
 We further show that this representation remains stable across training, indicating that the agent develops an objective representation of a given task.
-This simplifies the study of agent-environment dynamics that would otherwise be intractable if every state had to be analyzed individually.
-The method is presented together with objective evaluation metrics and a series of experiments that demonstrate its effectiveness (Chapters~\ref{chap:latent_space}, \ref{chap:clustering_agent_representation} and \ref{chap:experiments}).
