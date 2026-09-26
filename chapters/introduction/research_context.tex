@@ -3,12 +3,12 @@
 
 As is evident in recent years, \gls{ai} has advanced rapidly.
 
+This progress is driven largely, by major development in \gls{dl}.
 This type of approach relies on artificial \glspl{nn}, which offer an unprecedented level of performance.
 Inspired by their biological counterparts, these networks are known as connectionist models.
 In such models, information is represented and transformed through patterns of interactions among interconnected elementary computational units \cite{rumelhart1986learning}.
-This distributed form of information processing is key to their versatility, enabling them to revolutionize an increasing number of domains.
 
-Among the fields transformed by \gls{dl} is the main subject of this manuscript, \gls{rl}.
+One of the fields significantly transformed by \gls{dl} is \gls{rl}, which is the main focus of this manuscript.
 The purpose of \gls{rl} is to enable an agent to learn how to make decisions through interactions with an environment \cite{sutton2018reinforcement}.
 At each step, the agent observes the current state of the environment and selects an action.
 This action changes the state of the environment and results in a reward.
@@ -16,20 +16,20 @@ The objective of the agent is then to learn a behavior that maximizes the cumula
 Due to their flexibility, \glspl{nn} provide a powerful means of representing the agent's information-processing capabilities.
 Their use has consequently made it possible to apply \gls{rl} to problems that were previously intractable \cite{mnih2013playingatarideepreinforcement, silver2017mastering, openai2019dota2largescale}.
 
-When an agent learns to act in complex environments, it develop strategies that are themselves complex.
-Although such agents can achieve strong performance, these strategies can be difficult for to understand.
-From an external perspective, we observe sets of sequences of interactions between the agent and its environment.
-However, for long interactions or complex environments, these observations are not enough to infer the agent's strategy.
+The ability of \gls{rl} to operate in complex environments introduces a new challenge.
+When an agent learns to act in such environments, it can develop complex strategies.
+Although such agents can achieve strong performance, these strategies can be difficult to understand.
+From an external perspective, we observe sequences of interactions between the agent and its environment, but these observations are not enough to infer the agent's strategy.
 
 An alternative approach is to analyze the agent itself.
-Due to their connectionist nature, \gls{nn} that model the agent's policy are not directly interpretable.
+However, due to their connectionist nature, \gls{nn} that model the agent's policy are not directly interpretable.
 The information behind a decision is distributed across many units and connections making it impossible to trace.
 \Glspl{nn} are therefore often regarded as "black box" models \cite{guidotti2018survey}.
 
 To address this black-box problem, the field of \gls{xai} has emerged \cite{gunning2019darpa, arrieta2020explainable}.
 In the specific context of \gls{rl}, this research area is referred to as \gls{xrl} \cite{puiutta2020explainable, milani2022explainable}.
 \gls{xrl} develops methods for producing explanations that improve our understanding of agent behavior.
-Such explanations can serve several purposes, including increasing human trust and facilitating the adoption of \gls{rl} agents in real-world settings, identifying errors and biases, and verifying that previously identified problems have been effectively corrected \cite{arrieta2020explainable, milani2022explainable}.
+Such explanations can serve several purposes, including increasing human trust, identifying biases and verifying that previously identified problems have been effectively corrected \cite{arrieta2020explainable, milani2022explainable}.
 
 This manuscript presents \gls{xrl} methods from different approaches to provide a broader view of the field.
 We focus on the mechanistic approach to explainability, which we refer to as \gls{me} (Definition~\ref{def:mechanistic_explainability}).
