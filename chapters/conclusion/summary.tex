@@ -1,0 +1,42 @@
+\section{Summary of Contributions}
+\label{sec:conclusion_summary}
+
+This section revisits the four research questions introduced in Section~\ref{sec:research_questions}.
+For each of them, it summarizes the answer provided by this manuscript.
+
+Research Question~\ref{rq:latent_space} concerned the approaches proposed in the literature to analyze the internal workings of \glspl{nn}.
+To answer it, we first made explicit the working hypothesis shared by most of this literature, the \ConceptHypothesisName.
+According to this hypothesis, \glspl{nn} generalize by organizing their \gls{ls} around concepts.
+We then organized existing methods into four families: probing, interpretable directions, \glspl{sae}, and clustering.
+Each family studies the \gls{ls} from a different angle, but they share the goal of understanding how \glspl{lr} are structured.
+
+Research Question~\ref{rq:taxonomy} concerned the organization of existing \gls{xrl} methods \cite{alaarabiou:hal-04685607, alaarabiou2026taxonomy}.
+To answer it, we first clarified what an explanation is by placing the observer at the center of the explanatory process.
+Building on this frame, we proposed a taxonomy that accounts for the specificities of \gls{rl} and used it to review the state of the art.
+This review led to three main observations.
+First, none of the reviewed methods explains the learning process itself.
+Second, there are no unified metrics for evaluating explanations.
+Third, the field remains dominated by substitutive approaches, which replace the \gls{nn} with a simpler model.
+
+Research Question~\ref{rq:mechanisms} concerned the use of \glspl{lr} to identify the mechanisms underlying the decisions of \gls{rl} agents.
+To answer it, we introduced \gls{car}, an \gls{xrl} method based on the principles of \gls{me} \cite{alaarabiou2026car}.
+\gls{car} trains several surrogate policies independently to reproduce the same agent.
+It then clusters their \glspl{lr} and compares the resulting partitions.
+This procedure relies on the \RepresentationConvergenceHypothesisName, according to which independently trained networks develop similar concepts for a given task.
+Applied to six Atari environments, \gls{car} recovers similar clustering structures across surrogate policies.
+The qualitative analysis shows that these clusters capture interpretable aspects of the task, such as episode progression, specific game situations, and behavioral patterns.
+
+Research Question~\ref{rq:evaluation} concerned the objective quantification of explanation quality.
+To answer it, we introduced three metrics.
+The \gls{cu} measures the consistency of the clusters across independently trained surrogate policies.
+The \gls{as} measures how far these clusters depart from the structure of the observations, of the actions, and of an untrained network.
+The experiments show that these two properties evolve in opposite directions across the network.
+The earliest layers are the most consistent, but also the least abstract.
+The \gls{acu} combines both properties into a single measure and provides a practical criterion for selecting the layer to analyze.
+These metrics make it possible to compare competing hypotheses about the structure of a \gls{ls} without relying on manual inspection.
+
+Taken together, these contributions form a coherent chain.
+The \MechanisticHypothesisName states that \glspl{nn} can be explained through their internal mechanisms.
+The \ConceptHypothesisName states that these mechanisms are organized around concepts.
+The \RepresentationConvergenceHypothesisName states that these concepts reflect the task rather than a particular network.
+\gls{car} translates these hypotheses into an empirical procedure, and the experiments provide support for them.
