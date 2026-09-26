@@ -33,8 +33,8 @@ This makes it difficult to determine whether differences in the \gls{ls} result 
 
 To overcome this limitation, we consider an already trained initial policy.
 This policy is then used as a target for imitation learning \cite{pmlr-v15-ross11a}.
-In this process, several surrogate \gls{nn} are independently trained in a supervised manner to reproduce its behavior.
-This makes it possible to investigate whether equivalent policies also exhibit equivalent conceptual organizations.
+In this process, several surrogate \gls{nn} are independently trained in a supervised manner to reproduce the behavior of the same agent.
+This allows us to investigate whether \glspl{nn} that learn equivalent policies also develop similar conceptual organizations.
 
 It is important to emphasize that the use of surrogate policies does not make \gls{car} a surrogate explainability method, as defined in Subsection~\ref{subsec:explainable_artificial_intelligence}.
 The surrogate policies remain deep \gls{nn}.
@@ -84,7 +84,14 @@ For a surrogate policy $\SurrogatePolicy{i}$, applying its encoder $\textcolor{m
 A clustering function $f_{\mathrm{clust}}$ then partitions the point cloud $\textcolor{myblue}{\mathcal{E}_{i}}$ into groups of nearby \gls{lr}, assigning each observation a cluster label and yielding the partition $\mathcal{C}_{i}$.
 The same observation set $\mathbb{O}$ is used for every surrogate policy, so that the partitions $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$ are defined over the same observations and can be compared.
 This comparison is the basis of the evaluation introduced in the following section.
-Algorithm~\ref{alg:car} states the complete \gls{car} procedure.
+
+Algorithm~\ref{alg:car} states the complete \gls{car} procedure, whose lines map directly onto the stages described above.
+Lines~\ref{alg:car:dataset}--\ref{alg:car:loss} prepare the imitation of the initial policy.
+They build the training dataset by pairing each observation with the parameters of the action distribution produced by $\InitialPolicy$, and define the \gls{mse} loss of Equation~\eqref{eq:car_loss}.
+Lines~\ref{alg:car:train_loop}--\ref{alg:car:sgd} correspond to the first stage, in which each of the $n$ surrogate policies is initialized randomly and trained independently by stochastic gradient descent.
+Lines~\ref{alg:car:cluster_loop}--\ref{alg:car:clust} correspond to the second stage.
+The encoder of each surrogate policy embeds the shared observation set $\mathbb{O}$ (Line~\ref{alg:car:embed}), and the resulting point cloud is partitioned by $f_{\mathrm{clust}}$ (Line~\ref{alg:car:clust}).
+Finally, Line~\ref{alg:car:return} returns the surrogate policies together with their partitions, which are the inputs of the evaluation.
 
 \input{algorithms/clustering_agent_representation/car.tex}
 
