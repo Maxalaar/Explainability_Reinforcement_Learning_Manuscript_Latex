@@ -16,10 +16,6 @@ Building on this frame, we identified the subjects and sources of explanation sp
 The subject of explanation is the policy of the agent, which can be explained either at the level of a single decision or at the level of its strategy over time.
 The sources of explanation are the policies, the trajectories, and the value functions.
 From these elements, we proposed a taxonomy that accounts for the specificities of \gls{rl} and used it to review the state of the art.
-This review led to three main observations.
-First, none of the reviewed methods explains the learning process itself.
-Second, there are no unified metrics for evaluating explanations.
-Third, the field remains dominated by substitutive approaches, which replace the \gls{nn} with a simpler model.
 
 Research Question~\ref{rq:mechanisms} concerned the use of \glspl{lr} to identify the mechanisms underlying the decisions of \gls{rl} agents.
 To answer it, we introduced \gls{car}, an \gls{xrl} method based on the principles of \gls{me} \cite{alaarabiou2026car}.
@@ -41,5 +37,5 @@ These metrics make it possible to compare competing hypotheses about the structu
 Taken together, these contributions form a coherent chain.
 The \MechanisticHypothesisName states that \glspl{nn} can be explained through their internal mechanisms.
 The \ConceptHypothesisName states that these mechanisms are organized around concepts.
-The \RepresentationConvergenceHypothesisName states that these concepts reflect the task rather than a particular network.
+The \RepresentationConvergenceHypothesisName states that these concepts reflect the task.
 \gls{car} translates these hypotheses into an empirical procedure, and the experiments provide support for them.
