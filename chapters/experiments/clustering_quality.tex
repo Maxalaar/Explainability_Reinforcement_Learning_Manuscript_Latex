@@ -8,6 +8,20 @@ This produces a point cloud for each combination of environment, surrogate polic
 Each point cloud is partitioned using $k$-means clustering \cite{macqueen1967multivariate} for each number of clusters from $2$ to $20$.
 
 The three metrics are then computed from these point clouds and their corresponding clusterings.
+Their interpretation, detailed in Section~\ref{sec:clustering_agent_representation_metrics}, is briefly recalled here:
+\begin{itemize}
+    \item \textbf{\gls{cu}} measures the agreement between the partitions obtained from independently trained surrogate policies.
+    A value close to $1$ indicates that the surrogate policies group the observations in the same way, while a value close to $0$ indicates an agreement no better than chance.
+    Since it relies on the \gls{ari}, a value of $0.5$ already corresponds to a substantial agreement.
+    \item \textbf{\gls{as}} measures how far the latent partitions are from three trivial baselines: the clustering of the raw observations, of the action distribution of the initial policy, and of untrained networks.
+    A value close to $1$ indicates that the clusters capture an abstraction learned by the policy, while a value close to $0$ indicates that they merely reproduce one of these baselines.
+    \item \textbf{\gls{acu}} subtracts the agreement explained by these baselines from \gls{cu}.
+    A value close to $1$ indicates that the surrogate policies converge toward a partition that is both reproducible and non-trivial, providing the strongest support for the \RepresentationConvergenceHypothesisName.
+    A value close to $0$, or negative, indicates that the observed agreement is largely explained by the baselines.
+\end{itemize}
+A high \gls{cu} alone is therefore not sufficient, since it can result from a trivial structure shared by all networks.
+It is the combination of a high \gls{cu} and a high \gls{as}, summarized by \gls{acu}, that supports the existence of a stable conceptual organization.
+
 The full results across all environments and analyzed layers are reported in Appendix~\ref{chap:appendix}.
 Two complementary analyses are then conducted on these results.
 First, the evolution of the three metrics across the different layers is examined to study the effect of representation depth.
@@ -45,6 +59,8 @@ The resulting \gls{acu}, $0.17 \pm 0.06$, is the lowest across the six environme
 
 The quantitative analysis provides a measure of the consistency and abstraction of the identified clusters, but does not directly reveal their semantic content.
 The following section therefore provides a qualitative analysis of the clusters to examine the concepts they represent.
+
+\vspace{1cm}
 
 \input{figures/clustering_agent_representation/latent_space_curves_by_metric.tex}
 

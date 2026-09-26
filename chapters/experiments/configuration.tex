@@ -42,7 +42,7 @@ The experiments use the six environments described below:
     Each broken brick scores one point, and the ball speeds up as the wall is cleared.
     \allowbreak
 
-    \item \MarioBrosName.: A single-screen platform game (Figure~\ref{fig:environment_mario_bros}) in which the player clears each phase by hitting enemies from below to flip them, then kicking them off the platforms before they recover.
+    \item \MarioBrosName.: A platform game (Figure~\ref{fig:environment_mario_bros}) in which the player clears each phase by hitting enemies from below to flip them, then kicking them off the platforms before they recover.
     A central POW block can flip all enemies at once but can only be used a few times per phase.
     \allowbreak
 
@@ -63,6 +63,10 @@ The experiments use the six environments described below:
 \endgroup
 
 \subsection{Neural architecture}
+
+The architecture of the surrogate policies was deliberately kept simple.
+The objective of this chapter is not to search for the best-performing architecture, but to obtain surrogate policies that faithfully reproduce the initial policy while remaining easy to analyze.
+A standard convolutional architecture was therefore selected because it is sufficient to reach a high \BehaviorReconstructionName on the six environments, as shown in Section~\ref{sec:experiments_policy_performance_surrogate_fidelity}.
 
 The surrogate policies use a \gls{cnn} to process the visual observations.
 The convolutional part consists of four layers with $16$, $32$, $64$, and $128$ channels, using $4 \times 4$ kernels with a stride of $2$.
@@ -90,6 +94,8 @@ Several other parameters must be defined for the different stages of the \gls{ca
 These parameters are less critical to the overall methodology than those discussed above, but they still need to be specified to reproduce the experiments.
 Since each stage introduces its own configuration choices, there are too many parameters to discuss them all in detail.
 The main parameters used across the experiments are summarized in Table~\ref{tab:experiments_parameters}.
+All these parameters are provided to the pipeline through the modular configuration file introduced in Section~\ref{sec:experiments_software}.
+Each stage reads its own section of this file, so that a parameter can be changed, or a component replaced, without modifying the code of the pipeline.
 
 \input{tables/experiments/experiments_parameters_table.tex}
 

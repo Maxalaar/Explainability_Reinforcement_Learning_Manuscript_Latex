@@ -10,6 +10,7 @@ The code is made publicly available as open-source to support reproducible repli
 The \gls{car} implementation is organized as a pipeline of five stages.
 Each stage performs a specific operation and produces the artifacts required by the subsequent stages.
 The stages are implemented as independent executables allowing each stage to be rerun independently.
+The whole pipeline is driven by a single configuration file, which is the input of the process and gathers the parameters of every stage.
 The \gls{car} pipeline is illustrated in Figure~\ref{fig:car_pipeline}, and Table~\ref{tab:software_libraries} summarizes the libraries used throughout the pipeline.
 The remainder of this section describes the purpose and implementation of each stage.
 
@@ -53,8 +54,10 @@ It handles common training operations such as data loading, optimization, checkp
 \subsection{Surrogate policy evaluation}
 
 The fourth stage evaluates how faithfully the surrogate policies reproduce the behavior of the initial policy.
+This stage therefore requires both the surrogate policies and the initial policy.
 Each surrogate is wrapped as an RLlib policy and evaluated in the original environment.
-Its mean cumulative reward over multiple episodes is compared with that of the initial policy.
+The initial policy is evaluated under the same conditions to provide the reference return.
+The mean cumulative reward of each surrogate over multiple episodes is then compared with that of the initial policy.
 Evaluation episodes are collected using parallel environment runners.
 
 This stage computes the \BehaviorReconstructionName.
