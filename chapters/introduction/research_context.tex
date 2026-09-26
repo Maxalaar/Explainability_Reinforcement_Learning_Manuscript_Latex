@@ -2,22 +2,24 @@
 \label{sec:research_context}
 
 As is evident in recent years, \gls{ai} has advanced rapidly.
-This progress is driven largely by major developments in \gls{dl}.
-This type of approach relies on artificial \glspl{nn} to automate an increasing number of tasks \cite{goodfellow2016deep}.
-These networks are connectionist models in which information is represented and transformed through patterns of interactions among interconnected elementary computational units \cite{rumelhart1986learning}.
 
-Among the fields that have been transformed by \gls{dl} is \gls{rl}.
+This type of approach relies on artificial \glspl{nn}, which offer an unprecedented level of performance.
+Inspired by their biological counterparts, these networks are known as connectionist models.
+In such models, information is represented and transformed through patterns of interactions among interconnected elementary computational units \cite{rumelhart1986learning}.
+This distributed form of information processing is key to their versatility, enabling them to revolutionize an increasing number of domains.
+
+Among the fields transformed by \gls{dl} is the main subject of this manuscript, \gls{rl}.
 The purpose of \gls{rl} is to enable an agent to learn how to make decisions through interactions with an environment \cite{sutton2018reinforcement}.
 At each step, the agent observes the current state of the environment and selects an action.
 This action changes the state of the environment and results in a reward.
 The objective of the agent is then to learn a behavior that maximizes the cumulative rewards obtained over time.
-Due to their flexibility, \glspl{nn} provide a powerful means of representing such policies enable agents to learn complex behaviors.
+Due to their flexibility, \glspl{nn} provide a powerful means of representing the agent's information-processing capabilities.
 Their use has consequently made it possible to apply \gls{rl} to problems that were previously intractable \cite{mnih2013playingatarideepreinforcement, silver2017mastering, openai2019dota2largescale}.
 
 When an agent learns to act in complex environments, it develop strategies that are themselves complex.
 Although such agents can achieve strong performance, these strategies can be difficult for to understand.
 From an external perspective, we observe sets of sequences of interactions between the agent and its environment.
-However, when interactions unfold over long sequences or take place in environments with complex dynamics, these observations are not sufficient to infer the strategy developed by the agent.
+However, for long interactions or complex environments, these observations are not enough to infer the agent's strategy.
 
 An alternative approach is to analyze the agent itself.
 Due to their connectionist nature, \gls{nn} that model the agent's policy are not directly interpretable.
@@ -30,9 +32,9 @@ In the specific context of \gls{rl}, this research area is referred to as \gls{x
 Such explanations can serve several purposes, including increasing human trust and facilitating the adoption of \gls{rl} agents in real-world settings, identifying errors and biases, and verifying that previously identified problems have been effectively corrected \cite{arrieta2020explainable, milani2022explainable}.
 
 This manuscript presents \gls{xrl} methods from different approaches to provide a broader view of the field.
-However, a particular emphasis is placed on the mechanistic approach to explainability, which we refer to as \gls{me} (Definition~\ref{def:mechanistic_explainability}).
+We focus on the mechanistic approach to explainability, which we refer to as \gls{me} (Definition~\ref{def:mechanistic_explainability}).
 Although still relatively underexplored, this approach seems particularly promising to us.
-In \gls{me}, the goal is to understand how information is represented, transformed, and propagated within the \gls{nn}.
+In \gls{me}, the goal is to understand how information is represented within the \gls{nn}.
 From this perspective, explainability is not achieved despite the use of \glspl{nn}, but through them.
 
 \begin{definition}{Mechanistic Explainability}{mechanistic_explainability}
@@ -40,7 +42,8 @@ From this perspective, explainability is not achieved despite the use of \glspl{
 \end{definition}
 
 To understand how \glspl{nn} work internally, \gls{me} studies the intermediate representations learned by these networks.
-These representations are referred to as \glspl{lr} \cite{bengio2014representationlearningreviewnew}, and the collection of the \glspl{lr} learned throughout a network forms its \gls{ls}.
+These representations are called \glspl{lr} \cite{bengio2014representationlearningreviewnew}.
+Together, they form the network's \gls{ls}.
 Analyzing the structure of this \gls{ls} provides insights into how information relevant to decision-making is organized.
 
 To develop an \gls{xrl} method based on \gls{me}, we need to address several research questions, which are detailed in the following section.
