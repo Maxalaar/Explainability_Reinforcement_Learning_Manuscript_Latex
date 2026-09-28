@@ -14,10 +14,21 @@
 
 \linenumbers
 
+% Front matter (roman page numbers): title, abstract, acknowledgements, contents.
+\frontmatter
 \maketitle
-
+% TODO: abstract and acknowledgements go here.
+\tableofcontents
+\clearpage\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+\clearpage\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
 \input{chapters/notation/notation.tex}
 
+% Main matter (arabic page numbers), opened by the Golem myth.
+\mainmatter
 \input{chapters/golem_mythos/golem_mythos.tex}
 \input{chapters/introduction/introduction.tex}
 \input{chapters/deep_learning/deep_learning.tex}
@@ -32,7 +43,11 @@
 \renewcommand{\thechapter}{\arabic{chapter}}
 \input{appendix/additional_results/additional_results.tex}
 
+% Back matter: reference lists and bibliography.
+\backmatter
 \printglossary[type=\acronymtype, nonumberlist]
+\clearpage\phantomsection
+\addcontentsline{toc}{chapter}{\bibname}
 
 % \bibliographystyle{plain}
 \bibliographystyle{apalike}
