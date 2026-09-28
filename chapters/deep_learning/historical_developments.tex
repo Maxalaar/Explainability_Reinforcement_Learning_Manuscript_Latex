@@ -2,23 +2,23 @@
 
 \input{figures/deepl_learning/evolution_deep_learning.tex}
 
-\gls{nn} and \gls{dl} emerged from an ambition to study the expressive capabilities of organic brain.
+\glspl{nn} and \gls{dl} emerged from an ambition to study the expressive capabilities of organic brain.
 The first major milestone came in 1943 with the proposal of a mathematical model of an artificial neuron, with a formulation of networked interactions \cite{mcculloch1943logical}.
 This work established the key idea that networks of simple units can give rise to complex computations.
 The focus was on representational power, not on the ability of such systems to learn.
 As a result, this work remained largely theoretical and had limited practical applications.
 
-A major step toward operationalizing the idea of \gls{nn}s was achieved with the perceptron algorithm in 1958 \cite{rosenblatt1958perceptron}.
+A major step toward operationalizing the idea of \glspl{nn} was achieved with the perceptron algorithm in 1958 \cite{rosenblatt1958perceptron}.
 It was designed to adjust its parameters from input–output pairs in order to approximate a target function.
 The perceptron fundamental limitations were exposed in 1969, showing that it could not learn functions as simple as the exclusive-or \cite{minsky1969introduction}.
 At the same time, it was demonstrated that stacking multiple perceptrons could, in principle, represent such functions.
-However, no effective training procedure for these multi-layer architectures was available at the time. It was only in 1986 that researchers introduced gradient descent as an effective method for training deep \gls{nn} \cite{rumelhart1986learning}.
+However, no effective training procedure for these multi-layer architectures was available at the time. It was only in 1986 that researchers introduced gradient descent as an effective method for training deep \glspl{nn} \cite{rumelhart1986learning}.
 From this point onward, the emergence of \gls{dl} is retrospectively situated, even though the term itself appeared later.
-\gls{dl} is defined as the training of deep \gls{nn} using gradient-based optimization methods.
+\gls{dl} is defined as the training of deep \glspl{nn} using gradient-based optimization methods.
 
 It took several decades before \gls{dl} reached the level of prominence it has today.
 One major obstacle was the absence of theoretical guarantees regarding the convergence of learning algorithms.
-Although the universal approximation theorem shows that \gls{nn} can represent a wide class of functions \cite{hornik1989multilayer}, it did not ensure that such representations could be effectively learned through optimization methods like gradient descent.
+Although the universal approximation theorem shows that \glspl{nn} can represent a wide class of functions \cite{hornik1989multilayer}, it did not ensure that such representations could be effectively learned through optimization methods like gradient descent.
 This lack of rigorous guarantees initially reduced interest within the academic community.
 As a result, early progress relied largely on empirical breakthroughs.
 
@@ -27,13 +27,13 @@ These empirical advances were made possible by two key developments: the availab
 The use of graphics processing units for large-scale training, demonstrated in 2009, greatly increased computational capacity and made it feasible to train large-scale models \cite{raina2009large, krizhevsky2012imagenet}.
 
 At the same time, researchers developed architectures specifically designed for different types of data, allowing \gls{dl} to address an increasingly wide range of problems.
-\gls{cnn} were introduced in 1989 to process images, using local, weight-shared filters that exploit the spatial structure of pixel grids \cite{lecun1989backpropagation}.
+\glspl{cnn} were introduced in 1989 to process images, using local, weight-shared filters that exploit the spatial structure of pixel grids \cite{lecun1989backpropagation}.
 \gls{lstm} networks were later proposed in 1997 to process temporal sequences, introducing gating mechanisms able to retain relevant information over long time horizons \cite{hochreiter1997long}.
 More recently, the Transformer architecture, relying entirely on the attention mechanism, was introduced in 2017 to process long, variable-length sequences of strongly interconnected elements, allowing every element to attend directly to every other element regardless of their distance within the sequence \cite{vaswani2017attention}.
 This growing body of knowledge was consolidated in 2016 in a reference textbook that formalized \gls{dl} as a coherent field of study \cite{goodfellow2016deep}.
 
 These changes paved the way for the rise of \gls{dl} as it is known today.
-\gls{dl} has achieved remarkable success across a wide range of domains, including computer vision \cite{krizhevsky2012imagenet}, complex games \cite{silver2017mastering}, content recommendation \cite{covington2016deep}, bio-chemistry \cite{jumper2021highly}, as well as the now essential digital assistants based on \gls{llm} \cite{brown2020language}.
+\gls{dl} has achieved remarkable success across a wide range of domains, including computer vision \cite{krizhevsky2012imagenet}, complex games \cite{silver2017mastering}, content recommendation \cite{covington2016deep}, bio-chemistry \cite{jumper2021highly}, as well as the now essential digital assistants based on \glspl{llm} \cite{brown2020language}.
 The diversity of these applications explains the enthusiasm for this technology, which continues to redefine the boundaries of what was once considered automatable.
 
 Figure~\ref{fig:evolution_deep_learning} provides a timeline of the key milestones that shaped deep learning.

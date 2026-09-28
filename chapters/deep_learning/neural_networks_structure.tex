@@ -1,6 +1,6 @@
 \section{Neural Network Structure}\label{sec:neural_networks_structure}
 
-\gls{nn} are called connectionist models.
+\glspl{nn} are called connectionist models.
 Rather than modeling information processing through a set of explicit rules, they rely on a flow of signals distributed within a computational structure.
 Their architecture is composed of a large number of simple computational units, which operate on partial representations and exchange signals across the network.
 A complex pattern of weighted connections between these units enables the transformation and propagation of information.
@@ -15,7 +15,7 @@ Finally, it concludes with a general description of the \gls{nn} as a whole.
 
 \subsection{Neurons}
 
-The artificial neuron is the basic building block of \gls{nn}.
+The artificial neuron is the basic building block of \glspl{nn}.
 It is through these units that all computations within the network are carried out.
 A neuron receives a set of input signals from other neurons, where these inputs are represented as real-valued numbers.
 It produces an output, also a real-valued number, which is transmitted to subsequent neural units.
@@ -79,7 +79,7 @@ The input layer has no preceding layer, as its neurons directly encode the compo
 Conversely, the output layer has no subsequent layer, and its neurons produce the model's prediction $\hat{y}$.
 This structure imposes a direct correspondence between the dimensionality of the input space and the number of neurons in the input layer, and similarly between the output space and the number of neurons in the output layer.
 
-When describing \gls{nn}, especially in \gls{mlp}, it is more common to reason at the level of layers rather than individual neurons.
+When describing \glspl{nn}, especially in \glspl{mlp}, it is more common to reason at the level of layers rather than individual neurons.
 This perspective allows interactions between layers to be modeled in a matrix form.
 Such a representation enables efficient parallel computation and forms the basis of modern \gls{dl} implementations \cite{krizhevsky2012imagenet}.
 Within this framework, it is useful to introduce the notion of layer activations.
@@ -108,7 +108,7 @@ This matrix-vector representation is visualised in Figure~\ref{fig:matrix_intera
 
 It is important to examine the role played by the intermediate layers of a \gls{nn}.
 At least one hidden layer is required to represent sufficiently complex functions, and in practice, modern architectures often include many more.
-Theoretical results have shown that, for a fixed number of parameters, increasing the number of layers enhances the expressive capacity of \gls{nn} \cite{telgarsky2016benefits}.
+Theoretical results have shown that, for a fixed number of parameters, increasing the number of layers enhances the expressive capacity of \glspl{nn} \cite{telgarsky2016benefits}.
 Each layer can be viewed as an additional stage in the computation performed by the network.
 This suggests that deeper networks can represent increasingly complex functions by composing a larger number of transformations.
 The precise relationship between depth and function complexity remains primarily supported by empirical observations rather than formal theoretical justification \cite{goodfellow2016deep}.

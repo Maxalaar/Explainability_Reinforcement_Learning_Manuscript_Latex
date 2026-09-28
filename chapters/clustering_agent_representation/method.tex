@@ -5,8 +5,8 @@ Following the work of \cite{zahavy2017graying}, we analyze the \gls{ls} through 
 This design choice is motivated by our rejection of the \SuperpositionHypothesisName and, more generally, of any view that assumes a linearly organized \gls{cs}, as discussed in Section~\ref{sec:clustering}.
 
 The \gls{car} methodology is composed of two main stages.
-The first stage trains multiple independent \gls{nn}, called surrogate policies, which implement the same decision policy.
-The second stage clusters their \gls{lr} in order to identify the underlying conceptual organization.
+The first stage trains multiple independent \glspl{nn}, called surrogate policies, which implement the same decision policy.
+The second stage clusters their \glspl{lr} in order to identify the underlying conceptual organization.
 Once these two stages have been completed, the resulting clustering can be analyzed from two complementary perspectives.
 First, the consistency of the resulting clusters across independent training runs can be assessed to determine whether the identified clusters are stable.
 Second, the semantic content of the clusters can be examined to determine whether they correspond to meaningful concepts.
@@ -17,13 +17,13 @@ Figure~\ref{fig:illustration_method} provides a visual overview of the two stage
 This section is organized into three parts.
 The first explains why multiple surrogate policies are used to study the stability of the representations.
 The second describes how these policies are trained to match the initial policy as closely as possible.
-The third presents how their \gls{lr} are clustered to identify the \gls{cs}.
+The third presents how their \glspl{lr} are clustered to identify the \glspl{cs}.
 
 \subsection{Multiple surrogate policies}
 
 The \gls{car} method was developed to test the \RepresentationConvergenceHypothesisName.
-This requires training several \gls{nn} independently and comparing their \gls{lr}.
-Consistent similarities in the resulting \gls{cs} would provide empirical support for this hypothesis.
+This requires training several \glspl{nn} independently and comparing their \glspl{lr}.
+Consistent similarities in the resulting \glspl{cs} would provide empirical support for this hypothesis.
 
 In supervised learning, this protocol is straightforward since several models can be independently trained on the same target function.
 \gls{rl} introduces an additional difficulty.
@@ -33,11 +33,11 @@ This makes it difficult to determine whether differences in the \gls{ls} result 
 
 To overcome this limitation, we consider an already trained initial policy.
 This policy is then used as a target for imitation learning \cite{pmlr-v15-ross11a}.
-In this process, several surrogate \gls{nn} are independently trained in a supervised manner to reproduce the behavior of the same agent.
+In this process, several surrogate \glspl{nn} are independently trained in a supervised manner to reproduce the behavior of the same agent.
 This allows us to investigate whether \glspl{nn} that learn equivalent policies also develop similar conceptual organizations.
 
 It is important to emphasize that the use of surrogate policies does not make \gls{car} a surrogate explainability method, as defined in Subsection~\ref{subsec:explainable_artificial_intelligence}.
-The surrogate policies remain deep \gls{nn}.
+The surrogate policies remain deep \glspl{nn}.
 Their role is not to simplify the decision process but to provide multiple independent realizations of the same policy function, enabling the study of representation convergence.
 
 \subsection{Training surrogate policies}
@@ -75,13 +75,13 @@ In practice, this function $p$ does not need to be explicitly defined, as neural
 Once the surrogate policies are trained, their encoders are used to generate a point cloud from a set of observations.
 This point cloud provides a sample of the \gls{ls} to be analyzed.
 The proposed \gls{car} method adopts the deep clustering approach introduced in Section~\ref{sec:clustering}.
-Under this approach, conceptually similar observations are expected to produce nearby \gls{lr}.
-A \gls{cs} can therefore be viewed as a region of the \gls{ls} containing related \gls{lr}.
+Under this approach, conceptually similar observations are expected to produce nearby \glspl{lr}.
+A \gls{cs} can therefore be viewed as a region of the \gls{ls} containing related \glspl{lr}.
 To identify these regions, a clustering algorithm is applied to the point cloud.
 
 The clustering is performed independently for each surrogate policy.
 For a surrogate policy $\SurrogatePolicy{i}$, applying its encoder $\textcolor{myblue}{f_{enc_{i}}}$ to a subset of observations $\mathbb{O} \subseteq \mathcal{O}$ yields the set of embeddings $\textcolor{myblue}{\mathcal{E}_{i}}$.
-A clustering function $f_{\mathrm{clust}}$ then partitions the point cloud $\textcolor{myblue}{\mathcal{E}_{i}}$ into groups of nearby \gls{lr}, assigning each observation a cluster label and yielding the partition $\mathcal{C}_{i}$.
+A clustering function $f_{\mathrm{clust}}$ then partitions the point cloud $\textcolor{myblue}{\mathcal{E}_{i}}$ into groups of nearby \glspl{lr}, assigning each observation a cluster label and yielding the partition $\mathcal{C}_{i}$.
 The same observation set $\mathbb{O}$ is used for every surrogate policy, so that the partitions $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$ are defined over the same observations and can be compared.
 This comparison is the basis of the evaluation introduced in the following section.
 
@@ -98,7 +98,7 @@ Finally, Line~\ref{alg:car:return} returns the surrogate policies together with 
 Two choices govern this analysis without being part of the clustering algorithm itself.
 The first is the choice of layer used to extract the representations.
 Each hidden layer defines its own \gls{ls}, reflecting the information represented at that stage of the network.
-\gls{car} can therefore be applied to the \gls{lr} extracted from any layer.
+\gls{car} can therefore be applied to the \glspl{lr} extracted from any layer.
 This allows the conceptual organization of the policy to be examined at different levels of the network.
 
 The second is the number of clusters.

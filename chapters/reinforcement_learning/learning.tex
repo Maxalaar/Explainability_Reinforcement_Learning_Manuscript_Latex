@@ -18,7 +18,7 @@ Since \(\hat{Q}_\pi\) serves as the basis for the agent's decisions, it cannot r
 It must therefore be defined solely over observations, as a function \(\hat{Q}_\pi : \mathcal{O} \times \mathcal{A} \to \mathbb{R}\).
 Its objective is to approximate the true \(Q_\pi\), which depends on the underlying states \(s\), using only the partial information available through \(o\).
 In practice, this does not necessarily pose a problem, as observations often contain sufficient information to make accurate predictions about the underlying state.
-Moreover, the strong representational capacity of \gls{nn} allows the critic to capture these relationships without explicitly representing the mapping between observations and states.
+Moreover, the strong representational capacity of \glspl{nn} allows the critic to capture these relationships without explicitly representing the mapping between observations and states.
 
 This leads to the following mathematical formulation:
 \begin{equation}

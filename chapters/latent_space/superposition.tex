@@ -30,18 +30,18 @@ where:
     \item $\|\boldsymbol{\alpha}\|_0 \ll n$ indicates that only a small fraction of concepts are active for a given \gls{lr}.
 \end{itemize}
 
-However, \gls{nn} operate in finite-dimensional spaces, so when the number of concepts exceeds the available dimensions, such a one-to-one correspondence becomes impractical.
+However, \glspl{nn} operate in finite-dimensional spaces, so when the number of concepts exceeds the available dimensions, such a one-to-one correspondence becomes impractical.
 The network must therefore reuse its representational dimensions, allowing multiple concepts to be encoded using the same directions.
 This shared encoding is referred to as superposition \cite{bricken2023monosemanticity}.
-This phenomenon becomes an obstacle for any method that attempts to analyze \gls{lr} directly in the original activation space.
+This phenomenon becomes an obstacle for any method that attempts to analyze \glspl{lr} directly in the original activation space.
 
-Building on this observation, several works based on the \SuperpositionHypothesisName have developed methods that aim to recover less superposed \gls{lr}.
+Building on this observation, several works based on the \SuperpositionHypothesisName have developed methods that aim to recover less superposed \glspl{lr}.
 A common approach is to map \gls{ls} into a higher-dimensional space while imposing additional constraints that encourage individual concepts to be represented separately.
-This transformation is illustrated in Figure~\ref{fig:dense_to_sparse_sae}, while \gls{lr} are entangled in the initial \gls{ls}, the sparse representation aligns each concept with a dedicated feature axis.
+This transformation is illustrated in Figure~\ref{fig:dense_to_sparse_sae}, while \glspl{lr} are entangled in the initial \gls{ls}, the sparse representation aligns each concept with a dedicated feature axis.
 
 \input{figures/latent_space/latent_space_sparse_autoencoders.tex}
 
-\gls{sae} provide a practical implementation of this approach and can be defined as follows:
+\glspl{sae} provide a practical implementation of this approach and can be defined as follows:
 \[
 z = f_{\text{enc}}(\latentRepresentation), \quad \hat{\latentRepresentation} = f_{\text{dec}}(z)
 \]
@@ -67,14 +67,14 @@ In practice, both $f_{\text{enc}}$ and $f_{\text{dec}}$ are implemented as linea
 Using more expressive projection functions could introduce additional structures into the transformed \gls{lr}. In this case, it would become difficult to determine whether an observed concept was already encoded in the model's \gls{lr}, or whether it was introduced by the projection itself. Restricting $f_{\text{enc}}$ and $f_{\text{dec}}$ to linear projections therefore helps ensure that the concepts identified in $\mathcal{Z}$ can be attributed to the original \gls{lr}, rather than to the transformation used to analyze it.
 
 The method proves to be powerful when successfully applied to language models \cite{templeton2024scaling}.
-In these applications, \gls{sae} are used to desuperpose the \gls{lr} of \gls{llm}.
+In these applications, \glspl{sae} are used to desuperpose the \gls{lr} of \glspl{llm}.
 Once this \gls{lr} is obtained, it has been shown that many concept vectors exhibit semantic properties.
 A example is the Golden Gate Bridge concept direction, illustrated in Figure~\ref{fig:sparse_autoencoder_illustration}, which activates systematically whenever the input text or image refers to the Golden Gate Bridge, regardless of the language or modality.
 This demonstrates that the learned concept is not tied to a specific surface form but captures a deeper semantic abstraction shared across modalities.
 
 \input{figures/latent_space/sparse_autoencoder_illustration.tex}
 
-\gls{sae} also provide a way to intervene directly on the \gls{lr} learned by the model.
+\glspl{sae} also provide a way to intervene directly on the \gls{lr} learned by the model.
 A concept can be artificially activated by modifying its corresponding feature in the sparse representation $z$, even when the input contains no reference to it.
 The modified \gls{lr} is then projected back into the original activation space, after which the model proceeds with standard next-token generation from $\latentRepresentation^{*}$:
 \[
@@ -100,11 +100,11 @@ These limitations can be summarized as follows:
 \begin{itemize}
     \item \textbf{Instability of the decomposition.}
     Repeating the \gls{sae} training process multiple times on the same model does not yield the same decomposition of the \gls{ls}.
-    Different runs produce different concept directions in $\mathcal{Z}$, even when achieving comparable reconstruction performance, which raises questions about the reliability of the discovered \gls{cs}.
+    Different runs produce different concept directions in $\mathcal{Z}$, even when achieving comparable reconstruction performance, which raises questions about the reliability of the discovered \glspl{cs}.
 
     \item \textbf{Lack of semantic coverage.}
     In the high-dimensional space $\mathcal{Z}$, a large fraction of dimensions do not correspond to any interpretable semantic concept.
-    This abundance of non-semantic directions raises questions about whether the decomposition truly reflects the model’s \gls{cs}.
+    This abundance of non-semantic directions raises questions about whether the decomposition truly reflects the model’s \glspl{cs}.
 
     \item \textbf{Sparsity--semantics trade-off.}
     Increasing the sparsity coefficient $\lambda$ beyond a certain threshold degrades the semantic quality of the learned features \cite{tanhPenaltyDictionaryLearning}.
@@ -113,13 +113,13 @@ These limitations can be summarized as follows:
     \item \textbf{Failure of scaling to remove superposition.}
     Under the \SuperpositionHypothesisName, increasing the dimensionality of the \gls{ls} should reduce superposition.
     However, this is not observed in practice.
-    Even in very high-dimensional \gls{ls}, representations remain superposed, indicating that scaling alone does not resolve the entanglement.
+    Even in very high-dimensional \glspl{ls}, representations remain superposed, indicating that scaling alone does not resolve the entanglement.
 \end{itemize}
 
 These limitations suggest that \SuperpositionHypothesisName, while powerful, do not fully resolve the problem of \gls{cs}.
 Convincing empirical results do not necessarily validate the underlying theoretical assumptions.
 
 So far, every method described, whether based on probing, interpretable directions, or superposition, relies on a common assumption.
-The \gls{cs} can be recovered from \gls{lr} through a linear decomposition.
+The \gls{cs} can be recovered from \glspl{lr} through a linear decomposition.
 This assumption has enabled substantial progress in understanding neural representations, but it also imposes a strong constraint on how concepts are expected to be represented.
 The following section examines clustering as an alternative approach that does not rely on this assumption.

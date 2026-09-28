@@ -6,7 +6,7 @@ Although rarely stated explicitly, this hypothesis is implicitly present in the 
 Throughout this manuscript, we refer to this hypothesis as \ConceptHypothesisName.
 The goal of this section is to make this conceptual framework explicit by defining its main components.  
 
-The \ConceptHypothesisName originates from the need to explain the generalization ability of deep \gls{nn} observed after training, as discussed in Section~\ref{sec:evaluation}.
+The \ConceptHypothesisName originates from the need to explain the generalization ability of deep \glspl{nn} observed after training, as discussed in Section~\ref{sec:evaluation}.
 A model is said to generalize when, for an input $x \in \mathcal{X}$ not seen during training, it still produces an output $\hat{y}$ close to the true output $y$.  
 Such behavior cannot be explained by simple memorization of training samples.  
 Instead, the model must extract and exploit underlying regularities in the target function.  
@@ -17,11 +17,11 @@ Abstraction is the process by which a model transforms an input into a task-rele
 It captures and restructures information in order to represent relationships that are useful for prediction.  
 \end{definition}
 
-The ability of \gls{nn} to perform abstraction arises from their intermediate activations.
+The ability of \glspl{nn} to perform abstraction arises from their intermediate activations.
 A \gls{nn} does not directly map $x$ to $\hat{y}$, it computes a sequence of intermediate activations across hidden layers.
 These activations are numerical encodings of the input referred to as embeddings.
 Once training is complete, these embeddings are structured to support the performance of a specific task.
-To mark this distinction, we will refer to these trained embeddings as \gls{lr}, as defined in Definition~\ref{def:representation}.
+To mark this distinction, we will refer to these trained embeddings as \glspl{lr}, as defined in Definition~\ref{def:representation}.
 
 \begin{definition}{Latent Representation}{representation}
 A \gls{lr} is the internal encoding of an input given by an intermediate layer of a trained \gls{nn}.
@@ -34,15 +34,15 @@ This process can be described as a sequence of transformations where each $\late
 x \rightarrow \latentRepresentation[1] \rightarrow \latentRepresentation[2] \rightarrow \dots \rightarrow \latentRepresentation[L-1] \rightarrow \hat{y}
 \]
 
-The set of all such \gls{lr} produced by a layer over a dataset defines its \gls{ls}, as defined in Definition~\ref{def:latent_space}.
+The set of all such \glspl{lr} produced by a layer over a dataset defines its \gls{ls}, as defined in Definition~\ref{def:latent_space}.
 
 \begin{definition}{Latent Space}{latent_space}
-The \gls{ls} is the set of all \gls{lr} produced by a layer over a dataset.
-It is shaped by learning and organizes \gls{lr} according to task-relevant properties.
+The \gls{ls} is the set of all \glspl{lr} produced by a layer over a dataset.
+It is shaped by learning and organizes \glspl{lr} according to task-relevant properties.
 \end{definition}
 
 Under the \ConceptHypothesisName, the analysis of the \gls{ls} is assumed to provide access to abstract structures learned by the model, as illustrated in Figure~\ref{fig:latent_space}.
-The same set of \gls{lr} can be viewed either as an unstructured point cloud or, under this hypothesis, as a collection of points organized by concept membership, in which case the structure of the \gls{ls} becomes meaningful and amenable to analysis.
+The same set of \glspl{lr} can be viewed either as an unstructured point cloud or, under this hypothesis, as a collection of points organized by concept membership, in which case the structure of the \gls{ls} becomes meaningful and amenable to analysis.
 In Figure~\ref{fig:latent_space}, the colors represent hypothetical concept memberships assigned by the model.
 In this manuscript, a concept is defined as an abstract representation that organizes information and supports reasoning (see Definition~\ref{def:concept}).
 
@@ -56,7 +56,7 @@ Our definition of concepts is consistent with both the pragmatic tradition in ph
 Within these frameworks, concepts arise from the need to simplify an otherwise intractable reality.
 Because the environment contains more information than any cognitive system can process, intelligent behavior relies on abstractions, called concepts, that discard irrelevant details while preserving the information required to achieve a given objective \cite{Peirce1878,Misak2013}.
 These concepts are realized as representations that reduce complexity and enable reasoning under limited computational resources \cite{Newell1980,Simon1996}.
-Although these theories were originally developed to explain human cognition, the \ConceptHypothesisName assumes that the same principles can be extended to deep \gls{nn}.
+Although these theories were originally developed to explain human cognition, the \ConceptHypothesisName assumes that the same principles can be extended to deep \glspl{nn}.
 
 In order to influence the model's computations, concepts must necessarily admit a concrete realization within the \gls{ls}.
 We refer to this realization as the \gls{cs}.
@@ -71,10 +71,10 @@ This choice directly determines how concepts can be identified and extracted fro
 As a result, several families of \gls{ls} analysis methods have emerged in the literature, each adopting a different view of how concepts are structured within the \gls{ls}.
 
 \begin{hypothesis}{Concept Hypothesis}{concept}
-\gls{nn} generalize by performing abstraction.
+\glspl{nn} generalize by performing abstraction.
 Through training, their \gls{ls} becomes organized around concepts.
 Concepts are task-dependent abstractions that capture regularities relevant to the task.
-Analyzing the \gls{ls} therefore provides access to the \gls{cs} through which these concepts are instantiated in the model.
+Analyzing the \gls{ls} therefore provides access to the \glspl{cs} through which these concepts are instantiated in the model.
 \end{hypothesis}
 
 Now that the definition of a \ConceptHypothesisName has been established, we can consider its relationship to human.
@@ -88,9 +88,9 @@ Semantics refers to the alignment between concepts in the model \gls{ls} and con
 A concept is semantic if it can be associated with a human interpretable concept.  
 \end{definition}
 
-It is important to note that this conceptual framework is not supported by a complete theoretical understanding of deep \gls{nn}.
-Current mathematical tools do not provide a rigorous characterization of their internal representations and do not formally prove that concepts emerge as identifiable \gls{cs} within \gls{ls}.
+It is important to note that this conceptual framework is not supported by a complete theoretical understanding of deep \glspl{nn}.
+Current mathematical tools do not provide a rigorous characterization of their internal representations and do not formally prove that concepts emerge as identifiable \glspl{cs} within \gls{ls}.
 Nevertheless, this perspective constitutes a widely adopted working hypothesis in the field of representation and \gls{ls} analysis.
 
-The remainder of this chapter is devoted to reviewing methods for analyzing \gls{ls} and extracting the concepts they encode.
+The remainder of this chapter is devoted to reviewing methods for analyzing \glspl{ls} and extracting the concepts they encode.
 We begin with probing, one of the most direct approaches for assessing whether concepts are represented in the \gls{ls}.

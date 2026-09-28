@@ -21,7 +21,7 @@ The \gls{nn} architecture $\hat{f}$ used to approximate the target function $f$ 
 It involves a large number of parameters as well as many nonlinear components.
 As a result, the optimum cannot be determined analytically by directly studying the properties of the function.
 
-Instead, approximate optimization methods are required to find suitable parameter values for \gls{nn}.
+Instead, approximate optimization methods are required to find suitable parameter values for \glspl{nn}.
 The class of algorithms used for this optimization is known as gradient descent methods.
 Numerous variants of gradient descent have been developed for \gls{nn} training.
 For simplicity, the focus here is on \gls{sgd} with a batch size of 1.
@@ -158,4 +158,4 @@ Figure~\ref{fig:multiple_gradient_descents_non_convex} illustrates the effect of
 
 \heavyfig{fig:multiple_gradient_descents_non_convex}{figures/deepl_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
 
-Despite the lack of theoretical guarantees of convergence to a global optimum, the simple procedure of random initialization followed by iterative gradient-based updates is sufficient in practice to train complex \gls{nn}.
+Despite the lack of theoretical guarantees of convergence to a global optimum, the simple procedure of random initialization followed by iterative gradient-based updates is sufficient in practice to train complex \glspl{nn}.

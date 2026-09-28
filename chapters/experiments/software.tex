@@ -29,7 +29,7 @@ By default, the initial policy is trained using \gls{ppo} \cite{schulman2017prox
 Other RLlib algorithms, such as \gls{appo} \cite{espeholt2018impala}, \gls{dqn} \cite{mnih2013playingatarideepreinforcement}, and DreamerV3 \cite{hafner2023masteringdiversedomainsworld}, can also be selected through the same configuration.
 
 The policy and critic networks are implemented using PyTorch \cite{paszke2019pytorch}.
-PyTorch is the standard \gls{dl} framework and is widely used for developing and training \gls{nn}.
+PyTorch is the standard \gls{dl} framework and is widely used for developing and training \glspl{nn}.
 It provides \gls{gpu} acceleration and supports a wide range of \gls{nn} architectures.
 This makes it well suited for implementing the different policy and critic architectures used in the experiments.
 
@@ -48,7 +48,7 @@ This is useful here because the datasets contain around one million observation-
 The third stage trains the surrogate policies using \gls{bc} on the trajectory dataset.
 This provides a supervised learning approach for replicating the initial policy.
 The training procedure is implemented using PyTorch Lightning \cite{falcon2019lightning}.
-PyTorch Lightning provides a simplified interface for training \gls{nn} with PyTorch.
+PyTorch Lightning provides a simplified interface for training \glspl{nn} with PyTorch.
 It handles common training operations such as data loading, optimization, checkpointing, and \gls{gpu} execution.
 
 \subsection{Surrogate policy evaluation}
