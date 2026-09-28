@@ -1,0 +1,223 @@
+\section{State-of-the-Art Review of XRL Methods}
+\label{sec:explainability_in_reinforcement_learning_state_of_the_art_review_of_xrl_methods}
+
+The purpose of this section is to detail the functioning of existing explainability methods (see Table~\ref{tab:taxonomy_methods}).
+They are presented according to the form of explanation they produce, following the taxonomy introduced in Section~\ref{sec:explainability_in_reinforcement_learning_taxonomy_of_xrl_methods}.
+
+\input{tables/explainability_in_reinforcement_learning/taxonomy_methods.tex}
+
+A family of methods is defined as a set of methods that share the same source, form, and subject of explanation, as well as a similar procedure for generating explanations.
+Methods belonging to the same family may differ in their implementation details while relying on the same principle.
+
+The remainder of this review is organized by form of explanation, following the six forms identified in Section~\ref{subsec:form}.
+For each form, we first describe its principle and its limitations, then present the families of methods that produce it.
+
+\subsection{Policy Model}
+\label{subsec:policy_model}
+
+The policy function can be represented by a wide variety of function classes.
+In modern \gls{rl}, \glspl{nn} are the most commonly used models for representing policies.
+Although these models achieve the highest performance, their connectionist nature makes their internal representations non-interpretable.
+
+For this reason, a substitutive approach to \gls{xrl} aims to replace these models with alternative models considered interpretable.
+Such models can be understood through direct analysis of their representations.
+The main classes of interpretable models used to represent policy functions include decision trees \parencite{topin2021iterative}, algorithms \parencite{trivedi2022learning}, formal logic \parencite{payani2019inductive}, and linear models \parencite{pmlr-v108-garreau20a}.
+
+Explanations derived from an interpretable model primarily provide insights into the decision-making process, since what is modeled is the mapping between an observation and an action.
+If the model is sufficiently well structured, the observer can form a mental representation of a sequence of decisions across the environment and thus obtain information about the agent's strategy.
+
+The main limitation of these methods is that interpretable models rely on symbolic representations.
+When the policy to be represented is too complex, achieving comparable performance requires a large number of rules or conditions.
+The resulting model can quickly become difficult to analyze and lose its interpretability.
+
+
+For example, representing a policy capable of playing Go using a symbolic model would require considering a very large number of possible situations and specific cases.
+Even if such a representation were possible, the resulting model would likely become intractable for human analysis due to its complexity.
+This illustrates why \gls{nn}-based approaches have become dominant in such domains, as they can learn complex decision strategies without requiring an explicit enumeration of rules.
+
+To obtain an interpretable policy model, two families of explainability methods are available: \textit{interpretable policy learning} and \textit{policy approximation via interpretable model}.
+
+\subsubsection{\textit{Interpretable Policy Learning}}
+\label{subsubsec:interpretable_policy_learning}
+
+This family of methods aims at learning a policy represented by an interpretable model \parencite{topin2021iterative, trivedi2022learning}.
+It is the most direct approach to addressing the challenges posed by \gls{xrl}.
+This type of training requires modifying the \gls{mdp} in order to adapt it to the search space and to the type of policy representation.
+Moreover, this search space often needs to be reduced to make learning feasible.
+Such a reduction requires the integration of expert knowledge into the learning process.
+With this family of methods, the \textit{interpretable policy function} itself is used to provide explanations to the observer.
+
+\subsubsection{\textit{Policy Approximation via Interpretable Model}}
+\label{subsubsec:policy_approximation_via_interpretable_model}
+
+An interpretable model can be trained to approximate a policy learned through deep \gls{rl} \parencite{sieusahai2021explaining}.
+In this setting, the problem is formulated as a supervised learning task, where the initial deep \gls{rl} policy is used to label each observation with the action it selects, such as the observation from the Atari game \PongName shown in Figure~\ref{fig:policy_approximation_observation}.
+Using this dataset, the interpretable model is trained to reproduce the behavior of the initial policy, yielding for instance the decision tree illustrated in Figure~\ref{fig:policy_approximation_decision_tree}, obtained by approximating a deep \gls{rl} policy trained on that environment.
+The resulting interpretable model is then used as an explanation for the observer.
+If this approximation is sufficiently faithful, it can also be deployed in the environment in place of the initial policy, thereby providing a high degree of control over the agent.
+
+\input{figures/explainability_in_reinforcement_learning/policy_approximation_example.tex}
+
+\subsection{Saliency Map}
+\label{subsec:saliency_map}
+
+The influence of each part of the input on the action selected by the policy can be visualized using heatmaps (Figure~\ref{fig:saliency_map_heatmap}).
+In the \gls{rl} setting, the input corresponds to the observation received by the agent at a given time step.
+Heatmaps therefore highlight the regions of the observation that have the greatest influence on the action selection process.
+By providing this information, they allow the observer to identify which elements of the environment are considered important by the policy when making a decision.
+In Figure~\ref{fig:saliency_map_heatmap}, both panels correspond to the same observation of the Atari game \BreakoutName, with panel~(a) obtained by observation perturbation and panel~(b) by observation gradient analysis.
+
+\input{figures/explainability_in_reinforcement_learning/saliency_map_heatmap.tex}
+
+A limitation of heatmap-based methods is that the resulting explanations are not always directly meaningful to the observer.
+As illustrated in Figure~\ref{fig:saliency_map_heatmap_gradient}, interpreting which regions are important often requires human reasoning and involves a degree of subjectivity.
+This limitation becomes particularly relevant in \gls{rl}, where the objective is not only to explain a single decision but also to understand the factors influencing a sequence of decisions over time.
+
+Three families of explainability methods can be used to obtain this type of explanation: \textit{observation perturbation}, \textit{observation gradient analysis}, and \textit{attention-based architectures}.
+
+\subsubsection{\textit{Observation Perturbation}}
+\label{subsubsec:observation_perturbation}
+
+Perturbation analysis consists in applying various modifications to the observation in order to study their impact on the output of the policy function \parencite{greydanus2018visualizing}.
+The greater the variation in the output caused by a perturbation applied to a given component of the input vector, the higher the weight assigned to that component.
+The magnitude of the perturbation is measured by computing the distance between the original output and the output obtained from the perturbed input.
+Using this set of weights, a \textit{heatmap} is constructed, enabling the observer to visualize which parts of the observation vector are most sensitive in the action-selection process (see Figure~\ref{fig:saliency_map_heatmap_perturbation}).
+
+\subsubsection{\textit{Observation Gradient Analysis}}
+\label{subsubsec:observation_gradient_analysis}
+
+Observation gradient analysis refers to a set of methods that require a differentiable policy function in order to extract information from it \parencite{simonyan2014deep, weitkamp2019visual, huber2019enhancing}.
+To this end, the gradient of the policy function is computed with respect to all components of the input vector.
+For each input component, the resulting gradient provides a weighting that represents its importance in the output of the policy function.
+Based on these weightings, a \textit{heatmap} is constructed to allow the observer to visually identify the parts of the input vector that are the most influential in the policy function's output (see Figure~\ref{fig:saliency_map_heatmap_gradient}).
+
+\subsubsection{\textit{Attention-Based Architecture}}
+\label{subsubsec:attention_based_architecture}
+
+Attention blocks constitute a \gls{nn} architecture that makes it possible to weight the relative importance of one part of a vector with respect to the other parts of the same vector \parencite{vaswani2017attention}.
+These weights are computed as a function of the vector itself and are learned by the \gls{nn} during training.
+For a given observation, each component of the observation vector is assigned a scalar value.
+It can therefore be assumed that the components associated with the highest weights are the most influential in determining the output \parencite{mott2019towards, itaya2021visual}.
+This attention-based \textit{heatmap} is then provided to the observer as the explanation, as illustrated for the Atari game \BreakoutName in Figure~\ref{fig:attention_map_heatmap_clear}, where the highlighted regions are easily interpretable.
+However, as shown for \MsPacManName in Figure~\ref{fig:attention_map_heatmap_unclear}, the attention weights are not always concentrated on a small, easily interpretable set of regions, which can make this type of explanation difficult to exploit.
+
+\input{figures/explainability_in_reinforcement_learning/attention_map_heatmap.tex}
+
+\subsection{Counterfactual}
+\label{subsec:counterfactual}
+
+A counterfactual explanation is a new observation, close to the original one, that leads the agent to select a different action.
+Comparing the two observations reveals which elements of the environment must change for the agent to behave differently, and thus provides insight into its decision-making process.
+Unlike the other forms of explanation, this form is currently associated with a single family of methods, based on the \textit{use of the \gls{ls} for counterfactual generation}.
+
+\subsubsection*{\textit{Latent Space Usage for Counterfactual Generation}}
+\phantomsection\label{subsubsec:latent_space_counterfactual_generation}
+
+This family of methods uses generative models to build counterfactuals from the \gls{lr} of the observation \parencite{bond2021deep, olson2021counterfactual}.
+The observation is encoded into the \gls{ls}, its representation is modified until the agent selects the desired action, and this modified representation is decoded back into a new observation.
+Working in the \gls{ls} rather than at the pixel level keeps the counterfactual close to the original state and consistent with the environment.
+The fidelity of the generated observations to the real game can then be assessed through user studies \parencite{olson2021counterfactual}.
+
+Figure~\ref{fig:counterfactual_example} illustrates this approach on the Atari game \textit{\SpaceInvadersName} \parencite{olson2021counterfactual}.
+In the original observation (Figure~\ref{fig:counterfactual_example_original}) the agent selects \texttt{LEFT}, whereas in the counterfactual observation (Figure~\ref{fig:counterfactual_example_counterfactual}) it selects \texttt{RIGHT\_FIRE}.
+Here, removing an enemy is enough to change the action, which suggests that the position of that enemy influences the agent's decision.
+Such observations remain only indicative. Identifying a reliable pattern requires repeating the analysis across many situations.
+
+\input{figures/explainability_in_reinforcement_learning/counterfactual_example.tex}
+
+\subsection{Agent Trajectory}
+\label{subsec:agent_trajectory}
+
+Until now, the presented methods have focused on explaining individual decisions made by the agent.
+The methods considered from this point on aim to provide insight into the agent's strategy by analyzing its behavior over time.
+
+The most direct approach consists in visualizing agent trajectories, most commonly through complete episodes.
+By analyzing these trajectories, the observer can infer the dynamics underlying the agent's behavior and how its decisions evolve through time.
+This type of visualization is not specific to \gls{xrl}.
+In practice, visualizing agent episodes is a standard step in the development and evaluation of \gls{rl}.
+It provides a simple way to verify that the agent behaves as expected and to detect potential implementation errors.
+
+This simple approach can be further enhanced using families of methods such as \textit{hierarchical decomposition} and \textit{extraction via critic analysis}.
+
+\subsubsection{\textit{Extraction via Critic Analysis}}
+\label{subsubsec:extraction_via_critic_analysis}
+
+In this family of methods, the predictions of the critic are used to determine which trajectories to present to the observer \parencite{Sequeira_2020}.
+A set of states is selected from multiple trajectories.
+For a given state, all possible actions are examined.
+The state is assigned a value equal to the difference between the critic's prediction for the lowest-valued action and the prediction for the highest-valued action.
+Trajectories containing the states with the highest values according to this procedure are then chosen to be presented to the observer.
+These trajectories are considered critical moments of the agent and are therefore relevant for analysis.
+For this family of methods, the \textit{selected trajectories} represent the interpretable information provided to the observer.
+
+\subsubsection{\textit{Hierarchical Decomposition}}
+\label{subsubsec:hierarchical_decomposition}
+
+Hierarchical agents are composed of a set of sub-policies specialized for specific tasks within subsets of the environment's states.
+This family of methods distributes the optimization of the reward function across multiple models, significantly simplifying the learning process.
+Moreover, this decomposition of the policy function can also provide explainability in the agent's strategy \parencite{Beyret_2019}.
+If a sub-policy is selected, it indicates that the agent will execute a specialized behavior.
+This behavioral specialization provides insight into the strategy the agent employs to maximize the reward function.
+The agent's \textit{trajectory}, together with the \textit{sub-policy} selected for each action, is used as interpretable information.
+
+\subsection{Trajectory Prediction}
+\label{subsec:trajectory_prediction}
+
+Making predictions about the future of a trajectory allows one to form a representation of what the system expects, based on its training experience.
+These predictions are produced using value functions.
+Such functions provide insights into the future evolution of the agent's trajectory.
+By their nature, this form of explanation informs the observer about the strategy adopted by the agent.
+Value functions provide an estimate of the expected cumulative reward from a given state.
+Consequently, a value function maps an observation to a scalar value in $\mathbb{R}$.
+
+This aggregated prediction provides limited information about the underlying factors that contribute to this value.
+It does not directly reveal which aspects of the task are being optimized or how the predicted return is composed.
+Unlike the other forms of explanation, this form is currently associated with a single family of methods, aimed at improving the interpretability of value-based explanations: \textit{critic enrichment}.
+
+\subsubsection*{\textit{Critic Enrichment}}
+\phantomsection\label{subsubsec:critic_enrichment}
+
+In order to obtain interpretable information from the predictions of the critic, it is possible to decompose the critic into multiple sub-functions \parencite{juozapaitis2019explainable}.
+The reward function is thus decomposed into multiple sub-reward functions, each representing a sub-objective of the task to be accomplished.
+Similarly, for each of these sub-reward functions, corresponding sub-critic functions are defined, along with a function that combines their outputs.
+During training, the agent selects its actions so as to maximize this combination function of the sub-critics.
+Using this approach, for each observation and action, a prediction is obtained regarding the sub-objectives the agent is attempting to maximize, so that the action chosen by the agent reveals which sub-reward it aims to maximize (see Figure~\ref{fig:trajectory_prediction_values}).
+This \textit{prediction} is then used as the explanation for the observer.
+
+\input{figures/explainability_in_reinforcement_learning/trajectory_prediction_values.tex}
+
+\subsection{Interaction Model}
+\label{subsec:interaction_model}
+
+Modeling the interactions between an agent and its environment makes it possible to understand how the agent's decisions are made and what impact they have on the environment.
+By incorporating these interactions into an explanatory model, one can better grasp the complex relationships between the agent and its environment, thereby identifying the determining factors in the decision-making process.
+By explicitly handling the agent--environment interaction, this type of explanation aims to explain the agent's strategy.
+The families of methods used to obtain explanations in the form of agent--environment interactions are: \textit{Bayesian network learning} and \textit{\gls{ls} usage for \gls{mdp} generation}.
+
+\subsubsection{\textit{Bayesian Network Learning}}
+\label{subsubsec:bayesian_network_learning}
+
+The evolution of an agent within an environment can be observed as a set of random variables connected through a Bayesian network \parencite{madumal2020explainable}.
+Random variables are defined to represent both external aspects (the environment) and internal aspects of the agent (the actions).
+By analyzing trajectories, it becomes possible to infer causal relationships among these random variables.
+At the end of this process, a weighted causal graph is obtained, which serves as an explanation for the observer, as illustrated for the video game \textit{StarCraft~II} in Figure~\ref{fig:interaction_model_causal_graph}, where nodes represent random variables and edges represent causal relationships between them.
+This \textit{Bayesian network}, representing the interactions between the agent and the environment, is then used as the explanation.
+
+\input{figures/explainability_in_reinforcement_learning/interaction_model_causal_graph.tex}
+
+\subsubsection{\textit{Latent Space Usage for MDP Generation}}
+\label{subsubsec:latent_space_mdp_generation}
+
+Each layer of a \gls{nn} can be viewed as a projection from one space to another \parencite{zahavy2017graying}.
+As information propagates through successive layers of a \gls{nn}, it becomes increasingly abstract.
+It can therefore be assumed that two vectors that are close in this projected space are also close in terms of the agent's perception.
+Based on this observation, it is possible to redefine an \gls{mdp} by leveraging the abstract representations produced by the final layers of a \gls{nn}.
+Once the new \gls{mdp} has been constructed, a model of the interaction between the agent and its environment is obtained.
+This model, represented as a \textit{graph}, is then used as the explanation.
+
+Figure~\ref{fig:latent_space_tsne_example} illustrates this idea using a two-dimensional \textit{t-SNE} projection of the \gls{ls} of the \gls{nn} used to represent the policy.
+Each point is colored according to the value function's prediction for the corresponding state, with warmer colors indicating higher predicted values.
+An agreement can be observed between the structure of this projected space and the critic's predictions: states that are assigned similar values by the critic also tend to be located close to one another in the projection.
+This agreement makes it possible to manually identify clusters of states, which likely correspond to states that are perceived as similar by the agent.
+
+\input{figures/explainability_in_reinforcement_learning/latent_space_tsne_example.tex}

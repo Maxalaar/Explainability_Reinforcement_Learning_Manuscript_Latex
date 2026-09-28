@@ -1,0 +1,51 @@
+\newpage
+\subsection{\BreakoutName}
+
+Two clusterings are examined for \BreakoutName (Table~\ref{tab:qualitative_breakout_metrics}), obtained at layer 4 with $K=2$ and at layer 6b with $K=5$.
+
+At layer 4 (Figure~\ref{fig:qualitative_breakout_alt}), the partition captures the position of the ball relative to the brick wall.
+The ball remains below the wall in cluster A.
+The ball has passed behind the wall in cluster B, allowing it to continue clearing bricks without further interaction with the paddle.
+
+At layer 6b (Figure~\ref{fig:qualitative_breakout}), the partition again isolates situations in which the ball has passed behind the wall in cluster E.
+It also identifies the digging of a tunnel through the left side of the wall in cluster C.
+Finally, it distinguishes different paddle positions at the beginning of the episode in clusters D, F, and G.
+
+The clustering at layer 4 with $K=2$ is almost perfectly reproducible across surrogate policies, with a \gls{cu} of $0.99$ and an \gls{acu} of $0.87$.
+The clustering at layer 6b with $K=5$ is less consistent, with a \gls{cu} of $0.79$ and an \gls{acu} of $0.61$, but reveals additional information about the organization of the \gls{ls}.
+
+\vfill
+\begin{table}[H]
+    \centering
+    \begin{tblr}{
+        width=\linewidth,
+        colspec={Q[c,wd=1.6cm] X[l]},
+        cells = {valign=m},
+        rowsep=2pt,
+        hline{1,Z} = {1pt},
+        hline{4} = {0.5pt},
+        hline{2,5} = {0.3pt},
+        row{1,4} = {bg=black!8, font=\bfseries},
+        column{1} = {font=\bfseries}
+    }
+        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 4}\makebox[1.4cm][l]{$K=2$}\makebox[2.75cm][l]{\gls{cu} 0.99}\makebox[2.75cm][l]{\gls{as} 0.88}\gls{acu} 0.87 & \\
+        A & The ball is below the brick wall. \\
+        B & The ball passes behind the brick wall. \\
+        \SetCell[c=2]{l} \makebox[1.9cm][l]{Layer 6b}\makebox[1.4cm][l]{$K=5$}\makebox[2.75cm][l]{\gls{cu} 0.79}\makebox[2.75cm][l]{\gls{as} 0.82}\gls{acu} 0.61 & \\
+        C & Digging a tunnel through the left side of the wall. \\
+        D & Start of the episode, paddle on the right. \\
+        E & The ball is behind the brick wall. \\
+        F & Start of the episode, paddle in the middle. \\
+        G & Start of the episode, paddle on the left. \\
+    \end{tblr}
+    \caption{\glsfmtshort{cu}, \glsfmtshort{as}, and \glsfmtshort{acu} of the two clusterings analyzed in the \BreakoutName environment.}
+    \label{tab:qualitative_breakout_metrics}
+\end{table}
+\vfill
+
+\newpage
+\vspace*{\fill}
+\input{figures/experiments/qualitative_breakout_alt.tex}
+
+\input{figures/experiments/qualitative_breakout.tex}
+\vfill

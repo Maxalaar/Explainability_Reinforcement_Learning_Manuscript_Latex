@@ -1,6 +1,3 @@
-% Document class and style
-\usepackage{balance}
-
 % Encoding and font settings
 \usepackage{fontspec}
 \setmainfont{Latin Modern Roman}
@@ -14,18 +11,14 @@
 \usepackage{tabularx}
 \usepackage{tabularray}
 \usepackage{array}
-\usepackage{multirow}
-\usepackage{makecell}
 \usepackage{pdflscape}
 \usepackage{diagbox}
 
 % Mathematical symbols and fonts
 \usepackage{amsfonts}
 \usepackage{amsmath}
-\usepackage{nicefrac}
 \usepackage{amssymb}
 \usepackage{mathtools}
-\usepackage{amsthm}
 
 % Typography and text enhancements
 \usepackage{microtype}
@@ -35,11 +28,7 @@
 \usepackage{listofitems}
 \usepackage{csquotes}
 \usepackage{xspace}
-% \usepackage{arev}
-\usepackage{pifont}
 \usepackage{enumitem}
-\usepackage{ulem}
-\usepackage{soul}
 \usepackage[acronym, automake]{glossaries-extra}
 % Bibliography: numbered citations (sorted by year, oldest first), clickable DOI, arXiv
 % and URL links.
@@ -62,8 +51,6 @@
 \addbibresource{references/explainability_reinforcement_learning.bib}
 \addbibresource{references/mathematical_tools.bib}
 \addbibresource{references/software.bib}
-% ulem turns \emph into underlining; restore italics in the bibliography only.
-\AtBeginBibliography{\normalem}
 % URLs are shown as "URL: link", the word "link" being clickable.
 \DeclareFieldFormat{url}{\mkbibacro{URL}\addcolon\space\href{#1}{link}}
 % More space between two references.
@@ -83,7 +70,6 @@
 \usepackage{float}
 \usepackage{dblfloatfix}
 \usepackage{placeins}
-\usepackage{cuted}
 % Never allow more than one float (figure/table) per page, to avoid two figures bunching together
 \setcounter{topnumber}{1}
 \setcounter{bottomnumber}{0}
@@ -98,9 +84,6 @@
 \SetKw{Return}{Return}
 \renewcommand{\CommentSty}[1]{\textcolor{gray}{\footnotesize\itshape #1}}
 \SetKwComment{tcp}{}{}
-\SetArgSty{textit} % \ArgSty (e.g. \Return's argument) defaults to \emph, which ulem redefines to underline
-\SetProgSty{textit} % \ProgSty (e.g. \While/\For/\If conditions) has the same issue
-\SetFuncArgSty{textit} % \FuncArgSty (arguments of \SetKwFunction calls) has the same issue
 \SetKwFunction{FnDataCollection}{DataCollection}
 \SetKwFunction{FnSGD}{SGD}
 \SetAlgoSkip{smallskip}
@@ -118,12 +101,10 @@
 \usepackage{graphicx}
 \usepackage{pgfplots}
 \usepackage{subcaption}
-\usepackage{multicol}
 \pgfplotsset{compat=1.18}
 
 % TikZ libraries for advanced drawing
 \usepackage{tikz}
-\usepackage{pgfplots}
 \usetikzlibrary{decorations.pathreplacing}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{matrix}
@@ -153,12 +134,8 @@
 \contourlength{1.2pt}   % Set the thickness of the outline created by the 'contour' package
 
 % Conditional statements and loops
-\usepackage{comment}
-\usepackage{nameref}
 \usepackage{pgffor}
-\usepackage{ifthen}
 \usepackage{etoolbox}
-\usepackage{iflang}
 
 % Prevent itemize/enumerate lists from being split across two pages
 \BeforeBeginEnvironment{itemize}{\begin{samepage}}
@@ -168,8 +145,9 @@
 
 % Debug
 \usepackage{lineno}
-\usepackage{lipsum}
 \usepackage[most]{tcolorbox}
 \usepackage{datetime}
+% Loaded for its redefinition of the default headings: running heads show the
+% current section, not only the chapter.
 \usepackage{fancyhdr}
 \usepackage{eso-pic}

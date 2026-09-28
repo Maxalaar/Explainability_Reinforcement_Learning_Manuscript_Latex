@@ -1,0 +1,33 @@
+\begin{figure}[t]
+\centering
+
+\input{figures/latent_space_analysis/latent_space_shared.tex}
+
+\resizebox{0.65\textwidth}{!}{
+\begin{tikzpicture}
+\begin{axis}[latent axis]
+
+  % Point clouds
+  \plotPoints[color=colorA, mark=*]{figures/latent_space_analysis/cluster_a.data}
+  \plotPoints[color=colorB, mark=square*]{figures/latent_space_analysis/cluster_b.data}
+  \plotPoints[color=colorC, size=2pt, mark=triangle*]{figures/latent_space_analysis/cluster_c.data}
+
+  % Interpretable directions
+  \plotProbe[color=colorDirBA, style=dashed, width=thick]{-11}{-31.5}
+  \plotDirection[color=colorDirBA]{-2.5}{-4.0}{-3.0}{1.5}
+
+  \plotProbe[color=colorDirBC, style=dashed, width=thick]{0.5224}{-2.694}
+  \plotDirection[color=colorDirBC]{-2.5}{-4.0}{4.2}{-0.5}
+
+  % Centroid B
+  \fill[colorB] (axis cs:-2.5,-4.0) circle (4pt);
+
+\end{axis}
+\end{tikzpicture}
+}
+
+\caption{
+    Interpretable directions in the latent space.
+}
+\label{fig:latent_directions}
+\end{figure}

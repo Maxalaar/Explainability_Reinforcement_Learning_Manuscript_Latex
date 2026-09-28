@@ -1,4 +1,4 @@
-# Deep Learning & Latent Space Manuscript
+# Mechanistic Explainability in Reinforcement Learning — PhD Thesis
 
 
 
@@ -14,8 +14,31 @@ The manuscript is organized as follows:
 
 * `setup/setup.tex`
   Global configuration, split by topic into the other files of `setup/`:
-  `colors`, `draft`, `boxes`, `names`, `glossary`, `notation`,
-  `environments`, `plots`, `floats`, `appendix_tables`.
+  `colors`, `links`, `draft`, `boxes`, `names`, `glossary`, `notation`,
+  `environments`, `timeline`, `plots`, `floats`, `appendix_tables`.
+
+* `chapters/`, `appendix/`
+  One folder per chapter, holding the chapter file and one file per section.
+
+* `figures/`, `tables/`, `algorithms/`
+  One folder per chapter, holding the floats included by that chapter.
+
+* `references/`
+  Bibliography files (biblatex + biber).
+
+### Naming rules
+
+The names are derived mechanically from the titles, with no exception:
+
+* A chapter folder and its main file are named after the chapter title in
+  `snake_case` (e.g. "The Golem Myth" → `chapters/the_golem_myth/the_golem_myth.tex`).
+* A section file is named after the section title in `snake_case`
+  (e.g. "Evaluation Metrics" → `evaluation_metrics.tex`).
+* Labels follow the files: `chap:<chapter folder>` and
+  `sec:<chapter folder>_<section file>`.
+* A figure, table or algorithm lives in the folder of the chapter that
+  includes it, and its file is named after its label without the prefix
+  (e.g. `fig:car_pipeline` → `figures/experiments/car_pipeline.tex`).
 
 
 ## ⚙️ Dependencies

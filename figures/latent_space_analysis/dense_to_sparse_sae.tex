@@ -1,0 +1,86 @@
+\providecommand{\lsePanelWidth}{6cm}
+\newlength{\saePanelWd}
+\newlength{\saePanelHt}
+\newlength{\saePanelGap}
+
+% Lengths must be set BEFORE \resizebox so pgfplots sees non-zero values.
+\setlength{\saePanelWd}{\lsePanelWidth}
+\pgfmathsetlength{\saePanelHt} {\saePanelWd * 5 / 6}
+\pgfmathsetlength{\saePanelGap}{\saePanelWd * 0.9}
+
+\begin{figure}[t]
+\centering
+
+\input{figures/latent_space_analysis/latent_space_shared.tex}
+
+\resizebox{1\textwidth}{!}{
+\begin{tikzpicture}
+
+  % ================================================================
+  % LEFT PANEL — Dense latent space
+  % ================================================================
+  \begin{scope}[xshift=0pt]
+  \begin{axis}[
+    name=axisLeft,
+    latent embed,
+    width=\saePanelWd,
+    height=\saePanelHt,
+    xmin=-7, xmax=8,
+    ymin=-7, ymax=5.5,
+  ]
+    \plotPoints[color=colorA, mark=*]{figures/latent_space_analysis/cluster_a.data}
+    \plotPoints[color=colorB, mark=square*]{figures/latent_space_analysis/cluster_b.data}
+    \plotPoints[color=colorC, size=2pt, mark=triangle*]{figures/latent_space_analysis/cluster_c.data}
+    \end{axis}
+    \node[anchor=north, yshift=-6pt] at (axisLeft.south)
+      {\textbf{(a)} Dense latent space};
+  \end{scope}
+
+  % ================================================================
+  % RIGHT PANEL — Sparse SAE space
+  % ================================================================
+  \begin{scope}[xshift=\saePanelGap]
+  \begin{axis}[
+    name=axisRight,
+    width=\saePanelWd,
+    height=\saePanelHt,
+    xmin=-8.5, xmax=8.5,
+    ymin=-6,   ymax=9,
+    axis lines=none,
+    ticks=none,
+    clip=true,
+  ]
+
+    \draw[colorA, thick, -{Stealth[length=7pt,width=5pt]}]
+      (axis cs:0,0) -- (axis cs:0,7);
+    \node[colorA, font=\small\bfseries, above] at (axis cs:0,7.3)
+      {Feature $A$};
+
+    \draw[colorB, thick, -{Stealth[length=7pt,width=5pt]}]
+      (axis cs:0,0) -- (axis cs:-6.062,-3.5);
+    \node[colorB, font=\small\bfseries, below left] at (axis cs:-6.062,-3.8)
+      {Feature $B$};
+
+    \draw[colorC, thick, -{Stealth[length=7pt,width=5pt]}]
+      (axis cs:0,0) -- (axis cs:6.062,-3.5);
+    \node[colorC, font=\small\bfseries, below right] at (axis cs:6.062,-3.8)
+      {Feature $C$};
+
+    \plotPoints[color=colorA, mark=*]{figures/latent_space_analysis/sae_right_a.data}
+    \plotPoints[color=colorB, mark=square*]{figures/latent_space_analysis/sae_right_b.data}
+    \plotPoints[color=colorC, size=2pt, mark=triangle*]{figures/latent_space_analysis/sae_right_c.data}
+
+  \end{axis}
+  \node[anchor=north, yshift=-6pt] at (axisRight.south)
+    {\textbf{(b)} Sparse SAE space};
+  \end{scope}
+
+\end{tikzpicture}
+}
+
+\caption[Transformation from a dense to a sparse latent space.]{
+  Transformation from a dense latent space~\textbf{(a)} to a sparse
+  \glsfmtshort{sae} representation~\textbf{(b)}.
+}
+\label{fig:dense_to_sparse_sae}
+\end{figure}

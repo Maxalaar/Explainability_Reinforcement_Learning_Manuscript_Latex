@@ -1,5 +1,5 @@
 \section{Problem Formulation}
-\label{sec:rl_problem_formulation}
+\label{sec:reinforcement_learning_problem_formulation}
 
 Having outlined the main developments shaping \gls{rl} and introduced the concept of the agent, the \gls{rl} problem can now be stated formally.
 In essence, \gls{rl} aims to build a agent that makes sequential decisions in order to maximize a cumulative reward signal over the long term.
@@ -35,8 +35,6 @@ We therefore restrict the analysis to the following configuration:
 The resulting framework can be formally described as a single-agent finite-horizon partially observable Markov decision process.
 For simplicity, we will refer to this setting as an \enquote{\gls{mdp}} throughout this thesis.
 
-% The following section aims to provide a mathematical description of the \gls{rl} problem.
-% The formulation adopted in this thesis has been chosen to emphasize the main elements that will be used throughout the remainder of the thesis.
 A \gls{mdp} is defined by the tuple \((\StateSet, \ObsSet, \ActionSet, \RewardSet, p)\):  
 \begin{itemize}
     \item \textbf{\(\StateSet\)}: The set of states, representing all possible configurations of the environment.  
@@ -94,7 +92,6 @@ The notation \(\pi(a \mid o)\) denotes the probability of selecting action \(a\)
 It is important to note that this policy does not include any explicit mechanism for estimating the underlying state from the observations.
 Instead, the policy must learn from experience how to infer the information about the underlying state that is not directly available in the observations.
 This reflects the design of many modern \gls{rl} implementations, where policies are often parameterized by architectures capable of summarizing past observations, such as recurrent or attention-based networks, without explicitly modeling the uncertainty over the underlying state.
-
 
 \subsection{Trajectory}
 \label{subsec:trajectory}

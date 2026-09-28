@@ -1,0 +1,54 @@
+\section{Conclusion}
+\label{sec:explainability_in_reinforcement_learning_conclusion}
+
+The taxonomy and the state-of-the-art review presented in this chapter make it possible to draw three main observations.
+
+\subsection{Absence of Explanation of the Learning Process}
+
+Regarding the subject of explanation, Table~\ref{tab:taxonomy_methods} shows that none of the reviewed methods addresses the learning process itself.
+Such an explanation would concern how the policy is progressively updated throughout training, and why it evolves over successive iterations to converge toward a particular solution.
+Several reasons explain this absence.
+
+First, among the different machine learning paradigms, \gls{rl} is arguably the one that would benefit the most from explanations of the learning process.
+Unlike supervised or unsupervised learning, it relies on an explicit exploration--exploitation trade-off, making the learning trajectory itself an informative subject of explanation.
+However, most \gls{xrl} methods are inherited from the XAI literature, where explanations focus exclusively on the behavior of already-trained models.
+This limitation has naturally carried over to \gls{xrl}.
+
+Second, explanations of the learning process have limited value from a practical perspective.
+In most real-world applications, practitioners deploy an already-trained agent.
+Practitioners are therefore primarily interested in understanding the behavior of the final policy rather than the optimization process that produced it.
+
+Finally, explaining the learning process raises significant methodological challenges.
+Training in \gls{rl} can be viewed as the iterative improvement of a policy through repeated interactions with the environment.
+In this sense, explaining learning would amount to explaining the evolution of an entire sequence of policies rather than a single one.
+Current \gls{xrl} methods still struggle to provide comprehensive explanations of an individual policy, so extending them to a full training trajectory appears considerably more difficult.
+
+\subsection{Lack of Unified Metrics for Explainability}
+
+The diversity of explanation forms identified in this review also reveals another limitation shared by nearly all families of \gls{xrl} methods, which is the absence of reliable metrics for evaluating explainability.
+In many studies, explanations are not evaluated with human participants.
+Instead, authors focus on technical properties of the proposed method, such as fidelity, sparsity, or computational efficiency.
+When human evaluations are conducted, they usually rely on subjective satisfaction questionnaires.
+Although useful, self-reported satisfaction remains prone to numerous biases and does not necessarily indicate that the explanation has improved the observer's mental model or understanding of the agent.
+
+This limitation is not specific to \gls{xrl}, it reflects a broader challenge affecting \gls{xai} as a whole.
+In our view, this limitation comes from how explainability has developed in artificial intelligence.
+Most of the proposed approaches have been developed by the computer science community.
+Explainability has consequently often been studied from an algorithmic or mathematical perspective, with less attention given to how humans actually benefit from explanations.
+
+Our definition of explanation explicitly places the observer at the center of the explanatory process.
+From this perspective, the value of an explanation should not only depend on its technical properties but also on its ability to improve the observer's understanding.
+Addressing this challenge will require stronger interdisciplinary collaboration between computer science and disciplines such as cognitive science, psychology, philosophy, and sociology.
+These fields provide the theoretical and experimental tools needed to study human understanding and to develop evaluation protocols that measure the actual effectiveness of explanations.
+
+\subsection{Toward Intrinsic Explainability in \gls{xrl}}
+
+Our review also suggests that current \gls{xrl} research remains largely dominated by substitutive explainability approaches.
+Replacing a deep model with a simpler one therefore risks losing precisely the complexity that makes deep \gls{rl} effective.
+For this reason, we argue that a promising direction for \gls{xrl} is to develop explanations directly from the \gls{nn} that forms the agent's policy.
+Such approaches aim to analyze the representations learned by the network itself.
+From this perspective, the \gls{nn} should not necessarily be regarded as an black box, but as a complex representation whose apparent opacity may instead reflect the limitations of current analysis tools.
+
+Among the methods reviewed, \textit{latent space usage for MDP generation} (Section~\ref{subsubsec:latent_space_mdp_generation}) appears closest to this intrinsic perspective.
+However, this approach still relies on a largely manual and qualitative analysis of the \gls{ls}, which limits its reproducibility and its ability to produce systematic explanations.
+The next chapter builds upon this idea and proposes a mechanistic \gls{xrl} approach based on \gls{ls} analysis.

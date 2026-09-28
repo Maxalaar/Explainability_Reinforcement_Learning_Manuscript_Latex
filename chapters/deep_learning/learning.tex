@@ -1,4 +1,4 @@
-\section{Learning}\label{sec:learning}
+\section{Learning}\label{sec:deep_learning_learning}
 
 Now that the structure of a \gls{nn} has been detailed, the next step is to examine how its parameters are adjusted to accomplish the assigned task.
 This brings the discussion to the core of \gls{dl}, namely the learning process itself.
@@ -147,7 +147,7 @@ Algorithm~\ref{alg:stochastic_gradient_descent} summarizes this whole training p
 To develop an intuition for this update rule, Figure~\ref{fig:simple_gradient_descent} illustrates it applied to the simple convex loss function $\mathcal{L}(\theta_1,\theta_2)=\theta_1^2+\theta_2^2$, where the red path shows the parameter updates converging to the minimum.
 The point $\params_{1}$ represents the initial parameter values, with $\theta_1$ and $\theta_2$ randomly initialized, and the subsequent points, from $\params_{2}$ to $\params_{6}$, represent the successive updates produced by applying Equation~\eqref{eq:gradient_descent_update}, progressively moving the trajectory toward the minimum of the loss function.
 
-\heavyfig{fig:simple_gradient_descent}{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
+\heavyfig{fig:simple_gradient_descent}{figures/deep_learning/gradient_descent/simple_gradient_descent/simple_gradient_descent.tex}
 
 \subsection{Convergence Properties}
 
@@ -156,6 +156,6 @@ It has been mathematically shown that gradient descent applied to a convex loss 
 However, \gls{nn} training involves highly non-convex loss surfaces, so the optimization trajectory becomes strongly dependent on the initial conditions, and no such guarantee holds.
 Figure~\ref{fig:multiple_gradient_descents_non_convex} illustrates the effect of non-convex functions, different starting points lead to distinct local minima.
 
-\heavyfig{fig:multiple_gradient_descents_non_convex}{figures/deepl_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
+\heavyfig{fig:multiple_gradient_descents_non_convex}{figures/deep_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
 
 Despite the lack of theoretical guarantees of convergence to a global optimum, the simple procedure of random initialization followed by iterative gradient-based updates is sufficient in practice to train complex \glspl{nn}.

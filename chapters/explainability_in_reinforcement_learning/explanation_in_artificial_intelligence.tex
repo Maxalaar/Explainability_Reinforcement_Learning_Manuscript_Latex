@@ -1,0 +1,124 @@
+\section{Explanation in Artificial Intelligence}
+\label{sec:explainability_in_reinforcement_learning_explanation_in_artificial_intelligence}
+
+In this section, we define what an explanation is in the context of \gls{xai} and how it can be obtained.
+We first introduce the concept of explanation in general.
+We then describe how this concept applies to \gls{xai}.
+Finally, we further detail the properties that characterize an explainability method in the context of \gls{xai}.
+
+\subsection{Explanation}
+\label{subsec:explanation}
+Defining what constitutes an explanation is challenging because the concept is inherently multidisciplinary.
+When we refer to explanation, we are inherently referring to an explanation provided to a human.
+As soon as humans are involved, the problem is no longer purely computational or mathematical.
+It involves several fields of research, such as philosophy, psychology, and sociology.
+So far, these disciplines have not converged on a unified definition of explanation that can be directly applied to \gls{xai} \parencite{miller2019explanation, bellucci2021towards}.
+
+For this reason, we propose the following definition of explanation.
+An explanation involves two entities: the object (Definition~\ref{def:object}) being explained and the receiver of the explanation.
+The receiver is a human who aims to understand how the object operates and will be referred to as the observer throughout this thesis (Definition~\ref{def:observer}).
+The observer seeks to understand the object and, in doing so, builds a mental model of its functioning.
+An explanation is therefore what allows the observer to refine and correct their mental model of how the object operates (Definition~\ref{def:explanation}).
+This refinement is obtained through a transformation process that produces an explanation from the object being explained.
+We refer to this process as an explainability method (Definition~\ref{def:explainability_method}), detailed further in Section~\ref{subsec:explainability_method}.
+For an observer to understand an explanation, the information it contains must be interpretable (Definition~\ref{def:interpretable}).
+Information is considered interpretable when it can be directly understood by a human without requiring any additional transformation process.
+
+\begin{definition}{Object}{object}
+The object of an explanation is the system the observer wants to understand.
+\end{definition}
+
+\begin{definition}{Observer}{observer}
+The observer is the human who aims to understand an object.
+The observer possesses a mental model of the object being explained.
+This mental model is an internal representation of how the observer believes the system operates.
+This representation may be incomplete or inaccurate.
+\end{definition}
+
+\begin{definition}{Interpretable}{interpretable}
+Information is interpretable when it can be directly understood by an observer without requiring any additional transformation process.
+\end{definition}
+
+\begin{definition}{Explanation}{explanation}
+An explanation is any interpretable information that enables an observer to refine or correct their mental model of the object of the explanation.
+\end{definition}
+
+\begin{definition}{Explainability Method}{explainability_method}
+An explainability method is a transformation process that produces an explanation from the object being explained.
+\end{definition}
+
+Figure~\ref{fig:explanation_process_illustration} summarizes this whole explanation process, from the object of the explanation to the mental model refined by the observer, as a chain of three information structures, depicted as boxes and connected by arrows denoting a transformation of information:
+\begin{enumerate}
+    \item[(1)] The object of the explanation, that is, the system the observer seeks to understand.
+    \item[(2)] The explanation, the interpretable information produced from the object.
+    This transformation is performed through the use of an explainability method.
+    \item[(3)] The mental model held by the observer regarding the object.
+\end{enumerate}
+A brace spanning boxes~(2) and~(3) indicates that this second half of the process, from the explanation to the resulting mental model, constitutes a subjective analysis carried out by the observer.
+
+\input{figures/explainability_in_reinforcement_learning/explanation_process_illustration.tex}
+
+This definition of explanation establishes the approach to explainability adopted throughout this thesis.
+Under this definition, explainability is regarded as a continuum that evolves as knowledge develops \parencite{Siegel_Craver_2024, zednik2019solving}.
+
+This quantitative perspective highlights that not all explanations provide the same level of value \parencite{doshivelez2017rigorous}.
+The effectiveness of an explanation depends on its ability to improve the observer's understanding of the system.
+For example, describing a marginal aspect of a system is different from correcting an observer's misunderstanding of a key mechanism.
+
+\subsection{Explainable Artificial Intelligence}
+\label{subsec:explainable_artificial_intelligence}
+
+Now that the general framework of explanation has been established, we can examine how this concept applies in the context of \gls{ai}.
+In the context of \gls{xai}, the object of explanation is an \gls{ai} system.
+More precisely, \gls{xai} emerged as a response to the success of \gls{dl} models \parencite{gunning2019darpa, arrieta2020explainable}.
+In these architectures, information is represented in a distributed manner across the network through patterns of activation and connections between computational units.
+Unlike symbolic approaches, individual components of \glspl{nn} cannot be directly associated with human concepts.
+From this starting point, we identify two types of approaches:
+\begin{itemize}
+    \item \textbf{Substitutive explainability:} In this approach, the assumption is that there is nothing to explain within a \gls{nn}.
+    There is no semantic meaning associated with each computational component, and therefore nothing to interpret.
+    This corresponds to the \enquote{black box} view of \glspl{nn}.
+    Under this assumption, \gls{xai} consists of replacing as much of the \gls{dl} system as possible with alternative \gls{ai} methods \parencite{rudin2019stop}.
+
+    \item \textbf{Intrinsic explainability:} In this approach, it is argued that \glspl{nn} contain mechanisms that can be explained.
+    The limitation is considered to lie not in the networks themselves, but in the absence of adequate tools to analyze their functioning \parencite{olah2020zoom}.
+\end{itemize}
+
+This thesis considers methods from both approaches in order to provide a comprehensive overview of the \gls{xai} field.
+Although both approaches have produced convincing results, this thesis primarily adopts the perspective of the \MechanisticHypothesisName \parencite{Siegel_Craver_2024, zednik2019solving}.
+This perspective is more closely aligned with the definition of explainability adopted in this thesis, which considers explainability as a continuum that evolves with the development of knowledge.
+
+\begin{hypothesis}{Mechanistic Hypothesis}{mechanistic}
+Every \gls{ai} system results from a sequence of causal computations.
+Because the rules governing these interactions are mechanical, the behavior of the system can be explained.
+If an \gls{ai} system cannot be explained, this reflects a limitation of knowledge rather than an intrinsic property of the system.
+\end{hypothesis}
+
+Within intrinsic explainability, the \MechanisticHypothesisName underlies the approach that we refer to as \gls{me} (Definition~\ref{def:mechanistic_explainability}), generally called mechanistic interpretability in the literature \parencite{olah2020zoom}.
+The definitions introduced above clarify this terminological choice.
+According to Definition~\ref{def:interpretable}, the internal mechanisms of a \gls{nn} are not interpretable, since an observer cannot directly understand them without an additional transformation process.
+What this approach produces is interpretable information obtained from these mechanisms through an explainability method (Definition~\ref{def:explainability_method}), that is, explanations in the sense of Definition~\ref{def:explanation}.
+It therefore falls within explainability rather than interpretability.
+
+\subsection{Explainability Method in XAI}
+\label{subsec:explainability_method}
+
+Now that the general framework of \gls{xai} has been established, we need to further detail the properties of an explanation in this context.
+In our framework, an explanation in the field of \gls{xai} can be characterized by three components:
+\begin{itemize}
+    \item \textbf{Source:}\label{item:source} refers to the origin of the information used by the explainability method.
+    The explainability method transforms the raw information produced by the \gls{ai} system into an explanation that can be understood by an observer.
+
+    \item \textbf{Form:}\label{item:form} refers to the representation through which the explanation is communicated.
+    The form defines how the information is presented to the observer and must allow human interpretation.
+    An explanation can take many different forms, including text, images, computer code, and mathematical equations.
+
+    \item \textbf{Subject:}\label{item:subject} refers to the aspect of the \gls{ai} system that is being explained.
+    In \gls{xai}, this distinction is commonly associated with the difference between local and global explanations.
+    A local explanation describes why an \gls{ai} system produced a specific output in a given situation.
+    A global explanation aims to describe the general functioning of the \gls{ai} system.
+\end{itemize}
+
+These three properties of an explanation are entirely determined by the explainability method (Definition~\ref{def:explainability_method}) used to produce it.
+In this context, an explainability method is a transformation process that maps a source of information into an explanation characterized by a specific form and subject.
+Research in \gls{xai} focuses on developing new methods capable of performing this transformation in order to overcome the lack of interpretability associated with \gls{dl} models.

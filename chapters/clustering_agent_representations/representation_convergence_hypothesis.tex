@@ -1,0 +1,38 @@
+\section{Representation Convergence Hypothesis}
+\label{sec:clustering_agent_representations_representation_convergence_hypothesis}
+
+The \gls{car} method relies on a assumption, referred to as the \RepresentationConvergenceHypothesisName.
+This hypothesis follows the two assumptions established previously throughout this thesis.
+
+The \MechanisticHypothesisName rejects the notion that deep \glspl{nn} constitute irreducible black boxes.
+Adopting a mechanistic perspective, we consider that every process results from a sequence of causal computations.
+Although these computations may be complex, they remain explainable through the analysis of the internal mechanisms.
+
+The \ConceptHypothesisName states that \glspl{nn} achieve generalization by learning concepts.
+During optimization, the network progressively organizes its \gls{ls} into representations that capture the information required to solve the task.
+
+Following these two hypotheses, it becomes possible to explain a \gls{nn} by studying the organization of its \gls{ls}.
+This family of approaches corresponds to \gls{me} (Definition~\ref{def:mechanistic_explainability}).
+Since the \gls{car} method is grounded in these two hypotheses, it falls within this field of research.
+More specifically, \gls{car} focuses on a specific aspect of \gls{me} known as universality.
+Universality refers to the consistency with which a concept is recovered across different models trained on the same task \parencite{templeton2024scaling}.
+
+To provide a explanation for this phenomenon, we developed the \RepresentationConvergenceHypothesisName.
+This hypothesis states that, when \glspl{nn} are trained to solve the same task, a set of concepts should systematically emerge because these concepts provide a effective way of representing the problem.
+As a result, independently trained models should develop similar concepts in their learned representations.
+
+\begin{hypothesis}{Representation Convergence Hypothesis}{convergence}
+For a given task, independently trained \glspl{nn} tend to develop similar sets of concepts because these concepts provide an efficient representation for solving the task.
+\end{hypothesis}
+
+The \gls{car} method is designed to investigate the \RepresentationConvergenceHypothesisName by assessing whether it can consistently recover similar concepts across independently trained models.
+The hypothesis therefore serves both as the foundation of the method and as the phenomenon it aims to investigate.
+If \gls{car} consistently recovers the same set of concepts across different training runs, this set is more likely to reflect invariant properties of the task than model-specific artifacts.
+Conversely, the absence of representation convergence would provide evidence against the hypothesis and would also question the validity of the \gls{car} approach.
+
+It is important to clarify that this hypothesis does not imply convergence at the parameter level.
+Independently trained models are expected to converge toward different sets of weights.
+The proposed hypothesis concerns a abstract level of representation.
+We assume that the conceptual organization induced by their \glspl{lr} converges toward an equivalent \gls{cs}, even though the numerical implementation of the networks differ.
+
+The remainder of this chapter develops the methodology used to investigate this hypothesis.

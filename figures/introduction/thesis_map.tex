@@ -1,0 +1,51 @@
+\begin{figure}[t]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tikzpicture}[
+            chapter/.style={rectangle, draw, rounded corners, minimum height=1.6cm,
+                            minimum width=2.9cm, align=center, font=\small, text width=2.7cm},
+            legend/.style={rectangle, draw, rounded corners, font=\small,
+                           inner xsep=8pt, inner ysep=5pt},
+            >={Stealth},
+            % Each category has its own color AND its own border style, so the
+            % figure stays readable in grayscale: dashed for technical
+            % background, solid for surveys, double line for the method.
+            background/.style={draw=myblue,  fill=myblue!12, dashed, line width=1pt},
+            survey/.style={draw=mygreen, fill=mygreen!12},
+            method/.style={draw=myred,   fill=myred!12, double=myred!12,
+                           double distance=1.6pt},
+        ]
+
+        % Chapter number (small, on top) followed by the chapter name in bold.
+        \newcommand{\chapterbox}[2]{{\footnotesize Chapter~\ref{#1}}\\[3pt]\textbf{#2}}
+
+        % Two parallel tracks, deep learning (top) and reinforcement learning
+        % (bottom), which converge on the method chapter.
+        \node[chapter, background]  (dl)   at (0, 1.1)   {\chapterbox{chap:deep_learning}{Deep\\Learning}};
+        \node[chapter, survey] (ls)   at (3.5, 1.1) {\chapterbox{chap:latent_space_analysis}{Latent\\Space}};
+        \node[chapter, background]  (rl)   at (0, -1.1)  {\chapterbox{chap:reinforcement_learning}{Reinforcement\\Learning}};
+        \node[chapter, survey] (xrl)  at (3.5, -1.1){\chapterbox{chap:explainability_in_reinforcement_learning}{Explainability\\in \gls{rl}}};
+        \node[chapter, method]   (car)  at (7.5, 0)   {\chapterbox{chap:clustering_agent_representations}{\gls{car}\\Method}};
+        \node[chapter, method]   (exp)  at (11, 0)    {\chapterbox{chap:experiments}{Experiments}};
+
+        % Within each track.
+        \draw[->, thick] (dl)  -- (ls);
+        \draw[->, thick] (rl)  -- (xrl);
+
+        % Both tracks converge on the method chapter.
+        \draw[->, thick] (ls.east)  -- ++(0.55, 0) |- ([yshift=0.35cm]car.west);
+        \draw[->, thick] (xrl.east) -- ++(0.55, 0) |- ([yshift=-0.35cm]car.west);
+
+        \draw[->, thick] (car) -- (exp);
+
+        \matrix[ampersand replacement=\&, column sep=0.8cm, inner sep=0pt] at (5.5, -2.8) {
+            \node[legend, background]  {Technical background}; \&
+            \node[legend, survey] {Survey}; \&
+            \node[legend, method]   {Method}; \\
+        };
+
+        \end{tikzpicture}
+    }
+    \caption{Structure of the thesis.}
+    \label{fig:thesis_map}
+\end{figure}

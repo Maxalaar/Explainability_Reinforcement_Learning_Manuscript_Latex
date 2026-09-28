@@ -9,19 +9,19 @@ This chapter presents the experimental study of the \gls{car} method introduced 
 It focuses on evaluating the method's ability to identify conceptual structures.
 The remainder of this chapter is organized as follows:
 \begin{itemize}
-    \item Section~\ref{sec:experiments_software} describes the software implementation of the \gls{car} pipeline.
-    \item Section~\ref{sec:experiments_configuration} details the experimental configuration, covering the environments, the \gls{rl} setup, and the surrogate policy training.
-    \item Section~\ref{sec:experiments_policy_performance_surrogate_fidelity} presents the training of the initial and surrogate policies and evaluates how faithfully the surrogate policies reproduce the behavior of the initial policy.
-    \item Section~\ref{sec:experiments_clustering_quality} provides a quantitative analysis of the \glspl{lr} using the \gls{cu}, \gls{as}, and \gls{acu} metrics.
-    \item Section~\ref{sec:experiments_cluster_semantic_interpretation} provides a qualitative analysis of the resulting clusters by manually examining their semantic content.
+    \item Section~\ref{sec:experiments_software_implementation} describes the software implementation of the \gls{car} pipeline.
+    \item Section~\ref{sec:experiments_experimental_configuration} details the experimental configuration, covering the environments, the \gls{rl} setup, and the surrogate policy training.
+    \item Section~\ref{sec:experiments_policy_performance_and_surrogate_fidelity} presents the training of the initial and surrogate policies and evaluates how faithfully the surrogate policies reproduce the behavior of the initial policy.
+    \item Section~\ref{sec:experiments_clustering_quality_of_the_latent_space} provides a quantitative analysis of the \glspl{lr} using the \gls{cu}, \gls{as}, and \gls{acu} metrics.
+    \item Section~\ref{sec:experiments_semantic_interpretation_of_the_clusters} provides a qualitative analysis of the resulting clusters by manually examining their semantic content.
     \item Section~\ref{sec:experiments_conclusion} summarizes the findings and discusses their implications.
 \end{itemize}
 
-\input{chapters/experiments/software.tex}
-\input{chapters/experiments/configuration.tex}
+\input{chapters/experiments/software_implementation.tex}
+\input{chapters/experiments/experimental_configuration.tex}
 \input{chapters/experiments/policy_performance_and_surrogate_fidelity.tex}
-\input{chapters/experiments/clustering_quality.tex}
-\input{chapters/experiments/cluster_semantic_interpretation.tex}
+\input{chapters/experiments/clustering_quality_of_the_latent_space.tex}
+\input{chapters/experiments/semantic_interpretation_of_the_clusters.tex}
 \input{chapters/experiments/conclusion.tex}
 
 \DisableCompactFloats

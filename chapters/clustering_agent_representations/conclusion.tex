@@ -1,0 +1,17 @@
+\section{Conclusion}
+\label{sec:clustering_agent_representations_conclusion}
+
+The \gls{car} method was developed to investigate how concepts are organized within the representations of \gls{rl} policies.
+It is based on three hypotheses introduced throughout this thesis, the \MechanisticHypothesisName, the \ConceptHypothesisName, and the \RepresentationConvergenceHypothesisName.
+
+\gls{car} translates these assumptions into an empirical analysis.
+Multiple surrogate policies are trained independently to reproduce the same policy.
+Their \glspl{lr} are then clustered and compared to assess whether similar conceptual structures emerge across policies.
+The \ClusteringUniversalityName and \AbstractionScoreName provide quantitative measures for evaluating the consistency and abstraction of the resulting clusters.
+
+This makes \gls{car} a general procedure for analyzing agent representations.
+The analysis and evaluation metrics are fully automated and require no manual intervention or environment-specific adjustments.
+The method can therefore be applied to a wide range of \gls{rl} settings and provides a basis for systematically studying the internal representations of neural policies.
+
+The next chapter applies \gls{car} to several environments to evaluate its ability to identify meaningful conceptual structures.
+

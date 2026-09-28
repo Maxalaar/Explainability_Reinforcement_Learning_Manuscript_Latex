@@ -1,0 +1,31 @@
+\begin{figure}[t]
+\centering
+
+\input{figures/latent_space_analysis/latent_space_shared.tex}
+
+\resizebox{0.65\textwidth}{!}{
+\begin{tikzpicture}
+\begin{axis}[latent axis]
+
+  % Cluster boundaries
+  \plotEllipse[color=colorA, width=very thick, fill=colorA, fillopacity=0.08]
+    {-3}{1.5}{15}{2.3}{1.2}
+  \plotEllipse[color=colorB, width=very thick, fill=colorB, fillopacity=0.08]
+    {-2.5}{-4}{10}{2.2}{1.1}
+  \plotEllipse[color=colorC, width=very thick, fill=colorC, fillopacity=0.08]
+    {4.2}{-0.5}{-20}{1.4}{2.6}
+
+  % Point clouds
+  \plotPoints[color=colorA, mark=*]{figures/latent_space_analysis/cluster_a.data}
+  \plotPoints[color=colorB, mark=square*]{figures/latent_space_analysis/cluster_b.data}
+  \plotPoints[color=colorC, size=2pt, mark=triangle*]{figures/latent_space_analysis/cluster_c.data}
+
+\end{axis}
+\end{tikzpicture}
+}
+
+\caption{
+  Visualization of the latent space structure.
+}
+\label{fig:latent_clusters}
+\end{figure}
