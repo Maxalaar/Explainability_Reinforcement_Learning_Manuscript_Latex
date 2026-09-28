@@ -41,14 +41,13 @@
 \usepackage{ulem}
 \usepackage{soul}
 \usepackage[acronym, automake]{glossaries-extra}
-% Bibliography: author-year citations, clickable DOI, arXiv and URL links.
+% Bibliography: numbered citations (sorted by year, oldest first), clickable DOI, arXiv
+% and URL links.
 \usepackage[
   backend=biber,
-  style=authoryear,
-  maxcitenames=2,
+  style=numeric-comp,
+  sorting=ynt,
   maxbibnames=10,
-  uniquelist=false,
-  dashed=false,
   doi=true,
   eprint=true,
   url=true,
@@ -64,6 +63,20 @@
 \addbibresource{references/software.bib}
 % ulem turns \emph into underlining; restore italics in the bibliography only.
 \AtBeginBibliography{\normalem}
+% URLs are shown as "URL: link", the word "link" being clickable.
+\DeclareFieldFormat{url}{\mkbibacro{URL}\addcolon\space\href{#1}{link}}
+% More space between two references.
+\setlength{\bibitemsep}{0.6\baselineskip}
+% Raise the anchor of each reference by one line, so that following a citation
+% link shows the reference at the top of the window instead of cutting it off.
+\makeatletter
+\appto\blx@mkhyperref{%
+  \protected\def\blx@anchor{%
+    \xifinlist{\the\c@refsection @\abx@field@entrykey}{\blx@anchors}
+      {}
+      {\listxadd\blx@anchors{\the\c@refsection @\abx@field@entrykey}%
+       \Hy@raisedlink{\hypertarget{cite.\the\c@refsection @\abx@field@entrykey}{}}}}}
+\makeatother
 
 % Floats and positioning
 \usepackage{float}
