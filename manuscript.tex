@@ -49,13 +49,13 @@
 \renewcommand{\thechapter}{\arabic{chapter}}
 \input{appendix/additional_results/additional_results.tex}
 
-% Back matter: reference lists, bibliography, institutional statements and
-% back cover (abstract).
+% Back matter: reference lists, bibliography, LLM use policy, institutional
+% acknowledgements and back cover (abstract).
 \backmatter
 \printglossary[type=\acronymtype, nonumberlist]
 \printbibliography[heading=bibintoc]
+\input{chapters/llm_use_policy/llm_use_policy.tex}
 \input{chapters/institutional_acknowledgements/institutional_acknowledgements.tex}
-\input{chapters/ai_use_policy/ai_use_policy.tex}
 \input{chapters/abstract/abstract.tex}
 
 \end{document}

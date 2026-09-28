@@ -11,22 +11,34 @@
   {\large \ThesisAuthor\par}
 \end{center}
 \bigskip
-\noindent\textbf{Abstract}
+% \noindent\textbf{Abstract}
 
-Deep reinforcement learning agents reach strong performance on complex sequential decision-making tasks, but the neural networks that implement their policies remain difficult to interpret.
-This thesis addresses the explainability of such agents from a mechanistic perspective: rather than describing the behavior of an agent from the outside, it seeks to explain its decisions by analyzing the internal representations learned by its network.
+Deep reinforcement learning agents achieve strong performance on complex sequential decision-making tasks, but the neural networks that implement their policies remain difficult to interpret.
+This thesis addresses the explainability of such agents from a mechanistic perspective.
+It seeks to explain their decisions by analyzing the internal representations learned by their neural networks.
 
-The thesis first reviews the methods proposed to analyze the latent space of neural networks and makes explicit the working hypothesis they share, the Concept Hypothesis, according to which networks generalize by organizing their latent space around concepts.
-It then clarifies what an explanation is and proposes a unified taxonomy of explainable reinforcement learning methods, organized by the subject of the explanation (a single decision or the agent's strategy) and by its source (policies, trajectories, or value functions).
+The thesis first reviews methods for analyzing the latent space and makes explicit the hypothesis they share.
+We refer to this hypothesis as the Concept Hypothesis, which states that neural networks generalize by organizing their latent space around concepts.
 
-Building on these foundations, the thesis introduces Clustering Agent Representation (CAR), a mechanistic explainability method.
-CAR trains several surrogate policies independently to reproduce the same agent, clusters their latent representations, and compares the resulting partitions.
-It relies on the Representation Convergence Hypothesis, according to which independently trained networks develop similar concepts for a given task.
-To evaluate the recovered structures objectively, three metrics are proposed: Clustering Universality, which measures their consistency across surrogate policies; Abstraction Score, which measures how far they depart from the structure of the observations, of the actions, and of an untrained network; and Adjusted Clustering Universality, which combines both.
+It then clarifies what constitutes an explanation and proposes a unified taxonomy of explainable reinforcement learning methods.
+This taxonomy is organized according to the subject of the explanation, which can be a single decision or the agent's overall strategy, and according to its source, which can be policies, trajectories, or value functions.
 
-Experiments on six Atari environments show that independently trained surrogate policies converge toward similar clustering structures that cannot be explained by these baselines alone.
-Consistency and abstraction evolve in opposite directions across the network, and Adjusted Clustering Universality provides a practical criterion for selecting the layer to analyze.
-A qualitative analysis shows that the recovered clusters correspond to interpretable aspects of the task, such as episode progression, specific game situations, and behavioral patterns.
+Building on these foundations, the thesis introduces Clustering Agent Representation, or CAR, as a mechanistic explainability method.
+CAR independently trains several surrogate policies to reproduce the behavior of the same agent.
+It then clusters their latent representations and compares the resulting partitions.
+
+The method relies on the Representation Convergence Hypothesis, which states that independently trained networks develop similar concepts for a given task.
+
+To objectively evaluate the recovered structures, three metrics are proposed.
+Clustering Universality measures their consistency across surrogate policies.
+Abstraction Score measures their departure from the structure of the observations, the actions, and an untrained network.
+Adjusted Clustering Universality combines these two measures.
+
+Experiments conducted on six Atari environments show that independently trained surrogate policies converge toward similar clustering structures that cannot be explained by the considered baselines alone.
+Consistency and abstraction evolve in opposite directions across network layers.
+Adjusted Clustering Universality provides a practical criterion for selecting the layer to analyze.
+
+Finally, a qualitative analysis shows that the recovered clusters correspond to interpretable aspects of the task, including episode progression, specific game situations, and behavioral patterns.
 
 \bigskip
-\noindent\textbf{Keywords:} explainable artificial intelligence, reinforcement learning, mechanistic explainability, latent space, clustering, surrogate policies.
+\noindent\textbf{Keywords:} Explainable Artificial Intelligence, Deep Learning, Reinforcement Learning, explainability, Mechanistic Interpretability, Latent Space, Clustering.
