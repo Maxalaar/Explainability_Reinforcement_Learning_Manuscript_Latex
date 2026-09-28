@@ -4,7 +4,7 @@
 \input{setup/setup}
 
 % Uncomment for a fast draft: heavy figures become placeholders (see setup/draft.tex).
-\draftfigurestrue
+% \draftfigurestrue
 
 % Title and author, reused on the back cover.
 \newcommand{\ThesisTitle}{Mechanistic Explainability in Reinforcement Learning}
@@ -19,46 +19,44 @@
 
 % Front matter (roman page numbers): title, acknowledgements, contents, notation.
 
-% \frontmatter
-% \maketitle
-% \input{chapters/acknowledgements/acknowledgements.tex}
-% \tableofcontents
-% \clearpage\phantomsection
-% \addcontentsline{toc}{chapter}{\listfigurename}
-% \listoffigures
-% \clearpage\phantomsection
-% \addcontentsline{toc}{chapter}{\listtablename}
-% \listoftables
-% \input{chapters/notation/notation.tex}
+\frontmatter
+\maketitle
+\input{chapters/acknowledgements/acknowledgements.tex}
+\tableofcontents
+\clearpage\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+\clearpage\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+\input{chapters/notation/notation.tex}
 
 % Main matter (arabic page numbers), opened by the Golem myth.
 % The main matter starts on a recto, so that printed and physical page
 % parities agree when printed recto-verso.
 \cleartorightpage
 \mainmatter
-
-% \input{chapters/the_golem_myth/the_golem_myth.tex}
-% \input{chapters/introduction/introduction.tex}
-% \input{chapters/deep_learning/deep_learning.tex}
-% \input{chapters/latent_space_analysis/latent_space_analysis.tex}
-% \input{chapters/reinforcement_learning/reinforcement_learning.tex}
-% \input{chapters/explainability_in_reinforcement_learning/explainability_in_reinforcement_learning.tex}
-% \input{chapters/clustering_agent_representations/clustering_agent_representations.tex}
-% \input{chapters/experiments/experiments.tex}
+\input{chapters/the_golem_myth/the_golem_myth.tex}
+\input{chapters/introduction/introduction.tex}
+\input{chapters/deep_learning/deep_learning.tex}
+\input{chapters/latent_space_analysis/latent_space_analysis.tex}
+\input{chapters/reinforcement_learning/reinforcement_learning.tex}
+\input{chapters/explainability_in_reinforcement_learning/explainability_in_reinforcement_learning.tex}
+\input{chapters/clustering_agent_representations/clustering_agent_representations.tex}
+\input{chapters/experiments/experiments.tex}
 \input{chapters/conclusion/conclusion.tex}
 
 \appendix
 \renewcommand{\thechapter}{\arabic{chapter}}
-% \input{appendix/additional_results/additional_results.tex}
+\input{appendix/additional_results/additional_results.tex}
 
 % Back matter: reference lists, bibliography, LLM use policy, institutional
 % acknowledgements and back cover (abstract).
-
-% \backmatter
-% \printglossary[type=\acronymtype, nonumberlist]
-% \printbibliography[heading=bibintoc]
-% \input{chapters/llm_use_policy/llm_use_policy.tex}
-% \input{chapters/institutional_acknowledgements/institutional_acknowledgements.tex}
-% \input{chapters/abstract/abstract.tex}
+\backmatter
+\printglossary[type=\acronymtype, nonumberlist]
+\printbibliography[heading=bibintoc]
+\input{chapters/llm_use_policy/llm_use_policy.tex}
+\input{chapters/institutional_acknowledgements/institutional_acknowledgements.tex}
+\input{chapters/abstract/abstract.tex}
 
 \end{document}

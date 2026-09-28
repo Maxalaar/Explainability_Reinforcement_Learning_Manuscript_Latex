@@ -22,6 +22,7 @@
 *-blx.bib
 *.blg
 *.run.xml
+*-SAVE-ERROR
 
 # --- Index / Glossaire / Nomenclature ---
 *.idx
