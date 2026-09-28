@@ -18,7 +18,7 @@ This thesis addresses the explainability of such agents from a mechanistic persp
 It seeks to explain their decisions by analyzing the internal representations learned by their neural networks.
 
 The thesis first reviews methods for analyzing the latent space and makes explicit the hypothesis they share.
-We refer to this hypothesis as the Concept Hypothesis, which states that neural networks generalize by organizing their latent space around concepts.
+This hypothesis, referred to as the Concept Hypothesis, states that neural networks generalize by organizing their latent space around concepts.
 
 It then clarifies what constitutes an explanation and proposes a unified taxonomy of explainable reinforcement learning methods.
 This taxonomy is organized according to the subject of the explanation, which can be a single decision or the agent's overall strategy, and according to its source, which can be policies, trajectories, or value functions.
@@ -26,7 +26,6 @@ This taxonomy is organized according to the subject of the explanation, which ca
 Building on these foundations, the thesis introduces Clustering Agent Representation, or CAR, as a mechanistic explainability method.
 CAR independently trains several surrogate policies to reproduce the behavior of the same agent.
 It then clusters their latent representations and compares the resulting partitions.
-
 The method relies on the Representation Convergence Hypothesis, which states that independently trained networks develop similar concepts for a given task.
 
 To objectively evaluate the recovered structures, three metrics are proposed.
@@ -41,4 +40,4 @@ Adjusted Clustering Universality provides a practical criterion for selecting th
 Finally, a qualitative analysis shows that the recovered clusters correspond to interpretable aspects of the task, including episode progression, specific game situations, and behavioral patterns.
 
 \bigskip
-\noindent\textbf{Keywords:} Explainable Artificial Intelligence, Deep Learning, Reinforcement Learning, explainability, Mechanistic Interpretability, Latent Space, Clustering.
+\noindent\textbf{Keywords:} Explainable Artificial Intelligence, Deep Learning, Reinforcement Learning, Explainability, Mechanistic Explainability, Mechanistic Interpretability, Latent Space, Clustering.
