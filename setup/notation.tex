@@ -1,0 +1,20 @@
+% Mathematical notation.
+
+% Reinforcement learning: state sets and states.
+\newcommand{\StateSet}{\mathcal{S}}
+\newcommand{\StateSetInitial}{\mathcal{S}^{\text{init}}}
+\newcommand{\StateSetTerminal}{\mathcal{S}^{\text{ter}}}
+\newcommand{\StateInitial}{s^{\text{init}}}
+\newcommand{\StateTerminal}{s^{\text{ter}}}
+
+\newcommand{\InitialPolicy}{\textcolor{mygreen}{\pi}}
+\newcommand{\SurrogatePolicy}[1]{\textcolor{myred}{\pi'_{#1}}}
+
+% Per-example loss: #1 = parameters, #2 = example index.
+\newcommand{\fullLoss}[2]{\mathcal{L}\left(\hat{f}_{#1}(x^{(#2)}), y^{(#2)}\right)}
+\newcommand{\loss}[2]{\mathcal{L}^{(#2)}\left(#1\right)}
+
+% Latent representation: optional #1 = layer index (h or h_l).
+\newcommand{\latentRepresentation}[1][]{%
+    \mathbf{h}\if\relax\detokenize{#1}\relax\else_{#1}\fi
+}

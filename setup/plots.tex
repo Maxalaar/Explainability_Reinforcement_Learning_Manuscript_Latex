@@ -1,0 +1,17 @@
+% Figure helpers: timelines, PlotNeuralNet styles and plotting functions.
+
+\input{figures/timeline.tex}
+
+% PlotNeuralNet layer colors.
+\colorlet{ObservationColor}{black!10!white}
+\colorlet{ConvColor}{myblue!35!white}
+\colorlet{FcColor}{black!12!white}
+\colorlet{FlattenColor}{mygreen!12!white}
+\colorlet{OutputColor}{myred!45!white}
+\tikzset{connection/.style={ultra thick, every node/.style={sloped, allow upside down}, draw=\edgecolor, opacity=0.7}}
+
+\def\numberOfSamplesToPlotCurve{50}
+% Gaussian probability density function.
+\pgfmathdeclarefunction{gauss}{3}{%
+  \pgfmathparse{1/(#3*sqrt(2*pi))*exp(-((#1-#2)^2)/(2*#3^2))}%
+}

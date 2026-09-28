@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Compiles the appendix tables once into tables/additional_results/tables.pdf
-# (plus tables_pages.tex, the label -> page map read by setup.tex).
+# (plus tables_pages.tex, the label -> page map read by setup/appendix_tables.tex).
 # Run from anywhere; re-run whenever a table's data or
 # tables/additional_results/cluster_k_table_core.tex changes.
 set -euo pipefail

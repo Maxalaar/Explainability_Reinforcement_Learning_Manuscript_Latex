@@ -1,0 +1,71 @@
+% Colored boxes: definitions, hypotheses, research questions and problems.
+
+\tcbset{
+  mydefinition/.style={
+    colback=gray!5,
+    colframe=gray!60,
+    boxrule=0.5pt,
+    arc=3pt,
+    left=6pt,
+    right=6pt,
+    top=4pt,
+    bottom=6pt,
+    fonttitle=\bfseries,
+    coltitle=black
+  }
+}
+
+\newtcbtheorem[number within=section]{definition}{Definition}{
+  mydefinition
+}{def}
+
+\tcbset{
+  myhypothesis/.style={
+    colback=mygreen!5,
+    colframe=mygreen!60,
+    boxrule=0.5pt,
+    arc=3pt,
+    left=6pt,
+    right=6pt,
+    top=4pt,
+    bottom=6pt,
+    fonttitle=\bfseries,
+    coltitle=black
+  }
+}
+
+\newtcbtheorem{hypothesis}{Hypothesis}{
+  myhypothesis
+}{hyp}
+
+\tcbset{
+  myresearchquestion/.style={
+    colback=myblue!5,
+    colframe=myblue!60,
+    boxrule=0.5pt,
+    arc=3pt,
+    left=6pt,
+    right=6pt,
+    top=4pt,
+    bottom=6pt,
+    fonttitle=\bfseries,
+    coltitle=black
+  }
+}
+
+\newtcbtheorem{researchquestion}{Research Question}{
+  myresearchquestion
+}{rq}
+
+\tcbset{
+  myproblemstatement/.style={
+    mydefinition,
+    colback=myred!5,
+    colframe=myred!60
+  }
+}
+
+\newtcolorbox{problemstatement}{
+  myproblemstatement,
+  title={Problem Statement}
+}

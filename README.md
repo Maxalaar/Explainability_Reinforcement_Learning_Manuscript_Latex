@@ -12,8 +12,10 @@ The manuscript is organized as follows:
 * `packages.tex`
   All LaTeX packages and dependencies.
 
-* `setup.tex`
-  Glossary definitions, global configuration, and figure includes.
+* `setup/setup.tex`
+  Global configuration, split by topic into the other files of `setup/`:
+  `colors`, `draft`, `boxes`, `names`, `glossary`, `notation`,
+  `environments`, `plots`, `floats`, `appendix_tables`.
 
 
 ## ⚙️ Dependencies

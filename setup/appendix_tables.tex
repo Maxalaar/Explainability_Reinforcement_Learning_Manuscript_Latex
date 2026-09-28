@@ -1,0 +1,45 @@
+% Shared macros for the metric-vs-K tables of the appendix.
+
+\input{tables/additional_results/cluster_k_table_core}
+
+% Height budget: \ClusterKTablesPerPage tables per landscape page.
+% Lower the allowances if tables are too small, raise them if they overflow.
+\newcommand{\ClusterKTablesPerPage}{3}
+% Room taken by the section heading on the first page of an environment.
+\newcommand{\ClusterKTableHeadingAllowance}{45pt}
+% Caption line plus the spacing around one table.
+\newcommand{\ClusterKTableCaptionOverhead}{32pt}
+\newlength{\ClusterKTableMaxHeight}
+\newsavebox{\ClusterKTableBox}
+
+% Tables are precompiled by build_tables.sh into tables.pdf (tabularray is slow).
+% A table missing from tables_pages.tex is typeset live instead.
+\InputIfFileExists{tables/additional_results/tables_pages.tex}{}{}
+
+% #1 = last row index, #2 = caption, #3 = label suffix, #4 = data rows.
+% In draft mode, a placeholder replaces the table.
+\newcommand{\ClusterKTable}[4]{%
+  \ifdraftfigures
+  \begin{table}[H]
+  \centering
+  \fbox{\parbox[c][3cm][c]{0.6\linewidth}{\centering\itshape
+    Heavy table skipped in draft mode}}
+  \caption{#2}
+  \label{tab:appendix_additional_results_#3}
+  \end{table}
+  \else
+  \begin{table}[H]
+  \centering
+  \setlength{\ClusterKTableMaxHeight}{\dimexpr(\textheight-\ClusterKTableHeadingAllowance)/\ClusterKTablesPerPage-\ClusterKTableCaptionOverhead\relax}%
+  \ifcsname ClusterKPage@#3\endcsname
+  \edef\ClusterKCurrentPage{\csname ClusterKPage@#3\endcsname}%
+  \includegraphics[page=\ClusterKCurrentPage,width=\linewidth,height=\ClusterKTableMaxHeight,keepaspectratio=false]{tables/additional_results/tables.pdf}%
+  \else
+  \sbox{\ClusterKTableBox}{\ClusterKTableBody{#1}{#4}}%
+  \resizebox*{\linewidth}{\ClusterKTableMaxHeight}{\usebox{\ClusterKTableBox}}%
+  \fi
+  \caption{#2}
+  \label{tab:appendix_additional_results_#3}
+  \end{table}
+  \fi
+}
