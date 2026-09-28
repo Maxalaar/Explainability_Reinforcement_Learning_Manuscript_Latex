@@ -6,18 +6,21 @@
 % Uncomment for a fast draft: heavy figures become placeholders (see setup/draft.tex).
 \draftfigurestrue
 
-\title{Mechanistic Explainability in Reinforcement Learning}
-\author{Maxime Alaarabiou}
+% Title and author, reused on the back cover.
+\newcommand{\ThesisTitle}{Mechanistic Explainability in Reinforcement Learning}
+\newcommand{\ThesisAuthor}{Maxime Alaarabiou}
+\title{\ThesisTitle}
+\author{\ThesisAuthor}
 \date{\today}
 
 \begin{document}
 
 \linenumbers
 
-% Front matter (roman page numbers): title, abstract, acknowledgements, contents.
+% Front matter (roman page numbers): title, acknowledgements, contents, notation.
 \frontmatter
 \maketitle
-% TODO: abstract and acknowledgements go here.
+\input{chapters/acknowledgements/acknowledgements.tex}
 \tableofcontents
 \clearpage\phantomsection
 \addcontentsline{toc}{chapter}{\listfigurename}
@@ -28,6 +31,9 @@
 \input{chapters/notation/notation.tex}
 
 % Main matter (arabic page numbers), opened by the Golem myth.
+% The main matter starts on a recto, so that printed and physical page
+% parities agree when printed recto-verso.
+\cleartorightpage
 \mainmatter
 \input{chapters/the_golem_myth/the_golem_myth.tex}
 \input{chapters/introduction/introduction.tex}
@@ -43,9 +49,13 @@
 \renewcommand{\thechapter}{\arabic{chapter}}
 \input{appendix/additional_results/additional_results.tex}
 
-% Back matter: reference lists and bibliography.
+% Back matter: reference lists, bibliography, institutional statements and
+% back cover (abstract).
 \backmatter
 \printglossary[type=\acronymtype, nonumberlist]
 \printbibliography[heading=bibintoc]
+\input{chapters/institutional_acknowledgements/institutional_acknowledgements.tex}
+\input{chapters/ai_use_policy/ai_use_policy.tex}
+\input{chapters/abstract/abstract.tex}
 
 \end{document}

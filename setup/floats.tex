@@ -41,9 +41,16 @@
   \setlength{\belowcaptionskip}{\savedbelowcaptionskip}%
 }
 
-% Start on the next left-hand (even) page, inserting an empty page if needed,
-% so that two consecutive pages face each other in a double-page spread.
+% Page parity for recto-verso printing, based on the physical page count
+% (\ReadonlyShipoutCounter = pages already output), not on the printed number.
+% \cleartoleftpage: next page is a verso (left, even physical page).
+% \cleartorightpage: next page is a recto (right, odd physical page).
+% An empty page is inserted when needed.
 \newcommand{\cleartoleftpage}{%
   \clearpage
-  \ifodd\value{page}\hbox{}\thispagestyle{empty}\newpage\fi
+  \ifodd\ReadonlyShipoutCounter\else\hbox{}\thispagestyle{empty}\newpage\fi
+}
+\newcommand{\cleartorightpage}{%
+  \clearpage
+  \ifodd\ReadonlyShipoutCounter\hbox{}\thispagestyle{empty}\newpage\fi
 }
