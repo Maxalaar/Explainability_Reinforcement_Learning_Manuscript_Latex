@@ -1,3 +1,6 @@
+% Line numbers (draft); loaded first so that later packages do not break its patches.
+\usepackage{lineno}
+
 % Encoding and font settings
 \usepackage{fontspec}
 \setmainfont{Latin Modern Roman}
@@ -55,6 +58,10 @@
 \DeclareFieldFormat{url}{\mkbibacro{URL}\addcolon\space\href{#1}{link}}
 % More space between two references.
 \setlength{\bibitemsep}{0.6\baselineskip}
+% Allow line breaks inside long URLs and DOIs (after digits and letters).
+\setcounter{biburlnumpenalty}{9000}
+\setcounter{biburllcpenalty}{7000}
+\setcounter{biburlucpenalty}{8000}
 % Raise the anchor of each reference by one line, so that following a citation
 % link shows the reference at the top of the window instead of cutting it off.
 \makeatletter
@@ -68,7 +75,6 @@
 
 % Floats and positioning
 \usepackage{float}
-\usepackage{dblfloatfix}
 \usepackage{placeins}
 % Never allow more than one float (figure/table) per page, to avoid two figures bunching together
 \setcounter{topnumber}{1}
@@ -125,10 +131,11 @@
 % "fill/.store in=\fill", which globally overwrites the plain TeX glue macro
 % \fill (used e.g.\ by \hspace*{\fill}) as a side effect of loading the
 % package. Save and restore it so the rest of the document is unaffected.
-\usepackage{import}
 \usetikzlibrary{3d}
 \let\originalfill\fill
-\subimport{styles/plotneuralnet/}{init}
+% Its styles are loaded by name (\usepackage{Ball}, ...): their folder is on
+% the TeX search path, set in .latexmkrc.
+\input{styles/plotneuralnet/init}
 \let\fill\originalfill
 \usepackage[outline]{contour}   % Load the 'contour' package with the 'outline' option
 \contourlength{1.2pt}   % Set the thickness of the outline created by the 'contour' package
@@ -144,7 +151,6 @@
 \AfterEndEnvironment{enumerate}{\end{samepage}}
 
 % Debug
-\usepackage{lineno}
 \usepackage[most]{tcolorbox}
 \usepackage{datetime}
 % Loaded for its redefinition of the default headings: running heads show the

@@ -1,7 +1,6 @@
 \begin{table}[t]
-\hspace*{\fill}
-\resizebox{\textwidth}{!}{
-\begin{tblr}{|Q[c,m,3.4cm]|Q[c,m,3.5cm]|Q[l,m,8.5cm]|}
+\centering
+\begin{tblr}{width=\linewidth, colspec={|Q[c,m,3.2cm]|Q[c,m,3.2cm]|X[l,m]|}}
     \hline
     \textbf{Pipeline Stage} & \textbf{Library} & \SetCell{c}\textbf{Description} \\
     \hline
@@ -27,8 +26,6 @@
     \textbf{Latent space analysis} & cuML \parencite{raschka2020cuml} & \gls{gpu}-accelerated clustering algorithms used to analyze the latent representations. \\
     \hline
 \end{tblr}
-}
-\hspace*{\fill}
 \caption{Main software libraries used at each stage of the \glsfmtshort{car} pipeline.}
 \label{tab:software_libraries}
 \end{table}

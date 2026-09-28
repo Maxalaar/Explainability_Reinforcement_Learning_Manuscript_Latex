@@ -1,7 +1,8 @@
-\begin{table*}[t]
-\hspace*{\fill}
-\resizebox{\textwidth}{!}{
-\begin{tblr}{|Q[c,m]|Q[c,m,4cm]|Q[c,m,7cm]|Q[c,m]|Q[c,m]|Q[c,m]|}
+\begin{table}[t]
+% The table is built wider than the page and scaled down by \resizebox; the
+% generous width only tells tabularray that this is intended.
+\noindent\resizebox{\textwidth}{!}{%
+\begin{tblr}{width=2\linewidth, colspec={|Q[c,m]|Q[c,m,4cm]|Q[c,m,7cm]|Q[c,m]|Q[c,m]|Q[c,m]|}}
     \hline
     \SetCell[r=2]{c} \hyperref[subsec:subject]{\textbf{Explanation \\ Subject}} & \SetCell[r=2]{c} \hyperref[subsec:form]{\textbf{Explanation \\ Form}} & \SetCell[r=2]{c} \hyperref[sec:explainability_in_reinforcement_learning_state_of_the_art_review_of_xrl_methods]{\textbf{Explainability \\ Method Family}} & \SetCell[c=3]{} \hyperref[subsec:source]{\textbf{Source of \\ Explanation}} & & \\
     \hline
@@ -31,9 +32,8 @@
     \hline
     & & \hyperref[subsubsec:latent_space_mdp_generation]{{\textit{Latent space usage for MDP generation}}} & \scalebox{2}{\checkmark} & & \\
     \hline
-\end{tblr}
+\end{tblr}%
 }
-\hspace*{\fill}
 \caption{Taxonomy of explainability methods in reinforcement learning.}
 \label{tab:taxonomy_methods}
-\end{table*}
+\end{table}

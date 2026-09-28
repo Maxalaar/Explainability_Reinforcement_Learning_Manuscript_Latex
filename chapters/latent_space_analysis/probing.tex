@@ -68,13 +68,13 @@ This goal can be formulated as an optimization problem over the \gls{lr} itself.
 The optimization is performed directly on the \gls{lr}, using \gls{sgd}.
 The solution to this problem is the optimal modified \gls{lr}, defined as:
 \[
+\begin{aligned}
 \latentRepresentation[l][*] =
-\argmin_{\latentRepresentation[l][\prime]}
-\underbrace{\lambda_1 \, \mathcal{L}_{\mathrm{flip}}\big(\Probe{l}{j}(\latentRepresentation[l][\prime]), c_j\big)}_{\text{flip target concept } c_j}
-+
-\underbrace{\lambda_2 \sum_{k \neq j} \mathcal{L}_{\mathrm{preserve}}\big(\Probe{l}{k}(\latentRepresentation[l][\prime]), c_k\big)}_{\text{preserve other concepts } c_{k \neq j}}
-+
-\underbrace{\lambda_3 \|\latentRepresentation[l][\prime] - \latentRepresentation[l]\|_2^2}_{\text{minimality}}
+\argmin_{\latentRepresentation[l][\prime]} \;
+&\underbrace{\lambda_1 \, \mathcal{L}_{\mathrm{flip}}\big(\Probe{l}{j}(\latentRepresentation[l][\prime]), c_j\big)}_{\text{flip target concept } c_j} \\
++ \, &\underbrace{\lambda_2 \sum_{k \neq j} \mathcal{L}_{\mathrm{preserve}}\big(\Probe{l}{k}(\latentRepresentation[l][\prime]), c_k\big)}_{\text{preserve other concepts } c_{k \neq j}} \\
++ \, &\underbrace{\lambda_3 \|\latentRepresentation[l][\prime] - \latentRepresentation[l]\|_2^2}_{\text{minimality}}
+\end{aligned}
 \]
 where:
 \begin{itemize}
