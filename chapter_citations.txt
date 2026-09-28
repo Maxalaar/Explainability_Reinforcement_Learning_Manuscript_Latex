@@ -1,0 +1,28 @@
+Introduction  
+“The generation of fire by friction is the first discovery which gave man command over a force of nature, and thereby separated him for ever from the animal kingdom.”  
+Friedrich Engels, The Part Played by Labour in the Transition from Ape to Man (1876), in Dialectics of Nature.
+
+Deep Learning  
+“With four parameters I can fit an elephant, and with five I can make him wiggle his trunk.”  
+John von Neumann, cité par Freeman Dyson, « A meeting with Enrico Fermi », Nature 427, 297 (2004).
+
+Latent Space  
+“Life is a node which is born from the flow of information. As a species, life is a node within the flow of genes. The human body is a node within the flow of information called society. And then there is the flow of information on the net. I am not a computer program. I am a living, thinking entity that was born in the sea of information.”  
+Puppet Master / Project 2501, Ghost in the Shell (1995), réalisé par Mamoru Oshii.
+
+Reinforcement Learning  
+“Since the fabric of the universe is most perfect and the work of a most wise Creator, nothing at all takes place in the universe in which some rule of maximum or minimum does not appear.”  
+Leonhard Euler, Methodus inveniendi lineas curvas maximi minimive proprietate gaudentes (1744).
+
+Explainability in Reinforcement Learning
+“The answer to the ultimate question of life, the universe, and everything is forty-two.”  
+Douglas Adams, The Hitchhiker’s Guide to the Galaxy (1979).
+
+
+Clustering Agents Representations  
+“There are three kinds of lies: lies, damned lies, and statistics.”  
+Attribution courante à Benjamin Disraeli, popularisée par Mark Twain, Chapters from My Autobiography (1907).
+
+Conclusion  
+“Look on my Works, ye Mighty, and despair!”  
+Percy Bysshe Shelley, « Ozymandias » (1818).
