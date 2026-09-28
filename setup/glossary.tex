@@ -21,6 +21,8 @@
   \renewcommand*{\glsgroupskip}{}% uniform spacing, no gap between letter groups
 }
 \setglossarystyle{acronymdesc}
+% Label of the list of acronyms, referenced from the introduction.
+\setglossarypreamble[\acronymtype]{\label{chap:acronyms}}
 
 % General fields
 \newacronym[description={The field of computer science concerned with building systems that perform tasks usually associated with human intelligence, such as perception, reasoning, learning and decision-making.}]

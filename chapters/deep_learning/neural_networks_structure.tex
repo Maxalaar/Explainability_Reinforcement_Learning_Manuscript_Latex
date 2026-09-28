@@ -116,7 +116,7 @@ The precise relationship between depth and function complexity remains primarily
 
 \subsection{Network}
 
-With a layer-wise representation, the propagation of information can be described as a sequence of transformations applied from the input layer (indexed $1$) to the output layer (indexed $L$):
+With a layer-wise representation, the propagation of information can be described as a sequence of transformations applied from the input layer (indexed $0$) to the output layer (indexed $L$):
 \begin{equation}
 \hat{f}(\vect{x}) = \latentRepresentation[L] = \sigma^{(L)}\left(\mat{W}^{(L)} \sigma^{(L-1)}\left(\dots \sigma^{(1)}\left(\mat{W}^{(1)} \vect{x} + \vect{b}^{(1)}\right) \dots \right) + \vect{b}^{(L)}\right) = \hat{\vect{y}}.
 \label{eq:network_full}
@@ -126,8 +126,8 @@ For a more compact description of information propagation, the layer activations
 \begin{equation}
 \latentRepresentation[l] =
 \begin{cases}
-\vect{x} & \text{if } l = 1,\\[4pt]
-\sigma^{(l)}\left(\mat{W}^{(l)} \latentRepresentation[l-1] + \vect{b}^{(l)}\right) & \text{if } 2 \le l \le L.
+\vect{x} & \text{if } l = 0,\\[4pt]
+\sigma^{(l)}\left(\mat{W}^{(l)} \latentRepresentation[l-1] + \vect{b}^{(l)}\right) & \text{if } 1 \le l \le L.
 \end{cases}
 \label{eq:layer_recursive}
 \end{equation}
