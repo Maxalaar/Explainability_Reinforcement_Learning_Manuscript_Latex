@@ -59,9 +59,9 @@ The close agreement between the ground truth and predicted positions suggests th
 \input{figures/latent_space/probing_illustration.tex}
 
 However, the fact that a concept can be decoded from \glspl{lr} does not necessarily imply that the model actually uses this information to perform its task.
-To assess whether \glspl{lr} play a causal role in the model’s output, it is possible to perform interventions on them.
-An intervention consists of modifying a \gls{lr} in a controlled manner by activating or deactivating a given concept, and then studying its impact on the model’s output.
-If the resulting change in the model’s output is consistent with the applied perturbation, this suggests that the representation had a causal role.
+To assess whether \glspl{lr} play a causal role in the model's output, it is possible to perform interventions on them.
+An intervention consists of modifying a \gls{lr} in a controlled manner by activating or deactivating a given concept, and then studying its impact on the model's output.
+If the resulting change in the model's output is consistent with the applied perturbation, this suggests that the representation had a causal role.
 
 To this end, the \gls{lr} is minimally modified such that the probe prediction for the target concept $c_j$ changes state, while the predictions associated with other concepts remain unchanged.
 This goal can be formulated as an optimization problem over the \gls{lr} itself.
@@ -87,15 +87,15 @@ where:
     \item $\lambda_1, \lambda_2, \lambda_3$: weighting coefficients controlling the trade-off between the intervention strength, the preservation of other concepts, and the minimality of the perturbation.
 \end{itemize}
 
-In the context of \glspl{llm} studied previously, such interventions have been used to remove specific pieces from the model’s internal representation of the game state \parencite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
+In the context of \glspl{llm} studied previously, such interventions have been used to remove specific pieces from the model's internal representation of the game state \parencite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
 The main observation is that, in the vast majority of cases, the model behaves as if the piece had effectively disappeared.
 The \gls{llm} continues to generate legal moves while correctly accounting for the absence of the removed piece.
-This provides evidence for the causal role of these internal representations in the model’s behavior.
+This provides evidence for the causal role of these internal representations in the model's behavior.
 
 A main limitation of the probing approach is that the concepts under investigation must be predefined before any analysis can be performed.
 This introduces a strong bias in what can be studied.
 Moreover, annotating a dataset for each concept is extremely time-consuming and requires significant human effort.
-Interventions in \gls{ls} are also difficult to interpret, as it is not always clear what constitutes a meaningful change in the network’s output under a given perturbation.
+Interventions in \gls{ls} are also difficult to interpret, as it is not always clear what constitutes a meaningful change in the network's output under a given perturbation.
 
 Moreover, probing methods provide a binary view of concepts, focusing on whether a given concept is present or absent in a \gls{lr}.
 This binary perspective can be overly restrictive, as concepts may be represented in a more continuous manner.

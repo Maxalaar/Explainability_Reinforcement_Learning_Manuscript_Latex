@@ -18,7 +18,7 @@ To this end, the presentation proceeds step by step:
 
 To specify the task and the agent's capacity to perceive and act, the problem is modeled as a \gls{mdp}.
 
-Before providing a more detailed definition, it is useful to clarify the scope of the \gls{mdp} problems considered in this manuscript.
+Before providing a more detailed definition, it is useful to clarify the scope of the \gls{mdp} problems considered in this thesis.
 We therefore restrict the analysis to the following configuration:
 
 \begin{itemize}
@@ -33,10 +33,10 @@ We therefore restrict the analysis to the following configuration:
 \end{itemize}
 
 The resulting framework can be formally described as a single-agent finite-horizon partially observable Markov decision process.
-For simplicity, we will refer to this setting as an ``\gls{mdp}'' throughout this manuscript.
+For simplicity, we will refer to this setting as an \enquote{\gls{mdp}} throughout this thesis.
 
 % The following section aims to provide a mathematical description of the \gls{rl} problem.
-% The formulation adopted in this manuscript has been chosen to emphasize the main elements that will be used throughout the remainder of the manuscript.
+% The formulation adopted in this thesis has been chosen to emphasize the main elements that will be used throughout the remainder of the thesis.
 A \gls{mdp} is defined by the tuple \((\StateSet, \ObsSet, \ActionSet, \RewardSet, p)\):  
 \begin{itemize}
     \item \textbf{\(\StateSet\)}: The set of states, representing all possible configurations of the environment.  
@@ -82,7 +82,7 @@ The notation \(\beta(s \mid o)\) denotes the probability of state \(s\) given th
 \subsection{Policy}
 \label{subsec:policy}
 
-The agent’s decision-making capability is modeled by a policy function.  
+The agent's decision-making capability is modeled by a policy function.  
 The policy defines the stochastic mapping between observations \(o \in \ObsSet\) and actions \(a \in \ActionSet\).  
 A policy function is denoted by \(\pi\), and is defined as:
 \(

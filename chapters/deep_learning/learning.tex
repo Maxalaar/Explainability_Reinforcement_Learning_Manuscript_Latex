@@ -9,7 +9,7 @@ Mathematically, this objective is expressed as:
 \label{eq:training_objective}
 \end{equation}
 
-As shown in Equation~\ref{eq:training_objective}, the loss for example $i$ depends on the input-target pair $(\vect{x}^{(i)},\vect{y}^{(i)})$, the loss function $\mathcal{L}$, the network architecture $\hat{f}$, and the parameters $\params$.
+As shown in Equation~\eqref{eq:training_objective}, the loss for example $i$ depends on the input-target pair $(\vect{x}^{(i)},\vect{y}^{(i)})$, the loss function $\mathcal{L}$, the network architecture $\hat{f}$, and the parameters $\params$.
 Since the dataset, loss function, and network architecture are fixed during training, only the parameters $\params$ are optimized.
 To simplify the notation, only the dependence on $\params$ is kept, and the loss for example $i$ is written as
 \begin{equation}
@@ -145,7 +145,7 @@ Algorithm~\ref{alg:stochastic_gradient_descent} summarizes this whole training p
 \input{algorithms/deep_learning/stochastic_gradient_descent.tex}
 
 To develop an intuition for this update rule, Figure~\ref{fig:simple_gradient_descent} illustrates it applied to the simple convex loss function $\mathcal{L}(\theta_1,\theta_2)=\theta_1^2+\theta_2^2$, where the red path shows the parameter updates converging to the minimum.
-The point $\params_{1}$ represents the initial parameter values, with $\theta_1$ and $\theta_2$ randomly initialized, and the subsequent points, from $\params_{2}$ to $\params_{6}$, represent the successive updates produced by applying Equation~\ref{eq:gradient_descent_update}, progressively moving the trajectory toward the minimum of the loss function.
+The point $\params_{1}$ represents the initial parameter values, with $\theta_1$ and $\theta_2$ randomly initialized, and the subsequent points, from $\params_{2}$ to $\params_{6}$, represent the successive updates produced by applying Equation~\eqref{eq:gradient_descent_update}, progressively moving the trajectory toward the minimum of the loss function.
 
 \heavyfig{fig:simple_gradient_descent}{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
 

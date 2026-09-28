@@ -16,7 +16,7 @@ So far, these disciplines have not converged on a unified definition of explanat
 
 For this reason, we propose the following definition of explanation.
 An explanation involves two entities: the object (Definition~\ref{def:object}) being explained and the receiver of the explanation.
-The receiver is a human who aims to understand how the object operates and will be referred to as the observer throughout this manuscript (Definition~\ref{def:observer}).
+The receiver is a human who aims to understand how the object operates and will be referred to as the observer throughout this thesis (Definition~\ref{def:observer}).
 The observer seeks to understand the object and, in doing so, builds a mental model of its functioning.
 An explanation is therefore what allows the observer to refine and correct their mental model of how the object operates (Definition~\ref{def:explanation}).
 This refinement is obtained through a transformation process that produces an explanation from the object being explained.
@@ -58,7 +58,7 @@ A brace spanning boxes~(2) and~(3) indicates that this second half of the proces
 
 \input{figures/explainability_reinforcement_learning/explanation_process_illustration.tex}
 
-This definition of explanation establishes the approach to explainability adopted throughout this manuscript.
+This definition of explanation establishes the approach to explainability adopted throughout this thesis.
 Under this definition, explainability is regarded as a continuum that evolves as knowledge develops \parencite{Siegel_Craver_2024, zednik2019solving}.
 
 This quantitative perspective highlights that not all explanations provide the same level of value \parencite{doshivelez2017rigorous}.
@@ -77,16 +77,16 @@ From this starting point, we identify two types of approaches:
 \begin{itemize}
     \item \textbf{Substitutive explainability:} In this approach, the assumption is that there is nothing to explain within a \gls{nn}.
     There is no semantic meaning associated with each computational component, and therefore nothing to interpret.
-    This corresponds to the ``black box'' view of \glspl{nn}.
+    This corresponds to the \enquote{black box} view of \glspl{nn}.
     Under this assumption, \gls{xai} consists of replacing as much of the \gls{dl} system as possible with alternative \gls{ai} methods \parencite{rudin2019stop}.
 
     \item \textbf{Intrinsic explainability:} In this approach, it is argued that \glspl{nn} contain mechanisms that can be explained.
     The limitation is considered to lie not in the networks themselves, but in the absence of adequate tools to analyze their functioning \parencite{olah2020zoom}.
 \end{itemize}
 
-This manuscript considers methods from both approaches in order to provide a comprehensive overview of the \gls{xai} field.
-Although both approaches have produced convincing results, this manuscript primarily adopts the perspective of the \MechanisticHypothesisName \parencite{Siegel_Craver_2024, zednik2019solving}.
-This perspective is more closely aligned with the definition of explainability adopted in this manuscript, which considers explainability as a continuum that evolves with the development of knowledge.
+This thesis considers methods from both approaches in order to provide a comprehensive overview of the \gls{xai} field.
+Although both approaches have produced convincing results, this thesis primarily adopts the perspective of the \MechanisticHypothesisName \parencite{Siegel_Craver_2024, zednik2019solving}.
+This perspective is more closely aligned with the definition of explainability adopted in this thesis, which considers explainability as a continuum that evolves with the development of knowledge.
 
 \begin{hypothesis}{Mechanistic Hypothesis}{mechanistic}
 Every \gls{ai} system results from a sequence of causal computations.

@@ -8,7 +8,7 @@ This type of approach relies on artificial \glspl{nn}, which offer an unpreceden
 Inspired by their biological counterparts, these networks are known as connectionist models.
 In such models, information is represented and transformed through patterns of interactions among interconnected elementary computational units \parencite{rumelhart1986learning}.
 
-One of the fields significantly transformed by \gls{dl} is \gls{rl}, which is the main focus of this manuscript.
+One of the fields significantly transformed by \gls{dl} is \gls{rl}, which is the main focus of this thesis.
 The purpose of \gls{rl} is to enable an agent to learn how to make decisions through interactions with an environment \parencite{sutton2018reinforcement}.
 At each step, the agent observes the current state of the environment and selects an action.
 This action changes the state of the environment and results in a reward.
@@ -24,14 +24,14 @@ From an external perspective, we observe sequences of interactions between the a
 An alternative approach is to analyze the agent itself.
 However, due to their connectionist nature, \glspl{nn} that model the agent's policy are not directly interpretable.
 The information behind a decision is distributed across many units and connections making it impossible to trace.
-\Glspl{nn} are therefore often regarded as "black box" models \parencite{guidotti2018survey}.
+\Glspl{nn} are therefore often regarded as \enquote{black box} models \parencite{guidotti2018survey}.
 
 To address this black-box problem, the field of \gls{xai} has emerged \parencite{gunning2019darpa, arrieta2020explainable}.
 In the specific context of \gls{rl}, this research area is referred to as \gls{xrl} \parencite{puiutta2020explainable, milani2022explainable}.
 \gls{xrl} develops methods for producing explanations that improve our understanding of agent behavior.
 Such explanations can serve several purposes, including increasing human trust, identifying biases and verifying that previously identified problems have been effectively corrected \parencite{arrieta2020explainable, milani2022explainable}.
 
-This manuscript presents \gls{xrl} methods from different approaches to provide a broader view of the field.
+This thesis presents \gls{xrl} methods from different approaches to provide a broader view of the field.
 We focus on the mechanistic approach to explainability, which we refer to as \gls{me} (Definition~\ref{def:mechanistic_explainability}).
 Although still relatively underexplored, this approach seems particularly promising to us.
 In \gls{me}, the goal is to understand how information is represented within the \gls{nn}.

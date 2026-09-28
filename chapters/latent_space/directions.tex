@@ -6,7 +6,7 @@ The methods in this section instead associate each concept with a direction in t
 Moving a \gls{lr} along this direction is expected to strengthen or weaken the concept smoothly.
 This provides information that a binary probe cannot express.
 
-Empirically, it has been observed that shifting a \gls{lr} along such a direction can induce coherent and semantically meaningful changes in the model’s output \parencite{haas2024discovering, voynov2020unsuperviseddiscoveryinterpretabledirections}.
+Empirically, it has been observed that shifting a \gls{lr} along such a direction can induce coherent and semantically meaningful changes in the model's output \parencite{haas2024discovering, voynov2020unsuperviseddiscoveryinterpretabledirections}.
 Such transformations can be mathematically express as:
 \[
 \latentRepresentation' = \latentRepresentation + \alpha \vect{v}_i,
@@ -49,7 +49,7 @@ It appears that not all concepts encoded by \glspl{nn} are linearly identifiable
 In practice, interpretable direction methods typically discover only a few dozen directions per dataset, which intuitively seems insufficient to account for the full diversity of semantic variations that a generative model is capable of producing.
 
 In addition, \glspl{lr} often exhibit a phenomenon known as entanglement, illustrated in Figure~\ref{fig:entanglement_illustration}, where multiple semantic attributes are mixed within the same directions of the \gls{ls}.
-For instance, in a generative face model, moving along the ``glasse'' direction may simultaneously modify age and gender, whereas a disentangled \gls{lr} would let each axis control a single semantic attribute while leaving the others unchanged.
+For instance, in a generative face model, moving along the \enquote{glasses} direction may simultaneously modify age and gender, whereas a disentangled \gls{lr} would let each axis control a single semantic attribute while leaving the others unchanged.
 This lack of separability suggests that semantic information is not cleanly organized in the \gls{ls}.
 This observation motivates the \SuperpositionHypothesisName, which proposes a different view of how \glspl{nn} organize information internally.
 The next section introduces this hypothesis.
