@@ -40,3 +40,10 @@
   \setlength{\abovecaptionskip}{\savedabovecaptionskip}%
   \setlength{\belowcaptionskip}{\savedbelowcaptionskip}%
 }
+
+% Start on the next left-hand (even) page, inserting an empty page if needed,
+% so that two consecutive pages face each other in a double-page spread.
+\newcommand{\cleartoleftpage}{%
+  \clearpage
+  \ifodd\value{page}\hbox{}\thispagestyle{empty}\newpage\fi
+}
