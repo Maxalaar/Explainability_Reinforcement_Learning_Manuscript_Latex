@@ -1,7 +1,7 @@
 \section{Probing}
 \label{sec:probing}
 
-Probing methods aim to determine whether a given semantic concept is encoded within the \gls{ls} of a \gls{nn} \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
+Probing methods aim to determine whether a given semantic concept is encoded within the \gls{ls} of a \gls{nn} \parencite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
 The idea behind these methods is that if a concept can be reliably decoded from \glspl{lr}, it is likely relevant to the problem being solved.
 Studying such concepts can therefore provide insight into how the network internally represents the problem.
 
@@ -46,7 +46,7 @@ Figure~\ref{fig:probes_decision_boundaries} illustrates the decision boundaries 
 
 \input{figures/latent_space/latent_space_probing.tex}
 
-An application of this technique can be found in studies investigating whether \glspl{llm} develop internal representations of their environment \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
+An application of this technique can be found in studies investigating whether \glspl{llm} develop internal representations of their environment \parencite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
 In these works, researchers train \gls{llm} architectures to play games such as chess or Othello in a purely textual setting.
 The model is provided only with sequences of moves and information about the actions it can take, all expressed in textual form.
 The central question is whether the \gls{llm} develops an internal representation of the game state.
@@ -87,7 +87,7 @@ where:
     \item $\lambda_1, \lambda_2, \lambda_3$: weighting coefficients controlling the trade-off between the intervention strength, the preservation of other concepts, and the minimality of the perturbation.
 \end{itemize}
 
-In the context of \glspl{llm} studied previously, such interventions have been used to remove specific pieces from the model’s internal representation of the game state \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
+In the context of \glspl{llm} studied previously, such interventions have been used to remove specific pieces from the model’s internal representation of the game state \parencite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
 The main observation is that, in the vast majority of cases, the model behaves as if the piece had effectively disappeared.
 The \gls{llm} continues to generate legal moves while correctly accounting for the absence of the removed piece.
 This provides evidence for the causal role of these internal representations in the model’s behavior.

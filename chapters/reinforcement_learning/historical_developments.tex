@@ -7,17 +7,17 @@ In this section, we outline the main stages in the emergence of this field, high
 
 \subsection{Behavioral foundations (1900--1950)}
 
-The origins of \gls{rl} can be traced back to 20th-century animal psychology studies \cite{thorndike1911law}.
+The origins of \gls{rl} can be traced back to 20th-century animal psychology studies \parencite{thorndike1911law}.
 These studies aimed to understand how behaviors are formed and modified.
 The central idea emerging from this work is that learning is driven by the consequences of actions.
 Behaviors followed by positive outcomes are more likely to be repeated, whereas those associated with negative outcomes tend to gradually decrease in frequency.
 
 This perspective was later developed within behaviorism.  
-In this school of psychology, rewards and punishments are used to gradually shape behavior through repeated interaction with the environment \cite{skinner1938behavior}.
+In this school of psychology, rewards and punishments are used to gradually shape behavior through repeated interaction with the environment \parencite{skinner1938behavior}.
 The term “reinforcement” in the context of learning comes from this school of thought, where it refers precisely to the process of strengthening a behavior through its consequences.
 
 This idea led to the suggestion that learning principles observed in living organisms could be transferred to artificial systems.
-Machines were therefore envisioned as potentially learning through reward-like mechanisms, guided by evaluative feedback signals resembling a “pleasure–pain system” \cite{turing1948intelligent}.
+Machines were therefore envisioned as potentially learning through reward-like mechanisms, guided by evaluative feedback signals resembling a “pleasure–pain system” \parencite{turing1948intelligent}.
 Although these studies did not involve formal mathematical models, they introduced the central idea of \gls{rl}, trial-and-error learning guided by environmental feedback.
 
 \subsection{Sequential decision-making (1950--1970)}
@@ -29,24 +29,24 @@ The agent interacts with the environment by selecting actions.
 The function that maps an observed state to the chosen action is called a policy.
 The objective is to find an optimal policy, in the sense that it maximizes the expected cumulative reward over time.
 
-This framework led to the formalization of \glspl{mdp}, which provide a mathematical model for sequential decision-making \cite{howard1960mdp}.
+This framework led to the formalization of \glspl{mdp}, which provide a mathematical model for sequential decision-making \parencite{howard1960mdp}.
 \glspl{mdp} describe an agent interacting with an environment through a set of states, actions, rewards, and transition rules.
-The earliest method proposed to solve \glspl{mdp} is dynamic programming \cite{bellman1957dynamic}.
+The earliest method proposed to solve \glspl{mdp} is dynamic programming \parencite{bellman1957dynamic}.
 It proceeds by breaking down a complex decision problem into smaller, more manageable subproblems, solving each one, and combining the results to obtain an overall solution.
 However, dynamic programming requires a full description of the environment, which is only feasible for small problems.
 
 \subsection{Emergence of reinforcement learning (1970--2000)}
 
-In order to address this issue, temporal-difference learning methods were introduced \cite{sutton1988td}.  
+In order to address this issue, temporal-difference learning methods were introduced \parencite{sutton1988td}.  
 This mechanism enables incremental learning directly from experience without requiring a complete model of the environment.  
 It can be interpreted as a sample-based approximation of the Bellman equations.  
 
 Building on these ideas, the notion of value functions emerged as a way to estimate the long-term benefit of being in a given state or taking a given action.
 These functions assign a numerical score to states or state-action pairs, reflecting the expected cumulative reward an agent can obtain from that point onward.
 They thus provide a compact way to evaluate and compare different courses of action.
-This line of work culminated in Q-learning, which showed that optimal action-value functions can be learned directly from interaction with the environment, without requiring a model of its dynamics \cite{watkins1989qlearning,watkins1992qlearning}. 
+This line of work culminated in Q-learning, which showed that optimal action-value functions can be learned directly from interaction with the environment, without requiring a model of its dynamics \parencite{watkins1989qlearning,watkins1992qlearning}. 
 
-The publication of the foundational reference work \cite{suttonbarto1998} contributed to the formalization of \gls{rl} as a coherent field.
+The publication of the foundational reference work \parencite{suttonbarto1998} contributed to the formalization of \gls{rl} as a coherent field.
 From that point onward, the field can be considered well established and widely recognized as a distinct area of research.
 
 \subsection{Consolidation of reinforcement learning (2000--2012)}
@@ -58,7 +58,7 @@ This requirement becomes infeasible in large-scale \glspl{mdp}, where the state 
 
 To address this issue, research shifted toward more general representations of value functions and policies. 
 Instead of maintaining explicit tables, function approximation methods were introduced.  
-These allowed value functions and policies to be represented using parametric models such as linear approximators or perceptron-like architectures \cite{BartoSuttonAnderson1983, tsitsiklis1996analysis}.
+These allowed value functions and policies to be represented using parametric models such as linear approximators or perceptron-like architectures \parencite{BartoSuttonAnderson1983, tsitsiklis1996analysis}.
 This change enabled generalization across states, reducing the dependence on exhaustive exploration of the state space.
 These parametric representations nonetheless remained limited in expressiveness.
 The next step consisted in replacing such approximators with \glspl{nn}, which would soon reshape the field.
@@ -71,24 +71,24 @@ Figure~\ref{fig:evolution_reinforcement_learning_classical} provides a timeline 
 
 The introduction of \gls{dl} into \gls{rl} marked a major turning point in the field.
 This shift was initiated by \gls{dqn}, which used a deep \gls{nn} to approximate action-value functions at scale.
-This made it possible to train an agent to play Atari games at a human level directly from raw pixels \cite{mnih2013playingatarideepreinforcement}.
+This made it possible to train an agent to play Atari games at a human level directly from raw pixels \parencite{mnih2013playingatarideepreinforcement}.
 The use of deep \glspl{nn} provided \gls{rl} with a powerful and flexible function approximator.
 This removed an important practical limitation by making it possible to efficiently represent the complex functions required by \gls{rl}.
 
 A series of subsequent algorithms further extended and improved this approach.
-\gls{ddpg} extended actor–critic methods to continuous action spaces \cite{lillicrap2015continuouscontroldeepreinforcement}.
-\gls{ppo} later became a widely adopted algorithm in \gls{rl} due to its simplicity, stability, and ability to handle both continuous and discrete action spaces \cite{schulman2017proximalpolicyoptimizationalgorithms}.
+\gls{ddpg} extended actor–critic methods to continuous action spaces \parencite{lillicrap2015continuouscontroldeepreinforcement}.
+\gls{ppo} later became a widely adopted algorithm in \gls{rl} due to its simplicity, stability, and ability to handle both continuous and discrete action spaces \parencite{schulman2017proximalpolicyoptimizationalgorithms}.
 
 These advances established a foundation for large-scale policy optimization.
-Notably, AlphaZero demonstrated that the combination of deep \glspl{nn}, \gls{rl}, and tree search could reach superhuman performance in the game of Go \cite{silver2017masteringchessshogiselfplay}.  
-This success was later extended to even more complex real-time strategy environments such as StarCraft II, where agents must handle long-term planning, partial observability, and large action spaces \cite{samvelyan2019starcraftmultiagentchallenge}.  
-Similarly, in Dota 2, large-scale multi-agent \gls{rl} systems such as OpenAI Five showed that self-play combined with deep policy optimization can achieve professional-level performance in highly dynamic and stochastic environments \cite{openai2019dota2largescale}.
+Notably, AlphaZero demonstrated that the combination of deep \glspl{nn}, \gls{rl}, and tree search could reach superhuman performance in the game of Go \parencite{silver2017mastering}.  
+This success was later extended to even more complex real-time strategy environments such as StarCraft II, where agents must handle long-term planning, partial observability, and large action spaces \parencite{samvelyan2019starcraftmultiagentchallenge}.  
+Similarly, in Dota 2, large-scale multi-agent \gls{rl} systems such as OpenAI Five showed that self-play combined with deep policy optimization can achieve professional-level performance in highly dynamic and stochastic environments \parencite{openai2019dota2largescale}.
 
 More recently, \gls{rl} has expanded beyond its traditional application domains. 
 With the emergence of increasingly agentic views of \glspl{llm}, it has become possible to train these models to perform specific tasks using \gls{rl}-based techniques.  
 In particular, \gls{rl} from human feedback has become a method for aligning \glspl{llm} with human preferences.  
-It does so by formalizing the problem as an \gls{mdp} and using \gls{rl} to solve it \cite{ouyang2022traininglanguagemodelsfollow}.
-Similarly, DeepSeekMath shows how \gls{rl} can enhance the mathematical reasoning abilities of \glspl{llm} \cite{shao2024deepseekmathpushinglimitsmathematical}.
+It does so by formalizing the problem as an \gls{mdp} and using \gls{rl} to solve it \parencite{ouyang2022traininglanguagemodelsfollow}.
+Similarly, DeepSeekMath shows how \gls{rl} can enhance the mathematical reasoning abilities of \glspl{llm} \parencite{shao2024deepseekmathpushinglimitsmathematical}.
 It demonstrates that an artificial agent can learn to reason in natural language in order to accomplish a given task.
 The skills acquired during this learning process also transfer to other similar tasks, leading to improved overall performance.
 For instance, training a \gls{llm} with \gls{rl} on mathematical problem-solving can also enhance its programming capabilities.

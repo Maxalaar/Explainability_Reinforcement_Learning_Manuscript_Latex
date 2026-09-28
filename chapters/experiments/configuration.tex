@@ -6,7 +6,7 @@ It covers the environments, the neural architectures used, and the main paramete
 
 \subsection{Environments}
 
-All experiments presented in this manuscript use environments from the Atari benchmark \cite{Bellemare_2013}, accessed through the Arcade Learning Environment.
+All experiments presented in this manuscript use environments from the Atari benchmark \parencite{Bellemare_2013}, accessed through the Arcade Learning Environment.
 The use of Atari environments offers several advantages:
 
 \begin{itemize}
@@ -15,7 +15,7 @@ The use of Atari environments offers several advantages:
 \item \textbf{Diversity:} The benchmark provides a diverse set of well-known environments with different types of tasks and levels of complexity, allowing \gls{car} to be evaluated under different conditions.
 \end{itemize}
 
-The configuration of the Atari environments follows common practice in \gls{rl} research \cite{machado2017revisitingarcadelearningenvironment}.
+The configuration of the Atari environments follows common practice in \gls{rl} research \parencite{machado2017revisitingarcadelearningenvironment}.
 In each environment, the agent receives visual observations in the form of raw pixels.
 Each image is resized to $64 \times 64$ pixels and converted to grayscale to reduce memory requirements.
 To provide information about the dynamics of the environment, four consecutive observations are stacked along the channel dimension.

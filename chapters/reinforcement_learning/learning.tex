@@ -86,10 +86,10 @@ For the learning to remain stable, the change from \(\hat{q}_k\) to \(\hat{q}_{k
 This way, \(\hat{q}_{k+1}\), trained to predict returns under \(\pi_k\), remains reasonably accurate under \(\pi_{k+1}\).
 However, the smaller the change, the slower the learning progresses.
 A trade-off must therefore be struck between stability and learning speed.
-Many improvements introduced later in the literature aim at stabilizing this learning loop \cite{hessel2017rainbowcombiningimprovementsdeep}.
+Many improvements introduced later in the literature aim at stabilizing this learning loop \parencite{hessel2017rainbowcombiningimprovementsdeep}.
 
 Convergence guarantees for such algorithms have been proved under a different set of assumptions than the setting presented here.
-For example, in the classical convergence results, the \gls{mdp} is fully observable, the value function is stored in a table, and the learning rate is decreased at a suitable rate over time \cite{watkins1992qlearning}.
+For example, in the classical convergence results, the \gls{mdp} is fully observable, the value function is stored in a table, and the learning rate is decreased at a suitable rate over time \parencite{watkins1992qlearning}.
 In modern implementations, the value function is approximated by a \gls{nn}.
 Theoretical convergence proofs no longer hold in this setting.
 Nevertheless, deep methods have demonstrated remarkable empirical success, making them the tool of choice for RL tasks.

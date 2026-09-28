@@ -41,7 +41,29 @@
 \usepackage{ulem}
 \usepackage{soul}
 \usepackage[acronym, automake]{glossaries-extra}
-\usepackage{breakcites}
+% Bibliography: author-year citations, clickable DOI, arXiv and URL links.
+\usepackage[
+  backend=biber,
+  style=authoryear,
+  maxcitenames=2,
+  maxbibnames=10,
+  uniquelist=false,
+  dashed=false,
+  doi=true,
+  eprint=true,
+  url=true,
+  isbn=false
+]{biblatex}
+\addbibresource{references/golem.bib}
+\addbibresource{references/deep_learning.bib}
+\addbibresource{references/latent_space.bib}
+\addbibresource{references/classic_clustering.bib}
+\addbibresource{references/reinforcement_learning.bib}
+\addbibresource{references/explainability_reinforcement_learning.bib}
+\addbibresource{references/mathematical_tools.bib}
+\addbibresource{references/software.bib}
+% ulem turns \emph into underlining; restore italics in the bibliography only.
+\AtBeginBibliography{\normalem}
 
 % Floats and positioning
 \usepackage{float}

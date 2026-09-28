@@ -4,7 +4,7 @@
 The \gls{rl} framework is built around the agent paradigm, in which the decision-making entity is referred to as the agent.
 A standard definition is:
 \begin{quote}
-\emph{``An agent is anything that can be viewed as perceiving its environment through sensors and acting upon that environment through actuators.''} \cite{russell2021artificial}
+\emph{``An agent is anything that can be viewed as perceiving its environment through sensors and acting upon that environment through actuators.''} \parencite{russell2021artificial}
 \end{quote}
 
 In the \gls{rl} setting, this definition translates into an interaction between the agent and its environment.
@@ -20,11 +20,11 @@ To achieve this objective, the agent's policy must progressively improve through
 The procedure responsible for this learning process is the \gls{rl} algorithm, which progressively modifies the policy based on the experience collected through interaction.
 
 In this manuscript, the \gls{rl} algorithm is considered as a process external to the agent.
-Other presentations of \gls{rl} describe the agent as both the learner and the decision-making entity \cite{suttonbarto1998}.
+Other presentations of \gls{rl} describe the agent as both the learner and the decision-making entity \parencite{suttonbarto1998}.
 We chose to distinguish the agent from the \gls{rl} algorithm because this provides a more general definition of an agent.
 
 An agent can therefore exist without learning, for example when its behavior is entirely specified by a set of programmed rules.
 Such an agent still perceives, processes information, and acts upon its environment, but its behavior is not the result of \gls{rl}.
 
-This distinction also makes the definition consistent with modern implementations of \gls{rl} \cite{espeholt2018impala, liang2018rllib}, in which the acting policy and the learning algorithm are separate software components.
+This distinction also makes the definition consistent with modern implementations of \gls{rl} \parencite{espeholt2018impala, liang2018rllib}, in which the acting policy and the learning algorithm are separate software components.
 Several copies of the policy, each interacting with its own instance of the environment, collect experience in parallel, while a single learning algorithm uses this experience to update the shared policy parameters.

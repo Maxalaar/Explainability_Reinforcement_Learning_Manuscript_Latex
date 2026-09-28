@@ -17,7 +17,7 @@ We then introduce the \gls{ari} measure, which serves as the foundation for the 
 \subsection{Behavior Reconstruction}
 
 % We argue that explaining a function $b$ that closely approximates another function $a$ is essentially the same as explaining $a$.
-% If $b$ accurately captures the key decision patterns of $a$, understanding $b$ provides meaningful insights into how $a$ works \cite{guidotti2018surveymethodsexplainingblack}.
+% If $b$ accurately captures the key decision patterns of $a$, understanding $b$ provides meaningful insights into how $a$ works \parencite{guidotti2018surveymethodsexplainingblack}.
 % In our setting, this means that generating explanations for $\SurrogatePolicy{}$ that faithfully reproduce $\InitialPolicy$ amounts to explaining $\InitialPolicy$ directly.
 
 We introduce the \BehaviorReconstructionName metric to assess whether $\SurrogatePolicy{}$ faithfully reproduces the behavior of $\InitialPolicy$.
@@ -32,11 +32,11 @@ The \BehaviorReconstructionName{} is then defined as the mean return of the surr
     \BR = \frac{1}{n \sum_{e=1}^{M} G^{(e)}_{\InitialPolicy}} \sum_{j=1}^{n} \sum_{e=1}^{M} G^{(e)}_{\SurrogatePolicy{j}}
 \end{align}
 
-In imitation learning, it is unlikely to expect the surrogate policy $\SurrogatePolicy{}$ to outperform the initial policy $\InitialPolicy$ it aims to approximate through supervised learning \cite{pmlr-v9-ross10a}.
+In imitation learning, it is unlikely to expect the surrogate policy $\SurrogatePolicy{}$ to outperform the initial policy $\InitialPolicy$ it aims to approximate through supervised learning \parencite{pmlr-v9-ross10a}.
 Consequently this metric ranges in $[0,1]$.
 Values approaching 1 indicate minimal loss in reproducing $\InitialPolicy$, while values close to 0 indicate poor reproduction.  
 
-We deliberately adopt a reward-based definition rather than alternatives based on actions or action distributions (e.g., training loss, accuracy, KL divergence \cite{shlens2014noteskullbackleiblerdivergencelikelihood}, or optimal transport \cite{peyré2020computationaloptimaltransport}).
+We deliberately adopt a reward-based definition rather than alternatives based on actions or action distributions (e.g., training loss, accuracy, KL divergence \parencite{shlens2014noteskullbackleiblerdivergencelikelihood}, or optimal transport \parencite{peyré2020computationaloptimaltransport}).
 Since surrogate policies are trained in a supervised manner, they cannot develop strategies beyond those demonstrated by the initial policy.
 This means that if the rewards achieved are comparable, the surrogate policy is effectively copying the initial policy's behavior.
 
@@ -51,12 +51,12 @@ When a particular observation is processed by the network, it is expected to act
 If independently trained policies converge toward the same conceptual organization, a given observation should activate the same concept across all models.
 As a consequence, observations grouped together within a cluster for one policy should also be grouped together for another independently trained policy.
 
-In the clustering literature, the most used measures for comparing two partitions is the \gls{ari}~\cite{hubert1985comparing}.
+In the clustering literature, the most used measures for comparing two partitions is the \gls{ari}~\parencite{hubert1985comparing}.
 This measure quantifies the agreement between cluster assignments independently of the spatial organization of the clusters.
 Both metrics introduced later in this chapter, \ClusteringUniversalityName{} and \AbstractionScoreName{}, rely on the \gls{ari}.
 Since the \gls{ari} is a complex measure, we review its definition and discuss its main properties.
 
-The \gls{ari} is derived from the \gls{ri}~\cite{rand1971objective}, which measures the agreement between two partitions by considering every possible pair of points in the point cloud.
+The \gls{ari} is derived from the \gls{ri}~\parencite{rand1971objective}, which measures the agreement between two partitions by considering every possible pair of points in the point cloud.
 For each pair, four situations are possible:
 \begin{itemize}
 \item \textbf{Agreement:} The points belong to the same cluster in both partitions.
@@ -117,7 +117,7 @@ With these definitions, the \gls{ari} can be computed as:
 
 Because it is bounded by $1$, a value such as $0.5$ can be misleadingly interpreted as ``halfway to a perfect match.''
 This interpretation is incorrect because the \gls{ari} is normalized against the agreement expected from two random partitions.
-As a result, values close to $1$ require the two clusterings to be nearly identical, while a value of $0.5$ already indicates substantial agreement~\cite{amezquita2020orchestrating}.
+As a result, values close to $1$ require the two clusterings to be nearly identical, while a value of $0.5$ already indicates substantial agreement~\parencite{amezquita2020orchestrating}.
 
 \subsection{Clustering Universality}
 \label{subsec:clustering_universality}

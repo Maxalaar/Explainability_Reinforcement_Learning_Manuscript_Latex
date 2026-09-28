@@ -3,7 +3,7 @@
 
 The previous section highlighted a limitation of interpretable directions.
 Only a limited number of concepts can be represented by a linear direction, and these directions are often entangled with multiple semantic concepts.
-To account for this, an extension of the \ConceptHypothesisName has been proposed under the name \SuperpositionHypothesisName, formalized in Hypothesis~\ref{hyp:superposition} \cite{elhage2022superposition}.
+To account for this, an extension of the \ConceptHypothesisName has been proposed under the name \SuperpositionHypothesisName, formalized in Hypothesis~\ref{hyp:superposition} \parencite{elhage2022superposition}.
 
 \begin{hypothesis}{Superposition Hypothesis}{superposition}
 Concepts are preferentially represented by distinct linear directions in \gls{ls}.
@@ -32,7 +32,7 @@ where:
 
 However, \glspl{nn} operate in finite-dimensional spaces, so when the number of concepts exceeds the available dimensions, such a one-to-one correspondence becomes impractical.
 The network must therefore reuse its representational dimensions, allowing multiple concepts to be encoded using the same directions.
-This shared encoding is referred to as superposition \cite{bricken2023monosemanticity}.
+This shared encoding is referred to as superposition \parencite{bricken2023monosemanticity}.
 This phenomenon becomes an obstacle for any method that attempts to analyze \glspl{lr} directly in the original activation space.
 
 Building on this observation, several works based on the \SuperpositionHypothesisName have developed methods that aim to recover less superposed \glspl{lr}.
@@ -66,7 +66,7 @@ Under this formulation, each dimension of $\mathcal{Z}$ is interpreted as a dedi
 In practice, both $\Encoder$ and $\Decoder$ are implemented as linear projections between the original \gls{ls} and the high-dimensional space $\mathcal{Z}$. This choice is motivated by the same principle underlying probing methods. The transformation applied to the \gls{lr} should remain as simple as possible.
 Using more expressive projection functions could introduce additional structures into the transformed \gls{lr}. In this case, it would become difficult to determine whether an observed concept was already encoded in the model's \gls{lr}, or whether it was introduced by the projection itself. Restricting $\Encoder$ and $\Decoder$ to linear projections therefore helps ensure that the concepts identified in $\mathcal{Z}$ can be attributed to the original \gls{lr}, rather than to the transformation used to analyze it.
 
-The method proves to be powerful when successfully applied to language models \cite{templeton2024scaling}.
+The method proves to be powerful when successfully applied to language models \parencite{templeton2024scaling}.
 In these applications, \glspl{sae} are used to desuperpose the \gls{lr} of \glspl{llm}.
 Once this \gls{lr} is obtained, it has been shown that many concept vectors exhibit semantic properties.
 A example is the Golden Gate Bridge concept direction, illustrated in Figure~\ref{fig:sparse_autoencoder_illustration}, which activates systematically whenever the input text or image refers to the Golden Gate Bridge, regardless of the language or modality.
@@ -107,7 +107,7 @@ These limitations can be summarized as follows:
     This abundance of non-semantic directions raises questions about whether the decomposition truly reflects the model’s \glspl{cs}.
 
     \item \textbf{Sparsity--semantics trade-off.}
-    Increasing the sparsity coefficient $\lambda$ beyond a certain threshold degrades the semantic quality of the learned features \cite{tanhPenaltyDictionaryLearning}.
+    Increasing the sparsity coefficient $\lambda$ beyond a certain threshold degrades the semantic quality of the learned features \parencite{tanhPenaltyDictionaryLearning}.
     Suggesting that enforcing excessive sparsity comes at the cost of interpretability.
 
     \item \textbf{Failure of scaling to remove superposition.}

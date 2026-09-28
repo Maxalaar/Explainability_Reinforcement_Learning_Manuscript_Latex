@@ -10,7 +10,7 @@ The \ConceptHypothesisName originates from the need to explain the generalizatio
 A model is said to generalize when, for an input $\vect{x} \in \mathcal{X}$ not seen during training, it still produces an output $\hat{\vect{y}}$ close to the true output $\vect{y}$.  
 Such behavior cannot be explained by simple memorization of training samples.  
 Instead, the model must extract and exploit underlying regularities in the target function.  
-This requires a process of abstraction, as defined in Definition~\ref{def:abstraction}, whereby raw inputs are transformed into internal structures that are meaningful for the task \cite{bengio2014representationlearningreviewnew}.  
+This requires a process of abstraction, as defined in Definition~\ref{def:abstraction}, whereby raw inputs are transformed into internal structures that are meaningful for the task \parencite{bengio2014representationlearningreviewnew}.  
 
 \begin{definition}{Abstraction}{abstraction}
 Abstraction is the process by which a model transforms an input into a task-relevant internal form.  
@@ -28,7 +28,7 @@ A \gls{lr} is the internal encoding of an input given by an intermediate layer o
 \end{definition}
 
 Each hidden layer refines the \gls{lr} of the previous layer.
-Each transformation progressively reshapes the \gls{lr} into a form more directly aligned with the output space \cite{rumelhart1986learning}.
+Each transformation progressively reshapes the \gls{lr} into a form more directly aligned with the output space \parencite{rumelhart1986learning}.
 This process can be described as a sequence of transformations where each $\latentRepresentation[l]$ is a \gls{lr}:
 \[
 \vect{x} \rightarrow \latentRepresentation[1] \rightarrow \latentRepresentation[2] \rightarrow \dots \rightarrow \latentRepresentation[L-1] \rightarrow \hat{\vect{y}}
@@ -54,8 +54,8 @@ A concept is a task-dependent abstraction that captures regularities in the inpu
 
 Our definition of concepts is consistent with both the pragmatic tradition in philosophy and the information-processing view of cognition.
 Within these frameworks, concepts arise from the need to simplify an otherwise intractable reality.
-Because the environment contains more information than any cognitive system can process, intelligent behavior relies on abstractions, called concepts, that discard irrelevant details while preserving the information required to achieve a given objective \cite{Peirce1878,Misak2013}.
-These concepts are realized as representations that reduce complexity and enable reasoning under limited computational resources \cite{Newell1980,Simon1996}.
+Because the environment contains more information than any cognitive system can process, intelligent behavior relies on abstractions, called concepts, that discard irrelevant details while preserving the information required to achieve a given objective \parencite{Peirce1878,Misak2013}.
+These concepts are realized as representations that reduce complexity and enable reasoning under limited computational resources \parencite{Newell1980,Simon1996}.
 Although these theories were originally developed to explain human cognition, the \ConceptHypothesisName assumes that the same principles can be extended to deep \glspl{nn}.
 
 In order to influence the model's computations, concepts must necessarily admit a concrete realization within the \gls{ls}.
@@ -79,7 +79,7 @@ Analyzing the \gls{ls} therefore provides access to the \glspl{cs} through which
 
 Now that the definition of a \ConceptHypothesisName has been established, we can consider its relationship to human.
 According to our definition, we can imagine concepts that are useful for the machine but do not make sense to humans.
-This relationship is captured by the notion of semantics \cite{marconato2023interpretabilitymindbeholdercausal}, defined in Definition~\ref{def:semantics}.
+This relationship is captured by the notion of semantics \parencite{marconato2023interpretabilitymindbeholdercausal}, defined in Definition~\ref{def:semantics}.
 Some concepts developed in \gls{ls} can be readily associated with human concepts and are said to have high semantic value.
 Others may contribute to task performance while remaining difficult for humans to understand, and are said to have low semantic value.
 

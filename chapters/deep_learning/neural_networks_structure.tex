@@ -81,7 +81,7 @@ This structure imposes a direct correspondence between the dimensionality of the
 
 When describing \glspl{nn}, especially in \glspl{mlp}, it is more common to reason at the level of layers rather than individual neurons.
 This perspective allows interactions between layers to be modeled in a matrix form.
-Such a representation enables efficient parallel computation and forms the basis of modern \gls{dl} implementations \cite{krizhevsky2012imagenet}.
+Such a representation enables efficient parallel computation and forms the basis of modern \gls{dl} implementations \parencite{krizhevsky2012imagenet}.
 Within this framework, it is useful to introduce the notion of layer activations.
 The activation of a layer corresponds to the activations of all its neurons, organized into a vector.
 For a layer $l$ composed of $n_l$ neurons, the activations are given by:
@@ -108,10 +108,10 @@ This matrix-vector representation is visualised in Figure~\ref{fig:matrix_intera
 
 It is important to examine the role played by the intermediate layers of a \gls{nn}.
 At least one hidden layer is required to represent sufficiently complex functions, and in practice, modern architectures often include many more.
-Theoretical results have shown that, for a fixed number of parameters, increasing the number of layers enhances the expressive capacity of \glspl{nn} \cite{telgarsky2016benefits}.
+Theoretical results have shown that, for a fixed number of parameters, increasing the number of layers enhances the expressive capacity of \glspl{nn} \parencite{telgarsky2016benefits}.
 Each layer can be viewed as an additional stage in the computation performed by the network.
 This suggests that deeper networks can represent increasingly complex functions by composing a larger number of transformations.
-The precise relationship between depth and function complexity remains primarily supported by empirical observations rather than formal theoretical justification \cite{goodfellow2016deep}.
+The precise relationship between depth and function complexity remains primarily supported by empirical observations rather than formal theoretical justification \parencite{goodfellow2016deep}.
 % An entire chapter of this manuscript is devoted to studying the information that can be extracted from the activations of these intermediate layers (Chapter~\ref{chap:latent_space}).
 
 \subsection{Network}

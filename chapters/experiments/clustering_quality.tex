@@ -5,7 +5,7 @@ This section analyzes the \gls{ls} of the surrogate policies using \gls{cu}, \gl
 To do so, a random subset of $20\,000$ observations is selected for each environment.
 This subset is then embedded into the \gls{ls} of each surrogate policy at each analyzed layer.
 This produces a point cloud for each combination of environment, surrogate policy, and layer.
-Each point cloud is partitioned using $k$-means clustering \cite{macqueen1967multivariate} for each number of clusters from $2$ to $20$.
+Each point cloud is partitioned using $k$-means clustering \parencite{macqueen1967multivariate} for each number of clusters from $2$ to $20$.
 
 The three metrics are then computed from these point clouds and their corresponding clusterings.
 Their interpretation, detailed in Section~\ref{sec:clustering_agent_representation_metrics}, is briefly recalled here:

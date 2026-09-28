@@ -12,7 +12,7 @@ Defining what constitutes an explanation is challenging because the concept is i
 When we refer to explanation, we are inherently referring to an explanation provided to a human.
 As soon as humans are involved, the problem is no longer purely computational or mathematical.
 It involves several fields of research, such as philosophy, psychology, and sociology.
-So far, these disciplines have not converged on a unified definition of explanation that can be directly applied to \gls{xai} \cite{miller2019explanation, bellucci2021towards}.
+So far, these disciplines have not converged on a unified definition of explanation that can be directly applied to \gls{xai} \parencite{miller2019explanation, bellucci2021towards}.
 
 For this reason, we propose the following definition of explanation.
 An explanation involves two entities: the object (Definition~\ref{def:object}) being explained and the receiver of the explanation.
@@ -59,9 +59,9 @@ A brace spanning boxes~(2) and~(3) indicates that this second half of the proces
 \input{figures/explainability_reinforcement_learning/explanation_process_illustration.tex}
 
 This definition of explanation establishes the approach to explainability adopted throughout this manuscript.
-Under this definition, explainability is regarded as a continuum that evolves as knowledge develops \cite{Siegel_Craver_2024, zednik2019solving}.
+Under this definition, explainability is regarded as a continuum that evolves as knowledge develops \parencite{Siegel_Craver_2024, zednik2019solving}.
 
-This quantitative perspective highlights that not all explanations provide the same level of value \cite{doshivelez2017rigorous}.
+This quantitative perspective highlights that not all explanations provide the same level of value \parencite{doshivelez2017rigorous}.
 The effectiveness of an explanation depends on its ability to improve the observer's understanding of the system.
 For example, describing a marginal aspect of a system is different from correcting an observer's misunderstanding of a key mechanism.
 
@@ -70,7 +70,7 @@ For example, describing a marginal aspect of a system is different from correcti
 
 Now that the general framework of explanation has been established, we can examine how this concept applies in the context of \gls{ai}.
 In the context of \gls{xai}, the object of explanation is an \gls{ai} system.
-More precisely, \gls{xai} emerged as a response to the success of \gls{dl} models \cite{gunning2019darpa, arrieta2020explainable}.
+More precisely, \gls{xai} emerged as a response to the success of \gls{dl} models \parencite{gunning2019darpa, arrieta2020explainable}.
 In these architectures, information is represented in a distributed manner across the network through patterns of activation and connections between computational units.
 Unlike symbolic approaches, individual components of \glspl{nn} cannot be directly associated with human concepts.
 From this starting point, we identify two types of approaches:
@@ -78,14 +78,14 @@ From this starting point, we identify two types of approaches:
     \item \textbf{Substitutive explainability:} In this approach, the assumption is that there is nothing to explain within a \gls{nn}.
     There is no semantic meaning associated with each computational component, and therefore nothing to interpret.
     This corresponds to the ``black box'' view of \glspl{nn}.
-    Under this assumption, \gls{xai} consists of replacing as much of the \gls{dl} system as possible with alternative \gls{ai} methods \cite{rudin2019stop}.
+    Under this assumption, \gls{xai} consists of replacing as much of the \gls{dl} system as possible with alternative \gls{ai} methods \parencite{rudin2019stop}.
 
     \item \textbf{Intrinsic explainability:} In this approach, it is argued that \glspl{nn} contain mechanisms that can be explained.
-    The limitation is considered to lie not in the networks themselves, but in the absence of adequate tools to analyze their functioning \cite{olah2020zoom}.
+    The limitation is considered to lie not in the networks themselves, but in the absence of adequate tools to analyze their functioning \parencite{olah2020zoom}.
 \end{itemize}
 
 This manuscript considers methods from both approaches in order to provide a comprehensive overview of the \gls{xai} field.
-Although both approaches have produced convincing results, this manuscript primarily adopts the perspective of the \MechanisticHypothesisName \cite{Siegel_Craver_2024, zednik2019solving}.
+Although both approaches have produced convincing results, this manuscript primarily adopts the perspective of the \MechanisticHypothesisName \parencite{Siegel_Craver_2024, zednik2019solving}.
 This perspective is more closely aligned with the definition of explainability adopted in this manuscript, which considers explainability as a continuum that evolves with the development of knowledge.
 
 \begin{hypothesis}{Mechanistic Hypothesis}{mechanistic}
@@ -94,7 +94,7 @@ Because the rules governing these interactions are mechanical, the behavior of t
 If an \gls{ai} system cannot be explained, this reflects a limitation of knowledge rather than an intrinsic property of the system.
 \end{hypothesis}
 
-Within intrinsic explainability, the \MechanisticHypothesisName underlies the approach that we refer to as \gls{me} (Definition~\ref{def:mechanistic_explainability}), generally called mechanistic interpretability in the literature \cite{olah2020zoom}.
+Within intrinsic explainability, the \MechanisticHypothesisName underlies the approach that we refer to as \gls{me} (Definition~\ref{def:mechanistic_explainability}), generally called mechanistic interpretability in the literature \parencite{olah2020zoom}.
 The definitions introduced above clarify this terminological choice.
 According to Definition~\ref{def:interpretable}, the internal mechanisms of a \gls{nn} are not interpretable, since an observer cannot directly understand them without an additional transformation process.
 What this approach produces is interpretable information obtained from these mechanisms through an explainability method (Definition~\ref{def:explainability_method}), that is, explanations in the sense of Definition~\ref{def:explanation}.

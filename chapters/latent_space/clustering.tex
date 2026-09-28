@@ -14,7 +14,7 @@ This suggests that the underlying representation may not be perfectly described 
 Taken together, these observations indicate that semantic concepts may not always exhibit a linear \gls{cs}.
 This motivates the exploration of alternative approaches that rely on weaker assumptions regarding the geometry of \glspl{ls}.
 
-To the best of our knowledge, clustering-based analysis is the only family of \gls{ls} analysis methods that does not rely on any assumption of a linear \gls{cs} \cite{ren_deep_2022, wei_overview_2024}.
+To the best of our knowledge, clustering-based analysis is the only family of \gls{ls} analysis methods that does not rely on any assumption of a linear \gls{cs} \parencite{ren_deep_2022, wei_overview_2024}.
 Rather than assuming that concepts correspond to directions, clustering methods only assume that conceptual similar inputs produce nearby \glspl{lr}.
 Conversely, inputs that differ significantly from a concept perspective are expected to be located farther apart in the \gls{ls}.
 This is a considerably weaker assumption, in the sense that it is empirically verified in a wide range of settings.
@@ -62,7 +62,7 @@ $$
 A classical clustering algorithm is applied to the set $\mathcal{Z}$ of \glspl{lr} to identify groups of similar \glspl{lr}.
 Each resulting cluster can therefore be interpreted as a group of images that the model considers similar.
 
-An example of this methodology can be observed in Figure~\ref{fig:deep_clustering_illustration}, where the approach is applied to the STL-10 dataset \cite{coates2011analysis} using $k$-means clustering \cite{macqueen1967multivariate} with a number of clusters arbitrarily fixed to $K = 10$ \cite{xie_unsupervised_2016}.
+An example of this methodology can be observed in Figure~\ref{fig:deep_clustering_illustration}, where the approach is applied to the STL-10 dataset \parencite{coates2011analysis} using $k$-means clustering \parencite{macqueen1967multivariate} with a number of clusters arbitrarily fixed to $K = 10$ \parencite{xie_unsupervised_2016}.
 For each cluster, the corresponding line shows the $10$ samples closest to the associated centroid in the \gls{ls}.
 
 \input{figures/latent_space/deep_clustering_illustration.tex}
@@ -73,7 +73,7 @@ It suggests that the compression process induces a \gls{ls} in which semanticall
 
 More advanced approaches combine representation learning and clustering within a single optimization process.
 In this setting, additional loss terms encourage \glspl{lr} to organize themselves around cluster centroids during training.
-This often produces \glspl{ls} that are easier to analyze and improves the quality of the discovered semantic \glspl{cs} \cite{guo_improved_2017, miklautz_breaking_2024}.
+This often produces \glspl{ls} that are easier to analyze and improves the quality of the discovered semantic \glspl{cs} \parencite{guo_improved_2017, miklautz_breaking_2024}.
 
 Despite its effectiveness, clustering-based analysis presents several important limitations.
 
