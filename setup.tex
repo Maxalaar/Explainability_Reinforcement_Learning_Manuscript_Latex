@@ -106,44 +106,101 @@
 \newcommand{\AdjustedClusteringUniversalityName}{\textit{Adjusted Clustering Universality}\xspace}
 
 \makeglossaries
-\setglossarystyle{index}
-\setabbreviationstyle[acronym]{long-short}
-\newacronym{ai}{AI}{Artificial Intelligence}
-\newacronym{rl}{RL}{Reinforcement Learning}
-\newacronym{xai}{XAI}{eXplainable Artificial Intelligence}
-\newacronym{xrl}{XRL}{eXplainable Reinforcement Learning}
-\newacronym{dl}{DL}{Deep Learning}
-\newacronym{nn}{NN}{Neural Network}
-\newacronym{ls}{LS}{Latent Space}
-\newacronym{lr}{LR}{Latent Representation}
-\newacronym{cs}{CS}{Concept Structure}
-\newacronym{llm}{LLM}{Large Language Model}
-\newacronym{car}{CAR}{Clustering Agent Representation}
-\newacronym{me}{ME}{Mechanistic Explainability}
-\newacronym{mlp}{MLP}{MultiLayer Perceptron}
-\newacronym{cnn}{CNN}{Convolutional Neural Network}
-\newacronym{lstm}{LSTM}{Long Short-Term Memory}
-\newacronym{sgd}{SGD}{Stochastic Gradient Descent}
-\newacronym{sae}{SAE}{Sparse Autoencoder}
-\newacronym{mse}{MSE}{Mean Squared Error}
-\newacronym{dqn}{DQN}{Deep Q-Networks}
-\newacronym{ddpg}{DDPG}{Deep Deterministic Policy Gradient}
+% Every acronym carries a one-sentence description, shown only in the list of
+% acronyms (the text keeps the usual "Long Form (SHORT)" on first use). Entries
+% are sorted by their short form. The descriptions must stay consistent with the
+% definition boxes of the text, to which they point when one exists.
+\setabbreviationstyle[acronym]{long-short-desc}
+\renewcommand*{\glsxtrlongshortdescsort}{\expandonce\glsxtrorgshort}
+% List of acronyms: short form in the left column; long form in bold, then its
+% description, in the right column. No page list.
+\newlength{\AcronymShortWidth}
+\setlength{\AcronymShortWidth}{0.12\linewidth}
+\newglossarystyle{acronymdesc}{%
+  \setglossarystyle{long}%
+  \renewenvironment{theglossary}%
+    {\begin{longtable}{@{}p{\AcronymShortWidth}p{\dimexpr\linewidth-\AcronymShortWidth-2\tabcolsep\relax}@{}}}%
+    {\end{longtable}}%
+  \renewcommand{\glossentry}[2]{%
+    \glsentryitem{##1}\glstarget{##1}{\textbf{\glsentryshort{##1}}} &
+    \textbf{\glsentrylong{##1}}\newline
+    \glossentrydesc{##1}\par\vspace{0.6em}\tabularnewline
+  }%
+  \renewcommand*{\glsgroupskip}{}% uniform spacing, no gap between letter groups
+}
+\setglossarystyle{acronymdesc}
 
-\newacronym{ppo}{PPO}{Proximal Policy Optimization}
-\newacronym{appo}{APPO}{Asynchronous Proximal Policy Optimization}
-\newacronym{mdp}{MDP}{Markov Decision Processes}
-\newacronym{ari}{ARI}{Adjusted Rand Index}
-\newacronym{ri}{RI}{Rand Index}
-\newacronym{cu}{CU}{\ClusteringUniversalityName}
-\newacronym{as}{AS}{\AbstractionScoreName}
-\newacronym{acu}{ACU}{\AdjustedClusteringUniversalityName}
-\newacronym{gmm}{GMM}{Gaussian Mixture Model}
-\newacronym{bc}{BC}{Behavioral Cloning}
+% General fields
+\newacronym[description={The field of computer science concerned with building systems that perform tasks usually associated with human intelligence, such as perception, reasoning, learning and decision-making.}]
+  {ai}{AI}{Artificial Intelligence}
+\newacronym[description={The subfield of artificial intelligence that develops methods to make the decisions of a model understandable to a human observer (see Section~\ref{subsec:explainable_artificial_intelligence}).}]
+  {xai}{XAI}{Explainable Artificial Intelligence}
+\newacronym[description={The branch of explainability dedicated to reinforcement learning agents, whose decisions are sequential and depend on the interaction with an environment (see Chapter~\ref{chap:explainability_reinforcement_learning}).}]
+  {xrl}{XRL}{Explainable Reinforcement Learning}
+\newacronym[description={The explainability approach that seeks to explain the behavior of a neural network by analyzing its internal mechanisms (see Definition~\ref{def:mechanistic_explainability}).}]
+  {me}{ME}{Mechanistic Explainability}
 
-\newacronym{gpu}{GPU}{Graphics Processing Unit}
-\newacronym{cpu}{CPU}{Central Processing Unit}
-\newacronym{hpc}{HPC}{High-Performance Computing}
-\newacronym{api}{API}{Application Programming Interface}
+% Deep learning
+\newacronym[description={The family of machine learning methods based on neural networks with many successive layers, trained from data by gradient descent (see Chapter~\ref{chap:deep_learning}).}]
+  {dl}{DL}{Deep Learning}
+\newacronym[description={A parameterized function made of successive layers of artificial neurons, whose parameters are learned from data.}]
+  {nn}{NN}{Neural Network}
+\newacronym[description={A neural network made of a sequence of fully connected layers.}]
+  {mlp}{MLP}{Multilayer Perceptron}
+\newacronym[description={A neural network whose layers apply learned convolution filters, suited to data with a spatial structure such as images.}]
+  {cnn}{CNN}{Convolutional Neural Network}
+\newacronym[description={A recurrent neural network architecture whose gating mechanism allows information to be retained over long sequences.}]
+  {lstm}{LSTM}{Long Short-Term Memory}
+\newacronym[description={A neural network trained on large text corpora to predict the next token of a sequence, used for language understanding and generation.}]
+  {llm}{LLM}{Large Language Model}
+\newacronym[description={An optimization algorithm that updates the parameters of a model in the direction opposite to the gradient of the loss, estimated on a random subset of the training data (see Section~\ref{sec:learning}).}]
+  {sgd}{SGD}{Stochastic Gradient Descent}
+\newacronym[description={A loss function equal to the average of the squared differences between predictions and targets.}]
+  {mse}{MSE}{Mean Squared Error}
+
+% Latent space analysis
+\newacronym[description={The internal encoding of an input given by an intermediate layer of a trained neural network (see Definition~\ref{def:representation}).}]
+  {lr}{LR}{Latent Representation}
+\newacronym[description={The set of all latent representations produced by a layer over a dataset (see Definition~\ref{def:latent_space}).}]
+  {ls}{LS}{Latent Space}
+\newacronym[description={The specific form in which a concept is instantiated within the latent space, for instance a direction or a cluster (see Definition~\ref{def:concept_structure}).}]
+  {cs}{CS}{Concept Structure}
+\newacronym[description={An autoencoder trained with a sparsity constraint, used to decompose latent representations into a larger set of more interpretable directions (see Section~\ref{sec:superposition}).}]
+  {sae}{SAE}{Sparse Autoencoder}
+
+% Reinforcement learning
+\newacronym[description={The learning paradigm in which an agent learns a policy by interacting with an environment so as to maximize the rewards it collects (see Chapter~\ref{chap:reinforcement_learning}).}]
+  {rl}{RL}{Reinforcement Learning}
+\newacronym[longplural={Markov Decision Processes}, description={The mathematical framework modeling sequential decision-making as an agent interacting with an environment through states, actions, rewards and transitions (see Section~\ref{subsec:markov_decision_processes}).}]
+  {mdp}{MDP}{Markov Decision Process}
+\newacronym[description={A reinforcement learning algorithm that approximates the action-value function with a deep neural network.}]
+  {dqn}{DQN}{Deep Q-Network}
+\newacronym[description={An actor--critic reinforcement learning algorithm for continuous action spaces, which learns a deterministic policy.}]
+  {ddpg}{DDPG}{Deep Deterministic Policy Gradient}
+\newacronym[description={A policy-gradient reinforcement learning algorithm that stabilizes training by limiting the size of each policy update through a clipped objective.}]
+  {ppo}{PPO}{Proximal Policy Optimization}
+\newacronym[description={A variant of Proximal Policy Optimization in which data collection by the workers and policy updates run asynchronously, to scale training.}]
+  {appo}{APPO}{Asynchronous Proximal Policy Optimization}
+\newacronym[description={The training of a policy by supervised learning to reproduce the actions of another policy on a dataset of its interactions.}]
+  {bc}{BC}{Behavioral Cloning}
+
+% Proposed method and evaluation metrics
+\newacronym[description={The method proposed in this thesis, which trains several surrogate policies of an agent and clusters their latent representations to detect concept structures (see Chapter~\ref{chap:clustering_agent_representation}).}]
+  {car}{CAR}{Clustering Agent Representation}
+\newacronym[description={A measure of the agreement between two partitions of the same set of points, computed over all pairs of points (see Section~\ref{subsec:adjusted_rand_index}).}]
+  {ri}{RI}{Rand Index}
+\newacronym[description={The Rand Index corrected for chance, equal to $0$ for random partitions and to $1$ for identical partitions (see Section~\ref{subsec:adjusted_rand_index}).}]
+  {ari}{ARI}{Adjusted Rand Index}
+\newacronym[description={The mean pairwise Adjusted Rand Index between the latent clusterings of independently trained surrogate policies (see Section~\ref{subsec:clustering_universality}).}]
+  {cu}{CU}{\ClusteringUniversalityName}
+\newacronym[description={A metric measuring how far latent clusterings differ from those of the observations, of the action distribution and of untrained networks (see Section~\ref{subsec:abstraction_score}).}]
+  {as}{AS}{\AbstractionScoreName}
+\newacronym[description={The Clustering Universality minus the similarity of the latent clusterings to the three trivial baselines of the Abstraction Score (see Section~\ref{subsec:adjusted_clustering_universality}).}]
+  {acu}{ACU}{\AdjustedClusteringUniversalityName}
+
+% Computing
+\newacronym[description={A processor specialized in massively parallel computation, used to accelerate the training of neural networks.}]
+  {gpu}{GPU}{Graphics Processing Unit}
 
 \colorlet{myred}{red!60!black}
 \colorlet{mygreen}{green!50!black}
