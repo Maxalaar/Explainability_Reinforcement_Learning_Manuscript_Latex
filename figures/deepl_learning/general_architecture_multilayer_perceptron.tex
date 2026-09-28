@@ -37,8 +37,8 @@
         \draw[dotted, thick] ( 3, 0) -- ( 4, 0);
 
         %% ── Input vector ────────────────────────────────────────────────────────────
-        \node (iv0) at (-12.5,  2.4) {$x_0$};
-        \node (iv1) at (-12.5,  1.2) {$x_1$};
+        \node (iv0) at (-12.5,  2.4) {$x_1$};
+        \node (iv1) at (-12.5,  1.2) {$x_2$};
         \node (iv2) at (-12.5,  0.0) {$\vdots$};
         \node (iv3) at (-12.5, -1.2) {$x_{n_1-1}$};
         \node (iv4) at (-12.5, -2.4) {$x_{n_1}$};
@@ -47,7 +47,7 @@
         \draw (-11.75, 2.8) -- (-11.5, 2.8) -- (-11.5,-2.8) -- (-11.75,-2.8);
 
         \node[align=center, font=\scriptsize] at (-12.5, 4.3)
-        {Input\\vector $x$};
+        {Input\\vector $\vect{x}$};
 
         \draw[arr] (iv0.east) -- (L1N1);
         \draw[arr] (iv1.east) -- (L1N2);
@@ -55,8 +55,8 @@
         \draw[arr] (iv4.east) -- (L1N4);
 
         %% ── Output vector ───────────────────────────────────────────────────────────
-        \node (ov0) at (12.5,  2.4) {$\hat{y}_0$};
-        \node (ov1) at (12.5,  1.2) {$\hat{y}_1$};
+        \node (ov0) at (12.5,  2.4) {$\hat{y}_1$};
+        \node (ov1) at (12.5,  1.2) {$\hat{y}_2$};
         \node (ov2) at (12.5,  0.0) {$\vdots$};
         \node (ov3) at (12.5, -1.2) {$\hat{y}_{n_L-1}$};
         \node (ov4) at (12.5, -2.4) {$\hat{y}_{n_L}$};
@@ -65,7 +65,7 @@
         \draw (13.25, 2.8) -- (13.5, 2.8) -- (13.5,-2.8) -- (13.25,-2.8);
 
         \node[align=center, font=\scriptsize] at (12.5, 4.3)
-        {Model's\\prediction $\hat{y}$};
+        {Model's\\prediction $\hat{\vect{y}}$};
 
         \draw[arr] (L6N1) -- (ov0.west);
         \draw[arr] (L6N2) -- (ov1.west);

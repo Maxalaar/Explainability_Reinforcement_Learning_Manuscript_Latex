@@ -1,0 +1,133 @@
+\chapter*{Notation}
+\label{chap:notation}
+\markboth{Notation}{Notation}
+
+% One group of symbols: #1 = title, rows are "symbol & description \\".
+\newenvironment{notationgroup}[1]{%
+  \par\medskip\renewcommand{\arraystretch}{1.3}
+  \begin{center}\textbf{#1}\end{center}
+  \begin{longtable}{@{}>{\centering\arraybackslash}p{0.25\linewidth}p{0.69\linewidth}@{}}
+}{%
+  \end{longtable}
+}
+
+This section summarizes the notation used throughout this manuscript.
+It follows the conventions of Goodfellow et al.~\cite{goodfellow2016deep} for deep learning and of Sutton and Barto~\cite{sutton2018reinforcement} for reinforcement learning.
+Vectors and matrices are written in bold upright letters and sets in calligraphic letters.
+Unlike Sutton and Barto, random variables are written in lower case, like their values, and the reward $r_t$ is indexed by the time step of the action $a_t$ that produced it.
+Unlike Goodfellow et al., $\sigma$ denotes any activation function and $\eta$ the learning rate.
+
+\begin{notationgroup}{Numbers and Arrays}
+$a$ & A scalar \\
+$\vect{a}$ & A vector \\
+$\mat{A}$ & A matrix \\
+$a_i$ & Element $i$ of vector $\vect{a}$, with indexing starting at 1 \\
+$A_{i,j}$ & Element $i, j$ of matrix $\mat{A}$ \\
+$\vect{e}^{(i)}$ & Standard basis vector, with a 1 at position $i$ \\
+\end{notationgroup}
+
+\begin{notationgroup}{Sets}
+$\mathcal{A}$ & A set \\
+$\mathbb{R}$ & The set of real numbers \\
+$[a, b]$ & The real interval including $a$ and $b$ \\
+$|\mathcal{A}|$ & Number of elements of the set $\mathcal{A}$ \\
+$\Distributions{\mathcal{A}}$ & Set of probability distributions over $\mathcal{A}$ \\
+\end{notationgroup}
+
+\begin{notationgroup}{Calculus, Probability and Functions}
+$\dfrac{\partial y}{\partial x}$ & Partial derivative of $y$ with respect to $x$ \\
+$\nabla_{\params} y$ & Gradient of $y$ with respect to $\params$ \\
+$\mat{J}_{f}$ & Jacobian matrix of the function $f$ \\
+$x \sim P$ & $x$ is sampled from the distribution $P$ \\
+$\mathbb{E}[\cdot]$ & Expectation \\
+$f : \mathcal{A} \to \mathcal{B}$ & The function $f$ with domain $\mathcal{A}$ and range $\mathcal{B}$ \\
+$f \circ g$ & Composition of the functions $f$ and $g$ \\
+$\hat{f}$ & An approximation of $f$; the hat denotes an approximation \\
+$\|\vect{x}\|_p$ & $L^p$ norm of $\vect{x}$ \\
+$\argmax_{a} f(a)$ & A value of $a$ at which $f(a)$ is maximal \\
+$\sigma$ & Activation function, applied element-wise \\
+\end{notationgroup}
+
+\begin{notationgroup}{Deep Learning}
+$\mathcal{X}, \mathcal{Y}$ & Input and output spaces \\
+$\vect{x}, \vect{y}$ & An input and its target output \\
+$\hat{\vect{y}}$ & Output predicted by the network \\
+$\mathcal{D}$ & A dataset \\
+$N$ & Number of examples in a dataset \\
+$(\vect{x}^{(i)}, \vect{y}^{(i)})$ & The $i$-th example of a dataset \\
+$\mathcal{L}$ & Loss function \\
+$\loss{\params}{i}$ & Loss of the $i$-th example \\
+$\params$ & Parameters of a model, a vector of $\mathbb{R}^d$ \\
+$\theta_j$ & The $j$-th parameter \\
+$\hat{f}_{\params}$ & Network with parameters $\params$ \\
+$\params_k$ & Parameters after $k-1$ steps of gradient descent \\
+$\eta$ & Learning rate \\
+$\vect{g}$ & Gradient estimate used by stochastic gradient descent \\
+$L$ & Number of layers of a network \\
+$n_l$ & Number of neurons of layer $l$ \\
+$\mat{W}^{(l)}, \vect{b}^{(l)}$ & Weight matrix and bias vector of layer $l$ \\
+$\latentRepresentation[l]$ & Latent representation (activations) of layer $l$ \\
+$h^{(l)}_i$ & Activation of neuron $i$ of layer $l$ \\
+$\phi^{(l)}$ & Function computed by layer $l$ \\
+$\Encoder, \Decoder$ & Encoder and decoder of an autoencoder \\
+$\vect{z} \in \mathcal{Z}$ & Code produced by an encoder, and the space of codes \\
+\end{notationgroup}
+
+\begin{notationgroup}{Latent Space Analysis}
+$c_j$ & Presence of concept $j$ \\
+$\vect{v}_i$ & Direction associated with concept $i$ \\
+$\alpha$ & Strength of a perturbation along a direction \\
+$\Probe{l}{j}$ & Probe predicting concept $j$ from layer $l$ \\
+$\lambda, \lambda_1, \lambda_2, \lambda_3$ & Weighting coefficients of a loss \\
+\end{notationgroup}
+
+\begin{notationgroup}{Reinforcement Learning}
+$(\StateSet, \ObsSet, \ActionSet, \RewardSet, p)$ & A Markov decision process \\
+$\StateSet, \ObsSet, \ActionSet, \RewardSet$ & Sets of states, observations, actions and rewards \\
+$\StateSetInitial, \StateSetTerminal$ & Sets of initial and terminal states \\
+$s, o, a, r$ & A state, an observation, an action and a reward \\
+$s', o'$ & Next state and next observation \\
+$\StateInitial, \StateTerminal$ & An initial state and a terminal state \\
+$p(s', o, r \mid s, a)$ & Probability of the transition to $(s', o, r)$ from state $s$ and action $a$ \\
+$\beta(s \mid o)$ & Probability of state $s$ given observation $o$ \\
+$\pi(a \mid o)$ & Probability of taking action $a$ given observation $o$ under policy $\pi$ \\
+$\pi_*$ & Optimal policy \\
+$\varepsilon$ & Probability of taking a random action in an $\varepsilon$-greedy policy \\
+$t$ & Discrete time step \\
+$T$ & Final time step of an episode \\
+$s_t, o_t, a_t, r_t$ & State, observation, action and reward at time step $t$ \\
+$\tau$ & A trajectory \\
+$\tau_{t:}$ & Part of the trajectory $\tau$ starting from time step $t$ \\
+$\tau^{\mathrm{ter}}, \tau^{\mathrm{ep}}$ & A terminal trajectory and an episode \\
+$\tau \sim \pi$ & Trajectory generated by following the policy $\pi$ \\
+$\Pr_\pi(\tau \mid s, o)$ & Probability of $\tau$ under $\pi$, starting from state $s$ and observation $o$ \\
+$\gamma$ & Discount factor \\
+$G_t$ & Return following time step $t$ \\
+$v_\pi(s, o)$ & Value of state $s$ with observation $o$ under policy $\pi$ \\
+$q_\pi(s, a)$ & Value of taking action $a$ in state $s$ under policy $\pi$ \\
+$q_*$ & State-action value function of the optimal policy \\
+$\hat{v}(s, o, \weights)$ & Approximate state value given the weight vector $\weights$ (critic) \\
+$\hat{q}(o, a, \weights)$ & Approximate state-action value given the weight vector $\weights$ \\
+$\pi_{\params}$ & Policy with parameters $\params$ (actor) \\
+$\pi_k, \hat{q}_k$ & Policy and value approximation at iteration $k$ \\
+$A(s, a)$ & Advantage of action $a$ in state $s$ \\
+\end{notationgroup}
+
+\begin{notationgroup}{Clustering Agent Representation}
+$\InitialPolicy$ & Initial policy to be explained \\
+$\SurrogatePolicy{i}$ & The $i$-th surrogate policy, with parameters $\params_i$ \\
+$n$ & Number of surrogate policies \\
+$\SurrogateEncoder[i], \Decoder[i]$ & Encoder and decoder of the $i$-th surrogate policy \\
+$\logits$ & Parameters (logits) of an action distribution \\
+$\ObsData$ & Set of observations used for training and clustering \\
+$\LatentSet{i}$ & Latent representations of $\ObsData$ given by $\SurrogateEncoder[i]$ \\
+$\ClusteringFunction$ & Clustering function \\
+$\mathcal{C}_i$ & Clustering of $\LatentSet{i}$ \\
+$K$ & Number of clusters \\
+$\BaselineClustering{obs}, \BaselineClustering{act}$ & Clusterings of the observations and of the action distributions \\
+$\BaselineClustering[u]{untr}$ & Clustering given by the $u$-th of $U$ untrained networks \\
+$\Similarity{obs}{i}, \Similarity{act}{i}, \Similarity{untr}{i}$ & Similarity of $\mathcal{C}_i$ to the three baseline clusterings \\
+$M$, $G^{(e)}_{\pi}$ & Number of evaluation episodes, and return of $\pi$ in episode $e$ \\
+$\RI, \ARI$ & Rand Index and Adjusted Rand Index \\
+$\BR, \CU, \AS, \ACU$ & \BehaviorReconstructionName, \ClusteringUniversalityName, \AbstractionScoreName, \AdjustedClusteringUniversalityName \\
+\end{notationgroup}

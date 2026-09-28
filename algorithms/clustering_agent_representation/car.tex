@@ -5,23 +5,23 @@
 \Input{
 \\
 Initial policy $\InitialPolicy$\\
-Observation dataset $\mathbb{O}$\\
+Observation dataset $\ObsData$\\
 Number of surrogate policies $n$\\
-Surrogate policy architecture $\textcolor{myred}{\pi'}$ (encoder $\textcolor{myblue}{f_{enc}}$, decoder $f_{dec}$)\\
+Surrogate policy architecture $\SurrogatePolicy{}$ (encoder $\SurrogateEncoder$, decoder $\Decoder$)\\
 Learning rate $\eta$\\
-Clustering function $f_{\mathrm{clust}}$
+Clustering function $\ClusteringFunction$
 }
 
 \Output{
 \\
-Trained surrogate policies $\textcolor{myred}{\pi'_{\Theta_1}}, \dots, \textcolor{myred}{\pi'_{\Theta_n}}$\\
+Trained surrogate policies $\SurrogatePolicy{1}, \dots, \SurrogatePolicy{n}$\\
 Clusterings $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$
 }
 
 \AlgoRule
 
 \tcp{Behavioral cloning dataset built from the target policy $\InitialPolicy$}
-$\mathcal{D} \leftarrow \big\{ \big(O, p(\InitialPolicy(O))\big) \mid O \in \mathbb{O} \big\}$\nllabel{alg:car:dataset}\;
+$\mathcal{D} \leftarrow \big\{ \big(o, \logits(\InitialPolicy(o))\big) \mid o \in \ObsData \big\}$\nllabel{alg:car:dataset}\;
 
 \BlankLine
 \tcp{MSE loss between action-distribution parameters, as defined in Equation~\eqref{eq:car_loss}}
@@ -30,25 +30,25 @@ $\mathcal{L} \leftarrow$ \gls{mse}\nllabel{alg:car:loss}\;
 \BlankLine
 \tcp{Independently train $n$ surrogate policies by behavioral cloning}
 \For{$i = 1, \dots, n$\nllabel{alg:car:train_loop}}{
-    Initialize $\Theta_i$ randomly\;
+    Initialize $\params_i$ randomly\;
 
     \BlankLine
     \tcp{Behavioral cloning of $\InitialPolicy$ via SGD, see Algorithm~\ref{alg:stochastic_gradient_descent}}
-    $\Theta_i \leftarrow$ \FnSGD{$\mathcal{D}, \textcolor{myred}{\pi'}, \mathcal{L}, \eta, \Theta_i$}\nllabel{alg:car:sgd}\;
+    $\params_i \leftarrow$ \FnSGD{$\mathcal{D}, \SurrogatePolicy{}, \mathcal{L}, \eta, \params_i$}\nllabel{alg:car:sgd}\;
 }
 
 \BlankLine
 \tcp{Cluster the latent representations of each surrogate policy}
 \For{$i = 1, \dots, n$\nllabel{alg:car:cluster_loop}}{
-    \tcp{Embeddings produced by the encoder of $\textcolor{myred}{\pi'_{\Theta_i}}$}
-    $\textcolor{myblue}{\mathcal{E}_{i}} \leftarrow \big\{ \textcolor{myblue}{f_{enc_i}}(O) \mid O \in \mathbb{O} \big\}$\nllabel{alg:car:embed}\;
+    \tcp{Embeddings produced by the encoder of $\SurrogatePolicy{i}$}
+    $\LatentSet{i} \leftarrow \big\{ \SurrogateEncoder[i](o) \mid o \in \ObsData \big\}$\nllabel{alg:car:embed}\;
 
     \BlankLine
     \tcp{Partition of the embedded observations into clusters}
-    $\mathcal{C}_{i} \leftarrow f_{\mathrm{clust}}(\textcolor{myblue}{\mathcal{E}_{i}})$\nllabel{alg:car:clust}\;
+    $\mathcal{C}_{i} \leftarrow \ClusteringFunction(\LatentSet{i})$\nllabel{alg:car:clust}\;
 }
 
 \BlankLine
-\Return{\nllabel{alg:car:return}$\big(\textcolor{myred}{\pi'_{\Theta_1}}, \dots, \textcolor{myred}{\pi'_{\Theta_n}}\big), \big(\mathcal{C}_{1}, \dots, \mathcal{C}_{n}\big)$}
+\Return{\nllabel{alg:car:return}$\big(\SurrogatePolicy{1}, \dots, \SurrogatePolicy{n}\big), \big(\mathcal{C}_{1}, \dots, \mathcal{C}_{n}\big)$}
 
 \end{algorithm}

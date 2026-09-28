@@ -14,7 +14,7 @@
 
         % Combination function (left)
         \node[function] (combination_function) at (-2.2, 0) {
-            Combination function \\[4pt] $\sum_{i=1}^{n} w_i a_i + b$
+            Combination function \\[4pt] $\sum_{i=1}^{n} w_i x_i + b$
         };
 
         % Activation function (right)
@@ -30,23 +30,23 @@
         \draw[->] (bias) -- (combination_function) node[midway, right] {$b$};
 
         % Incoming neurons – unrolled for clarity and to avoid parsing errors
-        \node[neuron] (in0) at (-8, 5) {$a_1$};
+        \node[neuron] (in0) at (-8, 5) {$x_1$};
         \draw[->] (in0) -- (combination_function) node[midway, above] {$w_1$};
 
-        \node[neuron] (in1) at (-8, 3) {$a_2$};
+        \node[neuron] (in1) at (-8, 3) {$x_2$};
         \draw[->] (in1) -- (combination_function) node[midway, above] {$w_2$};
 
-        \node[neuron] (in2) at (-8, -3) {$a_{n-1}$};
+        \node[neuron] (in2) at (-8, -3) {$x_{n-1}$};
         \draw[->] (in2) -- (combination_function) node[midway, above] {$w_{n-1}$};
 
-        \node[neuron] (in3) at (-8, -5) {$a_n$};
+        \node[neuron] (in3) at (-8, -5) {$x_n$};
         \draw[->] (in3) -- (combination_function) node[midway, above] {$w_n$};
 
         % Dotted line indicating more neurons
         \draw[dotted, thick] (-8, -1.1) -- (-8, 1.1);
 
         % Output activation node
-        \node[align=center] (activation_output) at (7,0) {Activation \\ $a$};
+        \node[align=center] (activation_output) at (7,0) {Activation \\ $h$};
         \draw[->] (activation_function.east) -- (activation_output.west);
 
         \end{tikzpicture}

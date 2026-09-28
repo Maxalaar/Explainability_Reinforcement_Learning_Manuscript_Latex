@@ -18,7 +18,7 @@
         \foreach \i [evaluate={\y=\N/2-\i+0.5; \x=\lay; \n=\nstyle;}] in {1,...,\N}{ % loop over nodes
             \ifboolexpr{test {\ifnumcomp{\lay}{=}{3}}}
             {
-                \node[node \n,outer sep=0.6] (N\lay-\i) at (\x,\y) {\textcolor{myblue}{$e_{\lay,\i}$}};
+                \node[node \n,outer sep=0.6] (N\lay-\i) at (\x,\y) {\textcolor{myblue}{$h^{(\lay)}_{\i}$}};
             }
             {
                 \node[node \n,outer sep=0.6] (N\lay-\i) at (\x,\y) {};
@@ -38,7 +38,7 @@
 
     % Encoder box: encloses the layers up to and including the embedding
     \node[draw, dashed, rounded corners=0.15cm, color=myblue, fit=(N1-1)(N1-4)(N3-1)(N3-6), inner sep=0.15cm] (encoder_box) {};
-    \node[align=center] (encoder_label) at ($(encoder_box.north) + (0, 0.5cm)$) {\scalebox{1.5}{$\textcolor{myblue}{f_{enc}}$}};
+    \node[align=center] (encoder_label) at ($(encoder_box.north) + (0, 0.5cm)$) {\scalebox{1.5}{$\SurrogateEncoder$}};
 
     % Decoder box: encloses the embedding and the layers up to the output
     \node[draw, dashed, rounded corners=0.15cm, color=black, fit=(N3-1)(N3-6)(N5-1), inner sep=0.15cm] (decoder_box) {};
@@ -66,9 +66,9 @@
     \draw[->] ($(observation_4.east) + (-0.15cm, 0)$) -- ($(N1-4.west) + (-0.0cm, 0)$);
 
     % Distribution
-    \node[minimum height=1cm, minimum width=1cm] (distribution_1) at ($(N5-1) + (1.75cm, 0)$) {\scalebox{1.25}{$d_1$}};
-    \node[minimum height=1cm, minimum width=1cm] (distribution_2) at ($(N5-2) + (1.75cm, 0)$) {\scalebox{1.25}{$d_2$}};
-    \node[minimum height=1cm, minimum width=1cm] (distribution_3) at ($(N5-3) + (1.75cm, 0)$) {\scalebox{1.25}{$d_3$}};
+    \node[minimum height=1cm, minimum width=1cm] (distribution_1) at ($(N5-1) + (1.75cm, 0)$) {\scalebox{1.25}{$\ell_1$}};
+    \node[minimum height=1cm, minimum width=1cm] (distribution_2) at ($(N5-2) + (1.75cm, 0)$) {\scalebox{1.25}{$\ell_2$}};
+    \node[minimum height=1cm, minimum width=1cm] (distribution_3) at ($(N5-3) + (1.75cm, 0)$) {\scalebox{1.25}{$\ell_3$}};
 
     \draw[thick] (distribution_1.north east) -- ($(distribution_1.north east) + (-0.1cm, 0)$);
     \draw[thick] (distribution_1.north east) -- (distribution_3.south east);
@@ -91,12 +91,12 @@
 
     \node[] (embedding) at ($(embedding_label) + (0, -2cm)$) {
         $\begin{bmatrix}
-            \textcolor{myblue}{e_{3,1}} \\
-            \textcolor{myblue}{e_{3,2}} \\
-            \textcolor{myblue}{e_{3,3}} \\
-            \textcolor{myblue}{e_{3,4}} \\
-            \textcolor{myblue}{e_{3,5}} \\
-            \textcolor{myblue}{e_{3,6}}
+            \textcolor{myblue}{h^{(3)}_{1}} \\
+            \textcolor{myblue}{h^{(3)}_{2}} \\
+            \textcolor{myblue}{h^{(3)}_{3}} \\
+            \textcolor{myblue}{h^{(3)}_{4}} \\
+            \textcolor{myblue}{h^{(3)}_{5}} \\
+            \textcolor{myblue}{h^{(3)}_{6}}
         \end{bmatrix}$
     };
 

@@ -7,7 +7,7 @@
 % Label style
 \def\labelfont{\footnotesize}
 \def\labelfill{white}
-\def\labelprefix{\theta}
+\def\labelprefix{\params}
 
 % Label offset (in axis units)
 \def\labeloffsetx{0}
@@ -20,11 +20,11 @@
     \resizebox{0.85\textwidth}{!}{
         \begin{tikzpicture}
         \begin{axis}[
-                % title={$\mathcal{L}(\theta) = w_{1}^2 + w_{2}^2$},
+                % title={$\mathcal{L}(\theta) = \theta_{1}^2 + \theta_{2}^2$},
                 view={-60}{60},
-                xlabel={$w_{1}$},
-                ylabel={$w_{2}$},
-                zlabel={$\mathcal{L}(w_{1}, w_{2})$},
+                xlabel={$\theta_{1}$},
+                ylabel={$\theta_{2}$},
+                zlabel={$\mathcal{L}(\theta_{1}, \theta_{2})$},
                 colormap/viridis,
                 % colorbar,
                 % colorbar style={
@@ -83,7 +83,7 @@
                     fill=\noexpand\labelfill,
                     inner sep=1pt,
                 ] at (axis cs: \x+\labeloffsetx,\y+\labeloffsety,\z+\labeloffsetz)
-                    {$\labelprefix^{(\labelidx)}$};
+                    {$\labelprefix_{\labelidx}$};
             }
             \templabel
         }
@@ -91,6 +91,6 @@
         \end{axis}
         \end{tikzpicture}
     }
-    \caption{Gradient descent in a case $\mathcal{L}(w_{1}, w_{2}) = w_{1}^2 + w_{2}^2$.}
+    \caption{Gradient descent in a case $\mathcal{L}(\theta_{1}, \theta_{2}) = \theta_{1}^2 + \theta_{2}^2$.}
     \label{fig:simple_gradient_descent}
 \end{figure}

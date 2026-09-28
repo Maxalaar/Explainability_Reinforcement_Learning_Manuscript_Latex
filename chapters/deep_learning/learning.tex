@@ -5,18 +5,18 @@ This brings the discussion to the core of \gls{dl}, namely the learning process 
 As a reminder, the objective of training a \gls{nn} is to adjust its parameters so that the network provides a good approximation of the target function.
 Mathematically, this objective is expressed as:
 \begin{equation}
-\min_{\theta} \frac{1}{N} \sum_{i=1}^{N} \fullLoss{\theta}{i}.
+\min_{\params} \frac{1}{N} \sum_{i=1}^{N} \fullLoss{\params}{i}.
 \label{eq:training_objective}
 \end{equation}
 
-As shown in Equation~\ref{eq:training_objective}, the loss for example $i$ depends on the input-target pair $(x^{(i)},y^{(i)})$, the loss function $\mathcal{L}$, the network architecture $\hat{f}$, and the parameters $\theta$.
-Since the dataset, loss function, and network architecture are fixed during training, only the parameters $\theta$ are optimized.
-To simplify the notation, only the dependence on $\theta$ is kept, and the loss for example $i$ is written as
+As shown in Equation~\ref{eq:training_objective}, the loss for example $i$ depends on the input-target pair $(\vect{x}^{(i)},\vect{y}^{(i)})$, the loss function $\mathcal{L}$, the network architecture $\hat{f}$, and the parameters $\params$.
+Since the dataset, loss function, and network architecture are fixed during training, only the parameters $\params$ are optimized.
+To simplify the notation, only the dependence on $\params$ is kept, and the loss for example $i$ is written as
 \begin{equation}
-\loss{\theta}{i} = \fullLoss{\theta}{i}.
+\loss{\params}{i} = \fullLoss{\params}{i}.
 \end{equation}
 
-Now that the learning objective has been defined, the next question is how to modify the parameters $\theta$ to minimize the loss.
+Now that the learning objective has been defined, the next question is how to modify the parameters $\params$ to minimize the loss.
 The \gls{nn} architecture $\hat{f}$ used to approximate the target function $f$ is highly complex.
 It involves a large number of parameters as well as many nonlinear components.
 As a result, the optimum cannot be determined analytically by directly studying the properties of the function.
@@ -34,32 +34,32 @@ The third discusses the convergence properties of the resulting algorithm.
 
 \subsection{Computing the Gradient}
 
-The first step of \gls{sgd} is to randomly initialize the parameter vector $\theta \in \mathbb{R}^P$ for a given network architecture $\hat{f}$.
-This initial state is denoted by $\theta^{(1)}$.
+The first step of \gls{sgd} is to randomly initialize the parameter vector $\params \in \mathbb{R}^d$ for a given network architecture $\hat{f}$.
+This initial state is denoted by $\params_{1}$.
 The goal is to iteratively update this vector so that the network gets better at approximating the target function.
-To do so, it is necessary to quantify the impact of each parameter $w_k$ on the loss $\loss{\theta}{i}$.
+To do so, it is necessary to quantify the impact of each parameter $\theta_j$ on the loss $\loss{\params}{i}$.
 This is done using the partial derivative of the loss with respect to each parameter, denoted by
 $
-\frac{\partial \loss{\theta}{i}}{\partial w_k}.
+\frac{\partial \loss{\params}{i}}{\partial \theta_j}.
 $
 
-Computing this derivative is not straightforward because a \gls{nn} is composed of a sequence of functions, and the parameter $w_k$ can belong to any layer of the network.
+Computing this derivative is not straightforward because a \gls{nn} is composed of a sequence of functions, and the parameter $\theta_j$ can belong to any layer of the network.
 Its influence on the loss must therefore be propagated through all subsequent layers.
 To describe these dependencies, each layer can be viewed as a function, denoted by $\phi^{(l)}$ for layer $l$.
-This function takes the activation vector $\mathbf{h}^{(l-1)} \in \mathbb{R}^{n_{l-1}}$ produced by the previous layer as input.
-It produces the activation vector $\mathbf{h}^{(l)} \in \mathbb{R}^{n_l}$ of the current layer.
+This function takes the activation vector $\latentRepresentation[l-1] \in \mathbb{R}^{n_{l-1}}$ produced by the previous layer as input.
+It produces the activation vector $\latentRepresentation[l] \in \mathbb{R}^{n_l}$ of the current layer.
 This can be expressed as
 \begin{equation}
-\phi^{(l)} \colon \mathbb{R}^{n_{l-1}} \to \mathbb{R}^{n_l}, \qquad \mathbf{h}^{(l)} = \phi^{(l)}(\mathbf{h}^{(l-1)}).
+\phi^{(l)} \colon \mathbb{R}^{n_{l-1}} \to \mathbb{R}^{n_l}, \qquad \latentRepresentation[l] = \phi^{(l)}(\latentRepresentation[l-1]).
 \label{eq:layer_function}
 \end{equation}
 
 Each layer function can have multiple inputs and multiple outputs, so the ordinary derivative is not sufficient to describe how its outputs change with respect to its inputs.
 The Jacobian matrix extends the derivative to functions with multiple inputs and outputs, quantifying how each output component changes with respect to each input component.
-Consider the function $\phi^{(l)}$ and its Jacobian $J_{\phi^{(l)}}$ evaluated at $\mathbf{h}^{(l-1)}$.
+Consider the function $\phi^{(l)}$ and its Jacobian $\mat{J}_{\phi^{(l)}}$ evaluated at $\latentRepresentation[l-1]$.
 The Jacobian collects the partial derivatives of each output component with respect to each input component:
 \begin{equation}
-J_{\phi^{(l)}}(\mathbf{h}^{(l-1)}) =
+\mat{J}_{\phi^{(l)}}(\latentRepresentation[l-1]) =
 \begin{bmatrix}
 \frac{\partial h_1^{(l)}}{\partial h_1^{(l-1)}} & \cdots & \frac{\partial h_1^{(l)}}{\partial h_{n_{l-1}}^{(l-1)}} \\
 \vdots & \ddots & \vdots \\
@@ -77,45 +77,45 @@ Each Jacobian is evaluated at the input received by the corresponding layer:
 
 
 \begin{equation}
-J_{\phi^{(l+1)} \circ \phi^{(l)}}\left(\mathbf{h}^{(l-1)}\right)
+\mat{J}_{\phi^{(l+1)} \circ \phi^{(l)}}\left(\latentRepresentation[l-1]\right)
 =
-J_{\phi^{(l+1)}}\left(\mathbf{h}^{(l)}\right)
-J_{\phi^{(l)}}\left(\mathbf{h}^{(l-1)}\right).
+\mat{J}_{\phi^{(l+1)}}\left(\latentRepresentation[l]\right)
+\mat{J}_{\phi^{(l)}}\left(\latentRepresentation[l-1]\right).
 \label{eq:chain_rule_generic}
 \end{equation}
 
 
 The network is composed of a sequence of layer functions $\phi^{(1)}, \dots, \phi^{(L)}$.
 Each layer depends only on the output of the previous layer.
-Consider a parameter $w_k$ belonging to layer $l$.
-A change in $w_k$ first affects the output $\mathbf{h}^{(l)}$ of its own layer.
-This change then propagates through the subsequent layers, affecting $\mathbf{h}^{(l+1)}$, and so on.
-The effect reaches the output $\mathbf{h}^{(L)}$, from which the loss $\loss{\theta}{i}$ is computed.
+Consider a parameter $\theta_j$ belonging to layer $l$.
+A change in $\theta_j$ first affects the output $\latentRepresentation[l]$ of its own layer.
+This change then propagates through the subsequent layers, affecting $\latentRepresentation[l+1]$, and so on.
+The effect reaches the output $\latentRepresentation[L]$, from which the loss $\loss{\params}{i}$ is computed.
 This layer-by-layer propagation is referred to as backpropagation:
 \begin{equation}
-\frac{\partial \loss{\theta}{i}}{\partial w_k}
+\frac{\partial \loss{\params}{i}}{\partial \theta_j}
 =
-J_{\mathcal{L}}(\mathbf{h}^{(L)}, y^{(i)})
-\, J_{\phi^{(L)}}(\mathbf{h}^{(L-1)})
+\mat{J}_{\mathcal{L}}(\latentRepresentation[L], \vect{y}^{(i)})
+\, \mat{J}_{\phi^{(L)}}(\latentRepresentation[L-1])
 \cdots
-J_{\phi^{(l+1)}}(\mathbf{h}^{(l)})
-\, J_{\phi^{(l)}}(w_k),
+\mat{J}_{\phi^{(l+1)}}(\latentRepresentation[l])
+\, \mat{J}_{\phi^{(l)}}(\theta_j),
 \label{eq:chain_rule}
 \end{equation}
 where:
 \begin{itemize}
-\item $J_{\mathcal{L}}(\mathbf{h}^{(L)}, y^{(i)})$ denotes the Jacobian of $\mathcal{L}$ with respect to its first argument, evaluated at $(\mathbf{h}^{(L)}, y^{(i)})$,
-\item each subsequent $J_{\phi^{(j+1)}}(\mathbf{h}^{(j)})$ denotes the Jacobian of the function $\phi^{(j+1)}$ with respect to its input $\mathbf{h}^{(j)}$,
-\item $J_{\phi^{(l)}}(w_k)$ denotes the Jacobian of the function $\phi^{(l)}$ with respect to the parameter $w_k$.
+\item $\mat{J}_{\mathcal{L}}(\latentRepresentation[L], \vect{y}^{(i)})$ denotes the Jacobian of $\mathcal{L}$ with respect to its first argument, evaluated at $(\latentRepresentation[L], \vect{y}^{(i)})$,
+\item each subsequent $\mat{J}_{\phi^{(m+1)}}(\latentRepresentation[m])$ denotes the Jacobian of the function $\phi^{(m+1)}$ with respect to its input $\latentRepresentation[m]$,
+\item $\mat{J}_{\phi^{(l)}}(\theta_j)$ denotes the Jacobian of the function $\phi^{(l)}$ with respect to the parameter $\theta_j$.
 \end{itemize}
 
-Once $\frac{\partial \loss{\theta}{i}}{\partial w_k}$ can be computed for every parameter, all of these values are stacked into one vector, called the gradient:
+Once $\frac{\partial \loss{\params}{i}}{\partial \theta_j}$ can be computed for every parameter, all of these values are stacked into one vector, called the gradient:
 \begin{equation}
-\nabla_{\theta} \loss{\theta}{i} =
+\nabla_{\params} \loss{\params}{i} =
 \left[
-\frac{\partial \loss{\theta}{i}}{\partial w_1},
+\frac{\partial \loss{\params}{i}}{\partial \theta_1},
 \dots,
-\frac{\partial \loss{\theta}{i}}{\partial w_P}
+\frac{\partial \loss{\params}{i}}{\partial \theta_d}
 \right].
 \label{eq:gradient}
 \end{equation}
@@ -130,22 +130,22 @@ To do so, the parameters are updated in the direction opposite to the gradient.
 Indeed, the gradient is followed in the opposite direction because it indicates the direction in which the loss increases, whereas the objective is to reduce it.
 This leads to the gradient descent update rule:
 \begin{equation}
-\theta^{(n+1)} = \theta^{(n)} - \eta \nabla_{\theta} \loss{\theta^{(n)}}{i},
+\params_{k+1} = \params_{k} - \eta \nabla_{\params} \loss{\params_{k}}{i},
 \label{eq:gradient_descent_update}
 \end{equation}
-where $\eta > 0$ is the learning rate, which controls the step size, and $\nabla_{\theta} \loss{\theta^{(n)}}{i}$ denotes the gradient of the loss with respect to the parameters, evaluated at the current values $\theta^{(n)}$.
+where $\eta > 0$ is the learning rate, which controls the step size, and $\nabla_{\params} \loss{\params_{k}}{i}$ denotes the gradient of the loss with respect to the parameters, evaluated at the current values $\params_{k}$.
 
 The parameter $\eta$ must remain small, as the gradient only provides reliable information in a local neighborhood of the current parameters.
 As a result, a single step is not sufficient to significantly reduce the loss, so the process is iterated many times.
-Producing a sequence of parameter vectors $\theta^{(1)}, \theta^{(2)}, \dots$ that progressively improve the model.
+Producing a sequence of parameter vectors $\params_{1}, \params_{2}, \dots$ that progressively improve the model.
 In practice, training is stopped when successive updates no longer produce a significant decrease in the loss.
 
 Algorithm~\ref{alg:stochastic_gradient_descent} summarizes this whole training procedure.
 
 \input{algorithms/deep_learning/stochastic_gradient_descent.tex}
 
-To develop an intuition for this update rule, Figure~\ref{fig:simple_gradient_descent} illustrates it applied to the simple convex loss function $\mathcal{L}(w_1,w_2)=w_1^2+w_2^2$, where the red path shows the parameter updates converging to the minimum.
-The point $\theta^{(1)}$ represents the initial parameter values, with $w_1$ and $w_2$ randomly initialized, and the subsequent points, from $\theta^{(2)}$ to $\theta^{(6)}$, represent the successive updates produced by applying Equation~\ref{eq:gradient_descent_update}, progressively moving the trajectory toward the minimum of the loss function.
+To develop an intuition for this update rule, Figure~\ref{fig:simple_gradient_descent} illustrates it applied to the simple convex loss function $\mathcal{L}(\theta_1,\theta_2)=\theta_1^2+\theta_2^2$, where the red path shows the parameter updates converging to the minimum.
+The point $\params_{1}$ represents the initial parameter values, with $\theta_1$ and $\theta_2$ randomly initialized, and the subsequent points, from $\params_{2}$ to $\params_{6}$, represent the successive updates produced by applying Equation~\ref{eq:gradient_descent_update}, progressively moving the trajectory toward the minimum of the loss function.
 
 \heavyfig{fig:simple_gradient_descent}{figures/deepl_learning/gradient_descent/simple_grandient_descent/simple_gradient_descent.tex}
 

@@ -4,28 +4,28 @@
 
 \Input{
 \\
-\gls{mdp} $(\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, p)$\\
-Architecture $\hat{Q}$\\
+\gls{mdp} $(\StateSet, \ObsSet, \ActionSet, \RewardSet, p)$\\
+Architecture $\hat{q}$\\
 Exploration rate $\varepsilon \in [0, 1]$\\
 Discount factor $\gamma \in [0, 1]$\\
 Learning rate $\eta > 0$\\
-Initial parameters $\theta$ (optional)
+Initial parameters $\weights$ (optional)
 }
 
 \Output{
 \\
-Trained policy $\pi_{\theta}$
+Trained policy $\pi_{\weights}$
 }
 
 \AlgoRule
 
-\uIf{$\theta$ is not given}{
-    Initialize $\theta$ randomly\;
+\uIf{$\weights$ is not given}{
+    Initialize $\weights$ randomly\;
 }
 
 \BlankLine
 \tcp{Exploration policy as defined in Equation~\eqref{eq:epsilon_greedy_policy}}
-$\pi_{\theta} \leftarrow$ $\varepsilon$-greedy policy with respect to $\hat{Q}_\theta$
+$\pi_{\weights} \leftarrow$ $\varepsilon$-greedy policy with respect to $\hat{q}(\cdot, \cdot, \weights)$
 
 \BlankLine
 \tcp{MSE loss function as defined in Equation~\eqref{eq:mse}}
@@ -34,22 +34,22 @@ $\mathcal{L} \leftarrow$ \gls{mse}\;
 \BlankLine
 \While{stopping criterion not satisfied}{
     \tcp{Data collection see Algorithm~\ref{alg:data_collection}}
-    $\mathcal{D} \leftarrow$ \FnDataCollection{\gls{mdp}, $\pi_{\theta}, \gamma$}
+    $\mathcal{D} \leftarrow$ \FnDataCollection{\gls{mdp}, $\pi_{\weights}, \gamma$}
 
     \BlankLine
     \tcp{observation-action pairs and their returns, from $\mathcal{D}$}
-    $\mathcal{D}' \leftarrow \big\{\big((o, a), g\big) \mid (s, o, a, g) \in \mathcal{D}\big\}$
+    $\mathcal{D}' \leftarrow \big\{\big((o, a), G\big) \mid (s, o, a, G) \in \mathcal{D}\big\}$
 
     \BlankLine
     \tcp{Model update whith SGD see Algorithm~\ref{alg:stochastic_gradient_descent}}
-    $\theta \leftarrow$ \FnSGD{$\mathcal{D}', \hat{Q}, \mathcal{L}, \eta, \theta$}
+    $\weights \leftarrow$ \FnSGD{$\mathcal{D}', \hat{q}, \mathcal{L}, \eta, \weights$}
 }
 
 \BlankLine
 \tcp{Final policy without exploration as defined in Equation~\eqref{eq:greedy_policy}}
-$\pi_{\theta} \leftarrow$ policy with respect to $\hat{Q}_\theta$\;
+$\pi_{\weights} \leftarrow$ policy with respect to $\hat{q}(\cdot, \cdot, \weights)$\;
 
 \BlankLine
-\Return{$\pi_{\theta}$}
+\Return{$\pi_{\weights}$}
 
 \end{algorithm}

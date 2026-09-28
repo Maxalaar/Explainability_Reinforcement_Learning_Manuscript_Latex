@@ -8,7 +8,7 @@
     % #6 : liste des coordonnées Y des circlepattern
     % #7 : liste des diamètres des circlepattern
     \node[policybox] (policy#2) at (#1,0)
-        {\scalebox{2}{$\textcolor{myred}{\pi}^{\textcolor{myred}{'}}_{\textcolor{myred}{#2}}$}};
+        {\scalebox{2}{$\SurrogatePolicy{#2}$}};
 
     \begin{scope}[xshift=#1, yshift=-4cm, scale=0.8, transform shape]
         \node[pointset] (box#2) at (0,0) {};
@@ -91,7 +91,7 @@
 
     \node[below=0.75cm] at (0, -6) {
         \scalebox{1.5}{$\displaystyle
-        \text{\ClusteringUniversalityName} = 1
+        \CU = 1
         $}
     };
 

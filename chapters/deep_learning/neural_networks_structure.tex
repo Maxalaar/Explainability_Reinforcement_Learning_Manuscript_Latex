@@ -32,9 +32,9 @@ A neuron is characterized by:
 \end{itemize}
 
 The activation of a neuron is determined by a weighted combination of its input signals, to which a bias is added, followed by the application of a nonlinear activation function.
-Mathematically, for a neuron receiving inputs $(a_1, \dots, a_n)$, its activation $a$ is given by:
+Mathematically, for a neuron receiving inputs $(x_1, \dots, x_n)$, its activation $h$ is given by:
 \begin{equation}
-a = \sigma\left(\sum_{i=1}^{n} w_i a_i + b\right),
+h = \sigma\left(\sum_{i=1}^{n} w_i x_i + b\right),
 \label{eq:neuron_activation}
 \end{equation}
 where:
@@ -75,8 +75,8 @@ Three types of layers are distinguished:
 \end{itemize}
 
 The input and output layers play a specific role.
-The input layer has no preceding layer, as its neurons directly encode the components of the input vector $x$.
-Conversely, the output layer has no subsequent layer, and its neurons produce the model's prediction $\hat{y}$.
+The input layer has no preceding layer, as its neurons directly encode the components of the input vector $\vect{x}$.
+Conversely, the output layer has no subsequent layer, and its neurons produce the model's prediction $\hat{\vect{y}}$.
 This structure imposes a direct correspondence between the dimensionality of the input space and the number of neurons in the input layer, and similarly between the output space and the number of neurons in the output layer.
 
 When describing \glspl{nn}, especially in \glspl{mlp}, it is more common to reason at the level of layers rather than individual neurons.
@@ -86,19 +86,19 @@ Within this framework, it is useful to introduce the notion of layer activations
 The activation of a layer corresponds to the activations of all its neurons, organized into a vector.
 For a layer $l$ composed of $n_l$ neurons, the activations are given by:
 \begin{equation}
-\mathbf{h}^{(l)} = [a_1^{(l)}, \dots, a_{n_l}^{(l)}].
+\latentRepresentation[l] = [h_1^{(l)}, \dots, h_{n_l}^{(l)}].
 \label{eq:layer_activation_vector}
 \end{equation}
 Using this formulation, the interaction between two consecutive layers can be written compactly as:
 \begin{equation}
-\mathbf{h}^{(l)} = \sigma^{(l)}\left(\mathbf{W}^{(l)} \mathbf{h}^{(l-1)} + \mathbf{b}^{(l)}\right),
+\latentRepresentation[l] = \sigma^{(l)}\left(\mat{W}^{(l)} \latentRepresentation[l-1] + \vect{b}^{(l)}\right),
 \label{eq:layer_interaction}
 \end{equation}
 where:
 \begin{itemize}
-\item $\mathbf{h}^{(l-1)}$ represents the activations vector of the previous layer,
-\item $\mathbf{W}^{(l)} \in \mathbb{R}^{n_l \times n_{l-1}}$ is the weight matrix connecting layer $l-1$ to layer $l$,
-\item $\mathbf{b}^{(l)} \in \mathbb{R}^{n_l}$ is the bias vector associated with layer $l$,
+\item $\latentRepresentation[l-1]$ represents the activations vector of the previous layer,
+\item $\mat{W}^{(l)} \in \mathbb{R}^{n_l \times n_{l-1}}$ is the weight matrix connecting layer $l-1$ to layer $l$,
+\item $\vect{b}^{(l)} \in \mathbb{R}^{n_l}$ is the bias vector associated with layer $l$,
 \item $\sigma^{(l)}$ is the activation function applied element-wise to the neurons of layer $l$.
 \end{itemize}
 
@@ -118,16 +118,16 @@ The precise relationship between depth and function complexity remains primarily
 
 With a layer-wise representation, the propagation of information can be described as a sequence of transformations applied from the input layer (indexed $1$) to the output layer (indexed $L$):
 \begin{equation}
-\hat{f}(x) = \mathbf{h}^{(L)} = \sigma^{(L)}\left(\mathbf{W}^{(L)} \sigma^{(L-1)}\left(\dots \sigma^{(1)}\left(\mathbf{W}^{(1)} x + \mathbf{b}^{(1)}\right) \dots \right) + \mathbf{b}^{(L)}\right) = \hat{y}.
+\hat{f}(\vect{x}) = \latentRepresentation[L] = \sigma^{(L)}\left(\mat{W}^{(L)} \sigma^{(L-1)}\left(\dots \sigma^{(1)}\left(\mat{W}^{(1)} \vect{x} + \vect{b}^{(1)}\right) \dots \right) + \vect{b}^{(L)}\right) = \hat{\vect{y}}.
 \label{eq:network_full}
 \end{equation}
 
 For a more compact description of information propagation, the layer activations are defined recursively as:
 \begin{equation}
-\mathbf{h}^{(l)} =
+\latentRepresentation[l] =
 \begin{cases}
-x & \text{if } l = 1,\\[4pt]
-\sigma^{(l)}\left(\mathbf{W}^{(l)} \mathbf{h}^{(l-1)} + \mathbf{b}^{(l)}\right) & \text{if } 2 \le l \le L.
+\vect{x} & \text{if } l = 1,\\[4pt]
+\sigma^{(l)}\left(\mat{W}^{(l)} \latentRepresentation[l-1] + \vect{b}^{(l)}\right) & \text{if } 2 \le l \le L.
 \end{cases}
 \label{eq:layer_recursive}
 \end{equation}
@@ -135,16 +135,16 @@ x & \text{if } l = 1,\\[4pt]
 To simplify notation, it is convenient to group all parameters of the network into a single set.
 The model parameters are thus denoted by:
 \begin{equation}
-\theta = \{\mathbf{W}^{(l)}, \mathbf{b}^{(l)}\}_{l=1}^{L}.
+\params = \{\mat{W}^{(l)}, \vect{b}^{(l)}\}_{l=1}^{L}.
 \label{eq:parameters}
 \end{equation}
 
-In this manuscript, $\theta$ is a vector in $\mathbb{R}^P$, where $P$ denotes the total number of parameters, such that $\theta = [w_1, \dots, w_P]$.
-The notation $\hat{f}_{\theta}$ expresses the dependence of the \gls{nn} on its parameters.
+In this manuscript, $\params$ is a vector in $\mathbb{R}^d$, where $d$ denotes the total number of parameters, such that $\params = [\theta_1, \dots, \theta_d]$.
+The notation $\hat{f}_{\params}$ expresses the dependence of the \gls{nn} on its parameters.
 Increasing the number of parameters, either by adding more neurons per layer or by increasing the number of layers, can enhances the expressive power of the model, allowing it to approximate more complex functions.
 However, this also increases computational cost and training time.
 
 It is important to distinguish between the architecture and the parameters of a \gls{nn}.
 When referring to the architecture of $\hat{f}$, the number of layers, the number of neurons per layer, and the choice of activation functions are considered.
-The parameters correspond to $\theta$, which controls the strength of the connections between neurons.
+The parameters correspond to $\params$, which controls the strength of the connections between neurons.
 The following sections examine how these parameters can be adjusted to obtain a better approximation of the target function.

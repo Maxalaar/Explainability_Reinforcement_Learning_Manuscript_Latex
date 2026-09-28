@@ -7,25 +7,25 @@ Studying such concepts can therefore provide insight into how the network intern
 
 A probing analysis begins by identifying a set of semantic concepts that the network could potentially use to accomplish its task.
 Each example in the dataset is then annotated to indicate the presence or absence of the studied concepts.
-We denote by $c_j$ the presence or absence of concept $j$ in example $x$.
+We denote by $c_j$ the presence or absence of concept $j$ in example $\vect{x}$.
 The dataset can therefore be written as follows:
 \[
-\mathcal{D} = \{(x^{(i)}, y^{(i)}, c^{(i)}_1, \dots, c^{(i)}_n)\}_{i=1}^{N}.
+\mathcal{D} = \{(\vect{x}^{(i)}, \vect{y}^{(i)}, c^{(i)}_1, \dots, c^{(i)}_n)\}_{i=1}^{N}.
 \]
 
 The data are subsequently projected into the \gls{ls} of the pretrained model.
-For an input $x$, we write $\latentRepresentation[l](x) \in \mathbb{R}^{n_l}$, or simply $\latentRepresentation[l]$, the \gls{lr} obtained at layer $l$.
+For an input $\vect{x}$, we write $\latentRepresentation[l](\vect{x}) \in \mathbb{R}^{n_l}$, or simply $\latentRepresentation[l]$, the \gls{lr} obtained at layer $l$.
 A classifier, referred to as a probe, is then trained to predict the presence of a given concept from this \gls{lr}.
-It is denoted by $p_{\theta}^{l,j}$, where $\theta$ represents its parameters, $l$ indicates the layer from which the \gls{lr} is extracted, and $j$ identifies the concept being predicted.
+It is denoted by $\Probe{l}{j}$, where $\params$ represents its parameters, $l$ indicates the layer from which the \gls{lr} is extracted, and $j$ identifies the concept being predicted.
 The probe maps the \gls{lr} to a scalar value in $[0,1]$, which can be interpreted as the probability that the concept is present.
-The parameters $\theta$ are learned by minimizing a loss function over the training examples using \gls{sgd}.
+The parameters $\params$ are learned by minimizing a loss function over the training examples using \gls{sgd}.
 This gives the following mathematical formulation:
 \begin{equation}
-p_{\theta}^{l,j} : \mathbb{R}^{n_l} \rightarrow [0,1],
+\Probe{l}{j} : \mathbb{R}^{n_l} \rightarrow [0,1],
 \qquad
-\min_{\theta} \frac{1}{N} \sum_{i=1}^{N}
+\min_{\params} \frac{1}{N} \sum_{i=1}^{N}
 \mathcal{L}\left(
-p_{\theta}^{l,j}\left(\latentRepresentation[l](x^{(i)})\right),
+\Probe{l}{j}\left(\latentRepresentation[l](\vect{x}^{(i)})\right),
 c_j^{(i)}
 \right).
 \label{eq:probe_function}
@@ -68,23 +68,23 @@ This goal can be formulated as an optimization problem over the \gls{lr} itself.
 The optimization is performed directly on the \gls{lr}, using \gls{sgd}.
 The solution to this problem is the optimal modified \gls{lr}, defined as:
 \[
-\latentRepresentation[l]^{*} =
-\arg\min_{\latentRepresentation[l]'}
-\underbrace{\gamma \, \mathcal{L}_{\text{flip}}\big(p_{\theta}^{l,j}(\latentRepresentation[l]'), c_j\big)}_{\text{flip target concept } c_j}
+\latentRepresentation[l][*] =
+\argmin_{\latentRepresentation[l][\prime]}
+\underbrace{\lambda_1 \, \mathcal{L}_{\mathrm{flip}}\big(\Probe{l}{j}(\latentRepresentation[l][\prime]), c_j\big)}_{\text{flip target concept } c_j}
 +
-\underbrace{\lambda \sum_{k \neq j} \mathcal{L}_{\text{preserve}}\big(p_{\theta}^{l,k}(\latentRepresentation[l]'), c_k\big)}_{\text{preserve other concepts } c_{k \neq j}}
+\underbrace{\lambda_2 \sum_{k \neq j} \mathcal{L}_{\mathrm{preserve}}\big(\Probe{l}{k}(\latentRepresentation[l][\prime]), c_k\big)}_{\text{preserve other concepts } c_{k \neq j}}
 +
-\underbrace{\beta \|\latentRepresentation[l]' - \latentRepresentation[l]\|_2^2}_{\text{minimality}}
+\underbrace{\lambda_3 \|\latentRepresentation[l][\prime] - \latentRepresentation[l]\|_2^2}_{\text{minimality}}
 \]
 where:
 \begin{itemize}
     \item $\latentRepresentation[l]$ is the original \gls{lr} of the input at layer $l$,
-    \item $\latentRepresentation[l]'$ is the modified \gls{lr} being optimized,
-    \item $\latentRepresentation[l]^{*}$ is the optimal modified \gls{lr},
-    \item $\mathcal{L}_{\text{flip}}$: loss encouraging the prediction of the target concept $c_j$ to change state (i.e., flipping the predicted label),
-    \item $\mathcal{L}_{\text{preserve}}$: loss enforcing invariance of all non-target concepts $c_k$ for $k \neq j$,
-    \item $\|\latentRepresentation[l]' - \latentRepresentation[l]\|_2^2$: regularization term ensuring the modified \gls{lr} remains close to the original one,
-    \item $\gamma, \lambda, \beta$: weighting coefficients controlling the trade-off between the intervention strength, the preservation of other concepts, and the minimality of the perturbation.
+    \item $\latentRepresentation[l][\prime]$ is the modified \gls{lr} being optimized,
+    \item $\latentRepresentation[l][*]$ is the optimal modified \gls{lr},
+    \item $\mathcal{L}_{\mathrm{flip}}$: loss encouraging the prediction of the target concept $c_j$ to change state (i.e., flipping the predicted label),
+    \item $\mathcal{L}_{\mathrm{preserve}}$: loss enforcing invariance of all non-target concepts $c_k$ for $k \neq j$,
+    \item $\|\latentRepresentation[l][\prime] - \latentRepresentation[l]\|_2^2$: regularization term ensuring the modified \gls{lr} remains close to the original one,
+    \item $\lambda_1, \lambda_2, \lambda_3$: weighting coefficients controlling the trade-off between the intervention strength, the preservation of other concepts, and the minimality of the perturbation.
 \end{itemize}
 
 In the context of \glspl{llm} studied previously, such interventions have been used to remove specific pieces from the model’s internal representation of the game state \cite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.

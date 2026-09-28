@@ -37,26 +37,26 @@ For simplicity, we will refer to this setting as an ``\gls{mdp}'' throughout thi
 
 % The following section aims to provide a mathematical description of the \gls{rl} problem.
 % The formulation adopted in this manuscript has been chosen to emphasize the main elements that will be used throughout the remainder of the manuscript.
-A \gls{mdp} is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, p)\):  
+A \gls{mdp} is defined by the tuple \((\StateSet, \ObsSet, \ActionSet, \RewardSet, p)\):  
 \begin{itemize}
-    \item \textbf{\(\mathcal{S}\)}: The set of states, representing all possible configurations of the environment.  
-    A state belonging to this set is denoted by \(s \in \mathcal{S}\).  
+    \item \textbf{\(\StateSet\)}: The set of states, representing all possible configurations of the environment.  
+    A state belonging to this set is denoted by \(s \in \StateSet\).  
     Among these, two special subsets are distinguished: initial states, from which an interaction can begin, and terminal states, in which the interaction ends.  
     The set of initial states is denoted by \(\StateSetInitial\), with an initial state written as \(\StateInitial \in \StateSetInitial\).
     The set of terminal states is denoted by \(\StateSetTerminal\), with a terminal state written as \(\StateTerminal \in \StateSetTerminal\).
     
-    \item \textbf{\(\mathcal{O}\)}: The set of observations that the agent can perceive from the environment.
-    A observation belonging to this set is denoted by \(o \in \mathcal{O}\). 
-    Unlike the state \(s \in \mathcal{S}\), which is hidden from the agent, the observation \(o \in \mathcal{O}\) provides partial information about the current state.
+    \item \textbf{\(\ObsSet\)}: The set of observations that the agent can perceive from the environment.
+    A observation belonging to this set is denoted by \(o \in \ObsSet\). 
+    Unlike the state \(s \in \StateSet\), which is hidden from the agent, the observation \(o \in \ObsSet\) provides partial information about the current state.
 
-    \item \textbf{\(\mathcal{A}\)}: The set of actions that the agent may execute.
-    A action belonging to this set is denoted by \(a \in \mathcal{A}\). 
+    \item \textbf{\(\ActionSet\)}: The set of actions that the agent may execute.
+    A action belonging to this set is denoted by \(a \in \ActionSet\). 
     Actions influence the dynamics of the \gls{mdp}, thereby shaping its future course.  
     They represent the agent's capacity to act upon its environment.
 
-    \item \textbf{\(\mathcal{R}\)}: The set of rewards that the agent can receive from the environment.  
-    A reward belonging to this set is denoted by \(r \in \mathcal{R}\). 
-    \(\mathcal{R}\) is a subset of \(\mathbb{R}\).
+    \item \textbf{\(\RewardSet\)}: The set of rewards that the agent can receive from the environment.  
+    A reward belonging to this set is denoted by \(r \in \RewardSet\). 
+    \(\RewardSet\) is a subset of \(\mathbb{R}\).
     Rewards can be either positive or negative, depending on whether the corresponding outcome is considered beneficial or detrimental for the agent.  
     The agent's goal is to maximize the cumulative sum of these rewards over time.
 
@@ -64,7 +64,7 @@ A \gls{mdp} is defined by the tuple \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \m
     Given a state \(s\) and an action \(a\), this function defines a probability distribution over the joint outcome consisting of the next state \(s'\), the observation \(o\), and the reward \(r\).  
     This function is denoted by \(p\), and is defined as:
     \(
-    p : \mathcal{S} \times \mathcal{A} \to \mathcal{P}(\mathcal{S} \times \mathcal{O} \times \mathcal{R}).
+    p : \StateSet \times \ActionSet \to \Distributions{\StateSet \times \ObsSet \times \RewardSet}.
     \)
     The notation \((s', o, r) \sim p(s, a)\) means that the tuple \((s', o, r)\) is sampled from the distribution induced by \(p(\cdot \mid s, a)\).  
     The notation \(p(s', o, r \mid s, a)\) denotes the probability of observing the tuple \((s', o, r)\) under the distribution \(p(\cdot \mid s, a)\).
@@ -76,17 +76,17 @@ In our \gls{mdp} formalization, this relationship is left implicit because it is
 
 However, to express mathematical equations, it is convenient to introduce the conditional distribution over states given an observation.
 We denote this distribution by
-\(b : \mathcal{O} \rightarrow \mathcal{P}(\mathcal{S}).\)
-The notation \(b(s \mid o)\) denotes the probability of state \(s\) given the observation \(o\), while \(s \sim b(\cdot \mid o)\) indicates that the state \(s\) is sampled from this distribution.
+\(\beta : \ObsSet \rightarrow \Distributions{\StateSet}.\)
+The notation \(\beta(s \mid o)\) denotes the probability of state \(s\) given the observation \(o\), while \(s \sim \beta(\cdot \mid o)\) indicates that the state \(s\) is sampled from this distribution.
 
 \subsection{Policy}
 \label{subsec:policy}
 
 The agent’s decision-making capability is modeled by a policy function.  
-The policy defines the stochastic mapping between observations \(o \in \mathcal{O}\) and actions \(a \in \mathcal{A}\).  
+The policy defines the stochastic mapping between observations \(o \in \ObsSet\) and actions \(a \in \ActionSet\).  
 A policy function is denoted by \(\pi\), and is defined as:
 \(
-\pi : \mathcal{O} \to \mathcal{P}(\mathcal{A}).
+\pi : \ObsSet \to \Distributions{\ActionSet}.
 \)
 The notation \(a \sim \pi(\cdot \mid o)\) means that the action \(a\) is sampled from the distribution induced by \(\pi(\cdot \mid o)\).  
 The notation \(\pi(a \mid o)\) denotes the probability of selecting action \(a\) under the distribution \(\pi(\cdot \mid o)\).
@@ -99,7 +99,7 @@ This reflects the design of many modern \gls{rl} implementations, where policies
 \subsection{Trajectory}
 \label{subsec:trajectory}
 
-Now that both the \gls{mdp} \((\mathcal{S}, \mathcal{O}, \mathcal{A}, \mathcal{R}, p)\) and the policy \(\pi\) have been defined, the interaction between them can be characterized.  
+Now that both the \gls{mdp} \((\StateSet, \ObsSet, \ActionSet, \RewardSet, p)\) and the policy \(\pi\) have been defined, the interaction between them can be characterized.  
 A sequence of consecutive interactions between an environment and a policy is called a trajectory.  
 A trajectory is generated through the repeated interaction between the policy and the environment, following the sequence below:
 \begin{enumerate}
@@ -116,38 +116,38 @@ A trajectory is generated through the repeated interaction between the policy an
     It moves to a new state \(s'\), and returns a new observation \(o'\) and a reward \(r\).
 \end{enumerate}
 
-A trajectory \(t\) of length \(T\) can be written as:
+Indexing each interaction by a discrete time step \(t\), a trajectory \(\tau\) of length \(T\) can be written as:
 \[
-t = (s_1, o_1, a_1, r_1, s_2, o_2, a_2, r_2, \ldots, s_T, o_T, a_T, r_T).
+\tau = (s_1, o_1, a_1, r_1, s_2, o_2, a_2, r_2, \ldots, s_T, o_T, a_T, r_T),
 \]
+where \(r_t\) is the reward received after taking action \(a_t\) at time step \(t\).
 
-It is important to clearly distinguish between a trajectory distribution and its realizations.  
-The distribution over trajectories is denoted by \(\tau\), and a particular trajectory is denoted by \(t\).
-The distribution \(\tau\) is determined by the initial state \(s\), the initial observation \(o\), the environment dynamics \(p\), and the policy \(\pi\), and is denoted by \(\tau(s, o, p, \pi)\).
-The notation \(t \sim \tau(s, o, p, \pi)\) means that the trajectory \(t\) is sampled from the distribution induced by \(s\), \(o\), \(p\), and \(\pi\).
-The notation \(\tau(t \mid s, o, p, \pi)\) denotes the probability of observing the trajectorie \(t\) under the distribution \(\tau(\cdot \mid s, o, p, \pi)\)
+A trajectory is random: it is sampled from a distribution determined by the initial state \(s\), the initial observation \(o\), the environment dynamics \(p\), and the policy \(\pi\).
+Since the dynamics \(p\) are fixed, they are omitted from the notation.
+The notation \(\tau \sim \pi\) means that the trajectory \(\tau\) is generated by following the policy \(\pi\), and \(\Pr_\pi(\tau \mid s, o)\) denotes the probability of observing the trajectory \(\tau\) when starting from state \(s\) with observation \(o\).
 
 An important property of the trajectory distribution is its recursive structure.
 Since both the policy \(\pi\) and the transition function \(p\) are known, the distribution over trajectories starting from \(s_1\) with observation \(o_1\) can be expressed in terms of the distribution over trajectories starting from the next state \(s_2\) with observation \(o_2\).
-Specifically, the probability of a trajectory \(t\) factorizes as:
+Specifically, the probability of a trajectory \(\tau\) factorizes as:
 \[
-\tau(t \mid s_1, o_1, p, \pi) = \pi(a_1 \mid o_1) \; p(s_2, o_2, r_1 \mid s_1, a_1) \; \tau(t_{2:} \mid s_2, o_2, p, \pi),
+\Pr_\pi(\tau \mid s_1, o_1) = \pi(a_1 \mid o_1) \; p(s_2, o_2, r_1 \mid s_1, a_1) \; \Pr_\pi(\tau_{2:} \mid s_2, o_2),
 \]
-where \(t_{2:} = (s_2, o_2, a_2, r_2, \ldots, s_T, o_T, a_T, r_T)\) denotes the trajectory starting from the second step.
+where \(\tau_{t:} = (s_t, o_t, a_t, r_t, \ldots, s_T, o_T, a_T, r_T)\) denotes the part of the trajectory starting from time step \(t\).
 
 There exist two special types of trajectories.
-First, a trajectory that terminates in a terminal state is called a terminal trajectory, and is denoted by \(t_t \sim \tau_t(s, o, p, \pi)\).
-Second, a terminal trajectory that starts from an initial state and an initial observation is called an episode, and is denoted by \(t_e \sim \tau_t(\StateInitial, o, p, \pi)\).
+First, a trajectory that terminates in a terminal state is called a terminal trajectory, and is denoted by \(\tau^{\mathrm{ter}}\).
+Second, a terminal trajectory that starts from an initial state \(\StateInitial\) and an initial observation is called an episode, and is denoted by \(\tau^{\mathrm{ep}}\).
 
 \subsection{Value Functions}
 \label{subsec:value_functions}
 
 To evaluate the ability of a policy \(\pi\) to collect rewards, the notion of return is introduced.
-The return of a trajectory \(g(t, \gamma)\), is defined as the discounted sum of rewards collected along the trajectory:
+The return \(G_t\) is defined as the discounted sum of the rewards collected along a terminal trajectory from time step \(t\) onward:
 \[
-g(t, \gamma) = r_1 + \gamma r_2 + \gamma^2 r_3 + \cdots + \gamma^{T-1} r_T = \sum_{i=1}^{T} \gamma^{i-1} r_i,
+G_t = r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \cdots + \gamma^{T-t} r_T = \sum_{k=t}^{T} \gamma^{k-t} r_k,
 \]
 where \(\gamma \in [0, 1]\) is the discount factor.  
+The return of the whole trajectory is therefore \(G_1\).
 This parameter controls the time horizon of the agent's objective.  
 When \(\gamma\) is close to \(0\), the agent focuses almost exclusively on immediate rewards, leading to short-sighted behavior.  
 As \(\gamma\) increases toward \(1\), future rewards gain more weight, and the agent adopts a more far-sighted strategy.  
@@ -156,64 +156,64 @@ In practice, \(\gamma\) is often chosen slightly below \(1\) (e.g., \(0.99\)) to
 
 The return also admits a recursive form, which is central to the dynamic programming and \gls{rl} algorithms presented later:
 \[
-g(t, \gamma) = r_1 + \gamma \, g(t_{2:}, \gamma),
+G_t = r_t + \gamma \, G_{t+1}, \qquad G_{T+1} = 0.
 \]
 
 From the notion of return, functions that estimate the expected return of a policy from a given starting point can be defined.  
 These functions are called value functions.
-The first one considered is the state-value function \(V\).  
+The first one considered is the state-value function \(v\).  
 It tells us how desirable a particular state is under a given policy \(\pi\), given an observation \(o\), the environment dynamics \(p\), and the discount factor \(\gamma\).
-Strictly speaking, this function should be written as \(V(s, o, p, \gamma, \pi)\) to reflect all its dependencies.
+Strictly speaking, this function should be written as \(v(s, o, p, \gamma, \pi)\) to reflect all its dependencies.
 However, since both the environment dynamics \(p\) and the discount factor \(\gamma\) are fixed throughout learning, they are omitted from the notation.
 To emphasize that the value is tied to a specific policy, \(\pi\) is placed as a subscript.
-This yields the compact notation \(V_\pi : \mathcal{S} \times \mathcal{O} \to \mathbb{R}\).
+This yields the compact notation \(v_\pi : \StateSet \times \ObsSet \to \mathbb{R}\).
 
-If \(V_\pi(s, o) > V_\pi(s', o')\), then, under policy \(\pi\), the agent prefers being in state \(s\) with observation \(o\) over state \(s'\) with observation \(o'\).  
-Formally, the state-value function is defined as:
+If \(v_\pi(s, o) > v_\pi(s', o')\), then, under policy \(\pi\), the agent prefers being in state \(s\) with observation \(o\) over state \(s'\) with observation \(o'\).  
+Formally, the state-value function is defined as the expected return over the terminal trajectories \(\tau^{\mathrm{ter}} \sim \pi\):
 \[
-V_\pi(s, o) = \mathbb{E}\Big[g(t, \gamma)\Big], \quad \text{with } t \sim \tau_t(s, o, p, \pi).
+v_\pi(s, o) = \mathbb{E}_\pi\Big[G_t \mid s_t = s, o_t = o\Big].
 \]
 
-It is worth noting that the state-value function \(V_\pi\) is recursive, a property that follows directly from the recursive form of the return:
+It is worth noting that the state-value function \(v_\pi\) is recursive, a property that follows directly from the recursive form of the return:
 \[
 \begin{aligned}
-V_\pi(s, o) 
-&= \mathbb{E}\Big[g(t, \gamma)\Big], \quad \text{with } t \sim \tau_t(s, o, p, \pi) \\[4pt]
-&= \mathbb{E}\Big[r_1 + \gamma \, g(t_{2:}, \gamma)\Big] \\[4pt]
-&= \mathbb{E}\Big[r_1 + \gamma \, V_\pi(s_2, o_2)\Big]
+v_\pi(s, o) 
+&= \mathbb{E}_\pi\Big[G_t \mid s_t = s, o_t = o\Big] \\[4pt]
+&= \mathbb{E}_\pi\Big[r_t + \gamma \, G_{t+1} \mid s_t = s, o_t = o\Big] \\[4pt]
+&= \mathbb{E}_\pi\Big[r_t + \gamma \, v_\pi(s_{t+1}, o_{t+1}) \mid s_t = s, o_t = o\Big]
 \end{aligned}
 \]
 
-If the expectation is expressed explicitly in terms of the distributions \(p\) and \(\pi\), the Bellman equation for \(V_\pi\) is obtained:
+If the expectation is expressed explicitly in terms of the distributions \(p\) and \(\pi\), the Bellman equation for \(v_\pi\) is obtained:
 
 \[
 \begin{aligned}
-V_\pi(s, o) 
-&= \mathbb{E}\Big[r_1 + \gamma \, V_\pi(s_2, o_2)\Big] \\[4pt]
-&= \sum_{a \in \mathcal{A}} \pi(a \mid o) 
-   \sum_{\substack{s' \in \mathcal{S} \\ o' \in \mathcal{O} \\ r \in \mathcal{R}}} 
-   p(s', o', r \mid s, a) \Big[\, r + \gamma \, V_\pi(s', o') \,\Big].
+v_\pi(s, o) 
+&= \mathbb{E}_\pi\Big[r_t + \gamma \, v_\pi(s_{t+1}, o_{t+1}) \mid s_t = s, o_t = o\Big] \\[4pt]
+&= \sum_{a \in \ActionSet} \pi(a \mid o) 
+   \sum_{\substack{s' \in \StateSet \\ o' \in \ObsSet \\ r \in \RewardSet}} 
+   p(s', o', r \mid s, a) \Big[\, r + \gamma \, v_\pi(s', o') \,\Big].
 \end{aligned}
 \]
 
 Now that the value of a state has been expressed, the next step is to consider the value of taking a specific action in a given state.
 Indeed, it is useful to estimate the expected future gain of an action \(a\) in state \(s\), in order to compare different actions and determine which one is the most promising under a given policy \(\pi\).
-This function is called the state-action value function \(Q_\pi : \mathcal{S} \times \mathcal{A} \to \mathbb{R}\).
-If \(Q_\pi(s, a) > Q_\pi(s, a')\), then, under policy \(\pi\), choosing action \(a\) in state \(s\) yields a higher expected return than choosing action \(a'\).
+This function is called the state-action value function \(q_\pi : \StateSet \times \ActionSet \to \mathbb{R}\).
+If \(q_\pi(s, a) > q_\pi(s, a')\), then, under policy \(\pi\), choosing action \(a\) in state \(s\) yields a higher expected return than choosing action \(a'\).
 It is defined as:
 \[
-Q_\pi(s, a) = \mathbb{E}\Big[\, r + \gamma \, g(t, \gamma) \,\Big], \quad \text{with } t \sim \tau_t(s', o', p, \pi), \quad (s', o', r) \sim p(\cdot \mid s, a).
+q_\pi(s, a) = \mathbb{E}_\pi\Big[\, r_t + \gamma \, G_{t+1} \mid s_t = s, a_t = a \,\Big].
 \]
 
-The function \(Q_\pi\) can be related to \(V_\pi\) by recognizing that, after taking action \(a\) in state \(s\), the remaining return from the next state \(s'\) with observation \(o'\) is precisely \(V_\pi(s', o')\).
+The function \(q_\pi\) can be related to \(v_\pi\) by recognizing that, after taking action \(a\) in state \(s\), the remaining return from the next state \(s'\) with observation \(o'\) is precisely \(v_\pi(s', o')\).
 This yields:
 \[
 \begin{aligned}
-Q_\pi(s, a) 
-&= \mathbb{E}\Big[\, r + \gamma \, g(t, \gamma) \,\Big], \quad \text{with } t \sim \tau_t(s', o', p, \pi), \quad (s', o', r) \sim p(\cdot \mid s, a) \\[4pt]
-&= \mathbb{E}\Big[\, r + \gamma \, V_\pi(s', o') \,\Big] \\[4pt]
-&= \sum_{\substack{s' \in \mathcal{S} \\ o' \in \mathcal{O} \\ r \in \mathcal{R}}} 
-   p(s', o', r \mid s, a) \Big[\, r + \gamma \, V_\pi(s', o') \,\Big] \\[4pt]
+q_\pi(s, a) 
+&= \mathbb{E}_\pi\Big[\, r_t + \gamma \, G_{t+1} \mid s_t = s, a_t = a \,\Big] \\[4pt]
+&= \mathbb{E}_\pi\Big[\, r_t + \gamma \, v_\pi(s_{t+1}, o_{t+1}) \mid s_t = s, a_t = a \,\Big] \\[4pt]
+&= \sum_{\substack{s' \in \StateSet \\ o' \in \ObsSet \\ r \in \RewardSet}} 
+   p(s', o', r \mid s, a) \Big[\, r + \gamma \, v_\pi(s', o') \,\Big] \\[4pt]
 \end{aligned}
 \]
 
@@ -221,23 +221,23 @@ Q_\pi(s, a)
 \label{subsec:optimal_policy}
 
 The goal of \gls{rl} is to find a policy that maximizes the expected cumulative reward from any observation until the end of the trajectory.
-This policy is called the optimal policy and is denoted by \(\pi^*\).
+This policy is called the optimal policy and is denoted by \(\pi_*\), and its state-action value function by \(q_* = q_{\pi_*}\).
 In a partially observable setting, the optimal action is the one that maximizes the expected state-action value over the distribution of possible states given the observation:
 \[
-\pi^*(a \mid o) =
+\pi_*(a \mid o) =
 \begin{cases}
-1 & \text{if } a = \underset{a' \in \mathcal{A}}{\arg\max}\;
-\sum_{s \in \mathcal{S}} b(s \mid o)\, Q_{\pi^*}(s, a'), \\[6pt]
+1 & \text{if } a = \argmax_{a' \in \ActionSet}\;
+\sum_{s \in \StateSet} \beta(s \mid o)\, q_*(s, a'), \\[6pt]
 0 & \text{otherwise}
 \end{cases}
 \]
 
-As shown, both \(V_\pi\) and \(Q_\pi\) can be expressed explicitly in terms of the environment dynamics \(p\) and the policy \(\pi\).
-If \(p\), \(b\)  and \(\pi\) are fully known, one can theoretically compute the optimal policy by unfolding the graph of all possible trajectories starting from a given state \(s\) and observation \(o\).  
-This is possible precisely because \(V_\pi\) and \(Q_\pi\) are recursive functions.  
+As shown, both \(v_\pi\) and \(q_\pi\) can be expressed explicitly in terms of the environment dynamics \(p\) and the policy \(\pi\).
+If \(p\), \(\beta\)  and \(\pi\) are fully known, one can theoretically compute the optimal policy by unfolding the graph of all possible trajectories starting from a given state \(s\) and observation \(o\).  
+This is possible precisely because \(v_\pi\) and \(q_\pi\) are recursive functions.  
 Solving an \gls{mdp} in this way is known as dynamic programming.
 
 In practice, most environments of have too many states to allow an explicit representation of the dynamics \(p\).  
 Storing and computing over the full transition function becomes intractable.
-To overcome this limitation, instead of directly constructing the optimal policy, an iterative approach is adopted: starting from an initial policy, it is progressively improved so that it converges toward \(\pi^*\).
+To overcome this limitation, instead of directly constructing the optimal policy, an iterative approach is adopted: starting from an initial policy, it is progressively improved so that it converges toward \(\pi_*\).
 This iterative improvement through interaction with the environment is precisely what constitutes learning in \gls{rl}, and it is the subject of the next section.

@@ -22,14 +22,14 @@ We then introduce the \gls{ari} measure, which serves as the foundation for the 
 
 We introduce the \BehaviorReconstructionName metric to assess whether $\SurrogatePolicy{}$ faithfully reproduces the behavior of $\InitialPolicy$.
 This metric compares the returns obtained by the initial policy $\InitialPolicy$ and the surrogate policies $\SurrogatePolicy{}$ over a set of evaluation episodes.
-We use the definition of return introduced in Section~\ref{subsec:value_functions}, where $g(t,\gamma)$ denotes the discounted sum of rewards collected along a trajectory $t$.
-Here, the return is computed over complete episodes with $\gamma=1$, so $g$ corresponds to the total reward collected during the episode.
-Each policy is evaluated over $m$ episodes.
-We denote by $g_{\InitialPolicy}^{i}$ the return obtained by the initial policy in episode $i$, and by $g_{\SurrogatePolicy{j}}^{i}$ the return obtained by surrogate policy $\SurrogatePolicy{j}$ in episode $i$.
+We use the definition of return introduced in Section~\ref{subsec:value_functions}, where $G_1$ denotes the discounted sum of rewards collected along a whole trajectory.
+Here, the return is computed over complete episodes with $\gamma=1$, so $G_1$ corresponds to the total reward collected during the episode.
+Each policy is evaluated over $M$ episodes.
+We denote by $G^{(e)}_{\InitialPolicy}$ the return obtained by the initial policy in episode $e$, and by $G^{(e)}_{\SurrogatePolicy{j}}$ the return obtained by surrogate policy $\SurrogatePolicy{j}$ in episode $e$.
 The \BehaviorReconstructionName{} is then defined as the mean return of the surrogate policies normalized by the mean return of the initial policy:
 
 \begin{align}
-    \text{\BehaviorReconstructionName} = \frac{1}{n \sum_{i=1}^{m} g_{\InitialPolicy}^{i}} \sum_{j=1}^{n} \sum_{k=1}^{m} g_{\SurrogatePolicy{j}}^{k}
+    \BR = \frac{1}{n \sum_{e=1}^{M} G^{(e)}_{\InitialPolicy}} \sum_{j=1}^{n} \sum_{e=1}^{M} G^{(e)}_{\SurrogatePolicy{j}}
 \end{align}
 
 In imitation learning, it is unlikely to expect the surrogate policy $\SurrogatePolicy{}$ to outperform the initial policy $\InitialPolicy$ it aims to approximate through supervised learning \cite{pmlr-v9-ross10a}.
@@ -67,7 +67,7 @@ For each pair, four situations are possible:
 
 The \gls{ri} measures the proportion of pairs for which the two partitions agree:
 $$
-\text{RI} = \frac{\text{number of agreeing pairs}}{\text{total number of pairs}}.
+\RI = \frac{\text{number of agreeing pairs}}{\text{total number of pairs}}.
 $$
 
 Although the \gls{ri} is intuitive, it suffers from an important limitation.
@@ -76,17 +76,17 @@ Consequently, even two completely independent partitions will agree on a large n
 This effect becomes more pronounced as the number of points or clusters increases.
 
 The \gls{ari} addresses this issue by accounting for the agreement that would be expected purely by chance.
-It compares the observed agreement $\text{RI}$ to the expected agreement under random partitions $\mathbb{E}[\text{RI}]$.
-The score is then normalized by the maximum agreement achievable beyond this random baseline, $\max(\text{RI}) - \mathbb{E}[\text{RI}]$.
+It compares the observed agreement $\RI$ to the expected agreement under random partitions $\mathbb{E}[\RI]$.
+The score is then normalized by the maximum agreement achievable beyond this random baseline, $\max(\RI) - \mathbb{E}[\RI]$.
 As a result, an \gls{ari} of $0$ corresponds to the level of agreement expected from random clusterings, while an \gls{ari} of $1$ indicates perfect agreement between the two partitions:
 \[
-\text{ARI} = \frac{\text{RI} - \mathbb{E}[\text{RI}]}{\max(\text{RI}) - \mathbb{E}[\text{RI}]}
+\ARI = \frac{\RI - \mathbb{E}[\RI]}{\max(\RI) - \mathbb{E}[\RI]}
 \]
 
 In practice, the \gls{ari} is computed directly from the cluster assignments of the two partitions.
-Let clustering \(A\) be composed of partitions \(\{A_i\}\) and clustering \(B\) of partitions \(\{B_j\}\).
-Let \(a_i = |A_i|\) denote the number of samples in partition \(i\) of clustering \(A\), and \(b_j = |B_j|\) the number of samples in partition \(j\) of clustering \(B\).
-Furthermore, let \(n_{ij} = |A_i \cap B_j|\) be the number of samples shared by partition \(i\) of clustering \(A\) and partition \(j\) of clustering \(B\), and let \(n\) be the total number of samples.
+Let clustering \(\mathcal{C}\) be composed of clusters \(\{C_i\}\) and clustering \(\mathcal{C}'\) of clusters \(\{C'_j\}\).
+Let \(a_i = |C_i|\) denote the number of samples in cluster \(i\) of clustering \(\mathcal{C}\), and \(b_j = |C'_j|\) the number of samples in cluster \(j\) of clustering \(\mathcal{C}'\).
+Furthermore, let \(n_{ij} = |C_i \cap C'_j|\) be the number of samples shared by cluster \(i\) of clustering \(\mathcal{C}\) and cluster \(j\) of clustering \(\mathcal{C}'\), and let \(N\) be the total number of samples.
 With these definitions, the \gls{ari} can be computed as:
 
 \[
@@ -98,7 +98,7 @@ With these definitions, the \gls{ari} can be computed as:
 \sum_i \binom{a_i}{2}
 \sum_j \binom{b_j}{2}
 \right]
-\big/ \binom{n}{2}
+\big/ \binom{N}{2}
 }{
 \frac{1}{2}
 \left[
@@ -111,7 +111,7 @@ With these definitions, the \gls{ari} can be computed as:
 \sum_i \binom{a_i}{2}
 \sum_j \binom{b_j}{2}
 \right]
-\big/ \binom{n}{2}
+\big/ \binom{N}{2}
 }
 \]
 
@@ -130,12 +130,12 @@ Under the \RepresentationConvergenceHypothesisName, these independently obtained
 \ClusteringUniversalityName{} quantifies this by computing the mean pairwise \gls{ari}:
 
 \begin{align}
-    \text{\ClusteringUniversalityName}
+    \CU
     =
     \frac{1}{\binom{n}{2}}
     \sum_{i=2}^{n}
     \sum_{j=1}^{i-1}
-    \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{j}).
+    \ARI(\mathcal{C}_{i}, \mathcal{C}_{j}).
 \end{align}
 
 This metric takes values in $[-1, 1]$.
@@ -164,30 +164,30 @@ Two possibilities arise:
 To distinguish among these cases, we introduce the \AbstractionScoreName.
 This metric contextualizes latent clusterings by examining how their patterns align with three reference baselines: the raw observations, the action distribution of the initial policy, and an untrained network of the same architecture.
 
-We consider $\mathcal{C}_{obs}$, the clustering of the observation space $\mathbb{O}$, and $\mathcal{C}_{act}$, the clustering of the action distribution of the initial policy.
-Concretely, $\mathcal{C}_{act}$ is computed on the parameters of this distribution (the logits, before the softmax) produced by the initial policy for the same observations, which are precisely the quantities the surrogate policies are trained to reproduce.
+We consider $\BaselineClustering{obs}$, the clustering of the observations $\ObsData$, and $\BaselineClustering{act}$, the clustering of the action distribution of the initial policy.
+Concretely, $\BaselineClustering{act}$ is computed on the parameters of this distribution (the logits, before the softmax) produced by the initial policy for the same observations, which are precisely the quantities the surrogate policies are trained to reproduce.
 We cluster these continuous parameters rather than the sampled discrete action, since a discrete action takes only a few distinct values, which would limit the number of clusters that can be distinguished.
 Both clusterings use the same algorithm, distance metric, and hyperparameters as those used for $\mathcal{C}_{i}$ in the \gls{ls}.
 This ensures that the three clusterings are obtained under the same conditions.
 
 The third baseline addresses the case where the \gls{ls} merely reflects an inductive bias of the network architecture rather than something learned.
-To this end, we introduce $m$ untrained networks sharing the same architecture as the surrogate policies, but with randomly initialized, never-updated weights.
-Each of these $m$ untrained networks is used to project the same observations into its own latent space, which is then clustered in the same way, yielding partitions $\mathcal{C}_{untr, 1}, \dots, \mathcal{C}_{untr, m}$.
+To this end, we introduce $U$ untrained networks sharing the same architecture as the surrogate policies, but with randomly initialized, never-updated weights.
+Each of these $U$ untrained networks is used to project the same observations into its own latent space, which is then clustered in the same way, yielding partitions $\BaselineClustering[1]{untr}, \dots, \BaselineClustering[U]{untr}$.
 This baseline isolates what the architecture already imposes on the representation before any learning takes place, so that a high similarity between $\mathcal{C}_i$ and this baseline indicates that the corresponding structure cannot be attributed to training.
 
 For each latent clustering $\mathcal{C}_{i}$, we define its similarity to these three baselines using the \gls{ari}:
 
 \begin{align*}
-A^{obs}_{i} &= \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{obs}) \\
-A^{act}_{i} &= \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{act}) \\
-A^{untr}_{i} &= \frac{1}{m} \sum_{k=1}^{m} \operatorname{ARI}(\mathcal{C}_{i}, \mathcal{C}_{untr, k})
+\Similarity{obs}{i} &= \ARI(\mathcal{C}_{i}, \BaselineClustering{obs}) \\
+\Similarity{act}{i} &= \ARI(\mathcal{C}_{i}, \BaselineClustering{act}) \\
+\Similarity{untr}{i} &= \frac{1}{U} \sum_{u=1}^{U} \ARI(\mathcal{C}_{i}, \BaselineClustering[u]{untr})
 \end{align*}
 
 The \AbstractionScoreName is subsequently calculated as one minus the average of the maximum absolute similarity values across these three reference baselines:
 
 \begin{align}
 \scalebox{0.9}{%
-$\text{\AbstractionScoreName} = 1 - \frac{1}{n} \sum_{i=1}^{n} \max \left( \left|A^{obs}_{i}\right|, \left|A^{act}_{i}\right|, \left|A^{untr}_{i}\right| \right)$%
+$\AS = 1 - \frac{1}{n} \sum_{i=1}^{n} \max \left( \left|\Similarity{obs}{i}\right|, \left|\Similarity{act}{i}\right|, \left|\Similarity{untr}{i}\right| \right)$%
 }
 \end{align}
 
@@ -203,15 +203,15 @@ We therefore introduce the \AdjustedClusteringUniversalityName, which measures h
 
 \begin{align}
 \scalebox{1}{%
-$\vcenter{\hbox{\shortstack{\textit{Adjusted}\\\textit{Clustering}\\\textit{Universality}}}}
+$\ACU
 =
-\vcenter{\hbox{\shortstack{\textit{Clustering}\\\textit{Universality}}}}
+\CU
 -
 \frac{1}{n}\sum_{i=1}^{n}
 \max\left(
-\left|A^{obs}_{i}\right|,
-\left|A^{act}_{i}\right|,
-\left|A^{untr}_{i}\right|
+\left|\Similarity{obs}{i}\right|,
+\left|\Similarity{act}{i}\right|,
+\left|\Similarity{untr}{i}\right|
 \right)$%
 }
 \end{align}

@@ -2,13 +2,13 @@
     \centering
     \resizebox{\textwidth}{!}{
     \begin{tikzpicture}
-        \node (observation) [minimum height=1.5cm, minimum width=2.5cm, align=center] at (0, 0) {\hl{Observation} \\ \large $O$};
+        \node (observation) [minimum height=1.5cm, minimum width=2.5cm, align=center] at (0, 0) {\hl{Observation} \\ \large $o$};
 
         \node[draw, rectangle, text centered, minimum height=1cm, minimum width=2.5cm, align=center, rounded corners=0.2cm] (policy) at ($(observation) + (3cm, 1.35cm)$) {\scalebox{2}{$\InitialPolicy$}};
 
         \node[align=center] (policy_text) at ($(policy) + (0, 1cm)$) {Initial Policy};
 
-        \node[draw, rectangle, text centered, minimum height=1cm, minimum width=2.5cm, align=center, rounded corners=0.2cm] (surrogate_policy) at ($(observation) + (3cm, -1.35cm)$) {\scalebox{2}{$\textcolor{myred}{\pi}^{\textcolor{myred}{'}}_{\textcolor{myred}{\Theta}}$}};
+        \node[draw, rectangle, text centered, minimum height=1cm, minimum width=2.5cm, align=center, rounded corners=0.2cm] (surrogate_policy) at ($(observation) + (3cm, -1.35cm)$) {\scalebox{2}{$\SurrogatePolicy{}$}};
 
         \node[align=center] (surrogate_policy_text) at ($(surrogate_policy) + (0, 1cm)$) {Surrogate Policy};
 
@@ -41,7 +41,7 @@
             x=0.5cm,
             y=5cm,
             scale=0.7,
-            xlabel={$\mathcal{A}$},
+            xlabel={$\ActionSet$},
             xlabel style={at={(axis description cs:0.85,0.2)}, anchor=west},
             % ylabel={probability},
             ylabel style={at={(axis description cs:0,1.02)},anchor=south},
@@ -50,7 +50,7 @@
         ]
 
         % PLOTS
-        \addplot[name path=A,thick, mygreen] {gauss(x,\B,\Bs)} node[pos=0.5, above, xshift=-0.8cm, yshift=-0.2cm] {$\pi\textcolor{black}{(O)}$};
+        \addplot[name path=A,thick, mygreen] {gauss(x,\B,\Bs)} node[pos=0.5, above, xshift=-0.8cm, yshift=-0.2cm] {$\InitialPolicy\textcolor{black}{(o)}$};
         \end{axis}
 
         \begin{axis}[
@@ -71,7 +71,7 @@
             x=0.5cm,
             y=5cm,
             scale=0.7,
-            xlabel={$\mathcal{A}$},
+            xlabel={$\ActionSet$},
             xlabel style={at={(axis description cs:0.85,0.2)}, anchor=west},
             % ylabel={probability},
             ylabel style={at={(axis description cs:0,1.02)},anchor=south},
@@ -80,7 +80,7 @@
         ]
 
         % PLOTS
-        \addplot[name path=B,thick,myred] {gauss(x,\S,\Ss)} node[pos=0.5, above, xshift=1.2cm, yshift=-0.3cm] {$\pi^{'}_{\Theta}\textcolor{black}{(O)}$};
+        \addplot[name path=B,thick,myred] {gauss(x,\S,\Ss)} node[pos=0.5, above, xshift=1.2cm, yshift=-0.3cm] {$\SurrogatePolicy{}\textcolor{black}{(o)}$};
         \end{axis}
 
         \draw[->] (policy) -- ($(policy_distribution.west) + (-0.2cm, 0)$);
@@ -104,7 +104,7 @@
             x=0.5cm,
             y=5cm,
             scale=0.8,
-            xlabel={$\mathcal{A}$},
+            xlabel={$\ActionSet$},
             xlabel style={at={(axis description cs:0.85,0.2)}, anchor=west},
             % ylabel={probability},
             ylabel style={at={(axis description cs:0,1.02)},anchor=south},
@@ -113,13 +113,13 @@
         ]
 
         % PLOTS
-        \addplot[name path=A,thick,mygreen] {gauss(x,\B,\Bs)} node[pos=0.5, above, xshift=-0.8cm, yshift=-0.2cm] {$\pi\textcolor{black}{(O)}$};
-        \addplot[name path=B,thick,myred] {gauss(x,\S,\Ss)} node[pos=0.5, above, xshift=1.2cm, yshift=-0.3cm] {$\pi^{'}_{\Theta}\textcolor{black}{(O)}$};
+        \addplot[name path=A,thick,mygreen] {gauss(x,\B,\Bs)} node[pos=0.5, above, xshift=-0.8cm, yshift=-0.2cm] {$\InitialPolicy\textcolor{black}{(o)}$};
+        \addplot[name path=B,thick,myred] {gauss(x,\S,\Ss)} node[pos=0.5, above, xshift=1.2cm, yshift=-0.3cm] {$\SurrogatePolicy{}\textcolor{black}{(o)}$};
 
         \addplot[opacity=0.2] fill between[of=A and B, soft clip={domain=0:15}];
         \end{axis}
 
-        \node[align=center] at ($(distribution_match.north) + (0, 1.25cm)$) {$\textcolor{myred}{\pi}^{\textcolor{myred}{'}}_{\textcolor{myred}{\Theta}}$ is trained to be as close as \\ possible of $\InitialPolicy$ for all $O$ in  order \\ to reproduce its behavior.};
+        \node[align=center] at ($(distribution_match.north) + (0, 1.25cm)$) {$\SurrogatePolicy{}$ is trained to be as close as \\ possible of $\InitialPolicy$ for all $o$ in order \\ to reproduce its behavior.};
 
         \draw[->] ($(policy_distribution.east) + (0.2cm, 0)$) -- ($(policy_distribution.east) + (0.5cm, 0)$) |- ($(distribution_match.west) + (-0.2cm, 0)$);
         \draw[->] ($(surrogate_policy_distribution.east) + (0.2cm, 0)$) -- ($(surrogate_policy_distribution.east) + (0.5cm, 0)$) |- ($(distribution_match.west) + (-0.2cm, 0)$);
@@ -161,11 +161,11 @@
         \end{scope}
         \draw[->, dashed, preaction={draw=white,line width=6pt}] (surrogate_policy) |- ($(box_2.west) + (-0.2cm, 0)$);
 
-        \node[draw, rectangle, text centered, align=center, dashed, fill=white, inner sep=1.5mm] at ($(surrogate_policy) - (0, 2.0cm)$) {Projection obtained through \\ the function $\textcolor{myblue}{f_{enc}}$, which is \\ a subcomponent of $\textcolor{myred}{\pi}^{\textcolor{myred}{'}}_{\textcolor{myred}{\Theta}}$.};
+        \node[draw, rectangle, text centered, align=center, dashed, fill=white, inner sep=1.5mm] at ($(surrogate_policy) - (0, 2.0cm)$) {Projection obtained through \\ the function $\SurrogateEncoder$, which is \\ a subcomponent of $\SurrogatePolicy{}$.};
 
-        \node[align=center] at ($(box_2.east) + (2.75cm, 0)$) {Once $\textcolor{myred}{\pi}^{\textcolor{myred}{'}}_{\textcolor{myred}{\Theta}}$ is trained,\\ observations are projected into $\textcolor{myblue}{\mathcal{Z}}$,\\ clustered automatically,\\ and interpreted for semantics.};
+        \node[align=center] at ($(box_2.east) + (2.75cm, 0)$) {Once $\SurrogatePolicy{}$ is trained,\\ observations are projected into $\LatentSet{}$,\\ clustered automatically,\\ and interpreted for semantics.};
 
-        \node[align=center] at ($(box_2.south) + (0, -0.3cm)$) {\gls{ls} $\textcolor{myblue}{\mathcal{Z}}$ of $\textcolor{myred}{\pi}^{\textcolor{myred}{'}}_{\textcolor{myred}{\Theta}}$};
+        \node[align=center] at ($(box_2.south) + (0, -0.3cm)$) {\gls{ls} $\LatentSet{}$ of $\SurrogatePolicy{}$};
     \end{tikzpicture}
     }
     \caption{Illustration of the \methodName method.}

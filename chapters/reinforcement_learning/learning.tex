@@ -1,9 +1,9 @@
 \section{Learning}
 \label{sec:rl_learning}
 
-Now that the optimal policy \(\pi^*\) has been defined, the question is how to obtain it.
-The recursive Bellman equations for \(V_\pi\) and \(Q_\pi\) suggest dynamic programming approaches, but these scale poorly to large state spaces.
-\gls{rl} offers an alternative by solving the \gls{mdp} iteratively and generating a sequence of policies that progressively approach \(\pi^*\) through direct interaction with the environment.
+Now that the optimal policy \(\pi_*\) has been defined, the question is how to obtain it.
+The recursive Bellman equations for \(v_\pi\) and \(q_\pi\) suggest dynamic programming approaches, but these scale poorly to large state spaces.
+\gls{rl} offers an alternative by solving the \gls{mdp} iteratively and generating a sequence of policies that progressively approach \(\pi_*\) through direct interaction with the environment.
 This section introduces two major families of \gls{rl} algorithms, critic-only methods and actor-critic methods.
 
 At a high level, every algorithm presented below repeats the same loop: the current policy interacts with the environment, the resulting trajectories are sent to the \gls{rl} algorithm, and the algorithm uses them to produce a new policy.
@@ -11,12 +11,12 @@ At a high level, every algorithm presented below repeats the same loop: the curr
 \subsection{Critic-Only Methods}
 \label{subsec:critic_only}
 
-The central idea behind all critic-only approaches is to iteratively construct an approximation of the state-action value function \(Q_\pi\), denoted by \(\hat{Q}_\pi\).
-Although \(\hat{Q}_\pi\) is only an approximation of the true \(Q_\pi\), the policy always acts greedily with respect to this approximation.
+The central idea behind all critic-only approaches is to iteratively construct an approximation of the state-action value function \(q_\pi\), denoted by \(\hat{q}\).
+Although \(\hat{q}\) is only an approximation of the true \(q_\pi\), the policy always acts greedily with respect to this approximation.
 
-Since \(\hat{Q}_\pi\) serves as the basis for the agent's decisions, it cannot rely on more information than the agent itself has access to.
-It must therefore be defined solely over observations, as a function \(\hat{Q}_\pi : \mathcal{O} \times \mathcal{A} \to \mathbb{R}\).
-Its objective is to approximate the true \(Q_\pi\), which depends on the underlying states \(s\), using only the partial information available through \(o\).
+Since \(\hat{q}\) serves as the basis for the agent's decisions, it cannot rely on more information than the agent itself has access to.
+It must therefore be defined solely over observations, as a function \(\hat{q} : \ObsSet \times \ActionSet \to \mathbb{R}\).
+Its objective is to approximate the true \(q_\pi\), which depends on the underlying states \(s\), using only the partial information available through \(o\).
 In practice, this does not necessarily pose a problem, as observations often contain sufficient information to make accurate predictions about the underlying state.
 Moreover, the strong representational capacity of \glspl{nn} allows the critic to capture these relationships without explicitly representing the mapping between observations and states.
 
@@ -24,40 +24,40 @@ This leads to the following mathematical formulation:
 \begin{equation}
     \pi(a \mid o) =
     \begin{cases}
-    1 & \text{if } a = \underset{a' \in \mathcal{A}}{\arg\max}\; \hat{Q}_\pi(o, a'), \\[6pt]
+    1 & \text{if } a = \argmax_{a' \in \ActionSet}\; \hat{q}(o, a'), \\[6pt]
     0 & \text{otherwise}.
     \end{cases}
     \label{eq:greedy_policy}
 \end{equation}
 
-It is precisely this way of modeling the policy that gives this family of methods its name.  
-The policy is not represented explicitly as a standalone function.  
-Rather, it simply emerges from searching over the set of actions to maximize \(\hat{Q}_\pi\).
+It is precisely this way of modeling the policy that gives this family of methods its name.
+The policy is not represented explicitly as a standalone function.
+Rather, it simply emerges from searching over the set of actions to maximize \(\hat{q}\).
 
 To give a clear example of critic-only methods, they are presented in their simplest form: model-free, without temporal-difference learning, without replay buffer, without bootstrapping, and using only \(\varepsilon\)-greedy exploration.
 Naturally, many variants and extensions of this basic scheme exist, but the core idea remains the same.
 
-When implementing a \gls{rl} algorithm, one of the first questions is how to represent the value function.  
-In critic-only methods, this means choosing a model for \(\hat{Q}_\pi\).
+When implementing a \gls{rl} algorithm, one of the first questions is how to represent the value function.
+In critic-only methods, this means choosing a model for \(\hat{q}\).
 Any machine learning model capable of regression task can be used for this purpose.
-The set of parameters of the model is denoted by \(\theta\).
-In deep \gls{rl}, a \gls{nn} is used to model this function, in which case \(\theta\) represents the weights and biases of the network.
- 
+The parameters of the model are denoted by the weight vector \(\weights\), and the approximation is written \(\hat{q}(o, a, \weights)\) when this dependence matters.
+In deep \gls{rl}, a \gls{nn} is used to model this function, in which case \(\weights\) represents the weights and biases of the network.
+
 In our simple setting, exploration is handled via \(\varepsilon\)-greedy selection.
-With probability \(1 - \varepsilon\), the policy selects the greedy action that maximizes \(\hat{Q}_\pi\), and with probability \(\varepsilon\) it selects an action uniformly at random.
+With probability \(1 - \varepsilon\), the policy selects the greedy action that maximizes \(\hat{q}\), and with probability \(\varepsilon\) it selects an action uniformly at random.
 Formally, this \(\varepsilon\)-greedy policy is obtained by modifying the greedy policy defined above as follows:
 \begin{equation}
     \pi(a \mid o) =
     \begin{cases}
-    1 - \varepsilon + \dfrac{\varepsilon}{|\mathcal{A}|} & \text{if } a = \underset{a' \in \mathcal{A}}{\arg\max}\; \hat{Q}_\pi(o, a'), \\[10pt]
-    \dfrac{\varepsilon}{|\mathcal{A}|} & \text{otherwise}.
+    1 - \varepsilon + \dfrac{\varepsilon}{|\ActionSet|} & \text{if } a = \argmax_{a' \in \ActionSet}\; \hat{q}(o, a'), \\[10pt]
+    \dfrac{\varepsilon}{|\ActionSet|} & \text{otherwise}.
     \end{cases}
     \label{eq:epsilon_greedy_policy}
 \end{equation}
-The trajectory distribution induced by the resulting policy now depends on both \(\pi\) and \(\varepsilon\), and is denoted by \(t \sim \tau(s, o, p, \pi, \varepsilon)\).
+The trajectories generated by the resulting policy now depend on both \(\pi\) and \(\varepsilon\), which is written \(\tau \sim (\pi, \varepsilon)\).
 The parameter \(\varepsilon\) controls the degree of exploration.
-If the policy always chooses the action it currently believes to be optimal, it may miss better alternatives that \(\hat{Q}_\pi\) has not yet learned to value correctly.
-Exploring suboptimal actions from time to time is therefore essential to verify that \(\hat{Q}_\pi\) accurately reflects the true values, while still focusing most of the time on the most promising actions.
+If the policy always chooses the action it currently believes to be optimal, it may miss better alternatives that \(\hat{q}\) has not yet learned to value correctly.
+Exploring suboptimal actions from time to time is therefore essential to verify that \(\hat{q}\) accurately reflects the true values, while still focusing most of the time on the most promising actions.
 In more advanced implementations, \(\varepsilon\) can be adapted over the course of learning to control exploration dynamically, for instance by decreasing it gradually over time.
 
 \input{algorithms/reinforcement_learning/data_collection.tex}
@@ -65,25 +65,25 @@ In more advanced implementations, \(\varepsilon\) can be adapted over the course
 The learning process consists of two steps that repeat until convergence:
 \begin{enumerate}
     \item \textbf{Data collection.} The current policy \(\pi\) interacts with the \gls{mdp}.
-    For a given starting state \(\StateInitial_1\) and observation \(o_1\), the interaction produces a episode \(t_e\) sampled from \(\tau_t(\StateInitial_1, o_1, p, \pi, \varepsilon)\).
-    For each step \(i\) along the episode, the return from that step onward is \(g(t_{i:}) = \sum_{k=i}^{T} \gamma^{k-i} r_k\), which serves as the target value for the state-action pair \((s_i, a_i)\).
+    For a given initial state \(\StateInitial\) and observation \(o_1\), the interaction produces an episode \(\tau^{\mathrm{ep}} \sim (\pi, \varepsilon)\).
+    For each time step \(t\) along the episode, the return from that step onward, \(G_t\), serves as the target value for the observation-action pair \((o_t, a_t)\).
     This procedure is detailed in Algorithm~\ref{alg:data_collection}.
 
-    \item \textbf{Model update.} The tuples \((s_i, a_i, g(t_{i:}))\) obtained in the previous step serve as supervised training data: the state-action pair \((s_i, a_i)\) is the input, and the return \(g(t_{i:})\) is the associated target.
-    These examples are used to train \(\hat{Q}_\theta\).
-    The improved approximation is denoted by \(\hat{Q}'_\theta\), which now predicts returns more accurately under \(\pi\). Since \(\hat{Q}'_\theta\) has changed, the policy derived from it also changes.
-    This new policy is denoted by \(\pi'\).
+    \item \textbf{Model update.} The tuples \((o_t, a_t, G_t)\) obtained in the previous step serve as supervised training data: the observation-action pair \((o_t, a_t)\) is the input, and the return \(G_t\) is the associated target.
+    These examples are used to train the current approximation \(\hat{q}_k\), associated with the current policy \(\pi_k\).
+    The improved approximation is denoted by \(\hat{q}_{k+1}\), which now predicts returns more accurately under \(\pi_k\). Since \(\hat{q}_{k+1}\) has changed, the policy derived from it also changes.
+    This new policy is denoted by \(\pi_{k+1}\).
 \end{enumerate}
 
-Because the policy is now \(\pi'\), the approximation \(\hat{Q}'_\theta\) must be trained to predict returns under \(\pi'\). This requires returning to step 1 to collect fresh interaction data generated by \(\pi'\). The two steps thus alternate until the policy and the value approximation stabilize.
+Because the policy is now \(\pi_{k+1}\), the approximation \(\hat{q}_{k+1}\) must be trained to predict returns under \(\pi_{k+1}\). This requires returning to step 1 to collect fresh interaction data generated by \(\pi_{k+1}\). The two steps thus alternate until the policy and the value approximation stabilize.
 Algorithm~\ref{alg:critic_only} summarizes this whole critic-only learning loop.
 
 \input{algorithms/reinforcement_learning/critic_only.tex}
 
 Even this simple algorithm already illustrates a difficulty inherent to all forms of \gls{rl}: the instability of the learning process.
-Each update from \(\hat{Q}_\theta\) to \(\hat{Q}'_\theta\) causes the policy to shift from \(\pi\) to \(\pi'\).
-For the learning to remain stable, the change from \(\hat{Q}_\theta\) to \(\hat{Q}'_\theta\) should be as small as possible.  
-This way, \(\hat{Q}'_\theta\), trained to predict returns under \(\pi\), remains reasonably accurate under \(\pi'\).
+Each update from \(\hat{q}_k\) to \(\hat{q}_{k+1}\) causes the policy to shift from \(\pi_k\) to \(\pi_{k+1}\).
+For the learning to remain stable, the change from \(\hat{q}_k\) to \(\hat{q}_{k+1}\) should be as small as possible.
+This way, \(\hat{q}_{k+1}\), trained to predict returns under \(\pi_k\), remains reasonably accurate under \(\pi_{k+1}\).
 However, the smaller the change, the slower the learning progresses.
 A trade-off must therefore be struck between stability and learning speed.
 Many improvements introduced later in the literature aim at stabilizing this learning loop \cite{hessel2017rainbowcombiningimprovementsdeep}.
@@ -91,11 +91,11 @@ Many improvements introduced later in the literature aim at stabilizing this lea
 Convergence guarantees for such algorithms have been proved under a different set of assumptions than the setting presented here.
 For example, in the classical convergence results, the \gls{mdp} is fully observable, the value function is stored in a table, and the learning rate is decreased at a suitable rate over time \cite{watkins1992qlearning}.
 In modern implementations, the value function is approximated by a \gls{nn}.
-Theoretical convergence proofs no longer hold in this setting.  
+Theoretical convergence proofs no longer hold in this setting.
 Nevertheless, deep methods have demonstrated remarkable empirical success, making them the tool of choice for RL tasks.
 
-Critic-only approaches suffer from several limitations.  
-The main limitation is scalability to large action spaces.  
+Critic-only approaches suffer from several limitations.
+The main limitation is scalability to large action spaces.
 Since the policy must evaluate all possible actions at each decision step to select the maximum, the computational cost grows with the size of the action set.
 To address this issue, another family of \gls{rl} algorithms exists: actor-critic methods.
 
@@ -103,30 +103,30 @@ To address this issue, another family of \gls{rl} algorithms exists: actor-criti
 \label{subsec:actor_critic}
 
 Two principal modifications distinguish actor-critic methods from critic-only approaches.
-First, the objective is to approximate the state-value function \(V\), instead of the state-action value function \(Q\).
+First, the objective is to approximate the state-value function \(v_\pi\), instead of the state-action value function \(q_\pi\).
 Second, the policy \(\pi\) is given its own dedicated set of parameters.
-Two separate components are thus obtained: a value function approximation \(\hat{V}_{\theta_1}\) and a parameterized policy \(\pi_{\theta_2}\).
+Two separate components are thus obtained: a value function approximation \(\hat{v}(s, o, \weights)\), called the critic, with parameters \(\weights\), and a parameterized policy \(\pi_{\params}\), called the actor, with parameters \(\params\).
 
-Analogously to critic-only methods, \(\hat{V}_{\theta_1}\) is trained using supervised learning on pairs obtained from interaction with the \gls{mdp}.
-For each step \(i\) along a trajectory, the input is the state-observation pair \((s_i, o_i)\) and the target is the observed return \(g(t_{i:})\).
+Analogously to critic-only methods, \(\hat{v}\) is trained using supervised learning on pairs obtained from interaction with the \gls{mdp}.
+For each time step \(t\) along a trajectory, the input is the state-observation pair \((s_t, o_t)\) and the target is the observed return \(G_t\).
 The value function is thus trained to correct its predictions based on data collected by the current policy interacting with the environment.
 
 The key difference lies in how the policy \(\pi\) itself is optimized.
-Since the policy now has its own set of parameters \(\theta_2\), it can be updated directly.
+Since the policy now has its own set of parameters \(\params\), it can be updated directly.
 The update uses the notion of advantage
 \(
-A : \mathcal{S} \times \mathcal{A} \to \mathcal{R}
+A : \StateSet \times \ActionSet \to \mathbb{R}
 \)
 , defined as:
 \[
-A(s, a) = g(t) - \hat{V}_{\theta_1}(s, o),
+A(s_t, a_t) = G_t - \hat{v}(s_t, o_t, \weights),
 \]
-where \(t\) is the trajectory that starts by taking action \(a\) in state \(s\) and then follows \(\pi\) for all subsequent steps.
+where \(G_t\) is the return obtained by taking action \(a_t\) in state \(s_t\) and then following \(\pi_{\params}\) for all subsequent steps.
 
-When \(A(s, a) > 0\), the action \(a\) performed better than expected, and the policy parameters \(\theta_2\) are adjusted to increase the probability \(\pi_{\theta_2}(a \mid o)\).
-When \(A(s, a) < 0\), the action \(a\) performed worse than expected, and the probability is decreased.
+When \(A(s_t, a_t) > 0\), the action \(a_t\) performed better than expected, and the policy parameters \(\params\) are adjusted to increase the probability \(\pi_{\params}(a_t \mid o_t)\).
+When \(A(s_t, a_t) < 0\), the action \(a_t\) performed worse than expected, and the probability is decreased.
 
-Both \(\hat{V}_{\theta_1}\) and \(\pi_{\theta_2}\) are improved simultaneously within the same loop: the critic provides a learned baseline for the actor, and the actor generates the data used to train the critic.
+Both \(\hat{v}\) and \(\pi_{\params}\) are improved simultaneously within the same loop: the critic provides a learned baseline for the actor, and the actor generates the data used to train the critic.
 This interplay reduces the instability inherent to \gls{rl}.
 Algorithm~\ref{alg:actor_critic} summarizes this whole actor-critic learning loop.
 

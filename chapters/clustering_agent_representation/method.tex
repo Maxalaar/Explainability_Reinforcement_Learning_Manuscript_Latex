@@ -45,27 +45,27 @@ Their role is not to simplify the decision process but to provide multiple indep
 Throughout the remainder of this manuscript, the initial policy we aim to explain is denoted as $\InitialPolicy$.
 This initial policy is obtained without imposing any constraints on its origin.
 It may result from classical or deep reinforcement learning \cite{sutton2018reinforcement}, alpha-beta algorithm \cite{knuth1975analysis}, or even from demonstrations provided by humans \cite{pmlr-v9-ross10a}.
-The crucial requirement is the availability of a dataset containing a sufficient number of projections from the observation space $\mathcal{O}$ to the action space $\mathcal{A}$ induced by $\InitialPolicy$ to train a \gls{nn}.
+The crucial requirement is the availability of a dataset containing a sufficient number of projections from the observation space $\ObsSet$ to the action space $\ActionSet$ induced by $\InitialPolicy$ to train a \gls{nn}.
 
 The replicated policies are referred to as surrogate policies.
 To assess the stability of the learned representations, $n$ surrogate policies are trained independently, denoted by $\SurrogatePolicy{1}, \dots, \SurrogatePolicy{n}$.
 All surrogate policies share the same architecture.
-It consists of a \gls{nn} with two components, an encoder $\textcolor{myblue}{f_{enc}}$ and a decoder $f_{dec}$, highlighted by the blue and black dashed rectangles, respectively, in Figure~\ref{fig:surrogate_policy_architecture}.
-The encoder maps the observation $O$ to the embedding, and the decoder reconstructs the parameters of the action distribution from this embedding.
-For a given surrogate policy $\SurrogatePolicy{i}$, parameterized by $\Theta_i$, its encoder and decoder are written $\textcolor{myblue}{f_{enc_{i}}}$ and $f_{dec_{i}}$.
+It consists of a \gls{nn} with two components, an encoder $\SurrogateEncoder$ and a decoder $\Decoder$, highlighted by the blue and black dashed rectangles, respectively, in Figure~\ref{fig:surrogate_policy_architecture}.
+The encoder maps the observation $o$ to the embedding, and the decoder reconstructs the parameters of the action distribution from this embedding.
+For a given surrogate policy $\SurrogatePolicy{i}$, parameterized by $\params_i$, its encoder and decoder are written $\SurrogateEncoder[i]$ and $\Decoder[i]$.
 
 \input{figures/clustering_agent_representation/surrogate_policy_architecture.tex}
 
-% For any observation $O$, each $\SurrogatePolicy{i}$ should produce an action distribution that closely matches that of $\InitialPolicy$.
+% For any observation $o$, each $\SurrogatePolicy{i}$ should produce an action distribution that closely matches that of $\InitialPolicy$.
 To train each surrogate policy $\SurrogatePolicy{i}$ to accurately replicate the action distribution, we define a loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:learning}.
-This loss, defined in Equation~\eqref{eq:car_loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $p$, which maps a distribution to its parameterization.
-In practice, this function $p$ does not need to be explicitly defined, as neural policies directly output the parameters of the action distribution.
+This loss, defined in Equation~\eqref{eq:car_loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $\logits$, which maps a distribution to its parameters (the logits).
+In practice, this function $\logits$ does not need to be explicitly defined, as neural policies directly output the parameters of the action distribution.
 
 \begin{align}
-    \min_{\Theta_i} \sum_{O \in \mathcal{O}}
-    \mathrm{MSE}\Big(
-        p \, \!\big(\InitialPolicy\left(O\right)\big),
-        p \, \!\big(\textcolor{myred}{\pi'_{\Theta_i}}\left(O\right)\big)
+    \min_{\params_i} \sum_{o \in \ObsSet}
+    \MSE\Big(
+        \logits\big(\InitialPolicy\left(o\right)\big),
+        \logits\big(\SurrogatePolicy{i}\left(o\right)\big)
     \Big)
     \label{eq:car_loss}
 \end{align}
@@ -80,9 +80,9 @@ A \gls{cs} can therefore be viewed as a region of the \gls{ls} containing relate
 To identify these regions, a clustering algorithm is applied to the point cloud.
 
 The clustering is performed independently for each surrogate policy.
-For a surrogate policy $\SurrogatePolicy{i}$, applying its encoder $\textcolor{myblue}{f_{enc_{i}}}$ to a subset of observations $\mathbb{O} \subseteq \mathcal{O}$ yields the set of embeddings $\textcolor{myblue}{\mathcal{E}_{i}}$.
-A clustering function $f_{\mathrm{clust}}$ then partitions the point cloud $\textcolor{myblue}{\mathcal{E}_{i}}$ into groups of nearby \glspl{lr}, assigning each observation a cluster label and yielding the partition $\mathcal{C}_{i}$.
-The same observation set $\mathbb{O}$ is used for every surrogate policy, so that the partitions $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$ are defined over the same observations and can be compared.
+For a surrogate policy $\SurrogatePolicy{i}$, applying its encoder $\SurrogateEncoder[i]$ to a subset of observations $\ObsData \subseteq \ObsSet$ yields the set of embeddings $\LatentSet{i}$.
+A clustering function $\ClusteringFunction$ then partitions the point cloud $\LatentSet{i}$ into groups of nearby \glspl{lr}, assigning each observation a cluster label and yielding the partition $\mathcal{C}_{i}$.
+The same observation set $\ObsData$ is used for every surrogate policy, so that the partitions $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$ are defined over the same observations and can be compared.
 This comparison is the basis of the evaluation introduced in the following section.
 
 Algorithm~\ref{alg:car} states the complete \gls{car} procedure, whose lines map directly onto the stages described above.
@@ -90,7 +90,7 @@ Lines~\ref{alg:car:dataset}--\ref{alg:car:loss} prepare the imitation of the ini
 They build the training dataset by pairing each observation with the parameters of the action distribution produced by $\InitialPolicy$, and define the \gls{mse} loss of Equation~\eqref{eq:car_loss}.
 Lines~\ref{alg:car:train_loop}--\ref{alg:car:sgd} correspond to the first stage, in which each of the $n$ surrogate policies is initialized randomly and trained independently by stochastic gradient descent.
 Lines~\ref{alg:car:cluster_loop}--\ref{alg:car:clust} correspond to the second stage.
-The encoder of each surrogate policy embeds the shared observation set $\mathbb{O}$ (Line~\ref{alg:car:embed}), and the resulting point cloud is partitioned by $f_{\mathrm{clust}}$ (Line~\ref{alg:car:clust}).
+The encoder of each surrogate policy embeds the shared observation set $\ObsData$ (Line~\ref{alg:car:embed}), and the resulting point cloud is partitioned by $\ClusteringFunction$ (Line~\ref{alg:car:clust}).
 Finally, Line~\ref{alg:car:return} returns the surrogate policies together with their partitions, which are the inputs of the evaluation.
 
 \input{algorithms/clustering_agent_representation/car.tex}

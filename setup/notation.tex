@@ -1,20 +1,61 @@
-% Mathematical notation.
+% Mathematical notation, following Goodfellow et al. (deep learning) and
+% Sutton & Barto (reinforcement learning). Change a style here only.
 
-% Reinforcement learning: state sets and states.
-\newcommand{\StateSet}{\mathcal{S}}
-\newcommand{\StateSetInitial}{\mathcal{S}^{\text{init}}}
-\newcommand{\StateSetTerminal}{\mathcal{S}^{\text{ter}}}
-\newcommand{\StateInitial}{s^{\text{init}}}
-\newcommand{\StateTerminal}{s^{\text{ter}}}
+% Generic styles: vectors and matrices in bold upright, parameters in bold.
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\params}{\boldsymbol{\theta}}
+\newcommand{\weights}{\vect{w}}
 
-\newcommand{\InitialPolicy}{\textcolor{mygreen}{\pi}}
-\newcommand{\SurrogatePolicy}[1]{\textcolor{myred}{\pi'_{#1}}}
+% Operators and metrics, set upright.
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\MSE}{MSE}
+\DeclareMathOperator{\RI}{RI}
+\DeclareMathOperator{\ARI}{ARI}
+\newcommand{\BR}{\mathrm{BR}}
+\newcommand{\CU}{\mathrm{CU}}
+\newcommand{\AS}{\mathrm{AS}}
+\newcommand{\ACU}{\mathrm{ACU}}
 
-% Per-example loss: #1 = parameters, #2 = example index.
-\newcommand{\fullLoss}[2]{\mathcal{L}\left(\hat{f}_{#1}(x^{(#2)}), y^{(#2)}\right)}
+% Deep learning: per-example loss (#1 = parameters, #2 = example index).
+\newcommand{\fullLoss}[2]{\mathcal{L}\left(\hat{f}_{#1}(\vect{x}^{(#2)}), \vect{y}^{(#2)}\right)}
 \newcommand{\loss}[2]{\mathcal{L}^{(#2)}\left(#1\right)}
 
-% Latent representation: optional #1 = layer index (h or h_l).
-\newcommand{\latentRepresentation}[1][]{%
-    \mathbf{h}\if\relax\detokenize{#1}\relax\else_{#1}\fi
+% Latent representation h^{(l)}: optional #1 = layer, optional #2 = decoration
+% (e.g. \prime or *), placed in the same superscript.
+\NewDocumentCommand{\latentRepresentation}{o o}{%
+  \vect{h}\IfValueT{#1}{^{(#1)\IfValueT{#2}{#2}}}%
 }
+
+% Encoder, decoder and clustering functions (optional #1 = model index).
+\NewDocumentCommand{\Encoder}{o}{f_{\mathrm{enc}\IfValueT{#1}{,#1}}}
+\NewDocumentCommand{\Decoder}{o}{f_{\mathrm{dec}\IfValueT{#1}{,#1}}}
+\newcommand{\ClusteringFunction}{f_{\mathrm{clust}}}
+
+% Probe for concept #2 at layer #1.
+\newcommand{\Probe}[2]{\psi^{(#1,#2)}_{\params}}
+
+% Reinforcement learning: spaces of the MDP.
+\newcommand{\StateSet}{\mathcal{S}}
+\newcommand{\ObsSet}{\mathcal{O}}
+\newcommand{\ActionSet}{\mathcal{A}}
+\newcommand{\RewardSet}{\mathcal{R}}
+\newcommand{\Distributions}[1]{\mathcal{P}(#1)}
+\newcommand{\StateSetInitial}{\mathcal{S}^{\mathrm{init}}}
+\newcommand{\StateSetTerminal}{\mathcal{S}^{\mathrm{ter}}}
+\newcommand{\StateInitial}{s^{\mathrm{init}}}
+\newcommand{\StateTerminal}{s^{\mathrm{ter}}}
+
+% Method: initial and surrogate policies, their encoders and latent sets.
+\newcommand{\InitialPolicy}{\textcolor{mygreen}{\pi}}
+\newcommand{\SurrogatePolicy}[1]{\textcolor{myred}{\pi'_{#1}}}
+\NewDocumentCommand{\SurrogateEncoder}{o}{\textcolor{myblue}{\IfValueTF{#1}{\Encoder[#1]}{\Encoder}}}
+\newcommand{\LatentSet}[1]{\textcolor{myblue}{\mathcal{H}_{#1}}}
+\newcommand{\ObsData}{\mathcal{O}_{\mathrm{data}}}
+\newcommand{\logits}{\boldsymbol{\ell}}
+
+% Metrics: baseline clusterings and similarities (#1 = obs, act or untr).
+% Optional #1 = index of an untrained network.
+\NewDocumentCommand{\BaselineClustering}{o m}{\mathcal{C}_{\mathrm{#2}\IfValueT{#1}{,#1}}}
+\newcommand{\Similarity}[2]{\rho^{\mathrm{#1}}_{#2}}

@@ -4,52 +4,52 @@
 
 \Input{
 \\
-Dataset $\mathcal{D} = \{(x^{(i)}, y^{(i)})\}_{i=1}^{N}$\\
+Dataset $\mathcal{D} = \{(\vect{x}^{(i)}, \vect{y}^{(i)})\}_{i=1}^{N}$\\
 Architecture $\hat{f}$\\
 Loss function $\mathcal{L}$\\
 Learning rate $\eta > 0$\\
-Initial parameters $\theta$ (optional)
+Initial parameters $\params$ (optional)
 }
 
 \Output{
 \\
-Trained parameters $\theta$
+Trained parameters $\params$
 }
 
 \AlgoRule
 
-\uIf{$\theta$ is given}{
-    $\theta^{(1)} \leftarrow \theta$\;
+\uIf{$\params$ is given}{
+    $\params_{1} \leftarrow \params$\;
 }\uElse{
-    Initialize $\theta^{(1)}$ randomly\;
+    Initialize $\params_{1}$ randomly\;
 }
 
 \BlankLine
-$n \leftarrow 1$\;
+$k \leftarrow 1$\;
 \While{stopping criterion not satisfied}{
-    Select a random example $(x^{(i)}, y^{(i)}) \in \mathcal{D}$\;
+    Select a random example $(\vect{x}^{(i)}, \vect{y}^{(i)}) \in \mathcal{D}$\;
 
     \BlankLine
     \tcp{Model prediction for the selected example}
-    $\hat{y}^{(i)} \leftarrow \hat{f}_{\theta^{(n)}}(x^{(i)})$\;
+    $\hat{\vect{y}}^{(i)} \leftarrow \hat{f}_{\params_{k}}(\vect{x}^{(i)})$\;
 
     \BlankLine
     \tcp{Per-example loss between the prediction and the ground truth}
-    $\loss{\theta^{(n)}}{i} \leftarrow \mathcal{L}(\hat{y}^{(i)}, y^{(i)})$\;
+    $\loss{\params_{k}}{i} \leftarrow \mathcal{L}(\hat{\vect{y}}^{(i)}, \vect{y}^{(i)})$\;
 
     \BlankLine
     \tcp{Gradient of the per-example loss, since it is differentiable}
-    $g \leftarrow \nabla_{\theta} \loss{\theta^{(n)}}{i}$\;
+    $\vect{g} \leftarrow \nabla_{\params} \loss{\params_{k}}{i}$\;
 
     \BlankLine
     \tcp{Error minimization via a gradient descent step}
-    $\theta^{(n+1)} \leftarrow \theta^{(n)} - \eta \, g$\;
+    $\params_{k+1} \leftarrow \params_{k} - \eta \, \vect{g}$\;
 
-    $n \leftarrow n + 1$\;
+    $k \leftarrow k + 1$\;
 }
 
 \BlankLine
 
-\Return{$\theta^{(n)}$}
+\Return{$\params_{k}$}
 
 \end{algorithm}

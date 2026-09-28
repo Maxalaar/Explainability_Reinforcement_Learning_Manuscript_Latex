@@ -31,32 +31,32 @@ The obtained clusters are then interpreted as representing distinct concepts.
 
 Deep clustering has been particularly successful in unsupervised image classification.
 For this type of task, a specific \gls{nn} architecture called an autoencoder is commonly used.
-An autoencoder is composed of an encoder $f_{\text{enc}}$ and a decoder $f_{\text{dec}}$.
-The encoder maps an input $x \in \mathcal{X}$ to a low-dimensional \gls{lr} $\mathbf{z} \in \mathbb{R}^d$, the \gls{lr} produced by the encoder.
-The decoder then maps this \gls{lr} back to the input space to produce a reconstruction $\hat{x}$.
+An autoencoder is composed of an encoder $\Encoder$ and a decoder $\Decoder$.
+The encoder maps an input $\vect{x} \in \mathcal{X}$ to a low-dimensional \gls{lr} $\vect{z} \in \mathbb{R}^d$, the \gls{lr} produced by the encoder.
+The decoder then maps this \gls{lr} back to the input space to produce a reconstruction $\hat{\vect{x}}$.
 The model is trained by \gls{sgd} to minimize the reconstruction error between the original input and its reconstruction using a \gls{mse} loss.
 This objective encourages the \gls{ls} to preserve the most informative features of the input while enforcing a compact representation.
 This can be expressed mathematically as follows:
 \[
-x
-\xrightarrow{\;f_{\mathrm{enc}}\;}
-\mathbf{z}
-\xrightarrow{\;f_{\mathrm{dec}}\;}
-\hat{x},
+\vect{x}
+\xrightarrow{\;\Encoder\;}
+\vect{z}
+\xrightarrow{\;\Decoder\;}
+\hat{\vect{x}},
 \qquad
 d \ll \dim(\mathcal{X}),
 \qquad
 \mathcal{L}_{\mathrm{rec}}
 =
 \frac{1}{N}\sum_{i=1}^{N}
-\left\|x^{(i)}-\hat{x}^{(i)}\right\|_2^2.
+\left\|\vect{x}^{(i)}-\hat{\vect{x}}^{(i)}\right\|_2^2.
 \]
 
 Once the autoencoder has been trained sufficiently well, the reconstruction loss $\mathcal{L}_{\mathrm{rec}}$ should be low enough for the learned representation to be useful.
 A clustering algorithm can then be applied to the compressed representations of the images.
-Let $\mathcal{D}$ denote a dataset of inputs, through the encoder $f_{\text{enc}}$, this dataset is mapped to a point cloud in the \gls{ls}:
+Let $\mathcal{D}$ denote a dataset of inputs, through the encoder $\Encoder$, this dataset is mapped to a point cloud in the \gls{ls}:
 $$
-\mathcal{Z} = \{\mathbf{z}^{(i)} \in \mathbb{R}^d \mid \mathbf{z}^{(i)} = f_{\text{enc}}(x^{(i)}), \; x^{(i)} \in \mathcal{D} \}.
+\mathcal{Z} = \{\vect{z}^{(i)} \in \mathbb{R}^d \mid \vect{z}^{(i)} = \Encoder(\vect{x}^{(i)}), \; \vect{x}^{(i)} \in \mathcal{D} \}.
 $$
 
 A classical clustering algorithm is applied to the set $\mathcal{Z}$ of \glspl{lr} to identify groups of similar \glspl{lr}.
