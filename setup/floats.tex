@@ -45,12 +45,17 @@
 % (\ReadonlyShipoutCounter = pages already output), not on the printed number.
 % \cleartoleftpage: next page is a verso (left, even physical page).
 % \cleartorightpage: next page is a recto (right, odd physical page).
-% An empty page is inserted when needed.
+% An empty page is inserted when needed, in the print version only; the
+% screen PDF just starts a new page.
 \newcommand{\cleartoleftpage}{%
   \clearpage
-  \ifodd\ReadonlyShipoutCounter\else\hbox{}\thispagestyle{empty}\newpage\fi
+  \ifprintversion
+    \ifodd\ReadonlyShipoutCounter\else\hbox{}\thispagestyle{empty}\newpage\fi
+  \fi
 }
 \newcommand{\cleartorightpage}{%
   \clearpage
-  \ifodd\ReadonlyShipoutCounter\hbox{}\thispagestyle{empty}\newpage\fi
+  \ifprintversion
+    \ifodd\ReadonlyShipoutCounter\hbox{}\thispagestyle{empty}\newpage\fi
+  \fi
 }

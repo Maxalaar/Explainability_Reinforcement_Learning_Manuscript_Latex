@@ -1,6 +1,5 @@
-% Draft tools: placeholder for heavy figures and compile-date footer.
-
-\newif\ifdraftfigures
+% Output modes (switches declared at the top of manuscript.tex):
+% \ifprintversion, \ifdraftversion and \ifdraftfigures.
 
 \newcommand{\heavyfig}[2]{%  #1 = label to preserve, #2 = figure file
     \ifdraftfigures
@@ -17,17 +16,34 @@
     \fi
 }
 
-\AddToShipoutPictureBG{%
-    \AtPageLowerLeft{%
-        \hspace{\dimexpr\oddsidemargin+1in\relax}%
-        \raisebox{0.8cm}{%
-            \parbox{\textwidth}{%
-                \centering\color{gray}
-                Compiled on \the\day/\the\month/\the\year\ at \currenttime
+% Print version: links in black (still clickable), heavy figures always rendered.
+\ifprintversion
+    \draftfiguresfalse
+    \hypersetup{linkcolor=black, citecolor=black, urlcolor=black, filecolor=black}
+\fi
+
+% Draft version: line numbers, and a footer with the compile date.
+\ifdraftversion
+    \AtBeginDocument{\linenumbers}
+    \AddToShipoutPictureBG{%
+        \AtPageLowerLeft{%
+            \hspace{\dimexpr\ifprintversion\ifodd\value{page}\oddsidemargin
+                \else\evensidemargin\fi\else\oddsidemargin\fi+1in\relax}%
+            \raisebox{0.8cm}{%
+                \parbox{\textwidth}{%
+                    \centering\color{gray}
+                    Compiled on \the\day/\the\month/\the\year\ at \currenttime
+                }%
             }%
         }%
-    }%
-}
+    }
+\fi
 
 % Placeholder for text still to be written or completed, shown in red.
-\newcommand{\placeholder}[1]{\textcolor{red}{#1}}
+% In the print version, each remaining placeholder also raises a warning.
+\newcommand{\placeholder}[1]{%
+    \ifprintversion
+        \GenericWarning{}{Print version: placeholder left on page \thepage}%
+    \fi
+    \textcolor{red}{#1}%
+}
