@@ -218,13 +218,13 @@ q_\pi(s, a)
 \label{subsec:optimal_policy}
 
 The goal of \gls{rl} is to find a policy that maximizes the expected cumulative reward from any observation until the end of the trajectory.
-This policy is called the optimal policy and is denoted by \(\pi_*\), and its state-action value function by \(q_* = q_{\pi_*}\).
+This policy is called the optimal policy and is denoted by \(\OptimalPolicy\), and its state-action value function by \(\OptimalQ = q_{\OptimalPolicy}\).
 In a partially observable setting, the optimal action is the one that maximizes the expected state-action value over the distribution of possible states given the observation:
 \[
-\pi_*(a \mid o) =
+\OptimalPolicy(a \mid o) =
 \begin{cases}
 1 & \text{if } a = \argmax_{a' \in \ActionSet}\;
-\sum_{s \in \StateSet} \beta(s \mid o)\, q_*(s, a'), \\[6pt]
+\sum_{s \in \StateSet} \beta(s \mid o)\, \OptimalQ(s, a'), \\[6pt]
 0 & \text{otherwise}
 \end{cases}
 \]
@@ -236,5 +236,5 @@ Solving an \gls{mdp} in this way is known as dynamic programming.
 
 In practice, most environments of have too many states to allow an explicit representation of the dynamics \(p\).  
 Storing and computing over the full transition function becomes intractable.
-To overcome this limitation, instead of directly constructing the optimal policy, an iterative approach is adopted: starting from an initial policy, it is progressively improved so that it converges toward \(\pi_*\).
+To overcome this limitation, instead of directly constructing the optimal policy, an iterative approach is adopted: starting from an initial policy, it is progressively improved so that it converges toward \(\OptimalPolicy\).
 This iterative improvement through interaction with the environment is precisely what constitutes learning in \gls{rl}, and it is the subject of the next section.

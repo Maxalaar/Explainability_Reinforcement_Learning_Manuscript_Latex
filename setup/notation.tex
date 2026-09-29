@@ -1,11 +1,12 @@
 % Mathematical notation, following Goodfellow et al. (deep learning) and
 % Sutton & Barto (reinforcement learning). Change a style here only.
 
-% Generic styles: vectors and matrices in bold upright, parameters in bold.
+% Generic styles: vectors and matrices in bold upright, parameters in bold
+% (theta: network or actor parameters, phi: value function / critic parameters).
 \newcommand{\vect}[1]{\mathbf{#1}}
 \newcommand{\mat}[1]{\mathbf{#1}}
 \newcommand{\params}{\boldsymbol{\theta}}
-\newcommand{\weights}{\vect{w}}
+\newcommand{\valueParams}{\boldsymbol{\phi}}
 
 % Operators and metrics, set upright.
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -21,6 +22,9 @@
 % Deep learning: per-example loss (#1 = parameters, #2 = example index).
 \newcommand{\fullLoss}[2]{\mathcal{L}\left(\hat{f}_{#1}(\vect{x}^{(#2)}), \vect{y}^{(#2)}\right)}
 \newcommand{\loss}[2]{\mathcal{L}^{(#2)}\left(#1\right)}
+
+% Function computed by layer #1 of a network.
+\newcommand{\LayerFunction}[1]{f^{(#1)}}
 
 % Latent representation h^{(l)}: optional #1 = layer, optional #2 = decoration
 % (e.g. \prime or *), placed in the same superscript.
@@ -46,6 +50,10 @@
 \newcommand{\StateSetTerminal}{\mathcal{S}^{\mathrm{ter}}}
 \newcommand{\StateInitial}{s^{\mathrm{init}}}
 \newcommand{\StateTerminal}{s^{\mathrm{ter}}}
+
+% Reinforcement learning: optimal policy and its state-action value function.
+\newcommand{\OptimalPolicy}{\pi^{*}}
+\newcommand{\OptimalQ}{q^{*}}
 
 % Method: initial and surrogate policies, their encoders and latent sets.
 \newcommand{\InitialPolicy}{\textcolor{mygreen}{\pi}}

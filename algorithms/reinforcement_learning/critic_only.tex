@@ -9,23 +9,23 @@ Architecture $\hat{q}$\\
 Exploration rate $\varepsilon \in [0, 1]$\\
 Discount factor $\gamma \in [0, 1]$\\
 Learning rate $\eta > 0$\\
-Initial parameters $\weights$ (optional)
+Initial parameters $\valueParams$ (optional)
 }
 
 \Output{
 \\
-Trained policy $\pi_{\weights}$
+Trained policy $\pi_{\valueParams}$
 }
 
 \AlgoRule
 
-\uIf{$\weights$ is not given}{
-    Initialize $\weights$ randomly\;
+\uIf{$\valueParams$ is not given}{
+    Initialize $\valueParams$ randomly\;
 }
 
 \BlankLine
 \tcp{Exploration policy as defined in Equation~\eqref{eq:epsilon_greedy_policy}}
-$\pi_{\weights} \leftarrow$ $\varepsilon$-greedy policy with respect to $\hat{q}(\cdot, \cdot, \weights)$
+$\pi_{\valueParams} \leftarrow$ $\varepsilon$-greedy policy with respect to $\hat{q}_{\valueParams}$
 
 \BlankLine
 \tcp{MSE loss function as defined in Equation~\eqref{eq:mse}}
@@ -34,7 +34,7 @@ $\mathcal{L} \leftarrow$ \gls{mse}\;
 \BlankLine
 \While{stopping criterion not satisfied}{
     \tcp{Data collection see Algorithm~\ref{alg:data_collection}}
-    $\mathcal{D} \leftarrow$ \FnDataCollection{\gls{mdp}, $\pi_{\weights}, \gamma$}
+    $\mathcal{D} \leftarrow$ \FnDataCollection{\gls{mdp}, $\pi_{\valueParams}, \gamma$}
 
     \BlankLine
     \tcp{observation-action pairs and their returns, from $\mathcal{D}$}
@@ -42,14 +42,14 @@ $\mathcal{L} \leftarrow$ \gls{mse}\;
 
     \BlankLine
     \tcp{Model update whith SGD see Algorithm~\ref{alg:stochastic_gradient_descent}}
-    $\weights \leftarrow$ \FnSGD{$\mathcal{D}', \hat{q}, \mathcal{L}, \eta, \weights$}
+    $\valueParams \leftarrow$ \FnSGD{$\mathcal{D}', \hat{q}, \mathcal{L}, \eta, \valueParams$}
 }
 
 \BlankLine
 \tcp{Final policy without exploration as defined in Equation~\eqref{eq:greedy_policy}}
-$\pi_{\weights} \leftarrow$ policy with respect to $\hat{q}(\cdot, \cdot, \weights)$\;
+$\pi_{\valueParams} \leftarrow$ policy with respect to $\hat{q}_{\valueParams}$\;
 
 \BlankLine
-\Return{$\pi_{\weights}$}
+\Return{$\pi_{\valueParams}$}
 
 \end{algorithm}

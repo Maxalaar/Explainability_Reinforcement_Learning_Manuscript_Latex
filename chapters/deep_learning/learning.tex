@@ -45,21 +45,21 @@ $
 
 Computing this derivative is not straightforward because a \gls{nn} is composed of a sequence of functions, and the parameter $\theta_j$ can belong to any layer of the network.
 Its influence on the loss must therefore be propagated through all subsequent layers.
-To describe these dependencies, each layer can be viewed as a function, denoted by $\phi^{(l)}$ for layer $l$.
+To describe these dependencies, each layer can be viewed as a function, denoted by $\LayerFunction{l}$ for layer $l$.
 This function takes the activation vector $\latentRepresentation[l-1] \in \mathbb{R}^{n_{l-1}}$ produced by the previous layer as input.
 It produces the activation vector $\latentRepresentation[l] \in \mathbb{R}^{n_l}$ of the current layer.
 This can be expressed as
 \begin{equation}
-\phi^{(l)} \colon \mathbb{R}^{n_{l-1}} \to \mathbb{R}^{n_l}, \qquad \latentRepresentation[l] = \phi^{(l)}(\latentRepresentation[l-1]).
+\LayerFunction{l} \colon \mathbb{R}^{n_{l-1}} \to \mathbb{R}^{n_l}, \qquad \latentRepresentation[l] = \LayerFunction{l}(\latentRepresentation[l-1]).
 \label{eq:layer_function}
 \end{equation}
 
 Each layer function can have multiple inputs and multiple outputs, so the ordinary derivative is not sufficient to describe how its outputs change with respect to its inputs.
 The Jacobian matrix extends the derivative to functions with multiple inputs and outputs, quantifying how each output component changes with respect to each input component.
-Consider the function $\phi^{(l)}$ and its Jacobian $\mat{J}_{\phi^{(l)}}$ evaluated at $\latentRepresentation[l-1]$.
+Consider the function $\LayerFunction{l}$ and its Jacobian $\mat{J}_{\LayerFunction{l}}$ evaluated at $\latentRepresentation[l-1]$.
 The Jacobian collects the partial derivatives of each output component with respect to each input component:
 \begin{equation}
-\mat{J}_{\phi^{(l)}}(\latentRepresentation[l-1]) =
+\mat{J}_{\LayerFunction{l}}(\latentRepresentation[l-1]) =
 \begin{bmatrix}
 \frac{\partial h_1^{(l)}}{\partial h_1^{(l-1)}} & \cdots & \frac{\partial h_1^{(l)}}{\partial h_{n_{l-1}}^{(l-1)}} \\
 \vdots & \ddots & \vdots \\
@@ -71,21 +71,21 @@ The Jacobian collects the partial derivatives of each output component with resp
 Since a \gls{nn} is composed of several layers, a change in an early layer can affect the outputs of all subsequent layers.
 It is therefore necessary to propagate this change through the sequence of layer functions until it reaches the network output.
 The chain rule provides the mathematical tool required to describe this propagation.
-To illustrate this, consider two consecutive layers, $\phi^{(l)}$ and $\phi^{(l+1)}$.
+To illustrate this, consider two consecutive layers, $\LayerFunction{l}$ and $\LayerFunction{l+1}$.
 The chain rule states that the Jacobian of their composition is given by the product of their Jacobians.
 Each Jacobian is evaluated at the input received by the corresponding layer:
 
 
 \begin{equation}
-\mat{J}_{\phi^{(l+1)} \circ \phi^{(l)}}\left(\latentRepresentation[l-1]\right)
+\mat{J}_{\LayerFunction{l+1} \circ \LayerFunction{l}}\left(\latentRepresentation[l-1]\right)
 =
-\mat{J}_{\phi^{(l+1)}}\left(\latentRepresentation[l]\right)
-\mat{J}_{\phi^{(l)}}\left(\latentRepresentation[l-1]\right).
+\mat{J}_{\LayerFunction{l+1}}\left(\latentRepresentation[l]\right)
+\mat{J}_{\LayerFunction{l}}\left(\latentRepresentation[l-1]\right).
 \label{eq:chain_rule_generic}
 \end{equation}
 
 
-The network is composed of a sequence of layer functions $\phi^{(1)}, \dots, \phi^{(L)}$.
+The network is composed of a sequence of layer functions $\LayerFunction{1}, \dots, \LayerFunction{L}$.
 Each layer depends only on the output of the previous layer.
 Consider a parameter $\theta_j$ belonging to layer $l$.
 A change in $\theta_j$ first affects the output $\latentRepresentation[l]$ of its own layer.
@@ -96,17 +96,17 @@ This layer-by-layer propagation is referred to as backpropagation:
 \frac{\partial \loss{\params}{i}}{\partial \theta_j}
 =
 \mat{J}_{\mathcal{L}}(\latentRepresentation[L], \vect{y}^{(i)})
-\, \mat{J}_{\phi^{(L)}}(\latentRepresentation[L-1])
+\, \mat{J}_{\LayerFunction{L}}(\latentRepresentation[L-1])
 \cdots
-\mat{J}_{\phi^{(l+1)}}(\latentRepresentation[l])
-\, \mat{J}_{\phi^{(l)}}(\theta_j),
+\mat{J}_{\LayerFunction{l+1}}(\latentRepresentation[l])
+\, \mat{J}_{\LayerFunction{l}}(\theta_j),
 \label{eq:chain_rule}
 \end{equation}
 where:
 \begin{itemize}
 \item $\mat{J}_{\mathcal{L}}(\latentRepresentation[L], \vect{y}^{(i)})$ denotes the Jacobian of $\mathcal{L}$ with respect to its first argument, evaluated at $(\latentRepresentation[L], \vect{y}^{(i)})$,
-\item each subsequent $\mat{J}_{\phi^{(m+1)}}(\latentRepresentation[m])$ denotes the Jacobian of the function $\phi^{(m+1)}$ with respect to its input $\latentRepresentation[m]$,
-\item $\mat{J}_{\phi^{(l)}}(\theta_j)$ denotes the Jacobian of the function $\phi^{(l)}$ with respect to the parameter $\theta_j$.
+\item each subsequent $\mat{J}_{\LayerFunction{m+1}}(\latentRepresentation[m])$ denotes the Jacobian of the function $\LayerFunction{m+1}$ with respect to its input $\latentRepresentation[m]$,
+\item $\mat{J}_{\LayerFunction{l}}(\theta_j)$ denotes the Jacobian of the function $\LayerFunction{l}$ with respect to the parameter $\theta_j$.
 \end{itemize}
 
 Once $\frac{\partial \loss{\params}{i}}{\partial \theta_j}$ can be computed for every parameter, all of these values are stacked into one vector, called the gradient:

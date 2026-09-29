@@ -9,7 +9,7 @@ Architecture $\hat{v}$ (critic)\\
 Architecture $\pi$ (actor)\\
 Discount factor $\gamma \in [0, 1]$\\
 Learning rate $\eta > 0$\\
-Initial parameters $\weights$ of the critic (optional)\\
+Initial parameters $\valueParams$ of the critic (optional)\\
 Initial parameters $\params$ of the actor (optional)
 }
 
@@ -20,8 +20,8 @@ Trained policy $\pi_{\params}$
 
 \AlgoRule
 
-\uIf{$\weights$ is not given}{
-    Initialize $\weights$ randomly\;
+\uIf{$\valueParams$ is not given}{
+    Initialize $\valueParams$ randomly\;
 }
 \uIf{$\params$ is not given}{
     Initialize $\params$ randomly\;
@@ -39,7 +39,7 @@ $\mathcal{L} \leftarrow$ \gls{mse}\;
     \BlankLine
     \tcp{Advantage estimation: how much better/worse each action performed compared to the critic's expectation}
     \For{$(s_t, o_t, a_t, G_t) \in \mathcal{D}$}{
-        $A(s_t, a_t) \leftarrow G_t - \hat{v}(s_t, o_t, \weights)$\;
+        $A(s_t, a_t) \leftarrow G_t - \hat{v}_{\valueParams}(s_t, o_t)$\;
     }
 
     \BlankLine
@@ -48,7 +48,7 @@ $\mathcal{L} \leftarrow$ \gls{mse}\;
 
     \BlankLine
     \tcp{Critic update with SGD see Algorithm~\ref{alg:stochastic_gradient_descent}}
-    $\weights \leftarrow$ \FnSGD{$\mathcal{D}', \hat{v}, \mathcal{L}, \eta, \weights$}
+    $\valueParams \leftarrow$ \FnSGD{$\mathcal{D}', \hat{v}, \mathcal{L}, \eta, \valueParams$}
 
     \BlankLine
     \tcp{Actor update: increase the probability of actions with positive advantage, decrease it for those with negative advantage}
