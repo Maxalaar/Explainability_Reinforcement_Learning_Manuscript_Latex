@@ -6,7 +6,8 @@ The recursive Bellman equations for \(v_\pi\) and \(q_\pi\) suggest dynamic prog
 \gls{rl} offers an alternative by solving the \gls{mdp} iteratively and generating a sequence of policies that progressively approach \(\OptimalPolicy\) through direct interaction with the environment.
 This section introduces two major families of \gls{rl} algorithms, critic-only methods and actor-critic methods.
 
-At a high level, every algorithm presented below repeats the same loop: the current policy interacts with the environment, the resulting trajectories are sent to the \gls{rl} algorithm, and the algorithm uses them to produce a new policy.
+At a high level, every algorithm presented below repeats the same loop.
+The current policy interacts with the environment, the resulting trajectories are sent to the \gls{rl} algorithm, and the algorithm uses them to produce a new policy.
 
 \subsection{Critic-Only Methods}
 \label{subsec:critic_only}
@@ -34,7 +35,8 @@ It is precisely this way of modeling the policy that gives this family of method
 The policy is not represented explicitly as a standalone function.
 Rather, it simply emerges from searching over the set of actions to maximize \(\hat{q}\).
 
-To give a clear example of critic-only methods, they are presented in their simplest form: model-free, without temporal-difference learning, without replay buffer, without bootstrapping, and using only \(\varepsilon\)-greedy exploration.
+To give a clear example, critic-only methods are presented in their simplest form.
+This version is model-free and relies only on \(\varepsilon\)-greedy exploration, without temporal-difference learning, replay buffer or bootstrapping.
 Naturally, many variants and extensions of this basic scheme exist, but the core idea remains the same.
 
 When implementing a \gls{rl} algorithm, one of the first questions is how to represent the value function.
@@ -69,7 +71,7 @@ The learning process consists of two steps that repeat until convergence:
     For each time step \(t\) along the episode, the return from that step onward, \(G_t\), serves as the target value for the observation-action pair \((o_t, a_t)\).
     This procedure is detailed in Algorithm~\ref{alg:data_collection}.
 
-    \item \textbf{Model update.} The tuples \((o_t, a_t, G_t)\) obtained in the previous step serve as supervised training data: the observation-action pair \((o_t, a_t)\) is the input, and the return \(G_t\) is the associated target.
+    \item \textbf{Model update.} The tuples \((o_t, a_t, G_t)\) obtained in the previous step serve as supervised training data, in which the observation-action pair \((o_t, a_t)\) is the input and the return \(G_t\) is the associated target.
     These examples are used to train the current approximation \(\hat{q}_{\valueParams_k}\), associated with the current policy \(\pi_{\valueParams_k}\).
     The improved approximation is denoted by \(\hat{q}_{\valueParams_{k+1}}\), which now predicts returns more accurately under \(\pi_{\valueParams_k}\). Since \(\hat{q}_{\valueParams_{k+1}}\) has changed, the policy derived from it also changes.
     This new policy is denoted by \(\pi_{\valueParams_{k+1}}\).
@@ -80,7 +82,7 @@ Algorithm~\ref{alg:critic_only} summarizes this whole critic-only learning loop.
 
 \input{algorithms/reinforcement_learning/critic_only.tex}
 
-Even this simple algorithm already illustrates a difficulty inherent to all forms of \gls{rl}: the instability of the learning process.
+Even this simple algorithm already illustrates the instability of the learning process, a difficulty inherent to all forms of \gls{rl}.
 Each update from \(\hat{q}_{\valueParams_k}\) to \(\hat{q}_{\valueParams_{k+1}}\) causes the policy to shift from \(\pi_{\valueParams_k}\) to \(\pi_{\valueParams_{k+1}}\).
 For the learning to remain stable, the change from \(\hat{q}_{\valueParams_k}\) to \(\hat{q}_{\valueParams_{k+1}}\) should be as small as possible.
 This way, \(\hat{q}_{\valueParams_{k+1}}\), trained to predict returns under \(\pi_{\valueParams_k}\), remains reasonably accurate under \(\pi_{\valueParams_{k+1}}\).
@@ -97,36 +99,32 @@ Nevertheless, deep methods have demonstrated remarkable empirical success, makin
 Critic-only approaches suffer from several limitations.
 The main limitation is scalability to large action spaces.
 Since the policy must evaluate all possible actions at each decision step to select the maximum, the computational cost grows with the size of the action set.
-To address this issue, another family of \gls{rl} algorithms exists: actor-critic methods.
+To address this issue, another family of \gls{rl} algorithms exists, the actor-critic methods.
 
 \subsection{Actor-Critic Methods}
 \label{subsec:actor_critic}
 
-Two principal modifications distinguish actor-critic methods from critic-only approaches.
-First, the objective is to approximate the state-value function \(v_\pi\), instead of the state-action value function \(q_\pi\).
-Second, the policy \(\pi\) is given its own dedicated set of parameters.
-Two separate components are thus obtained: a value function approximation \(\hat{v}_{\valueParams}(s, o)\), called the critic, with parameters \(\valueParams\), and a parameterized policy \(\pi_{\params}\), called the actor, with parameters \(\params\).
+Actor-critic methods differ from critic-only approaches in two ways, each corresponding to one of their two components.
+The first component, called the critic, approximates the state-value function \(v_\pi\) instead of the state-action value function \(q_\pi\).
+The second component, called the actor, is a policy with its own dedicated set of parameters, instead of a policy derived from a value function.
 
-Analogously to critic-only methods, \(\hat{v}\) is trained using supervised learning on pairs obtained from interaction with the \gls{mdp}.
+The critic is a value function approximation \(\hat{v}_{\valueParams}(s, o)\) with parameters \(\valueParams\).
+Analogously to critic-only methods, it is trained using supervised learning on data obtained from interaction with the \gls{mdp}.
 For each time step \(t\) along a trajectory, the input is the state-observation pair \((s_t, o_t)\) and the target is the observed return \(G_t\).
-The value function is thus trained to correct its predictions based on data collected by the current policy interacting with the environment.
+The critic thus learns to predict the return expected under the current policy.
 
-The key difference lies in how the policy \(\pi\) itself is optimized.
-Since the policy now has its own set of parameters \(\params\), it can be updated directly.
-The update uses the notion of advantage
-\(
-A : \StateSet \times \ActionSet \to \mathbb{R}
-\)
-, defined as:
+The actor is a parameterized policy \(\pi_{\params}\) with parameters \(\params\).
+Since it has its own parameters, it can be updated directly, using the critic's predictions.
+This update relies on the notion of advantage \(A : \StateSet \times \ActionSet \to \mathbb{R}\), defined as
 \[
 A(s_t, a_t) = G_t - \hat{v}_{\valueParams}(s_t, o_t),
 \]
 where \(G_t\) is the return obtained by taking action \(a_t\) in state \(s_t\) and then following \(\pi_{\params}\) for all subsequent steps.
+When \(A(s_t, a_t) > 0\), the action \(a_t\) performed better than the critic expected, and the parameters \(\params\) are adjusted to increase the probability \(\pi_{\params}(a_t \mid o_t)\).
+When \(A(s_t, a_t) < 0\), the action \(a_t\) performed worse than expected, and this probability is decreased.
 
-When \(A(s_t, a_t) > 0\), the action \(a_t\) performed better than expected, and the policy parameters \(\params\) are adjusted to increase the probability \(\pi_{\params}(a_t \mid o_t)\).
-When \(A(s_t, a_t) < 0\), the action \(a_t\) performed worse than expected, and the probability is decreased.
-
-Both \(\hat{v}\) and \(\pi_{\params}\) are improved simultaneously within the same loop: the critic provides a learned baseline for the actor, and the actor generates the data used to train the critic.
+Both \(\hat{v}\) and \(\pi_{\params}\) are improved simultaneously within the same loop.
+The critic provides a learned baseline for the actor, and the actor generates the data used to train the critic.
 This interplay reduces the instability inherent to \gls{rl}.
 Algorithm~\ref{alg:actor_critic} summarizes this whole actor-critic learning loop.
 
