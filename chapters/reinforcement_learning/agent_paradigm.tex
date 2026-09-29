@@ -28,3 +28,6 @@ Such an agent still perceives, processes information, and acts upon its environm
 
 This distinction also makes the definition consistent with modern implementations of \gls{rl} \parencite{espeholt2018impala, liang2018rllib}, in which the acting policy and the learning algorithm are separate software components.
 Several copies of the policy, each interacting with its own instance of the environment, collect experience in parallel, while a single learning algorithm uses this experience to update the shared policy parameters.
+
+So far, the interaction between the agent and its environment has only been described informally, in terms of observations, actions, rewards and a policy.
+Before studying how an \gls{rl} algorithm improves the policy, each of these elements must be given a precise definition.

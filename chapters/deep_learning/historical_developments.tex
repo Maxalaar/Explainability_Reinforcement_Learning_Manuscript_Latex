@@ -5,7 +5,7 @@
 \glspl{nn} and \gls{dl} emerged from an ambition to study the expressive capabilities of organic brain.
 The first major milestone came in 1943 with the proposal of a mathematical model of an artificial neuron, with a formulation of networked interactions \parencite{mcculloch1943logical}.
 This work established the key idea that networks of simple units can give rise to complex computations.
-The focus was on representational power, not on the ability of such systems to learn.
+The focus of this first study was on representational power rather than on the ability of such systems to learn.
 As a result, this work remained largely theoretical and had limited practical applications.
 
 A major step toward operationalizing the idea of \glspl{nn} was achieved with the perceptron algorithm in 1958 \parencite{rosenblatt1958perceptron}.
@@ -13,7 +13,7 @@ It was designed to adjust its parameters from input–output pairs in order to a
 The perceptron fundamental limitations were exposed in 1969, showing that it could not learn functions as simple as the exclusive-or \parencite{minsky1969introduction}.
 At the same time, it was demonstrated that stacking multiple perceptrons could, in principle, represent such functions.
 However, no effective training procedure for these multi-layer architectures was available at the time. It was only in 1986 that researchers introduced gradient descent as an effective method for training deep \glspl{nn} \parencite{rumelhart1986learning}.
-From this point onward, the emergence of \gls{dl} is retrospectively situated, even though the term itself appeared later.
+From this point onward, we refer to the emergence of \gls{dl}, even though the term itself appeared later.
 \gls{dl} is defined as the training of deep \glspl{nn} using gradient-based optimization methods.
 
 It took several decades before \gls{dl} reached the level of prominence it has today.
@@ -29,7 +29,8 @@ The use of graphics processing units for large-scale training, demonstrated in 2
 At the same time, researchers developed architectures specifically designed for different types of data, allowing \gls{dl} to address an increasingly wide range of problems.
 \glspl{cnn} were introduced in 1989 to process images, using local, weight-shared filters that exploit the spatial structure of pixel grids \parencite{lecun1989backpropagation}.
 \gls{lstm} networks were later proposed in 1997 to process temporal sequences, introducing gating mechanisms able to retain relevant information over long time horizons \parencite{hochreiter1997long}.
-More recently, the Transformer architecture, relying entirely on the attention mechanism, was introduced in 2017 to process long, variable-length sequences of strongly interconnected elements, allowing every element to attend directly to every other element regardless of their distance within the sequence \parencite{vaswani2017attention}.
+More recently, the Transformer architecture was introduced in 2017, relying entirely on the attention mechanism \parencite{vaswani2017attention}.
+It allows every element in a sequence to attend directly to all others, regardless of their position.
 This growing body of knowledge was consolidated in 2016 in a reference textbook that formalized \gls{dl} as a coherent field of study \parencite{goodfellow2016deep}.
 
 These changes paved the way for the rise of \gls{dl} as it is known today.
