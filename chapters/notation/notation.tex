@@ -4,8 +4,9 @@
 \markboth{Notation}{Notation}
 
 % One group of symbols: #1 = title, rows are "symbol & description \\".
+% The title is moved to the next page unless a few rows fit below it.
 \newenvironment{notationgroup}[1]{%
-  \par\medskip\renewcommand{\arraystretch}{1.3}
+  \par\medskip\Needspace{6\baselineskip}\renewcommand{\arraystretch}{1.3}
   \begin{center}\textbf{#1}\end{center}
   \begin{longtable}{@{}>{\centering\arraybackslash}p{0.25\linewidth}p{0.69\linewidth}@{}}
 }{%
