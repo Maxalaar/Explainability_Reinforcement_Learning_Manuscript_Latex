@@ -7,7 +7,7 @@ For each of them, it summarizes the answer provided by this thesis.
 Research Question~\ref{rq:latent_space} concerned the approaches proposed in the literature to analyze the internal workings of \glspl{nn}.
 To answer it, we first made explicit the working hypothesis shared by most of this literature, the \ConceptHypothesisName.
 According to this hypothesis, \glspl{nn} generalize by organizing their \glspl{ls} around concepts.
-We then organized existing methods into four families: probing, interpretable directions, \glspl{sae}, and clustering.
+We then conducted a state-of-the-art review and organized existing methods into four families: probing, interpretable directions, \glspl{sae}, and clustering.
 
 Research Question~\ref{rq:taxonomy} concerned the organization of existing \gls{xrl} methods \parencite{alaarabiou:hal-04685607, alaarabiou2026taxonomy}.
 Our starting point was to clarify what an explanation means in the context of \gls{rl}.
@@ -18,7 +18,7 @@ From these elements, we proposed a taxonomy that accounts for the specificities 
 
 Research Question~\ref{rq:mechanisms} concerned the use of \glspl{lr} to identify the mechanisms underlying the decisions of \gls{rl} agents.
 To address it, we introduced \gls{car}, an \gls{xrl} method based on the principles of \gls{me} \parencite{alaarabiou2026car}.
-\gls{car} trains several surrogate policies independently to reproduce the same agent.
+\gls{car} independently trains several surrogate policies to reproduce the same behavior.
 It then clusters their \glspl{lr} and compares the resulting partitions.
 This procedure relies on the \RepresentationConvergenceHypothesisName, according to which networks trained on the same task develop similar concepts.
 Applied to six Atari environments, \gls{car} recovers similar clustering structures across surrogate policies.
@@ -28,7 +28,7 @@ Research Question~\ref{rq:evaluation} concerned the objective quantification of 
 We addressed it by introducing three metrics.
 The \gls{cu} measures the consistency of the clusters across surrogate policies.
 The \gls{as} measures how much these clusters differ from the structure of the observations, the actions, and an untrained network.
-The \gls{acu} combines both properties into a single measure and provides a practical criterion for selecting the layer to analyze.
+The \gls{acu} combines both properties into a single measure, allowing the relevance of the identified representations.
 
 Throughout these contributions, we developed three hypotheses that form a coherent chain.
 The \MechanisticHypothesisName states that \glspl{nn} can be understood through their internal mechanisms.
