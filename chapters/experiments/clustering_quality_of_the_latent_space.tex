@@ -33,6 +33,8 @@ The first analysis examines how the three metrics evolve with the depth of the a
 For each layer, \gls{cu}, \gls{as}, and \gls{acu} are averaged over the tested cluster numbers.
 Figure~\ref{fig:latent_space_curves_by_layer_depth} reports these averages as a function of layer depth.
 
+\input{figures/experiments/latent_space_curves_by_layer_depth.tex}
+
 Across environments, \gls{cu} tends to be highest in the earliest layers and decreases with depth.
 \gls{as} follows the opposite trend and generally increases as the representation becomes less tied to the raw observation, the action distribution, and the network's initialization.
 This increase is however not monotonic in the deepest layers.
@@ -43,13 +45,13 @@ The corresponding linear fits show that \gls{cu} decreases from $0.72$ at the fi
 Over the same range, \gls{acu} increases more moderately from $0.00$ to $0.19$, with a slope of approximately $+0.03$ per layer.
 This suggests that, despite the environment-specific variations, deeper representations tend on average to provide a better trade-off between \gls{cu} and \gls{as}.
 
-\input{figures/experiments/latent_space_curves_by_layer_depth.tex}
-
 \subsection{Analysis of the selected layers}
 
 The second analysis examines the effect of the number of clusters on the three metrics.
 For each environment, the layer with the highest average \gls{acu} across the tested cluster numbers is selected.
 Table~\ref{tab:latent_space_best_layer} reports the selected layer, together with the corresponding average \gls{cu}, \gls{as}, and \gls{acu}.
+
+\input{tables/experiments/latent_space_best_layer.tex}
 
 Figure~\ref{fig:latent_space_curves_by_metric} reports the evolution of \gls{cu}, \gls{as}, and \gls{acu} as the number of clusters varies.
 \PongName achieves the highest average \gls{acu} among the six environments, with a value of $0.45 \pm 0.06$.
@@ -57,11 +59,7 @@ This results from a moderate \gls{cu} combined with an \gls{as} that saturates f
 In contrast, \MsPacManName achieves the lowest \gls{as}, with $0.60 \pm 0.05$.
 The resulting \gls{acu}, $0.17 \pm 0.06$, is the lowest across the six environments.
 
+\input{figures/experiments/latent_space_curves_by_metric.tex}
+
 The quantitative analysis provides a measure of the consistency and abstraction of the identified clusters, but does not directly reveal their semantic content.
 The following section therefore provides a qualitative analysis of the clusters to examine the concepts they represent.
-
-\vspace{1cm}
-
-\input{tables/experiments/latent_space_best_layer.tex}
-
-\input{figures/experiments/latent_space_curves_by_metric.tex}
