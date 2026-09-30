@@ -5,7 +5,7 @@
 However, it originates from several research traditions that progressively converged toward a common framework.  
 In this section, we outline the main stages in the emergence of this field, highlighting the key ideas and milestones that shaped its evolution.
 
-\subsection{Behavioral foundations (1900--1950)}
+\subsection{Behavioral Foundations (1900--1950)}
 
 The origins of \gls{rl} can be traced back to 20th-century animal psychology studies \parencite{thorndike1911law}.
 These studies aimed to understand how behaviors are formed and modified.
@@ -20,7 +20,7 @@ This idea led to the suggestion that learning principles observed in living orga
 Machines were therefore envisioned as potentially learning through reward-like mechanisms, guided by evaluative feedback signals resembling a \enquote{pleasure--pain system} \parencite{turing1948intelligent}.
 Although these studies did not involve formal mathematical models, they introduced the central idea of \gls{rl}, trial-and-error learning guided by environmental feedback.
 
-\subsection{Sequential decision-making (1950--1970)}
+\subsection{Sequential Decision-Making (1950--1970)}
 
 A second foundation of \gls{rl} comes from optimal control theory.
 This field studies how to determine sequences of decisions that optimize a cumulative performance criterion over time.
@@ -35,7 +35,7 @@ The earliest method proposed to solve \glspl{mdp} is dynamic programming \parenc
 It proceeds by breaking down a complex decision problem into smaller, more manageable subproblems, solving each one, and combining the results to obtain an overall solution.
 However, dynamic programming requires a full description of the environment, which is only feasible for small problems.
 
-\subsection{Emergence of reinforcement learning (1970--2000)}
+\subsection{Emergence of Reinforcement Learning (1970--2000)}
 
 In order to address this issue, temporal-difference learning methods were introduced \parencite{sutton1988td}.  
 This mechanism enables incremental learning directly from experience without requiring a complete model of the environment.  
@@ -49,7 +49,7 @@ This line of work culminated in Q-learning, which showed that optimal action-val
 The publication in 1998 of the foundational book \textit{Reinforcement Learning: An Introduction} by Sutton and Barto \parencite{suttonbarto1998} contributed to the formalization of \gls{rl} as a coherent field.
 From that point onward, the field can be considered well established and widely recognized as a distinct area of research.
 
-\subsection{Consolidation of reinforcement learning (2000--2012)}
+\subsection{Consolidation of Reinforcement Learning (2000--2012)}
 
 A limitation of early algorithms such as Q-learning is their reliance on explicit state–action tables. 
 Although these methods remove the need to know the full dynamics of the \gls{mdp}, they still require storing a value for each possible state–action pair. 
@@ -67,7 +67,7 @@ Figure~\ref{fig:evolution_reinforcement_learning_classical} provides a timeline 
 
 \input{figures/reinforcement_learning/evolution_reinforcement_learning_classical.tex}
 
-\subsection{Deep reinforcement learning (2013--2026)}
+\subsection{Deep Reinforcement Learning (2013--2026)}
 
 The introduction of \gls{dl} into \gls{rl} marked a major turning point in the field.
 This shift was initiated by \gls{dqn}, which used a deep \gls{nn} to approximate action-value functions at scale.

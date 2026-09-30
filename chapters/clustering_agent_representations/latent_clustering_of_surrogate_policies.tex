@@ -19,7 +19,7 @@ The first explains why multiple surrogate policies are used to study the stabili
 The second describes how these policies are trained to match the initial policy as closely as possible.
 The third presents how their \glspl{lr} are clustered to identify the \glspl{cs}.
 
-\subsection{Multiple surrogate policies}
+\subsection{Multiple Surrogate Policies}
 
 The \gls{car} method was developed to test the \RepresentationConvergenceHypothesisName.
 This requires training several \glspl{nn} independently and comparing their \glspl{lr}.
@@ -40,7 +40,7 @@ It is important to emphasize that the use of surrogate policies does not make \g
 The surrogate policies remain deep \glspl{nn}.
 Their role is not to simplify the decision process but to provide multiple independent realizations of the same policy function, enabling the study of representation convergence.
 
-\subsection{Training surrogate policies}
+\subsection{Training Surrogate Policies}
 
 Throughout the remainder of this thesis, the initial policy we aim to explain is denoted as $\InitialPolicy$.
 This initial policy is obtained without imposing any constraints on its origin.
@@ -69,7 +69,7 @@ In practice, this function $\logits$ does not need to be explicitly defined, as 
     \label{eq:car_loss}
 \end{align}
 
-\subsection{Cluster extraction}
+\subsection{Cluster Extraction}
 
 Once the surrogate policies are trained, their encoders are used to generate a point cloud from a set of observations.
 This point cloud provides a sample of the \gls{ls} to be analyzed.

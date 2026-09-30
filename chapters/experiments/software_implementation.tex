@@ -20,7 +20,7 @@ The remainder of this section describes the purpose and implementation of each s
 
 \input{tables/experiments/software_libraries.tex}
 
-\subsection{Initial policy training}
+\subsection{Initial Policy Training}
 
 The first stage trains the initial policy using RLlib \parencite{moritz2018ray, liang2018rllib}.
 RLlib provides scalable implementations of \gls{rl} algorithms and supports distributed training.
@@ -33,7 +33,7 @@ PyTorch is the standard \gls{dl} framework and is widely used for developing and
 It provides \gls{gpu} acceleration and supports a wide range of \gls{nn} architectures.
 This makes it well suited for implementing the different policy and critic architectures used in the experiments.
 
-\subsection{Trajectory dataset generation}
+\subsection{Trajectory Dataset Generation}
 
 The second stage builds the dataset used to train the surrogate policies.
 RLlib is used to collect trajectories in parallel using multiple environment runners.
@@ -43,7 +43,7 @@ Trajectories are stored as Parquet files \parencite{arrow}.
 Its columnar structure allows efficient data access and supports concurrent processing.
 This is useful here because the datasets contain around one million observation--action pairs and cannot be loaded entirely into memory.
 
-\subsection{Surrogate policy training}
+\subsection{Surrogate Policy Training}
 
 The third stage trains the surrogate policies using \gls{bc} on the trajectory dataset.
 This provides a supervised learning approach for replicating the initial policy.
@@ -51,7 +51,7 @@ The training procedure is implemented using PyTorch Lightning \parencite{falcon2
 PyTorch Lightning provides a simplified interface for training \glspl{nn} with PyTorch.
 It handles common training operations such as data loading, optimization, checkpointing, and \gls{gpu} execution.
 
-\subsection{Surrogate policy evaluation}
+\subsection{Surrogate Policy Evaluation}
 
 The fourth stage evaluates how faithfully the surrogate policies reproduce the behavior of the initial policy.
 This stage therefore requires both the surrogate policies and the initial policy.
@@ -64,7 +64,7 @@ This stage computes the \BehaviorReconstructionName.
 It therefore verifies that the surrogate policies reproduce the behavior of the initial policy sufficiently well before their \glspl{lr} are analyzed.
 If a surrogate does not meet the required level of behavior reconstruction, its training can be repeated.
 
-\subsection{Latent space analysis}
+\subsection{Latent Space Analysis}
 
 The fifth stage performs the main analysis of \gls{car}.
 The trajectory dataset and trained surrogate policies are used to generate the \glspl{lr}.
