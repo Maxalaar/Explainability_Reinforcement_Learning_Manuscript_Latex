@@ -93,8 +93,9 @@ For the other four environments, which use three hidden layers, the representati
 Several other parameters must be defined for the different stages of the \gls{car} pipeline.
 These parameters are less critical to the overall methodology than those discussed above, but they still need to be specified to reproduce the experiments.
 Since each stage introduces its own configuration choices, there are too many parameters to discuss them all in detail.
+
 The main parameters used across the experiments are summarized in Table~\ref{tab:experiments_parameters}.
-All these parameters are provided to the pipeline through the modular configuration file introduced in Section~\ref{sec:experiments_software_implementation}.
+All these parameters are provided to the pipeline through the modular configuration file.
 Each stage reads its own section of this file, so that a parameter can be changed, or a component replaced, without modifying the code of the pipeline.
 
 \input{tables/experiments/experiments_parameters.tex}

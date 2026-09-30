@@ -2,6 +2,7 @@
 \label{sec:experiments_conclusion}
 
 The quantitative results show that \gls{car} consistently recovers similar clustering structures across independently trained surrogate policies.
+
 Across the six environments, the \gls{cu} frequently exceeds $0.5$, indicating that independently trained policies can develop similarly structured \glspl{lr} \parencite{amezquita2020orchestrating}.
 The \gls{cu} also tends to decrease as the network gets deeper, with the highest values generally observed in the earliest layers.
 Considering consistency alone would therefore favor the earliest layers of the network.
@@ -10,6 +11,7 @@ To complement this analysis, the level of abstraction of these representations m
 For this purpose, \gls{as} is analyzed and shows that the earliest layers tend to exhibit lower levels of abstraction.
 Their representations remain strongly related to the observations and the initial structure of the network.
 In the deepest layers, the abstraction can decrease again in some environments, as the latent clustering becomes closer to the clustering of the action distribution.
+Both trends are consistent with the literature, in which each layer progressively reshapes the \gls{lr} into a more abstract form that becomes increasingly aligned with the output space \parencite{rumelhart1986learning}.
 
 This highlights the importance of considering both consistency and abstraction when identifying meaningful \glspl{lr}.
 The \gls{acu} addresses this limitation by combining these two properties into a single measure, providing a practical criterion for identifying layers that achieve a suitable balance between representational consistency and abstraction.
@@ -23,8 +25,8 @@ Increasing the number of clusters allows more specific situations to be distingu
 Finer clusters have less clear semantic boundaries, reducing agreement across independently trained policies.
 The choice of the number of clusters therefore involves a trade-off between recovering stable, shared concepts and capturing finer distinctions between situations.
 
-Overall, these results provide empirical support for the assumptions underlying \gls{car}.
-Independently trained surrogate policies exhibit a degree of convergence in the organization of their \glspl{lr} that cannot be explained solely by the considered baselines.
+Overall, these results provide empirical support for the assumptions underlying \gls{car}, and in particular for the \RepresentationConvergenceHypothesisName.
+Independently trained surrogate policies exhibit a degree of convergence in the organization of their \glspl{lr} that cannot be explained by the considered baselines.
 The qualitative analysis also shows that these clusters can correspond to meaningful properties of the environment and the agent's behavior.
-Taken together, these findings provide empirical support for the \RepresentationConvergenceHypothesisName.
+Taken together, these findings suggest that the concepts recovered by \gls{car} reflect properties of the task rather than artifacts of a particular network.
 

@@ -37,6 +37,8 @@ Figure~\ref{fig:latent_space_curves_by_layer_depth} reports these averages as a 
 
 Across environments, \gls{cu} tends to be highest in the earliest layers and decreases with depth.
 \gls{as} follows the opposite trend and generally increases as the representation becomes less tied to the raw observation, the action distribution, and the network's initialization.
+This empirical trend is consistent with the intuition, discussed in Section~\ref{sec:latent_space_analysis_concept_hypothesis}, that each hidden layer progressively refines the \gls{lr} of the previous one into a more abstract form \parencite{rumelhart1986learning}.
+
 This increase is however not monotonic in the deepest layers.
 For \MarioBrosName and \MsPacManName, \gls{as} decreases at the last layer, from $0.83$ to $0.68$ and from $0.64$ to $0.60$ respectively, as the latent clustering becomes closer to the clustering of the action distribution, this layer being directly followed by the output layer.
 As \gls{acu} combines these two effects, its evolution depends on the environment.

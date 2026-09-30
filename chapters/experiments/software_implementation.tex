@@ -3,6 +3,7 @@
 
 This section details the experimental evaluation of the proposed method.
 \gls{dl} and \gls{rl} are strongly empirical fields, where experimental evaluation plays an important role in assessing how methods perform in practice.
+
 Particular attention is therefore given to the implementation of \gls{car}.
 It relies on established libraries that provide efficient implementations of its main components.
 The code is made publicly available as open-source to support reproducible replication of the reported results.\footnote{\url{https://github.com/Maxalaar/Clustering_Agent_Latent_Space}}
@@ -10,6 +11,7 @@ The code is made publicly available as open-source to support reproducible repli
 The \gls{car} implementation is organized as a pipeline of five stages.
 Each stage performs a specific operation and produces the artifacts required by the subsequent stages.
 The stages are implemented as independent executables allowing each stage to be rerun independently.
+
 The whole pipeline is driven by a single configuration file, which is the input of the process and gathers the parameters of every stage.
 The \gls{car} pipeline is illustrated in Figure~\ref{fig:car_pipeline}, and Table~\ref{tab:software_libraries} summarizes the libraries used throughout the pipeline.
 The remainder of this section describes the purpose and implementation of each stage.
@@ -45,7 +47,7 @@ This is useful here because the datasets contain around one million observation-
 
 \subsection{Surrogate Policy Training}
 
-The third stage trains the surrogate policies using \gls{bc} on the trajectory dataset.
+The third stage trains the surrogate policies using behavioral cloning on the trajectory dataset.
 This provides a supervised learning approach for replicating the initial policy.
 The training procedure is implemented using PyTorch Lightning \parencite{falcon2019lightning}.
 PyTorch Lightning provides a simplified interface for training \glspl{nn} with PyTorch.
@@ -73,5 +75,5 @@ These representations form the point clouds that are analyzed using clustering a
 The clustering step relies on the cuML library \parencite{raschka2020cuml}, which provides \gls{gpu}-accelerated clustering algorithms.
 This reduces the computational cost and allows point clouds containing tens of thousands of representations to be analyzed.
 
-The resulting partitions are used to compute the \gls{cu} and the \gls{as}.
+The resulting partitions are used to compute the \gls{cu}, the \gls{as}, and the \gls{acu}.
 The stage also produces the material required for the qualitative analysis, including the clustered point clouds and the cluster assignment of each observation.

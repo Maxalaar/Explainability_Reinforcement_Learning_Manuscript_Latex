@@ -30,8 +30,9 @@
 
             % --- headline metrics, same height, one label each, one word per line ---
             \node[metric] (m4) at ($(s4) + (0, -1.7cm)$) {Behavior \\ Reconstruction};
-            \node[metric] (m5a) at ($(s5) + (-1.3cm, -1.7cm)$) {Clustering \\ Universality};
-            \node[metric] (m5b) at ($(s5) + (1.3cm, -1.7cm)$) {Abstraction \\ Score};
+            \node[metric] (m5a) at ($(s5) + (-2.3cm, -1.7cm)$) {Clustering \\ Universality};
+            \node[metric] (m5b) at ($(s5) + (0cm, -1.7cm)$) {Abstraction \\ Score};
+            \node[metric] (m5c) at ($(s5) + (2.3cm, -1.95cm)$) {Adjusted \\ Clustering \\ Universality};
 
             % --- main flow ---
             \draw[flow] (cfg) -- (s1);
@@ -49,6 +50,7 @@
             \draw[flow] (s4) -- (m4);
             \draw[flow] (m5a |- s5.south) -- (m5a);
             \draw[flow] (m5b |- s5.south) -- (m5b);
+            \draw[flow] (m5c |- s5.south) -- (m5c);
 
             % --- artifact labels, placed on top of the lines they annotate ---
             \node[artifact] (artInitial) at ($(s1)!0.5!(s2)$) {Initial policy};

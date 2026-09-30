@@ -11,6 +11,7 @@ The first part verifies that the initial policies reach a competent level of pla
 
 Figure~\ref{fig:initial_policy_training} shows how the initial policies improve during \gls{ppo} training.
 For each environment, the mean episode return is normalized so that $0\%$ and $100\%$ correspond to the lowest and highest mean return observed during that run.
+
 In every environment the return increases and then reaches a plateau, at which point training is stopped.
 The number of iterations required to reach this plateau varies from a few hundred, for \PongName, to several thousand, for \SurroundName and \MsPacManName.
 For the subsequent analysis, the checkpoint with the best performance is retained rather than the final checkpoint.
