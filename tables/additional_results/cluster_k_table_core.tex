@@ -34,8 +34,11 @@
 % the value scaled to an integer in hundredths (97 for 0.97, -22 for -0.22);
 % the tint percentage is computed live from it via integer arithmetic
 % (\numexpr), clamped to 0 below zero since only non-negative values are
-% tinted.
-\newcommand{\HeatCellBg}[1]{myblue!\ifnum#1>0 \the\numexpr(#1*\HeatCellMaxPct/100)\relax\else0\fi}
+% tinted. The tint color is \HeatCellColor, set before each table with
+% \SetHeatColor{<color>} (CU in green, AS and its baselines in blue, ACU in red).
+\newcommand{\HeatCellColor}{myblue}
+\newcommand{\SetHeatColor}[1]{\renewcommand{\HeatCellColor}{#1}}
+\newcommand{\HeatCellBg}[1]{\HeatCellColor!\ifnum#1>0 \the\numexpr(#1*\HeatCellMaxPct/100)\relax\else0\fi}
 
 % An aggregate "mean $\pm$ std" cell -- #1 = mean, #2 = std, #3 = is the best
 % mean of the aggregate row/column (0/1).
