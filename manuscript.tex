@@ -4,6 +4,7 @@
 \newif\ifprintversion
 \newif\ifdraftversion
 \newif\ifdraftfigures
+\newif\ifnotitlepage
 
 % Print (recto-verso): two-sided, alternating margins, chapters opening on a
 % recto, links in black (still clickable), all figures rendered.
@@ -14,6 +15,11 @@
 
 % Fast draft: heavy figures become placeholders (see setup/draft.tex).
 % \draftfigurestrue
+
+% No title page: the doctoral school supplies its own title sheet (recto and
+% verso), which is placed before this document. Page numbering starts at iii,
+% as if that sheet were included.
+% \notitlepagetrue
 
 \ifprintversion
   \PassOptionsToClass{twoside, openright}{book}
@@ -37,9 +43,13 @@
 % Front matter (roman page numbers): title, acknowledgements, contents, notation.
 
 \frontmatter
-\centeredmargins
-\maketitle
-\restoremargins
+\ifnotitlepage
+  \setcounter{page}{3}
+\else
+  \centeredmargins
+  \maketitle
+  \restoremargins
+\fi
 \input{chapters/acknowledgements/acknowledgements.tex}
 \tableofcontents
 \clearpage\phantomsection
