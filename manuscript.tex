@@ -7,7 +7,7 @@
 
 % Print (recto-verso): two-sided, alternating margins, chapters opening on a
 % recto, links in black (still clickable), all figures rendered.
-% \printversiontrue
+\printversiontrue
 
 % Working draft: line numbers, and a footer with the compile date.
 % \draftversiontrue
@@ -37,7 +37,9 @@
 % Front matter (roman page numbers): title, acknowledgements, contents, notation.
 
 \frontmatter
+\centeredmargins
 \maketitle
+\restoremargins
 \input{chapters/acknowledgements/acknowledgements.tex}
 \tableofcontents
 \clearpage\phantomsection

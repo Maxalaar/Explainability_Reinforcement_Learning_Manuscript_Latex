@@ -1,23 +1,23 @@
 % Logos of the institutions involved in the thesis, on a 2 x 4 grid of equal
 % cells. Each logo has the same area (height proportional to 1/sqrt(aspect
-% ratio)), so that they look equally large; the widest one is 4.5cm wide.
+% ratio)), so that they look equally large; the widest one is 3.6cm wide.
 % Placed between two \vfill, the grid is centered in the space left below the
 % text, like the tables of the qualitative analysis.
 % Every cell has the same height, so that the rows are evenly spaced.
 \newcommand{\InstitutionLogo}[2]{%
-  \parbox[c][2.6cm][c]{\linewidth}{\centering
+  \parbox[c][2.1cm][c]{\linewidth}{\centering
     \includegraphics[height=#1]{figures/institutional_acknowledgements/logos/#2}}}
 
 \vfill
 \noindent
 \begin{tabular}{@{}*{2}{>{\centering\arraybackslash}m{\dimexpr\linewidth/2-2\tabcolsep\relax}}@{}}
-\InstitutionLogo{1.57cm}{logo_Republique_Francaise.png} &
-\InstitutionLogo{1.88cm}{logo_Region_Normandie.png} \\
-\InstitutionLogo{1.35cm}{logo_ED590_MIIS.png} &
-\InstitutionLogo{1.45cm}{logo_Normandie_Universite.png} \\
-\InstitutionLogo{1.23cm}{logo_Universite_Rouen_Normandie.png} &
-\InstitutionLogo{0.93cm}{logo_INSA_Rouen_Normandie.png} \\
-\InstitutionLogo{1.3cm}{logo_LITIS.png} &
-\InstitutionLogo{2.06cm}{logo_CRIANN.png}
+\InstitutionLogo{1.26cm}{logo_Republique_Francaise.png} &
+\InstitutionLogo{1.50cm}{logo_Region_Normandie.png} \\
+\InstitutionLogo{1.08cm}{logo_ED590_MIIS.png} &
+\InstitutionLogo{1.16cm}{logo_Normandie_Universite.png} \\
+\InstitutionLogo{0.98cm}{logo_Universite_Rouen_Normandie.png} &
+\InstitutionLogo{0.74cm}{logo_INSA_Rouen_Normandie.png} \\
+\InstitutionLogo{1.04cm}{logo_LITIS.png} &
+\InstitutionLogo{1.65cm}{logo_CRIANN.png}
 \end{tabular}
 \vfill

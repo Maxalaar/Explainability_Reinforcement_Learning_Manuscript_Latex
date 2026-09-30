@@ -59,3 +59,20 @@
     \ifodd\ReadonlyShipoutCounter\hbox{}\thispagestyle{empty}\newpage\fi
   \fi
 }
+
+% Centered margins for the covers (title page and back cover): the text block
+% is centered on the paper, ignoring the alternating recto-verso margins.
+% \restoremargins returns to the normal margins; both must act on a page
+% boundary, since margins are read when a page is output.
+\newlength{\savedoddsidemargin}
+\newlength{\savedevensidemargin}
+\newcommand{\centeredmargins}{%
+  \setlength{\savedoddsidemargin}{\oddsidemargin}%
+  \setlength{\savedevensidemargin}{\evensidemargin}%
+  \setlength{\oddsidemargin}{\dimexpr(\paperwidth-\textwidth)/2-1in\relax}%
+  \setlength{\evensidemargin}{\oddsidemargin}%
+}
+\newcommand{\restoremargins}{%
+  \setlength{\oddsidemargin}{\savedoddsidemargin}%
+  \setlength{\evensidemargin}{\savedevensidemargin}%
+}
