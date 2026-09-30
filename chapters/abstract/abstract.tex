@@ -16,31 +16,28 @@
 \bigskip
 % \noindent\textbf{Abstract}
 
-Deep reinforcement learning agents achieve strong performance on complex sequential decision-making tasks, but the neural networks that implement their policies remain difficult to interpret.
-This thesis addresses the explainability of such agents from a mechanistic perspective.
-It seeks to explain their decisions by analyzing the internal representations learned by their neural networks.
+Deep reinforcement learning agents achieve strong performance across a wide range of tasks.
+However, the neural networks that implement their policies are difficult to interpret due to their connectionist nature.
+This difficulty stems from the fact that information is distributed throughout the network, making it hard to relate internal components to the agent's decisions.
 
-The thesis first reviews methods for analyzing the latent space and makes explicit the hypothesis they share.
-This hypothesis, referred to as the Concept Hypothesis, states that neural networks generalize by organizing their latent space around concepts.
+In this thesis, explainability for such agents is achieved through the analysis of their latent spaces.
+This places the approach within a mechanistic perspective, which seeks to explain agent decisions by analyzing the internal representations learned by their neural networks.
 
-It then clarifies what constitutes an explanation and proposes a unified taxonomy of explainable reinforcement learning methods.
-This taxonomy is organized according to the subject of the explanation, which can be a single decision or the agent's overall strategy, and according to its source, which can be policies, trajectories, or value functions.
+The thesis first reviews state-of-the-art methods for analyzing latent spaces, providing an overview of the field.
+It then clarifies what constitutes an explanation in the context of explainable reinforcement learning.
+With these foundations in place, it reviews the state of the art in explainable reinforcement learning through a taxonomy specifically adapted to reinforcement learning.
 
-Building on these foundations, the thesis introduces Clustering Agent Representation, or CAR, as a mechanistic explainability method.
-CAR independently trains several surrogate policies to reproduce the behavior of the same agent.
-It then clusters their latent representations and compares the resulting partitions.
-The method relies on the Representation Convergence Hypothesis, which states that independently trained networks develop similar concepts for a given task.
+Building on this, the thesis introduces \textit{Clustering Agent Representation}, an explainability method that analyzes the latent space of reinforcement learning policies to identify meaningful structures in their internal representations.
 
 To objectively evaluate the recovered structures, three metrics are proposed.
-Clustering Universality measures their consistency across surrogate policies.
-Abstraction Score measures their departure from the structure of the observations, the actions, and an untrained network.
-Adjusted Clustering Universality combines these two measures.
+\textit{Clustering Universality} measures their consistency across independently trained policies, establishing that the identified structures are not due to chance.
+\textit{Abstraction Score} measures their departure from the structure of the observations, the actions, and an untrained network, showing that these structures emerge from learning.
+\textit{Adjusted Clustering Universality} combines these two measures to provide a criterion for selecting which representations to analyze.
 
-Experiments conducted on six Atari environments show that independently trained surrogate policies converge toward similar clustering structures that cannot be explained by the considered baselines alone.
-Consistency and abstraction evolve in opposite directions across network layers.
-Adjusted Clustering Universality provides a practical criterion for selecting the layer to analyze.
+Experiments conducted on six Atari environments show that independently trained policies converge toward similar clustering structures.
+Finally, a qualitative analysis shows that the recovered clusters correspond to interpretable aspects of the task.
 
-Finally, a qualitative analysis shows that the recovered clusters correspond to interpretable aspects of the task, including episode progression, specific game situations, and behavioral patterns.
+These results show that analyzing latent spaces is a promising path toward explaining reinforcement learning agents, opening new perspectives for their mechanistic understanding.
 
 \bigskip
 \noindent\textbf{Keywords:} Explainable Artificial Intelligence, Deep Learning, Reinforcement Learning, Explainability, Mechanistic Explainability, Mechanistic Interpretability, Latent Space, Clustering.

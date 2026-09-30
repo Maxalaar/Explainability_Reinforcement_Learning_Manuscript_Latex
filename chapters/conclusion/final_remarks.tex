@@ -2,8 +2,14 @@
 \label{sec:conclusion_final_remarks}
 
 To conclude, let us step back and consider this work as a whole.
-We propose explainability methods that build on the specific properties of \glspl{nn}.
-The goal is to uncover how these networks organize information, in order to shed light on their internal functioning.
+
+This thesis has proposed explainability methods for \gls{rl} agents that rely on the latent representations learned by \glspl{nn}.
 From this perspective, explainability is not achieved despite the use of \glspl{nn}, but through them.
-The results presented in this thesis show that this approach is feasible.
-It thus offers a way to better understand our creations and to ensure that they remain aligned with our intentions.
+Because these representations are what the agent actually uses to act, explanations derived from them remain grounded in the agent's own reasoning.
+These representations can be seen as a language that, once deciphered, reveals how an agent perceives its environment and makes decisions.
+
+This endeavour may also reach beyond artificial systems.
+Since \glspl{nn} are partly inspired by biological intelligence, understanding how they represent the world may shed light on how we do so ourselves.
+Unlike the brain, an artificial network can be observed in its entirety, probed at will, and retrained under controlled conditions, which makes it a unique experimental object for studying representation and decision-making.
+
+The study of latent spaces remains a largely open field, one whose exploration has only just begun.
