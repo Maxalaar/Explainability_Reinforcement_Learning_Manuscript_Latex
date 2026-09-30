@@ -41,7 +41,6 @@ $x \sim P$ & $x$ is sampled from the distribution $P$ \\
 $\mathbb{E}[\cdot]$ & Expectation \\
 $f : \mathcal{A} \to \mathcal{B}$ & The function $f$ with domain $\mathcal{A}$ and range $\mathcal{B}$ \\
 $f \circ g$ & Composition of the functions $f$ and $g$ \\
-$\hat{f}$ & An approximation of $f$; the hat denotes an approximation \\
 $\|\vect{x}\|_p$ & $L^p$ norm of $\vect{x}$ \\
 $\argmax_{a} f(a)$ & A value of $a$ at which $f(a)$ is maximal \\
 \end{notationgroup}
@@ -49,6 +48,9 @@ $\argmax_{a} f(a)$ & A value of $a$ at which $f(a)$ is maximal \\
 \begin{notationgroup}{Deep Learning}
 $\mathcal{X}, \mathcal{Y}$ & Input and output spaces \\
 $\vect{x}, \vect{y}$ & An input and its target output \\
+$f$ & Target function mapping inputs to outputs \\
+$\hat{\cdot}$ & Approximation or estimate of the quantity under the hat \\
+$\hat{f}$ & Network approximating the target function $f$ \\
 $\hat{\vect{y}}$ & Output predicted by the network \\
 $\mathcal{D}$ & A dataset \\
 $N$ & Number of examples in a dataset \\
@@ -64,11 +66,11 @@ $\vect{g}$ & Gradient estimate used by stochastic gradient descent \\
 $L$ & Index of the output layer of a network, the input layer being indexed 0 \\
 $n_l$ & Number of neurons of layer $l$ \\
 $\mat{W}^{(l)}, \vect{b}^{(l)}$ & Weight matrix and bias vector of layer $l$ \\
-$\latentRepresentation[l]$ & Latent representation (activations) of layer $l$ \\
+$\latentRepresentation[l]$ & Latent representation of layer $l$, given by its activations \\
 $h^{(l)}_i$ & Activation of neuron $i$ of layer $l$ \\
 $\sigma$ & Activation function, applied element-wise \\
 $\LayerFunction{l}$ & Function computed by layer $l$ \\
-$\Encoder, \Decoder$ & Encoder and decoder of an autoencoder \\
+$\Encoder, \Decoder$ & Encoder and decoder \\
 $\vect{z} \in \mathcal{Z}$ & Code produced by an encoder, and the space of codes \\
 \end{notationgroup}
 
@@ -106,9 +108,9 @@ $G_t$ & Return following time step $t$ \\
 $v_\pi(s, o)$ & Value of state $s$ with observation $o$ under policy $\pi$ \\
 $q_\pi(s, a)$ & Value of taking action $a$ in state $s$ under policy $\pi$ \\
 $\OptimalQ$ & State-action value function of the optimal policy \\
-$\hat{v}_{\valueParams}(s, o)$ & Approximate state value with parameters $\valueParams$ (critic) \\
+$\hat{v}_{\valueParams}(s, o)$ & Approximate state value with parameters $\valueParams$, used as the critic \\
 $\hat{q}_{\valueParams}(o, a)$ & Approximate state-action value with parameters $\valueParams$ \\
-$\pi_{\params}$ & Policy with parameters $\params$ (actor) \\
+$\pi_{\params}$ & Policy with parameters $\params$, used as the actor \\
 $\pi_{\valueParams_k}, \hat{q}_{\valueParams_k}$ & Policy and value approximation at iteration $k$ \\
 $A(s, a)$ & Advantage of action $a$ in state $s$ \\
 \end{notationgroup}
@@ -118,7 +120,7 @@ $\InitialPolicy$ & Initial policy to be explained \\
 $\SurrogatePolicy{i}$ & The $i$-th surrogate policy, with parameters $\params_i$ \\
 $n$ & Number of surrogate policies \\
 $\SurrogateEncoder[i], \Decoder[i]$ & Encoder and decoder of the $i$-th surrogate policy \\
-$\logits$ & Parameters (logits) of an action distribution \\
+$\logits$ & Logits parameterizing an action distribution \\
 $\ObsData$ & Set of observations used for training and clustering \\
 $\LatentSet{i}$ & Latent representations of $\ObsData$ given by $\SurrogateEncoder[i]$ \\
 $\ClusteringFunction$ & Clustering function \\
