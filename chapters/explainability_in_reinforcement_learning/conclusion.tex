@@ -28,6 +28,7 @@ Current \gls{xrl} methods still struggle to provide comprehensive explanations o
 The diversity of explanation forms identified in this review also reveals another limitation shared by nearly all families of \gls{xrl} methods, which is the absence of reliable metrics for evaluating explainability.
 In many studies, explanations are not evaluated with human participants.
 Instead, authors focus on technical properties of the proposed method, such as fidelity, sparsity, or computational efficiency.
+
 When human evaluations are conducted, they usually rely on subjective satisfaction questionnaires.
 Although useful, self-reported satisfaction remains prone to numerous biases and does not necessarily indicate that the explanation has improved the observer's mental model or understanding of the agent.
 
@@ -44,11 +45,11 @@ These fields provide the theoretical and experimental tools needed to study huma
 \subsection{Toward Intrinsic Explainability in Reinforcement Learning}
 
 Our review also suggests that current \gls{xrl} research remains largely dominated by substitutive explainability approaches.
-Replacing a deep model with a simpler one therefore risks losing precisely the complexity that makes deep \gls{rl} effective.
+Replacing a deep model with a simpler one therefore risks losing precisely the representational power that makes deep \gls{rl} effective.
 For this reason, we argue that a promising direction for \gls{xrl} is to develop explanations directly from the \gls{nn} that forms the agent's policy.
 Such approaches aim to analyze the representations learned by the network itself.
-From this perspective, the \gls{nn} should not necessarily be regarded as an black box, but as a complex representation whose apparent opacity may instead reflect the limitations of current analysis tools.
 
 Among the methods reviewed, \textit{latent space usage for MDP generation} (Section~\ref{subsubsec:latent_space_mdp_generation}) appears closest to this intrinsic perspective.
 However, this approach still relies on a largely manual and qualitative analysis of the \gls{ls}, which limits its reproducibility and its ability to produce systematic explanations.
+
 The next chapter builds upon this idea and proposes a mechanistic \gls{xrl} approach based on \gls{ls} analysis.

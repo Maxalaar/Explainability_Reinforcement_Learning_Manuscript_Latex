@@ -13,10 +13,10 @@ To answer this question, it is necessary to identify the different components in
 A \gls{rl} system can be described through two main components: the environment and the policy.
 
 The environment defines the dynamics in which the agent evolves, including the possible states, observations, actions, and transitions.
-Environments are simulations designed by humans, and their dynamics are explicitly defined.
+In \gls{rl}, environments are simulations designed by humans, and their dynamics are explicitly defined.
 Therefore, it is assumed that the environment is known to the observer and does not require explanation.
 
-The main object of interest is therefore the agent's policy.
+The object of interest is therefore the agent's policy.
 The policy represents the decision-making mechanism of the agent.
 It is a function that maps observations to actions and is learned through interaction with the environment in order to maximize the expected cumulative reward.
 The policy is the component that encodes the learning process and that \gls{xrl} aims to explain.
@@ -46,18 +46,12 @@ Conversely, understanding the agent's overall strategy can provide insights into
 
 We identify three sources of explanation in \gls{rl}, all obtained during or after the learning process and containing information about the agent:
 \begin{itemize}
-    \item \textbf{Policies:} policies are functions that generate a distribution over the action space for a given observation.
-    The objective of \gls{rl} is to learn a policy that maximizes the expected cumulative future rewards.
-    During the learning phase, the policy is iteratively improved through interactions with the environment.
+    \item \textbf{Policies:} policies are functions that generate a distribution over the action space for a given observation, as defined in Section~\ref{subsec:policy}.
 
-    \item \textbf{Trajectories:} trajectories represent sequences of successive interactions between the agent and the environment.
-    At each step, the agent selects an action based on its observation, which modifies the environment and produces a reward as well as a new observation.
-    This process continues until the end of the trajectory.
+    \item \textbf{Trajectories:} trajectories represent sequences of successive interactions between the agent and the environment, as defined in Section~\ref{subsec:trajectory}.
 
-    \item \textbf{Value functions:} value functions provide predictions about the future outcome of a trajectory from a given observation.
-    The most commonly used value function is the critic function, which estimates the expected sum of future rewards.
-    This prediction guides the learning process, as the agent updates its policy to maximize the estimated future return.
-    However, other types of value functions can also be used as sources of explainability.
+    \item \textbf{Value functions:} value functions provide predictions about the future outcome of a trajectory from a given observation, as defined in Section~\ref{subsec:value_functions}.
+    The most commonly used value function is the critic function, which estimates the expected sum of future rewards (Section~\ref{subsec:actor_critic}).
 \end{itemize}
 
 \subsection{Form}
