@@ -186,9 +186,11 @@ The two value functions are directly related.
 In the Bellman equation for \(v_\pi\), the inner sum over \((s', o', r)\) is exactly the expression of \(q_\pi(s, a)\) given above.
 Replacing it by \(q_\pi(s, a)\) gives:
 \[
+\begin{aligned}
 v_\pi(s, o)
-= \sum_{a} \pi(a \mid o) \underbrace{\sum_{s', o', r} p(s', o', r \mid s, a) \Big[\, r + \gamma \, v_\pi(s', o') \,\Big]}_{q_\pi(s, a)}
-= \sum_{a} \pi(a \mid o) \, q_\pi(s, a).
+&= \sum_{a} \pi(a \mid o) \underbrace{\sum_{s', o', r} p(s', o', r \mid s, a) \Big[\, r + \gamma \, v_\pi(s', o') \,\Big]}_{q_\pi(s, a)} \\
+&= \sum_{a} \pi(a \mid o) \, q_\pi(s, a).
+\end{aligned}
 \]
 The value of a state is therefore the average of the values of the actions, weighted by the probability that the policy selects each of them.
 
