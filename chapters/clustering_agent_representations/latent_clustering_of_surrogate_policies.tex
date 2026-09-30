@@ -1,15 +1,14 @@
 \section{Latent Clustering of Surrogate Policies}
 \label{sec:clustering_agent_representations_latent_clustering_of_surrogate_policies}
 
-Following \textcite{zahavy2017graying}, we analyze the \gls{ls} through clustering techniques, placing our approach within the broader field of Deep Clustering.
+Following \textcite{zahavy2017graying} in \citetitle{zahavy2017graying}, we analyze the \gls{ls} through clustering techniques, placing our approach within the broader field of Deep Clustering.
 This design choice is motivated by our rejection of the \SuperpositionHypothesisName and, more generally, of any view that assumes a linearly organized \gls{cs}, as discussed in Section~\ref{sec:latent_space_analysis_clustering}.
 
 The \gls{car} methodology is composed of two main stages.
 The first stage trains multiple independent \glspl{nn}, called surrogate policies, which implement the same decision policy.
 The second stage clusters their \glspl{lr} in order to identify the underlying conceptual organization.
-Once these two stages have been completed, the resulting clustering can be analyzed from two complementary perspectives.
-First, the consistency of the resulting clusters across independent training runs can be assessed to determine whether the identified clusters are stable.
-Second, the semantic content of the clusters can be examined to determine whether they correspond to meaningful concepts.
+Once these two stages have been completed, the resulting clustering can be analyzed.
+The consistency of the resulting clusters across independent training runs can be assessed to determine whether the identified clusters are stable.
 Figure~\ref{fig:illustration_method} provides a visual overview of the two stages, from the imitation of the initial policy to the clustering of the surrogate representations.
 
 \input{figures/clustering_agent_representations/illustration_method.tex}
@@ -57,7 +56,7 @@ For a given surrogate policy $\SurrogatePolicy{i}$, parameterized by $\params_i$
 \input{figures/clustering_agent_representations/surrogate_policy_architecture.tex}
 
 To train each surrogate policy $\SurrogatePolicy{i}$ to accurately replicate the action distribution, we define a loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:deep_learning_learning}.
-This loss, defined in Equation~\eqref{eq:car_loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $\logits$, which maps a distribution to its parameters (the logits).
+This loss, defined in Equation~\eqref{eq:car_loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $\logits$, which maps a distribution to its parameters, namely the logits.
 In practice, this function $\logits$ does not need to be explicitly defined, as neural policies directly output the parameters of the action distribution.
 Each surrogate policy $\SurrogatePolicy{i}$ is thus trained by solving:
 \begin{align}
@@ -81,6 +80,7 @@ To identify these regions, a clustering algorithm is applied to the point cloud.
 The clustering is performed independently for each surrogate policy.
 For a surrogate policy $\SurrogatePolicy{i}$, applying its encoder $\SurrogateEncoder[i]$ to a subset of observations $\ObsData \subseteq \ObsSet$ yields the set of embeddings $\LatentSet{i}$.
 A clustering function $\ClusteringFunction$ then partitions the point cloud $\LatentSet{i}$ into groups of nearby \glspl{lr}, assigning each observation a cluster label and yielding the partition $\mathcal{C}_{i}$.
+
 The same observation set $\ObsData$ is used for every surrogate policy, so that the partitions $\mathcal{C}_{1}, \dots, \mathcal{C}_{n}$ are defined over the same observations and can be compared.
 This comparison is the basis of the evaluation introduced in the following section.
 
@@ -95,6 +95,8 @@ Finally, Line~\ref{alg:car:return} returns the surrogate policies together with 
 \input{algorithms/clustering_agent_representations/car.tex}
 
 Two choices govern this analysis without being part of the clustering algorithm itself.
+The influence of both choices is studied in Chapter~\ref{chap:experiments}.
+
 The first is the choice of layer used to extract the representations.
 Each hidden layer defines its own \gls{ls}, reflecting the information represented at that stage of the network.
 \gls{car} can therefore be applied to the \glspl{lr} extracted from any layer.
@@ -104,7 +106,6 @@ The second is the number of clusters.
 \gls{car} does not assume that a task admits a single correct number of concepts.
 This choice instead determines the granularity at which the conceptual organization is examined.
 A small number reveals broad, strategic concepts, while a larger number reveals finer, tactical ones.
-The influence of both choices is studied in Chapter~\ref{chap:experiments}.
 
 Figure~\ref{fig:space_invaders_projection} shows the outcome of this procedure for a surrogate policy trained on \SpaceInvadersName, using five clusters.
 The clusters are computed in the original high-dimensional \gls{ls}.
@@ -121,8 +122,9 @@ Each cluster gathers observations that correspond to a distinct, interpretable s
 \input{figures/clustering_agent_representations/space_invaders_projection.tex}
 
 The position of an observation in the \gls{ls} thus reflects the stage of the environment it belongs to, suggesting a correspondence between the geometry of the \gls{ls} and the semantic properties of environment states.
+This example illustrates what \gls{car} is expected to produce.
 
-This example illustrates what \gls{car} is expected to produce, but it relies on the visual inspection of a single surrogate policy, which is precisely the type of evidence whose limitations motivated this work.
+However, the visual inspection of a single surrogate policy does not provide an objective criterion for trusting such an analysis.
 Three aspects must therefore be evaluated before such an analysis can be trusted.
 First, the surrogate policy must faithfully reproduce the initial policy so that its explanations remain relevant to the target policy.
 Second, the recovered conceptual organization must be consistent across independently trained surrogate policies.

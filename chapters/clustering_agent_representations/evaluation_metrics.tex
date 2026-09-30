@@ -6,7 +6,7 @@ To evaluate the effectiveness of \gls{car}, four evaluation metrics are introduc
 \begin{itemize}
     \item \textbf{\BehaviorReconstructionName} : it measures how well a surrogate policy faithfully reproduces the behavior of the initial policy by comparing their cumulative rewards.
     \item \textbf{\gls{cu}} : it evaluates the stability of clusterings by measuring the similarity of clusters obtained from independently trained surrogate policies.
-    \item \textbf{\gls{as}} : it quantifies the extent to which \gls{ls} clusters capture abstractions rather than directly reflecting the structure of observations, of the action distribution, or the network architecture prior to training.
+    \item \textbf{\gls{as}} : it quantifies the extent to which \gls{ls} clusters capture abstractions.
     \item \textbf{\gls{acu}}: it combines the two previous metrics to measure the agreement between surrogate policies beyond what can be explained by the baselines used in \gls{as}.
 \end{itemize}
 
@@ -20,6 +20,7 @@ We introduce the \BehaviorReconstructionName metric to assess whether $\Surrogat
 This metric compares the returns obtained by the initial policy $\InitialPolicy$ and the surrogate policies $\SurrogatePolicy{}$ over a set of evaluation episodes.
 We use the definition of return introduced in Section~\ref{subsec:value_functions}, where $G_1$ denotes the discounted sum of rewards collected along a whole trajectory.
 Here, the return is computed over complete episodes with $\gamma=1$, so $G_1$ corresponds to the total reward collected during the episode.
+
 Each policy is evaluated over $M$ episodes.
 We denote by $G^{(e)}_{\InitialPolicy}$ the return obtained by the initial policy in episode $e$, and by $G^{(e)}_{\SurrogatePolicy{j}}$ the return obtained by surrogate policy $\SurrogatePolicy{j}$ in episode $e$.
 The \BehaviorReconstructionName{} is then defined as the mean return of the surrogate policies normalized by the mean return of the initial policy:
@@ -149,18 +150,22 @@ The partitioning is therefore identical, resulting in an \gls{ari} of $1$.
 If \gls{cu} is high, it becomes important to determine what underlies this stability.
 Two possibilities arise:
 \begin{enumerate}[label=(\roman*), ref=(\roman*)]
-\item \label{i} the \gls{ls} provides no abstraction, as defined in Definition~\ref{def:abstraction}, because it either reproduces the observation space or action distribution, or reflects a structure already present in the network architecture before training;
-\item \label{ii} the \gls{ls} captures similarities in decision-making, resulting in behaviorally meaningful clusters.
+\item \label{case:abstraction} the \gls{ls} captures similarities in decision-making, resulting in behaviorally meaningful clusters;
+\item \label{case:no_abstraction} the \gls{ls} provides no abstraction, as defined in Definition~\ref{def:abstraction}, because it either reproduces the observation space or action distribution, or reflects a structure already present in the network architecture before training.
 \end{enumerate}
 
 To distinguish among these cases, we introduce the \glsxtrfull{as}.
 This metric contextualizes latent clusterings by examining how their patterns align with three reference baselines: the raw observations, the action distribution of the initial policy, and an untrained network of the same architecture.
+All baseline clusterings use the same algorithm, distance metric, and hyperparameters as those used for $\mathcal{C}_{i}$ in the \gls{ls}, so that all clusterings are obtained under the same conditions.
 
-We consider $\BaselineClustering{obs}$, the clustering of the observations $\ObsData$, and $\BaselineClustering{act}$, the clustering of the action distribution of the initial policy.
-Concretely, $\BaselineClustering{act}$ is computed on the parameters of this distribution (the logits, before the softmax) produced by the initial policy for the same observations, which are precisely the quantities the surrogate policies are trained to reproduce.
+The first baseline addresses the case where the \gls{ls} merely reproduces the structure of the raw observations.
+It is the clustering of the observations $\ObsData$ themselves, denoted by $\BaselineClustering{obs}$.
+
+The second baseline addresses the case where the \gls{ls} merely reproduces the decisions of the initial policy.
+It is the clustering of the action distribution of the initial policy, denoted by $\BaselineClustering{act}$.
+Concretely, $\BaselineClustering{act}$ is computed on the parameters of this distribution, namely the logits before the softmax, produced by the initial policy for the same observations.
+These are precisely the quantities the surrogate policies are trained to reproduce.
 We cluster these continuous parameters rather than the sampled discrete action, since a discrete action takes only a few distinct values, which would limit the number of clusters that can be distinguished.
-Both clusterings use the same algorithm, distance metric, and hyperparameters as those used for $\mathcal{C}_{i}$ in the \gls{ls}.
-This ensures that the three clusterings are obtained under the same conditions.
 
 The third baseline addresses the case where the \gls{ls} merely reflects an inductive bias of the network architecture rather than something learned.
 To this end, we introduce $U$ untrained networks sharing the same architecture as the surrogate policies, but with randomly initialized, never-updated weights.
@@ -174,7 +179,7 @@ For each latent clustering $\mathcal{C}_{i}$, we define its similarity to these 
 \Similarity{untr}{i} &= \frac{1}{U} \sum_{u=1}^{U} \ARI(\mathcal{C}_{i}, \BaselineClustering[u]{untr}).
 \end{align*}
 
-The \gls{as} is subsequently calculated as one minus the average of the maximum absolute similarity values across these three reference baselines:
+The \gls{as} is subsequently calculated as one minus the average of the maximum absolute similarity values across these three reference baselines, where $n$ is the number of surrogate policies:
 \begin{align}
 \scalebox{0.9}{%
 $\AS = 1 - \frac{1}{n} \sum_{i=1}^{n} \max \left( \left|\Similarity{obs}{i}\right|, \left|\Similarity{act}{i}\right|, \left|\Similarity{untr}{i}\right| \right).$%
@@ -182,8 +187,8 @@ $\AS = 1 - \frac{1}{n} \sum_{i=1}^{n} \max \left( \left|\Similarity{obs}{i}\righ
 \end{align}
 
 The \gls{as} ranges from $[0, 1]$.
-A score around $0$ means that the latent clusters are strongly aligned with the observation space, the action distribution, or the untrained network, reflecting no abstraction, case~\ref{i}.
-A score close to $1$ indicates that the latent clusters are independent of the observation space, the action distribution, and the network's initialization, capturing abstractions that meaningfully reflect the agent's behavior, case~\ref{ii}.
+A score close to $1$ indicates that the latent clusters are independent of the observation space, the action distribution, and the network's initialization, capturing abstractions that meaningfully reflect the agent's behavior, case~\ref{case:abstraction}.
+A score around $0$ means that the latent clusters are strongly aligned with the observation space, the action distribution, or the untrained network, reflecting no abstraction, case~\ref{case:no_abstraction}.
 
 \subsection{Adjusted Clustering Universality}
 \label{subsec:adjusted_clustering_universality}
@@ -206,5 +211,8 @@ $\ACU
 \end{align}
 
 This metric ranges in $[-1, 1]$.
+
 A value close to $1$ indicates that surrogate policies converge toward a partition that is both highly reproducible across seeds and clearly not explained by the observation space, the action distribution, or the network's initialization, providing the strongest evidence for \RepresentationConvergenceHypothesisName.
-A value close to $0$, or negative, indicates that whatever agreement exists between independently trained surrogate policies is largely trivial: the surrogate policies converge, but toward a partition that could just as easily emerge from raw pixel similarity, from the action distribution of the initial policy, or from an untrained network sharing the same architecture.
+
+A value close to $0$, or negative, covers two cases.
+Either the independently trained surrogate policies do not agree with one another, or their agreement is explained by one of the trivial baselines, namely the raw observations, the action distribution of the initial policy, or an untrained network sharing the same architecture.
