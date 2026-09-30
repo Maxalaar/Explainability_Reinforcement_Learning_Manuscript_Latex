@@ -79,7 +79,7 @@ The input layer has no preceding layer, as its neurons directly encode the compo
 Conversely, the output layer has no subsequent layer, and its neurons produce the model's prediction $\hat{\vect{y}}$.
 This structure imposes a direct correspondence between the dimensionality of the input space and the number of neurons in the input layer, and similarly between the output space and the number of neurons in the output layer.
 
-When describing \glspl{nn}, especially in \glspl{mlp}, it is more common to reason at the level of layers rather than individual neurons.
+When describing \glspl{nn}, it is more common to reason at the level of layers rather than individual neurons.
 This perspective allows interactions between layers to be modeled in a matrix form.
 Such a representation enables efficient parallel computation and forms the basis of modern \gls{dl} implementations \parencite{krizhevsky2012imagenet}.
 Within this framework, it is useful to introduce the notion of layer activations.

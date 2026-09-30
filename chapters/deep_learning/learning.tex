@@ -45,6 +45,7 @@ $
 
 Computing this derivative is not straightforward because a \gls{nn} is composed of a sequence of functions, and the parameter $\theta_j$ can belong to any layer of the network.
 Its influence on the loss must therefore be propagated through all subsequent layers.
+
 To describe these dependencies, each layer can be viewed as a function, denoted by $\LayerFunction{l}$ for layer $l$.
 This function takes the activation vector $\latentRepresentation[l-1] \in \mathbb{R}^{n_{l-1}}$ produced by the previous layer as input.
 It produces the activation vector $\latentRepresentation[l] \in \mathbb{R}^{n_l}$ of the current layer.
@@ -127,6 +128,7 @@ The gradient thus indicates, for every parameter, which direction to move in ord
 
 Now that information is available on how changes in the parameters affect the loss, the objective is to minimize it.
 To do so, the parameters are updated in the direction opposite to the gradient.
+
 Indeed, the gradient is followed in the opposite direction because it indicates the direction in which the loss increases, whereas the objective is to reduce it.
 This leads to the gradient descent update rule:
 \begin{equation}
@@ -144,7 +146,7 @@ Algorithm~\ref{alg:stochastic_gradient_descent} summarizes this whole training p
 
 \input{algorithms/deep_learning/stochastic_gradient_descent.tex}
 
-To develop an intuition for this update rule, Figure~\ref{fig:simple_gradient_descent} illustrates it applied to the simple convex loss function $\mathcal{L}(\theta_1,\theta_2)=\theta_1^2+\theta_2^2$, where the red path shows the parameter updates converging to the minimum.
+To develop an intuition for this update rule, Figure~\ref{fig:simple_gradient_descent} illustrates it applied to the simple convex loss function $\mathcal{L}(\theta_1,\theta_2)=\theta_1^2+\theta_2^2$, where the red path shows the parameter updates converging to the minimum.\footnote{The gradient descent figures of this chapter were produced with Interactive Gradient Descent, a software developed for this thesis \url{https://github.com/Maxalaar/Interactive_Gradient_Descent}.}
 The point $\params_{1}$ represents the initial parameter values, with $\theta_1$ and $\theta_2$ randomly initialized, and the subsequent points, from $\params_{2}$ to $\params_{6}$, represent the successive updates produced by applying Equation~\eqref{eq:gradient_descent_update}, progressively moving the trajectory toward the minimum of the loss function.
 
 \heavyfig{fig:simple_gradient_descent}{figures/deep_learning/gradient_descent/simple_gradient_descent/simple_gradient_descent.tex}

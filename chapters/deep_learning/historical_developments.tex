@@ -10,9 +10,11 @@ As a result, this work remained largely theoretical and had limited practical ap
 
 A major step toward operationalizing the idea of \glspl{nn} was achieved with the perceptron algorithm in 1958 \parencite{rosenblatt1958perceptron}.
 It was designed to adjust its parameters from input–output pairs in order to approximate a target function.
-The perceptron fundamental limitations were exposed in 1969, showing that it could not learn functions as simple as the exclusive-or \parencite{minsky1969introduction}.
-At the same time, it was demonstrated that stacking multiple perceptrons could, in principle, represent such functions.
-However, no effective training procedure for these multi-layer architectures was available at the time. It was only in 1986 that researchers introduced gradient descent as an effective method for training deep \glspl{nn} \parencite{rumelhart1986learning}.
+The fundamental limitations of the perceptron were exposed in 1969, showing that it could not learn functions as simple as the exclusive-or \parencite{minsky1969introduction}.
+This limitation, however, concerned a single layer of perceptrons.
+Stacking several layers could, in principle, represent such functions.
+The obstacle was therefore not the expressiveness of multi-layer architectures but their training, for which no effective procedure was available at the time.
+It was only in 1986 that the backpropagation algorithm made it possible to compute the gradients required to train deep \glspl{nn} by gradient descent \parencite{rumelhart1986learning}.
 From this point onward, we refer to the emergence of \gls{dl}, even though the term itself appeared later.
 \gls{dl} is defined as the training of deep \glspl{nn} using gradient-based optimization methods.
 
