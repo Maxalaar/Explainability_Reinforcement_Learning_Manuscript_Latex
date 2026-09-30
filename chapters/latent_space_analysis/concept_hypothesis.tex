@@ -44,6 +44,7 @@ It is shaped by learning and organizes \glspl{lr} according to task-relevant pro
 Under the \ConceptHypothesisName, the analysis of the \gls{ls} is assumed to provide access to abstract structures learned by the model, as illustrated in Figure~\ref{fig:latent_space}.
 The same set of \glspl{lr} can be viewed either as an unstructured point cloud or, under this hypothesis, as a collection of points organized by concept membership, in which case the structure of the \gls{ls} becomes meaningful and amenable to analysis.
 In Figure~\ref{fig:latent_space}, the colors represent hypothetical concept memberships assigned by the model.
+
 In this thesis, a concept is defined as an abstract representation that organizes information and supports reasoning (see Definition~\ref{def:concept}).
 
 \input{figures/latent_space_analysis/latent_space}
@@ -52,8 +53,8 @@ In this thesis, a concept is defined as an abstract representation that organize
 A concept is a task-dependent abstraction that captures regularities in the input space relevant for predicting the target output.
 \end{definition} 
 
-Our definition of concepts is consistent with both the pragmatic tradition in philosophy and the information-processing view of cognition.
-Within these frameworks, concepts arise from the need to simplify an otherwise intractable reality.
+Our definition of concepts is consistent with the information-processing view of cognition.
+Within this framework, concepts arise from the need to simplify an otherwise intractable reality.
 Because the environment contains more information than any cognitive system can process, intelligent behavior relies on abstractions, called concepts, that discard irrelevant details while preserving the information required to achieve a given objective \parencite{Peirce1878,Misak2013}.
 These concepts are realized as representations that reduce complexity and enable reasoning under limited computational resources \parencite{Newell1980,Simon1996}.
 Although these theories were originally developed to explain human cognition, the \ConceptHypothesisName assumes that the same principles can be extended to deep \glspl{nn}.

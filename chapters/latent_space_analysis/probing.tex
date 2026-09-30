@@ -93,10 +93,11 @@ The \gls{llm} continues to generate legal moves while correctly accounting for t
 This provides evidence for the causal role of these internal representations in the model's behavior.
 
 A main limitation of the probing approach is that the concepts under investigation must be predefined before any analysis can be performed.
-This introduces a strong bias in what can be studied.
-Moreover, annotating a dataset for each concept is extremely time-consuming and requires significant human effort.
+This introduces a strong bias.
+Moreover, annotating a dataset for each concept is extremely time-consuming.
 Interventions in \gls{ls} are also difficult to interpret, as it is not always clear what constitutes a meaningful change in the network's output under a given perturbation.
 
-Moreover, probing methods provide a binary view of concepts, focusing on whether a given concept is present or absent in a \gls{lr}.
-This binary perspective can be overly restrictive, as concepts may be represented in a more continuous manner.
+Finally, probing methods provide a binary view of concepts, focusing on whether a given concept is present or absent in a \gls{lr}.
+This binary perspective can be restrictive, as concepts may be represented in a more continuous manner.
+
 To obtain a more detailed characterization of these representations, the next section turns to methods that describe a concept as a direction in \gls{ls} along which it varies continuously.
