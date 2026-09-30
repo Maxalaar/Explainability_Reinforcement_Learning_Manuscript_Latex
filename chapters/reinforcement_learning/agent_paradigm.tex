@@ -7,10 +7,10 @@ A standard definition is:
 \textit{An agent is anything that can be viewed as perceiving its environment through sensors and acting upon that environment through actuators.} \parencite{russell2021artificial}
 \end{displayquote}
 
-In the \gls{rl} setting, this definition translates into an interaction between the agent and its environment.
-The agent perceives its environment through observations.
+In the \gls{rl} setting, the agent perceives its environment through observations.
 These observations are then processed by a decision-making mechanism referred to as the policy.
-The policy determines how the agent modifies its environment through the actions it selects.
+The policy is a function that maps each observation to a probability distribution over the possible actions.
+It determines how the agent modifies its environment through the actions it selects.
 Figure~\ref{fig:agent_environment_loop} illustrates this interaction.
 
 \input{figures/reinforcement_learning/agent_environment_loop.tex}
@@ -25,9 +25,3 @@ We chose to distinguish the agent from the \gls{rl} algorithm because this provi
 
 An agent can therefore exist without learning, for example when its behavior is entirely specified by a set of programmed rules.
 Such an agent still perceives, processes information, and acts upon its environment, but its behavior is not the result of \gls{rl}.
-
-This distinction also makes the definition consistent with modern implementations of \gls{rl} \parencite{espeholt2018impala, liang2018rllib}, in which the acting policy and the learning algorithm are separate software components.
-Several copies of the policy, each interacting with its own instance of the environment, collect experience in parallel, while a single learning algorithm uses this experience to update the shared policy parameters.
-
-So far, the interaction between the agent and its environment has only been described informally, in terms of observations, actions, rewards and a policy.
-Before studying how an \gls{rl} algorithm improves the policy, each of these elements must be given a precise definition.

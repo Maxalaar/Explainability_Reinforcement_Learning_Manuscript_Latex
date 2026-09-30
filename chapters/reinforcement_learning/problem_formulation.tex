@@ -70,7 +70,6 @@ A \gls{mdp} is defined by the tuple \((\StateSet, \ObsSet, \ActionSet, \RewardSe
 The two quantities, observation \(o\) and state \(s\), are not independent.
 They are jointly generated via \((s', o', r) \sim p(\cdot \mid s, a)\), which implicitly defines the relationship between them.
 In our \gls{mdp} formalization, this relationship is left implicit because it is never manipulated directly during learning.
-It is made explicit in Section~\ref{subsec:optimal_policy}, where it is needed to characterize the optimal policy.
 
 \subsection{Policy}
 \label{subsec:policy}
@@ -86,7 +85,9 @@ The notation \(\pi(a \mid o)\) denotes the probability of selecting action \(a\)
 
 It is important to note that this policy does not include any explicit mechanism for estimating the underlying state from the observations.
 Instead, the policy must learn from experience how to infer the information about the underlying state that is not directly available in the observations.
-This reflects the design of many modern \gls{rl} implementations, where policies are often parameterized by architectures capable of summarizing past observations, such as recurrent or attention-based networks, without explicitly modeling the uncertainty over the underlying state.
+This reflects the design of many modern \gls{rl} implementations.
+Policies are often parameterized by architectures capable of summarizing past observations, such as recurrent or attention-based networks.
+These architectures do not explicitly model the uncertainty over the underlying state.
 
 \subsection{Trajectory}
 \label{subsec:trajectory}
@@ -158,6 +159,7 @@ From the notion of return, functions that estimate the expected return of a poli
 These functions are called value functions.
 The first one is the state-value function, which tells how desirable a state \(s\) with observation \(o\) is under a policy \(\pi\).
 Since the dynamics \(p\) and the discount factor \(\gamma\) are fixed, it only depends on the policy, which is written as a subscript in \(v_\pi : \StateSet \times \ObsSet \to \mathbb{R}\).
+
 If \(v_\pi(s, o) > v_\pi(s', o')\), then, under policy \(\pi\), being in state \(s\) with observation \(o\) is preferable to being in state \(s'\) with observation \(o'\).
 Formally, the state-value function is the expected return over the terminal trajectories starting from state \(s\) with observation \(o\):\footnote{By convention, \(v_\pi(s, o) = 0\) for a terminal state \(s \in \StateSetTerminal\).}
 \[
@@ -186,7 +188,7 @@ The two value functions are related by \(v_\pi(s, o) = \sum_{a} \pi(a \mid o) \,
 \label{subsec:optimal_policy}
 
 The goal of \gls{rl} is to find a policy that maximizes the expected return of the episodes it generates.
-This policy is called the optimal policy and is denoted by \(\OptimalPolicy\), and its state-action value function by \(\OptimalQ = q_{\OptimalPolicy}\).
+This policy is called the optimal policy and is denoted by \(\OptimalPolicy\).
 
 Since the policy only receives observations, it must act on an estimate of the underlying state.
 The best possible estimate given \(o\) is the distribution \(\Belief{\pi}(s \mid o)\), the probability that the state is \(s\) when \(o\) is observed.
@@ -196,7 +198,7 @@ The optimal policy selects the action that maximizes the expected state-action v
 \OptimalPolicy(a \mid o) =
 \begin{cases}
 1 & \text{if } a = \argmax_{a' \in \ActionSet}\;
-\sum_{s \in \StateSet} \Belief{\OptimalPolicy}(s \mid o)\, \OptimalQ(s, a'), \\[6pt]
+\sum_{s \in \StateSet} \Belief{\OptimalPolicy}(s \mid o)\, q_{\OptimalPolicy}(s, a'), \\[6pt]
 0 & \text{otherwise}.
 \end{cases}
 \]
@@ -208,6 +210,6 @@ Solving an \gls{mdp} in this way is known as dynamic programming.
 
 In practice, most environments have too many states to allow an explicit representation of the dynamics \(p\).  
 Storing and computing over the full transition function becomes intractable.
-To overcome this limitation, an iterative approach is adopted instead of directly constructing the optimal policy.
+To overcome this limitation, an iterative approach is adopted.
 Starting from an initial policy, the policy is progressively improved so that it converges toward \(\OptimalPolicy\).
 This iterative improvement through interaction with the environment is precisely what constitutes learning in \gls{rl}, and it is the subject of the next section.
