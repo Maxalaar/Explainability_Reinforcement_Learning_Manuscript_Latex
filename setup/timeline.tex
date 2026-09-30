@@ -1,18 +1,16 @@
 % ----- Event of a timeline -----
-% \event[dx]{year}{citation keys}{text}{text width}{min height}{y}{font}{fill}
-% The optional dx (default 0) shifts the box horizontally from its year, so that
-% boxes of close years do not overlap; the dashed line stays on the year.
-\newcommand{\event}[9][0]{%
-    \pgfmathsetmacro{\x}{(#2 - \timelineStart) * \timelineScale}%
-    \pgfmathsetmacro{\y}{#7}%
+% \event{year}{citation keys}{text}{text width}{min height}{y}{font}{fill}
+\newcommand{\event}[8]{%
+    \pgfmathsetmacro{\x}{(#1 - \timelineStart) * \timelineScale}%
+    \pgfmathsetmacro{\y}{#6}%
     \begin{scope}[on background layer]
         \draw[thick, dashed] (\x,0) -- ++(0,\y);
     \end{scope}
     \node[
-        draw, rounded corners, very thick, fill=#9,
-        minimum height=#6, text width=#5, align=center, font=#8,
+        draw, rounded corners, very thick, fill=#8,
+        minimum height=#5, text width=#4, align=center, font=#7,
         execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}
-    ] at (\x+#1,\y) {\textbf{\textcite{#3}} \\[2pt] #4};
+    ] at (\x,\y) {\textbf{\textcite{#2}} \\[2pt] #3};
 }
 
 % ----- Main timeline command -----
