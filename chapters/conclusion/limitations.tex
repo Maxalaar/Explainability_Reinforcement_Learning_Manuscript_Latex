@@ -10,8 +10,8 @@ This step is time-consuming, subjective, and difficult to scale to a large numbe
 
 Second, the clusters identified by \gls{car} are not yet directly related to the agent's decisions.
 We show that these representations are stable across independent training runs and carry meaningful semantic information.
-However, although \gls{car} reveals which situations the agent distinguishes, it does not show how these distinctions influence its decisions.
-As a result, \gls{car} does not yet provide a direct explanation of the agent's behavior, leaving a significant subjective component in the interpretation of the identified representations.
+However, \gls{car} does not show how they influence the agent's decisions.
+The interpretation of the identified representations therefore remains partly subjective.
 
 Third, the experiments were conducted on six Atari environments.
 Whether \gls{car} can scale to more complex environments and larger networks therefore remains an open question.
@@ -19,7 +19,7 @@ In addition, only one clustering method was evaluated, based on $k$-means with E
 Other distances and other clustering methods could reveal different structures in the \gls{ls}.
 Since the pipeline of \gls{car} is modular, these alternatives can be tested and compared using the proposed metrics.
 
-Finally, these metrics have only been applied to clustering.
+Finally, these metrics have only been applied to deep clustering.
 The other families of methods reviewed in Chapter~\ref{chap:latent_space_analysis} have not yet been evaluated within this framework.
 This is particularly the case for methods based on the \SuperpositionHypothesisName.
 These methods are widely used, but their assumptions remain debated.

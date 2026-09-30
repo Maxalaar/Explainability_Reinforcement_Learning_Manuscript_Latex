@@ -9,7 +9,7 @@ We then describe the approach we propose and how it could be validated.
 \subsection{Automatic Textual Description of Clusters}
 \label{subsec:conclusion_perspectives_textual_description}
 
-As discussed, the semantics of the clusters is currently assigned manually.
+The first perspective addresses the manual interpretation of the clusters, since the meaning of each cluster is currently assigned by hand.
 The challenge is to obtain a reliable textual description of each cluster automatically.
 
 One possible approach is to first extract, for each cluster, the video segments formed by consecutive observations belonging to it.
@@ -25,7 +25,8 @@ This would fully automate the \gls{car} method, from the identification of the c
 \subsection{From Latent to the Strategy}
 \label{subsec:conclusion_perspectives_strategy}
 
-The goal here is to derive an explanation of the strategy of the agent from the similarity of its \glspl{lr}.
+The second perspective addresses the lack of a direct link between the clusters and the decisions of the agent.
+Its goal is to derive an explanation of the strategy of the agent from the similarity of its \glspl{lr}.
 The main challenge is that the clusters group states that the agent perceives as similar, but provide no information about the dynamics of its interaction with the environment.
 They must therefore be turned from a static view of the \gls{ls} into a dynamic view of the behavior of the agent.
 
@@ -41,7 +42,8 @@ An observer with the graph should be able to describe the behavior of the agent 
 \subsection{Human Evaluation of Explanations}
 \label{subsec:conclusion_perspectives_human_evaluation}
 
-The objective is to verify that the explanations produced by \gls{car} actually improve the observer's mental model of the agent.
+The third perspective concerns the observers to whom the explanations are addressed.
+Its objective is to verify that the explanations produced by \gls{car} actually improve the observer's mental model of the agent.
 This would also confirm the relevance of the associated metrics, namely \gls{cu}, \gls{as}, and \gls{acu}.
 The main challenge is that understanding has no consensual operational definition, which makes it difficult to measure.
 
@@ -52,11 +54,12 @@ It would then be tested by comparing the understanding of observers with and wit
 \subsection{Hypotheses on the Structure of the Latent Space}
 \label{subsec:conclusion_perspectives_latent_structure}
 
+The last perspective addresses the comparison of \gls{car} with the other families of methods, and in particular with those based on superposition.
 \gls{car} assumes that concepts are organized as clusters, whereas the \SuperpositionHypothesisName assumes that they are encoded as directions.
-The objective is to determine which of these hypotheses best describes the \gls{ls} of a \gls{rl} agent.
-The main challenge is that the two families of methods do not produce the same kind of object, a partition in one case and a set of directions in the other, which makes them difficult to compare.
+The objective is to determine which of these hypotheses best describes the \gls{ls}.
+The main challenge is that the two families of methods do not produce the same kind of object, a partition in one case and a set of directions in the other.
 
-The metrics proposed in this thesis can serve as a common framework.
+The metrics proposed in this thesis, namely \gls{cu}, \gls{as}, and \gls{acu}, can serve as a common framework.
 They can be applied to the concepts extracted by methods based on superposition, provided that these concepts are expressed as a partition of the observations.
 
 Both hypotheses can then be evaluated with these metrics on the same agents and environments.

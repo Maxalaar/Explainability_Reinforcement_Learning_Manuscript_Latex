@@ -23,12 +23,13 @@ It then clusters their \glspl{lr} and compares the resulting partitions.
 This procedure relies on the \RepresentationConvergenceHypothesisName, according to which networks trained on the same task develop similar concepts.
 Applied to six Atari environments, \gls{car} recovers similar clustering structures across surrogate policies.
 The qualitative analysis shows that these clusters capture interpretable aspects of the task.
+These results therefore provide empirical support for this hypothesis.
 
 Research Question~\ref{rq:evaluation} concerned the objective quantification of explanation quality.
 We addressed it by introducing three metrics.
 The \gls{cu} measures the consistency of the clusters across surrogate policies.
 The \gls{as} measures how much these clusters differ from the structure of the observations, the actions, and an untrained network.
-The \gls{acu} combines both properties into a single measure, allowing the relevance of the identified representations.
+The \gls{acu} combines both properties into a single measure, which indicates the relevance of the identified representations.
 
 Throughout these contributions, we developed three hypotheses that form a coherent chain.
 The \MechanisticHypothesisName states that \glspl{nn} can be understood through their internal mechanisms.
