@@ -110,6 +110,10 @@
 \usepackage{graphicx}
 \usepackage{pgfplots}
 \usepackage{subcaption}
+% Sub-figure letters in regular weight and in parentheses, both below the panel
+% and in references: \ref gives "3.2(a)" and \subref gives "(a)".
+\renewcommand{\thesubfigure}{(\alph{subfigure})}
+\captionsetup[subfigure]{labelformat=simple}
 \pgfplotsset{compat=1.18}
 
 % TikZ libraries for advanced drawing

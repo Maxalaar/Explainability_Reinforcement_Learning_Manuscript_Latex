@@ -65,7 +65,7 @@ The influence of each part of the input on the action selected by the policy can
 In the \gls{rl} setting, the input corresponds to the observation received by the agent at a given time step.
 Heatmaps therefore highlight the regions of the observation that have the greatest influence on the action selection process.
 By providing this information, they allow the observer to identify which elements of the environment are considered important by the policy when making a decision.
-In Figure~\ref{fig:saliency_map_heatmap}, both panels correspond to the same observation of the Atari game \BreakoutName, with panel~(a) obtained by observation perturbation and panel~(b) by observation gradient analysis.
+In Figure~\ref{fig:saliency_map_heatmap}, both panels correspond to the same observation of the Atari game \BreakoutName, with panel~\subref{fig:saliency_map_heatmap_perturbation} obtained by observation perturbation and panel~\subref{fig:saliency_map_heatmap_gradient} by observation gradient analysis.
 
 \input{figures/explainability_in_reinforcement_learning/saliency_map_heatmap.tex}
 
@@ -118,7 +118,7 @@ The observation is encoded into the \gls{ls}, its representation is modified unt
 Working in the \gls{ls} rather than at the pixel level keeps the counterfactual close to the original state and consistent with the environment.
 The fidelity of the generated observations to the real game can then be assessed through user studies \parencite{olson2021counterfactual}.
 
-Figure~\ref{fig:counterfactual_example} illustrates this approach on the Atari game \textit{\SpaceInvadersName} \parencite{olson2021counterfactual}.
+Figure~\ref{fig:counterfactual_example} illustrates this approach on the Atari game \SpaceInvadersName \parencite{olson2021counterfactual}.
 In the original observation (Figure~\ref{fig:counterfactual_example_original}) the agent selects \texttt{LEFT}, whereas in the counterfactual observation (Figure~\ref{fig:counterfactual_example_counterfactual}) it selects \texttt{RIGHT\_FIRE}.
 Here, removing an enemy is enough to change the action, which suggests that the position of that enemy influences the agent's decision.
 Such observations remain only indicative. Identifying a reliable pattern requires repeating the analysis across many situations.
