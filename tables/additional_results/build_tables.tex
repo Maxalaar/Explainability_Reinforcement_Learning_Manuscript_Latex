@@ -34,10 +34,10 @@
 \pdfvariable horigin=0pt
 \pdfvariable vorigin=0pt
 \newsavebox{\ClusterKBuildBox}
-\newcommand{\ClusterKTable}[4]{%
+\NewDocumentCommand{\ClusterKTable}{m o m m +m}{%
   \stepcounter{ClusterKPageNumber}%
-  \immediate\write\ClusterKPageMap{\string\csdef{ClusterKPage@#3}{\arabic{ClusterKPageNumber}}}%
-  \sbox{\ClusterKBuildBox}{\ClusterKTableBody{#1}{#4}}%
+  \immediate\write\ClusterKPageMap{\string\csdef{ClusterKPage@#4}{\arabic{ClusterKPageNumber}}}%
+  \sbox{\ClusterKBuildBox}{\ClusterKTableBody{#1}{#5}}%
   \pagewidth=\wd\ClusterKBuildBox
   \pageheight=\dimexpr\ht\ClusterKBuildBox+\dp\ClusterKBuildBox\relax
   \shipout\vtop{\vskip0pt\box\ClusterKBuildBox}%

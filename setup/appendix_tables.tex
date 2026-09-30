@@ -16,30 +16,31 @@
 % A table missing from tables_pages.tex is typeset live instead.
 \InputIfFileExists{tables/additional_results/tables_pages.tex}{}{}
 
-% #1 = last row index, #2 = caption, #3 = label suffix, #4 = data rows.
+% #1 = last row index, [#2] = optional short caption for the list of tables,
+% #3 = caption, #4 = label suffix, #5 = data rows.
 % In draft mode, a placeholder replaces the table.
-\newcommand{\ClusterKTable}[4]{%
+\NewDocumentCommand{\ClusterKTable}{m o m m +m}{%
   \ifdraftfigures
   \begin{table}[H]
   \centering
   \fbox{\parbox[c][3cm][c]{0.6\linewidth}{\centering\itshape
     Heavy table skipped in draft mode}}
-  \caption{#2}
-  \label{tab:appendix_additional_results_#3}
+  \IfValueTF{#2}{\caption[#2]{#3}}{\caption{#3}}
+  \label{tab:appendix_additional_results_#4}
   \end{table}
   \else
   \begin{table}[H]
   \centering
   \setlength{\ClusterKTableMaxHeight}{\dimexpr(\textheight-\ClusterKTableHeadingAllowance)/\ClusterKTablesPerPage-\ClusterKTableCaptionOverhead\relax}%
-  \ifcsname ClusterKPage@#3\endcsname
-  \edef\ClusterKCurrentPage{\csname ClusterKPage@#3\endcsname}%
+  \ifcsname ClusterKPage@#4\endcsname
+  \edef\ClusterKCurrentPage{\csname ClusterKPage@#4\endcsname}%
   \includegraphics[page=\ClusterKCurrentPage,width=\linewidth,height=\ClusterKTableMaxHeight,keepaspectratio=false]{tables/additional_results/tables.pdf}%
   \else
-  \sbox{\ClusterKTableBox}{\ClusterKTableBody{#1}{#4}}%
+  \sbox{\ClusterKTableBox}{\ClusterKTableBody{#1}{#5}}%
   \resizebox*{\linewidth}{\ClusterKTableMaxHeight}{\usebox{\ClusterKTableBox}}%
   \fi
-  \caption{#2}
-  \label{tab:appendix_additional_results_#3}
+  \IfValueTF{#2}{\caption[#2]{#3}}{\caption{#3}}
+  \label{tab:appendix_additional_results_#4}
   \end{table}
   \fi
 }
