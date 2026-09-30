@@ -115,7 +115,7 @@ The critic thus learns to predict the return expected under the current policy.
 
 The actor is a parameterized policy \(\pi_{\params}\) with parameters \(\params\).
 Since it has its own parameters, it can be updated directly, using the critic's predictions.
-This update relies on the notion of advantage \(A : \StateSet \times \ActionSet \to \mathbb{R}\), defined as
+This update relies on the notion of advantage \(A : \StateSet \times \ActionSet \to \mathbb{R}\), defined as:
 \[
 A(s_t, a_t) = G_t - \hat{v}_{\valueParams}(s_t, o_t),
 \]

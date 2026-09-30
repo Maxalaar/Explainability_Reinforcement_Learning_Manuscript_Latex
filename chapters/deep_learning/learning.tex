@@ -11,7 +11,7 @@ Mathematically, this objective is expressed as:
 
 As shown in Equation~\eqref{eq:training_objective}, the loss for example $i$ depends on the input-target pair $(\vect{x}^{(i)},\vect{y}^{(i)})$, the loss function $\mathcal{L}$, the network architecture $\hat{f}$, and the parameters $\params$.
 Since the dataset, loss function, and network architecture are fixed during training, only the parameters $\params$ are optimized.
-To simplify the notation, only the dependence on $\params$ is kept, and the loss for example $i$ is written as
+To simplify the notation, only the dependence on $\params$ is kept, and the loss for example $i$ is written as:
 \begin{equation}
 \loss{\params}{i} = \fullLoss{\params}{i}.
 \end{equation}
@@ -38,10 +38,10 @@ The first step of \gls{sgd} is to randomly initialize the parameter vector $\par
 This initial state is denoted by $\params_{1}$.
 The goal is to iteratively update this vector so that the network gets better at approximating the target function.
 To do so, it is necessary to quantify the impact of each parameter $\theta_j$ on the loss $\loss{\params}{i}$.
-This is done using the partial derivative of the loss with respect to each parameter, denoted by
-$
+This is done using the partial derivative of the loss with respect to each parameter, denoted by:
+\[
 \frac{\partial \loss{\params}{i}}{\partial \theta_j}.
-$
+\]
 
 Computing this derivative is not straightforward because a \gls{nn} is composed of a sequence of functions, and the parameter $\theta_j$ can belong to any layer of the network.
 Its influence on the loss must therefore be propagated through all subsequent layers.
@@ -49,7 +49,7 @@ Its influence on the loss must therefore be propagated through all subsequent la
 To describe these dependencies, each layer can be viewed as a function, denoted by $\LayerFunction{l}$ for layer $l$.
 This function takes the activation vector $\latentRepresentation[l-1] \in \mathbb{R}^{n_{l-1}}$ produced by the previous layer as input.
 It produces the activation vector $\latentRepresentation[l] \in \mathbb{R}^{n_l}$ of the current layer.
-This can be expressed as
+This can be expressed as:
 \begin{equation}
 \LayerFunction{l} \colon \mathbb{R}^{n_{l-1}} \to \mathbb{R}^{n_l}, \qquad \latentRepresentation[l] = \LayerFunction{l}(\latentRepresentation[l-1]).
 \label{eq:layer_function}
@@ -75,8 +75,6 @@ The chain rule provides the mathematical tool required to describe this propagat
 To illustrate this, consider two consecutive layers, $\LayerFunction{l}$ and $\LayerFunction{l+1}$.
 The chain rule states that the Jacobian of their composition is given by the product of their Jacobians.
 Each Jacobian is evaluated at the input received by the corresponding layer:
-
-
 \begin{equation}
 \mat{J}_{\LayerFunction{l+1} \circ \LayerFunction{l}}\left(\latentRepresentation[l-1]\right)
 =

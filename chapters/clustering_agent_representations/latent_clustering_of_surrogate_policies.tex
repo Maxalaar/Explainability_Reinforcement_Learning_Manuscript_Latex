@@ -59,13 +59,13 @@ For a given surrogate policy $\SurrogatePolicy{i}$, parameterized by $\params_i$
 To train each surrogate policy $\SurrogatePolicy{i}$ to accurately replicate the action distribution, we define a loss function $\mathcal{L}$ optimized via gradient descent as introduced in Section~\ref{sec:deep_learning_learning}.
 This loss, defined in Equation~\eqref{eq:car_loss}, is computed as the \gls{mse} between the parameters of the action distributions, obtained by applying the function $\logits$, which maps a distribution to its parameters (the logits).
 In practice, this function $\logits$ does not need to be explicitly defined, as neural policies directly output the parameters of the action distribution.
-
+Each surrogate policy $\SurrogatePolicy{i}$ is thus trained by solving:
 \begin{align}
     \min_{\params_i} \sum_{o \in \ObsSet}
     \MSE\Big(
         \logits\big(\InitialPolicy\left(o\right)\big),
         \logits\big(\SurrogatePolicy{i}\left(o\right)\big)
-    \Big)
+    \Big).
     \label{eq:car_loss}
 \end{align}
 

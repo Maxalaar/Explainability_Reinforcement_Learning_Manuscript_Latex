@@ -19,7 +19,6 @@ The idealized non-superposed \gls{lr} can be mathematically expressed as follows
 \qquad
 \|\boldsymbol{\alpha}\|_0 \ll n,
 \]
-
 where:
 \begin{itemize}
     \item $\latentRepresentation$ denotes a \gls{lr},
@@ -43,12 +42,11 @@ This transformation is illustrated in Figure~\ref{fig:dense_to_sparse_sae}, whil
 
 \glspl{sae} provide a practical implementation of this approach and can be defined as follows:
 \[
-\vect{z} = \Encoder(\latentRepresentation), \quad \hat{\latentRepresentation} = \Decoder(\vect{z})
+\vect{z} = \Encoder(\latentRepresentation), \quad \hat{\latentRepresentation} = \Decoder(\vect{z}),
 \]
 \[
-\mathcal{L}_{\mathrm{auto}} = \|\latentRepresentation - \hat{\latentRepresentation}\|_2^2 + \lambda \|\vect{z}\|_1
+\mathcal{L}_{\mathrm{auto}} = \|\latentRepresentation - \hat{\latentRepresentation}\|_2^2 + \lambda \|\vect{z}\|_1,
 \]
-
 where:
 \begin{itemize}
     \item $\Encoder(\latentRepresentation)$ is the encoding function that projects the original \gls{lr} $\latentRepresentation$ into a higher-dimensional sparse space,
@@ -80,7 +78,6 @@ The modified \gls{lr} is then projected back into the original activation space,
 \[
 \latentRepresentation^{*} = \Decoder(\vect{z}^*), \quad \text{where} \quad \vect{z}^* = \vect{z} + \alpha \, \vect{e}^{(i)},
 \]
-
 where:
 \begin{itemize}
     \item $\vect{z}$ is the original sparse representation of the input,

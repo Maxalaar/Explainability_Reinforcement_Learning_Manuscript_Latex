@@ -55,9 +55,9 @@ d \ll \dim(\mathcal{X}),
 Once the autoencoder has been trained sufficiently well, the reconstruction loss $\mathcal{L}_{\mathrm{rec}}$ should be low enough for the learned representation to be useful.
 A clustering algorithm can then be applied to the compressed representations of the images.
 Let $\mathcal{D}$ denote a dataset of inputs, through the encoder $\Encoder$, this dataset is mapped to a point cloud in the \gls{ls}:
-$$
+\[
 \mathcal{Z} = \{\vect{z}^{(i)} \in \mathbb{R}^d \mid \vect{z}^{(i)} = \Encoder(\vect{x}^{(i)}), \; \vect{x}^{(i)} \in \mathcal{D} \}.
-$$
+\]
 
 A classical clustering algorithm is applied to the set $\mathcal{Z}$ of \glspl{lr} to identify groups of similar \glspl{lr}.
 Each resulting cluster can therefore be interpreted as a group of images that the model considers similar.

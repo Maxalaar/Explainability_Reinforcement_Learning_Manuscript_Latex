@@ -23,9 +23,8 @@ Here, the return is computed over complete episodes with $\gamma=1$, so $G_1$ co
 Each policy is evaluated over $M$ episodes.
 We denote by $G^{(e)}_{\InitialPolicy}$ the return obtained by the initial policy in episode $e$, and by $G^{(e)}_{\SurrogatePolicy{j}}$ the return obtained by surrogate policy $\SurrogatePolicy{j}$ in episode $e$.
 The \BehaviorReconstructionName{} is then defined as the mean return of the surrogate policies normalized by the mean return of the initial policy:
-
 \begin{align}
-    \BR = \frac{1}{n \sum_{e=1}^{M} G^{(e)}_{\InitialPolicy}} \sum_{j=1}^{n} \sum_{e=1}^{M} G^{(e)}_{\SurrogatePolicy{j}}
+    \BR = \frac{1}{n \sum_{e=1}^{M} G^{(e)}_{\InitialPolicy}} \sum_{j=1}^{n} \sum_{e=1}^{M} G^{(e)}_{\SurrogatePolicy{j}}.
 \end{align}
 
 In imitation learning, it is unlikely to expect the surrogate policy $\SurrogatePolicy{}$ to outperform the initial policy $\InitialPolicy$ it aims to approximate through supervised learning \parencite{pmlr-v9-ross10a}.
@@ -62,9 +61,9 @@ For each pair, four situations are possible:
 \end{itemize}
 
 The \gls{ri} measures the proportion of pairs for which the two partitions agree:
-$$
+\[
 \RI = \frac{\text{number of agreeing pairs}}{\text{total number of pairs}}.
-$$
+\]
 
 Although the \gls{ri} is intuitive, it suffers from an important limitation.
 In most clustering problems, the majority of pairs of points belong to different clusters.
@@ -76,7 +75,7 @@ It compares the observed agreement $\RI$ to the expected agreement under random 
 The score is then normalized by the maximum agreement achievable beyond this random baseline, $\max(\RI) - \mathbb{E}[\RI]$.
 As a result, an \gls{ari} of $0$ corresponds to the level of agreement expected from random clusterings, while an \gls{ari} of $1$ indicates perfect agreement between the two partitions:
 \[
-\ARI = \frac{\RI - \mathbb{E}[\RI]}{\max(\RI) - \mathbb{E}[\RI]}
+\ARI = \frac{\RI - \mathbb{E}[\RI]}{\max(\RI) - \mathbb{E}[\RI]}.
 \]
 
 In practice, the \gls{ari} is computed directly from the cluster assignments of the two partitions.
@@ -84,7 +83,6 @@ Let clustering \(\mathcal{C}\) be composed of clusters \(\{C_i\}\) and clusterin
 Let \(a_i = |C_i|\) denote the number of samples in cluster \(i\) of clustering \(\mathcal{C}\), and \(b_j = |C'_j|\) the number of samples in cluster \(j\) of clustering \(\mathcal{C}'\).
 Furthermore, let \(n_{ij} = |C_i \cap C'_j|\) be the number of samples shared by cluster \(i\) of clustering \(\mathcal{C}\) and cluster \(j\) of clustering \(\mathcal{C}'\), and let \(N\) be the total number of samples.
 With these definitions, the \gls{ari} can be computed as:
-
 \[
 \ARI =
 \frac{
@@ -108,7 +106,7 @@ With these definitions, the \gls{ari} can be computed as:
 \sum_j \binom{b_j}{2}
 \right]
 \big/ \binom{N}{2}
-}
+}.
 \]
 
 Because it is bounded by $1$, a value such as $0.5$ can be misleadingly interpreted as \enquote{halfway to a perfect match}.
@@ -124,7 +122,6 @@ While the \gls{ari} quantifies the similarity between two partitions, the object
 To this end, the same set of observations is projected into the \gls{ls} of each surrogate policy and clustered.
 Under the \RepresentationConvergenceHypothesisName, these independently obtained partitions are expected to be similar.
 \gls{cu} quantifies this by computing the mean pairwise \gls{ari}:
-
 \begin{align}
     \CU
     =
@@ -171,18 +168,16 @@ Each of these $U$ untrained networks is used to project the same observations in
 This baseline isolates what the architecture already imposes on the representation before any learning takes place, so that a high similarity between $\mathcal{C}_i$ and this baseline indicates that the corresponding structure cannot be attributed to training.
 
 For each latent clustering $\mathcal{C}_{i}$, we define its similarity to these three baselines using the \gls{ari}:
-
 \begin{align*}
-\Similarity{obs}{i} &= \ARI(\mathcal{C}_{i}, \BaselineClustering{obs}) \\
-\Similarity{act}{i} &= \ARI(\mathcal{C}_{i}, \BaselineClustering{act}) \\
-\Similarity{untr}{i} &= \frac{1}{U} \sum_{u=1}^{U} \ARI(\mathcal{C}_{i}, \BaselineClustering[u]{untr})
+\Similarity{obs}{i} &= \ARI(\mathcal{C}_{i}, \BaselineClustering{obs}), \\
+\Similarity{act}{i} &= \ARI(\mathcal{C}_{i}, \BaselineClustering{act}), \\
+\Similarity{untr}{i} &= \frac{1}{U} \sum_{u=1}^{U} \ARI(\mathcal{C}_{i}, \BaselineClustering[u]{untr}).
 \end{align*}
 
 The \gls{as} is subsequently calculated as one minus the average of the maximum absolute similarity values across these three reference baselines:
-
 \begin{align}
 \scalebox{0.9}{%
-$\AS = 1 - \frac{1}{n} \sum_{i=1}^{n} \max \left( \left|\Similarity{obs}{i}\right|, \left|\Similarity{act}{i}\right|, \left|\Similarity{untr}{i}\right| \right)$%
+$\AS = 1 - \frac{1}{n} \sum_{i=1}^{n} \max \left( \left|\Similarity{obs}{i}\right|, \left|\Similarity{act}{i}\right|, \left|\Similarity{untr}{i}\right| \right).$%
 }
 \end{align}
 
@@ -194,8 +189,7 @@ A score close to $1$ indicates that the latent clusters are independent of the o
 \label{subsec:adjusted_clustering_universality}
 
 As discussed above, \gls{cu} alone does not indicate whether the recovered structure is meaningful.
-We therefore introduce the \glsxtrfull{acu}, which measures how much of the agreement between the different surrogate policies remains after accounting for the three trivial baselines.
-
+We therefore introduce the \glsxtrfull{acu}, which measures how much of the agreement between the different surrogate policies remains after accounting for the three trivial baselines:
 \begin{align}
 \scalebox{1}{%
 $\ACU
@@ -207,7 +201,7 @@ $\ACU
 \left|\Similarity{obs}{i}\right|,
 \left|\Similarity{act}{i}\right|,
 \left|\Similarity{untr}{i}\right|
-\right)$%
+\right).$%
 }
 \end{align}
 
