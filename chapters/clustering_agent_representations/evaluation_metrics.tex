@@ -211,8 +211,6 @@ $\ACU
 \end{align}
 
 This metric ranges in $[-1, 1]$.
-
 A value close to $1$ indicates that surrogate policies converge toward a partition that is both highly reproducible across seeds and clearly not explained by the observation space, the action distribution, or the network's initialization, providing the strongest evidence for \RepresentationConvergenceHypothesisName.
-
 A value close to $0$, or negative, covers two cases.
 Either the independently trained surrogate policies do not agree with one another, or their agreement is explained by one of the trivial baselines, namely the raw observations, the action distribution of the initial policy, or an untrained network sharing the same architecture.

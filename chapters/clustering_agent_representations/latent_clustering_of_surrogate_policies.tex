@@ -48,6 +48,7 @@ The crucial requirement is the availability of a dataset containing a sufficient
 
 The replicated policies are referred to as surrogate policies.
 To assess the stability of the learned representations, $n$ surrogate policies are trained independently, denoted by $\SurrogatePolicy{1}, \dots, \SurrogatePolicy{n}$.
+
 All surrogate policies share the same architecture.
 It consists of a \gls{nn} with two components, an encoder $\SurrogateEncoder$ and a decoder $\Decoder$, highlighted by the blue and black dashed rectangles, respectively, in Figure~\ref{fig:surrogate_policy_architecture}.
 The encoder maps the observation $o$ to the embedding, and the decoder reconstructs the parameters of the action distribution from this embedding.
@@ -88,6 +89,7 @@ Algorithm~\ref{alg:car} states the complete \gls{car} procedure, whose lines map
 Lines~\ref{alg:car:dataset}--\ref{alg:car:loss} prepare the imitation of the initial policy.
 They build the training dataset by pairing each observation with the parameters of the action distribution produced by $\InitialPolicy$, and define the \gls{mse} loss of Equation~\eqref{eq:car_loss}.
 Lines~\ref{alg:car:train_loop}--\ref{alg:car:sgd} correspond to the first stage, in which each of the $n$ surrogate policies is initialized randomly and trained independently by stochastic gradient descent.
+
 Lines~\ref{alg:car:cluster_loop}--\ref{alg:car:clust} correspond to the second stage.
 The encoder of each surrogate policy embeds the shared observation set $\ObsData$ (Line~\ref{alg:car:embed}), and the resulting point cloud is partitioned by $\ClusteringFunction$ (Line~\ref{alg:car:clust}).
 Finally, Line~\ref{alg:car:return} returns the surrogate policies together with their partitions, which are the inputs of the evaluation.
@@ -129,6 +131,5 @@ Three aspects must therefore be evaluated before such an analysis can be trusted
 First, the surrogate policy must faithfully reproduce the initial policy so that its explanations remain relevant to the target policy.
 Second, the recovered conceptual organization must be consistent across independently trained surrogate policies.
 Finally, the clusters must capture genuine abstractions rather than simply reproducing structure already present in the observations or action distributions.
-
 The following section introduces one evaluation metric for each of these aspects and details how it is computed.
 

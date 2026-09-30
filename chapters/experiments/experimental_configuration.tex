@@ -18,6 +18,7 @@ The use of Atari environments offers several advantages:
 The configuration of the Atari environments follows common practice in \gls{rl} research \parencite{machado2017revisitingarcadelearningenvironment}.
 In each environment, the agent receives visual observations in the form of raw pixels.
 Each image is resized to $64 \times 64$ pixels and converted to grayscale to reduce memory requirements.
+
 To provide information about the dynamics of the environment, four consecutive observations are stacked along the channel dimension.
 The resulting observation has a shape of $64 \times 64 \times 4$.
 This allows the agent to infer the motion of objects from successive observations.

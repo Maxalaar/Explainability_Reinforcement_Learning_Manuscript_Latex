@@ -16,7 +16,6 @@ The presentation proceeds step by step:
 \label{subsec:markov_decision_processes}
 
 To specify the task and the agent's capacity to perceive and act, the problem is modeled as a \gls{mdp}.
-
 Before providing a more detailed definition, it is useful to clarify the scope of the \gls{mdp} problems considered in this thesis.
 We therefore restrict the analysis to the following configuration:
 
@@ -141,7 +140,8 @@ G_t = r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \cdots + \gamma^{T-t} r_T = \sum
 \]
 where \(\gamma \in [0, 1]\) is the discount factor.  
 The return of the whole trajectory is therefore \(G_1\).
-This parameter controls the time horizon of the agent's objective.  
+
+The discount factor \(\gamma\) controls the time horizon of the agent's objective.  
 When \(\gamma\) is close to \(0\), the agent focuses almost exclusively on immediate rewards, leading to short-sighted behavior.  
 As \(\gamma\) increases toward \(1\), future rewards gain more weight, and the agent adopts a more far-sighted strategy.  
 In theory, since the goal is to maximize long-term cumulative reward, the discount factor would ideally be set to \(\gamma = 1\).
@@ -182,6 +182,7 @@ The same decomposition, with the first action fixed to \(a\), gives:
 \[
 q_\pi(s, a) = \sum_{s', o', r} p(s', o', r \mid s, a) \Big[\, r + \gamma \, v_\pi(s', o') \,\Big].
 \]
+
 The two value functions are directly related.
 In the Bellman equation for \(v_\pi\), the inner sum over \((s', o', r)\) is exactly the expression of \(q_\pi(s, a)\) given above.
 Replacing it by \(q_\pi(s, a)\) gives:

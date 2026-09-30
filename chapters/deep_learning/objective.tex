@@ -8,6 +8,7 @@ In this setting, learning consists of progressively shaping a \gls{nn} that serv
 At initialization, the network does not yet provide a meaningful representation of this function.
 Since a \gls{nn} is a parametric function, its parameters are updated during training to better approximate the target function.
 It gradually becomes capable of capturing the relationship between inputs and outputs through successive parameter updates during training.
+
 For this reason, \gls{dl} is naturally situated within the framework of machine learning.
 A standard definition of machine learning is:
 \begin{displayquote}
@@ -27,6 +28,7 @@ As with any function, it defines a mapping from an input to an output: $\vect{x}
 The function $f$ is therefore characterized by an input space $\mathcal{X}$ and an output space $\mathcal{Y}$, and can be formally written as $f : \mathcal{X} \to \mathcal{Y}$.
 For simplicity of exposition, both $\mathcal{X}$ and $\mathcal{Y}$ are assumed to be vector spaces throughout this thesis.
 This assumption is adopted solely to facilitate the presentation, as the framework can be readily extended to more general settings.
+
 The notation $\hat{\cdot}$ indicates that a given object is an approximation of another.
 Since the goal of the trained \gls{nn} is to approximate $f$, this approximation is denoted by $\hat{f} : \mathcal{X} \to \mathcal{Y}$.
 Given an input $\vect{x} \in \mathcal{X}$, the output of the approximating function $\hat{f}(\vect{x})$ is denoted by $\hat{\vect{y}}$.
@@ -50,6 +52,7 @@ In regression settings, a common choice is the \gls{mse}, defined as:
     \mathcal{L}(\hat{\vect{y}}, \vect{y}) = \|\hat{\vect{y}} - \vect{y}\|_2^2.
     \label{eq:mse}
 \end{equation}
+
 Thanks to this loss, it is now possible to rigorously define the performance measure $P$.
 This performance measure corresponds to the average loss over the dataset and can therefore be written as:
 \begin{equation}

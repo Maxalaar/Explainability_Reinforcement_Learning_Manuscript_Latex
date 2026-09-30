@@ -72,6 +72,7 @@ The Jacobian collects the partial derivatives of each output component with resp
 Since a \gls{nn} is composed of several layers, a change in an early layer can affect the outputs of all subsequent layers.
 It is therefore necessary to propagate this change through the sequence of layer functions until it reaches the network output.
 The chain rule provides the mathematical tool required to describe this propagation.
+
 To illustrate this, consider two consecutive layers, $\LayerFunction{l}$ and $\LayerFunction{l+1}$.
 The chain rule states that the Jacobian of their composition is given by the product of their Jacobians.
 Each Jacobian is evaluated at the input received by the corresponding layer:
@@ -126,7 +127,6 @@ The gradient thus indicates, for every parameter, which direction to move in ord
 
 Now that information is available on how changes in the parameters affect the loss, the objective is to minimize it.
 To do so, the parameters are updated in the direction opposite to the gradient.
-
 Indeed, the gradient is followed in the opposite direction because it indicates the direction in which the loss increases, whereas the objective is to reduce it.
 This leads to the gradient descent update rule:
 \begin{equation}
@@ -139,7 +139,6 @@ The parameter $\eta$ must remain small, as the gradient only provides reliable i
 As a result, a single step is not sufficient to significantly reduce the loss, so the process is iterated many times.
 Producing a sequence of parameter vectors $\params_{1}, \params_{2}, \dots$ that progressively improve the model.
 In practice, training is stopped when successive updates no longer produce a significant decrease in the loss.
-
 Algorithm~\ref{alg:stochastic_gradient_descent} summarizes this whole training procedure.
 
 \input{algorithms/deep_learning/stochastic_gradient_descent.tex}

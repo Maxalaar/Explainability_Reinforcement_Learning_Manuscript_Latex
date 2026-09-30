@@ -15,6 +15,7 @@ The dataset can therefore be written as follows:
 
 The data are subsequently projected into the \gls{ls} of the pretrained model.
 For an input $\vect{x}$, we write $\latentRepresentation[l](\vect{x}) \in \mathbb{R}^{n_l}$, or simply $\latentRepresentation[l]$, the \gls{lr} obtained at layer $l$.
+
 A classifier, referred to as a probe, is then trained to predict the presence of a given concept from this \gls{lr}.
 It is denoted by $\Probe{l}{j}$, where $\params$ represents its parameters, $l$ indicates the layer from which the \gls{lr} is extracted, and $j$ identifies the concept being predicted.
 The probe maps the \gls{lr} to a scalar value in $[0,1]$, which can be interpreted as the probability that the concept is present.
@@ -41,7 +42,6 @@ Restricting the capacity of the probe therefore helps ensure that its prediction
 For this reason, probing methods often rely on linear classifiers.
 A linear separation suggests that the information is easily accessible to the \gls{nn} and potentially usable during decision-making.
 If the classifier achieves performance significantly above chance level, this suggests that the \gls{ls} contains exploitable information related to the considered concept.
-
 Figure~\ref{fig:probes_decision_boundaries} illustrates the decision boundaries of such linear probes for three concepts, where each colored region indicates the area classified positively by the corresponding probe.
 
 \input{figures/latent_space_analysis/probes_decision_boundaries.tex}
