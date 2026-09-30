@@ -27,7 +27,7 @@ The thesis first reviews state-of-the-art methods for analyzing latent spaces, p
 It then clarifies what constitutes an explanation in the context of explainable reinforcement learning.
 With these foundations in place, it reviews the state of the art in explainable reinforcement learning through a taxonomy specifically adapted to reinforcement learning.
 
-Building on this, the thesis introduces \textit{Clustering Agent Representation}, an explainability method that analyzes the latent space of reinforcement learning policies to identify meaningful structures in their internal representations.
+Building on these two reviews, the thesis introduces \textit{Clustering Agent Representation}, an explainability method that analyzes the latent space of reinforcement learning policies to identify meaningful structures in their internal representations.
 
 To objectively evaluate the recovered structures, three metrics are proposed.
 \textit{Clustering Universality} measures their consistency across independently trained policies, establishing that the identified structures are not due to chance.
@@ -35,6 +35,7 @@ To objectively evaluate the recovered structures, three metrics are proposed.
 \textit{Adjusted Clustering Universality} combines these two measures to provide a criterion for selecting which representations to analyze.
 
 Experiments conducted on six Atari environments show that independently trained policies converge toward similar clustering structures.
+Since this similarity is explained neither by the observations, nor by the actions, nor by the architecture of the network, it points to a convergence of the concepts learned by these policies.
 Finally, a qualitative analysis shows that the recovered clusters correspond to interpretable aspects of the task.
 
 These results show that analyzing latent spaces is a promising path toward explaining reinforcement learning agents, opening new perspectives for their mechanistic understanding.
