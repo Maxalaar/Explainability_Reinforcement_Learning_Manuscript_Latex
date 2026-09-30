@@ -2,11 +2,12 @@
 \label{sec:latent_space_analysis_clustering}
 
 As the previous section noted, every \gls{ls} analysis method presented so far rests on a linear view of the \gls{cs}.
+
 For probing methods, concepts must be at least partially linearly separable for simple probes to detect them.
 Interpretable direction methods posit that variations associated with a concept can be captured by moving along a linear axis of the \gls{ls}.
 The \SuperpositionHypothesisName proposes that concepts are represented through linear directions that become entangled because of representational capacity constraints.
-Although these assumptions have led to empirical successes, several observations suggest that the linearity hypothesis may not fully capture the \gls{cs}.
 
+Although these assumptions have led to empirical successes, several observations suggest that the linearity hypothesis may not fully capture the \gls{cs}.
 For instance, some concepts can only be recovered using non-linear probes.
 Likewise, methods based on interpretable directions typically identify only a limited number of semantic factors.
 Finally, in sparse autoencoder approaches, enforcing excessive sparsity degrades interpretability.
@@ -34,6 +35,7 @@ For this type of task, a specific \gls{nn} architecture called an autoencoder is
 An autoencoder is composed of an encoder $\Encoder$ and a decoder $\Decoder$.
 The encoder maps an input $\vect{x} \in \mathcal{X}$ to a low-dimensional \gls{lr} $\vect{z} \in \mathbb{R}^d$, the \gls{lr} produced by the encoder.
 The decoder then maps this \gls{lr} back to the input space to produce a reconstruction $\hat{\vect{x}}$.
+
 The model is trained by \gls{sgd} to minimize the reconstruction error between the original input and its reconstruction using a \gls{mse} loss.
 This objective encourages the \gls{ls} to preserve the most informative features of the input while enforcing a compact representation.
 This can be expressed mathematically as follows:
@@ -64,10 +66,10 @@ Each resulting cluster can therefore be interpreted as a group of images that th
 
 An example of this methodology can be observed in Figure~\ref{fig:deep_clustering_illustration}, where the approach is applied to the STL-10 dataset \parencite{coates2011analysis} using $k$-means clustering \parencite{macqueen1967multivariate} with a number of clusters arbitrarily fixed to $K = 10$ \parencite{xie_unsupervised_2016}.
 For each cluster, the corresponding line shows the $10$ samples closest to the associated centroid in the \gls{ls}.
+We observe that the method captures coherent semantic categories such as animals, vehicles, and flying entities.
 
 \input{figures/latent_space_analysis/deep_clustering_illustration.tex}
 
-We observe that the method captures coherent semantic categories such as animals, vehicles, and flying entities.
 This result is particularly striking given that the only available information to the system consists of raw images.
 It suggests that the compression process induces a \gls{ls} in which semantically meaningful \glspl{cs} emerge.
 
@@ -75,12 +77,13 @@ More advanced approaches combine representation learning and clustering within a
 In this setting, additional loss terms encourage \glspl{lr} to organize themselves around cluster centroids during training.
 This often produces \glspl{ls} that are easier to analyze and improves the quality of the discovered semantic \glspl{cs} \parencite{guo_improved_2017, miklautz_breaking_2024}.
 
-Despite its effectiveness, clustering-based analysis presents several important limitations.
-
+Clustering-based analysis presents several important limitations.
 First, as with most unsupervised semantic discovery techniques, interpreting the resulting clusters remains partly subjective.
 Benchmark datasets often provide class labels for evaluation, but the discovered clusters may not match the categories that humans consider relevant. 
 
-Second, clustering methods are highly sensitive to design choices, as the number of clusters, the distance metric, and the clustering algorithm itself can all significantly influence the results, making parameter selection challenging and often requiring substantial empirical tuning.
+Second, clustering methods are highly sensitive to design choices.
+The number of clusters, the distance metric, and the clustering algorithm itself can all significantly influence the results.
+Parameter selection is therefore challenging and often requires substantial empirical tuning.
 
 Finally, to the best of our knowledge, no intervention technique has yet been proposed in the context of clustering-based analysis.
 Unlike probing or \gls{sae} analysis, which allow targeted modifications of \glspl{lr} to study their causal role, clustering methods currently offer no mechanism to alter the model's behavior by acting directly on the discovered \glspl{cs}.

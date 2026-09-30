@@ -29,7 +29,9 @@ This is illustrated schematically in Figure~\ref{fig:latent_directions}, where a
 \input{figures/latent_space_analysis/latent_directions.tex}
 
 This phenomenon has been extensively studied in generative image models.
-As illustrated in Figure~\ref{fig:interpretable_direction_illustration}, where each row corresponds to a distinct direction $\vect{v}_i$ and each column to an increasing value of $\alpha$, controlled perturbations of \glspl{lr} along interpretable directions can induce specific semantic transformations, such as stroke thickness modification in digit images, head rotation in facial images, or texture and background changes in natural images \parencite{voynov2020unsuperviseddiscoveryinterpretabledirections}.
+Controlled perturbations of \glspl{lr} along interpretable directions can induce specific semantic transformations \parencite{voynov2020unsuperviseddiscoveryinterpretabledirections}.
+Examples include stroke thickness modification in digit images, head rotation in facial images, and texture or background changes in natural images.
+These transformations are illustrated in Figure~\ref{fig:interpretable_direction_illustration}, where each row corresponds to a distinct direction $\vect{v}_i$ and each column to an increasing value of $\alpha$.
 These observations have led to the development of the field of \gls{ls} editing, whose objective is to manipulate generated content directly through modifications in \gls{ls} rather than through changes in the input prompt.
 
 \input{figures/latent_space_analysis/interpretable_direction_illustration.tex}
@@ -46,10 +48,10 @@ In this framework, human intervention occurs only a posteriori, to verify whethe
 
 Despite these advances, several challenges remain.
 It appears that not all concepts encoded by \glspl{nn} are linearly identifiable in \gls{ls}.
-In practice, interpretable direction methods typically discover only a few dozen directions per dataset, which intuitively seems insufficient to account for the full diversity of semantic variations that a generative model is capable of producing.
 
 In addition, \glspl{lr} often exhibit a phenomenon known as entanglement, illustrated in Figure~\ref{fig:entanglement_illustration}, where multiple semantic attributes are mixed within the same directions of the \gls{ls}.
 For instance, in a generative face model, moving along the \enquote{glasses} direction may simultaneously modify age and gender, whereas a disentangled \gls{lr} would let each axis control a single semantic attribute while leaving the others unchanged.
+
 This lack of separability suggests that semantic information is not cleanly organized in the \gls{ls}.
 This observation motivates the \SuperpositionHypothesisName, which proposes a different view of how \glspl{nn} organize information internally.
 The next section introduces this hypothesis.
