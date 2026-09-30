@@ -1,5 +1,9 @@
+% The full title is too wide for the running head, which gets a shorter one.
+\let\OriginalSectionMark\sectionmark
+\renewcommand{\sectionmark}[1]{\OriginalSectionMark{Review of Explainability Methods}}
 \section{State-of-the-Art Review of Explainable Reinforcement Learning Methods}
 \label{sec:explainability_in_reinforcement_learning_state_of_the_art_review_of_xrl_methods}
+\let\sectionmark\OriginalSectionMark
 
 The purpose of this section is to detail the functioning of existing explainability methods (see Table~\ref{tab:taxonomy_methods}).
 They are presented according to the form of explanation they produce, following the taxonomy introduced in Section~\ref{sec:explainability_in_reinforcement_learning_taxonomy_of_xrl_methods}.

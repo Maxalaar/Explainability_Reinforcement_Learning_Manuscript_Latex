@@ -3,7 +3,11 @@
 
 % Encoding and font settings
 \usepackage{fontspec}
-\setmainfont{Latin Modern Roman}
+% Latin Modern keeps its small caps in a separate font, which fontspec does not
+% find by itself (used by \textsc, e.g. for the names of the Atari environments).
+\setmainfont{Latin Modern Roman}[
+  SmallCapsFont={Latin Modern Roman Caps},
+]
 
 % Hyperlinks and URLs
 \usepackage{hyperref}
