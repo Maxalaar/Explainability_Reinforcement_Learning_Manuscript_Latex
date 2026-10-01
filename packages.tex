@@ -63,6 +63,8 @@
 \addbibresource{references/epigraphs.bib}
 % URLs are shown as "URL: link", the word "link" being clickable.
 \DeclareFieldFormat{url}{\mkbibacro{URL}\addcolon\space\href{#1}{link}}
+% arXiv preprints are shown as "arXiv: link", the word "link" pointing to the arXiv page.
+\DeclareFieldFormat{eprint:arxiv}{arXiv\addcolon\space\href{https://arxiv.org/abs/#1}{link}}
 % More space between two references.
 \setlength{\bibitemsep}{0.6\baselineskip}
 % Allow line breaks inside long URLs and DOIs (after digits and letters).
