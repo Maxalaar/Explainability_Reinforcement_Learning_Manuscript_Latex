@@ -45,8 +45,20 @@ Overall, these results provide empirical support for the \RepresentationConverge
 
 \subsection{A Coherent Chain of Hypotheses}
 
-Throughout these contributions, we developed three hypotheses that form a coherent chain.
+Throughout these contributions, we developed three hypotheses that form a coherent chain, each one building on the previous one.
 The \MechanisticHypothesisName states that \glspl{nn} can be understood through their internal mechanisms.
+It justifies analyzing the network itself rather than replacing it with a simpler model.
 The \ConceptHypothesisName states that these mechanisms are organized around concepts.
+It specifies what this analysis should look for in the \gls{ls}.
 The \RepresentationConvergenceHypothesisName states that these concepts reflect the task.
-\gls{car} translates these hypotheses into an empirical procedure, and the experimental results provide support for this framework.
+It provides a criterion to determine whether the identified concepts are reliable, since concepts shared by independently trained networks cannot be attributed to a particular model.
+
+These three hypotheses do not have the same status.
+The first two are working hypotheses widely adopted in the literature, which this thesis does not attempt to demonstrate.
+The third one is directly put to the test by \gls{car}, and is therefore both the foundation of the method and the object of its investigation.
+The experimental results support it, without constituting a formal proof.
+
+This chain also changes the role of universality.
+In the literature, the convergence of representations across models is mainly reported as an empirical observation.
+In this thesis, it becomes a principle of explanation, as concepts that emerge in every model trained on a task characterize the task itself.
+It is this principle that makes it possible to evaluate explanations objectively, without relying on human judgment.
