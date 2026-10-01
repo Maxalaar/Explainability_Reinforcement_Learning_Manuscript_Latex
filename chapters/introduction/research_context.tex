@@ -1,47 +1,90 @@
 \section{Research Context}
 \label{sec:introduction_research_context}
 
-As is evident in recent years, \gls{ai} has advanced rapidly.
-This progress is driven largely by major developments in \gls{dl}.
+This section presents the context of this thesis.
+We first introduce \gls{dl} and \gls{rl}, whose combination today enables highly capable agents.
+We then discuss the alignment problem raised by increasingly capable agents.
+Next, we show how the black-box nature of \glspl{nn} makes this problem difficult to address.
+Finally, we introduce \gls{me}, the approach adopted in this thesis.
+
+\subsection{Deep Reinforcement Learning}
+
+Over the past decade, \gls{ai} has advanced rapidly, driven largely by major developments in \gls{dl}.
 This type of approach relies on artificial \glspl{nn}, which offer an unprecedented level of performance.
 Inspired by their biological counterparts, these networks are known as connectionist models.
 In such models, information is represented and transformed through patterns of interactions among interconnected elementary computational units \parencite{rumelhart1986learning}.
 
-One of the fields significantly transformed by \gls{dl} is \gls{rl}, which is the main focus of this thesis.
+Among the fields transformed by \gls{dl}, \gls{rl} holds a particular place and is the main focus of this thesis.
 The purpose of \gls{rl} is to enable an agent to learn how to make decisions through interactions with an environment \parencite{sutton2018reinforcement}.
 At each step, the agent observes the current state of the environment and selects an action.
 This action changes the state of the environment and results in a reward.
 The objective of the agent is then to learn a behavior that maximizes the cumulative rewards obtained over time.
+
+The combination of \gls{rl} and \gls{dl}, known as \gls{drl}, is one of the most promising approaches for creating autonomous agents \parencite{arulkumaran2017deep}.
 Due to their flexibility, \glspl{nn} provide a powerful means of representing the agent's information-processing capabilities.
 Their use has consequently made it possible to apply \gls{rl} to problems that were previously intractable \parencite{mnih2013playingatarideepreinforcement, silver2017mastering, openai2019dota2largescale}.
+The ability of \gls{rl} to operate in increasingly complex environments also allows agents to learn increasingly complex behaviors.
+These behaviors are not explicitly programmed by the designer but emerge from the interaction between the learned policy, the environment, and the reward function.
 
-The ability of \gls{rl} to operate in complex environments introduces a new challenge.
-When an agent learns to act in such environments, it can develop complex strategies.
-Although such agents can achieve strong performance, these strategies can be difficult to understand.
-From an external perspective, we observe sequences of interactions between the agent and its environment, but these observations are not enough to infer the agent's strategy.
+\subsection{Alignment of Autonomous Agents}
 
-An alternative approach is to analyze the agent itself.
+As the capabilities of an agent increase, the resulting behaviors can become more difficult to anticipate and control.
+In some cases, an agent may exploit unintended properties of its environment or objective, resulting in behaviors that do not correspond to the intentions of its designers \parencite{krakovna2020specification}.
+An illustrative example comes from agents trained to play hide-and-seek in a physics-based environment \parencite{baker2020emergent}.
+To find the hiders, seekers learned to run into a wall with a ramp at a specific angle in order to launch themselves into the air.
+This behavior, impossible under the intended rules of the environment, exploited a flaw in the physics engine that the designers had not anticipated.
+
+In a game environment, such behaviors have limited consequences.
+However, agents trained with \gls{rl} are increasingly deployed in open-ended settings where they interact with the real world, notably \glspl{llm} trained with \gls{rl} and deployed as agents.
+In such settings, a lack of control can have far more serious consequences.
+In controlled settings, some agents have been shown to strategically deceive their users when placed under pressure \parencite{scheurer2024large}.
+Others selectively comply with their training objective during training in order to preserve their behavior outside of it \parencite{greenblatt2024alignment}.
+When given a goal conflicting with that of their developers, some agents have attempted to disable oversight mechanisms \parencite{meinke2024frontier}.
+Finally, when tasked with winning a chess game against a strong engine, some reasoning models manipulated the game environment rather than playing \parencite{bondarenko2025demonstrating}.
+
+These examples relate to the problem of alignment (Definition~\ref{def:alignment}), which has become a central concern in \gls{ai} research \parencite{ji2023ai}.
+
+\begin{definition}{Alignment}{alignment}
+
+Alignment is the problem of ensuring that the behavior of an \gls{ai} system corresponds to the intentions of its designers.
+
+\end{definition}
+
+The more capable agents become, the more pressing the need to ensure their alignment.
+
+\subsection{The Black-Box Problem}
+
+The difficulty of controlling such agents stems in part from the fact that we only observe sequences of interactions between the agent and its environment.
+These observations reveal how the agent's strategy is realized in particular situations.
+However, understanding the strategy itself requires knowing how the agent would behave across all the situations it may encounter.
+Since these situations are generally too numerous to be observed exhaustively, a collection of observed behaviors may not be sufficient to characterize the strategy.
+To gain further insight into the agent's strategy, an alternative approach is to analyze the agent itself.
 However, due to their connectionist nature, \glspl{nn} that model the agent's policy are not directly interpretable.
-The information behind a decision is distributed across many units and connections making it impossible to trace.
+The information underlying a decision is distributed across many units and connections, making the processes leading to a decision difficult to trace.
 \Glspl{nn} are therefore often regarded as \enquote{black box} models \parencite{guidotti2018survey}.
+
+\subsection{Mechanistic Explainability}
 
 To address this black-box problem, the field of \gls{xai} has emerged \parencite{gunning2019darpa, arrieta2020explainable}.
 In the specific context of \gls{rl}, this research area is referred to as \gls{xrl} \parencite{puiutta2020explainable, milani2022explainable}.
 \gls{xrl} develops methods for producing explanations that improve our understanding of agent behavior.
-Such explanations can serve several purposes, including increasing human trust, identifying biases and verifying that previously identified problems have been effectively corrected \parencite{arrieta2020explainable, milani2022explainable}.
-
-This thesis presents \gls{xrl} methods from different approaches to provide a broader view of the field.
-We focus on the mechanistic approach to explainability, which we refer to as \gls{me} (Definition~\ref{def:mechanistic_explainability}).
-Although still relatively underexplored, this approach seems particularly promising to us.
-In \gls{me}, the goal is to understand how information is represented within the \gls{nn}.
+Among the different approaches to \gls{xrl}, this thesis focuses on the one that seeks to explain the agent's strategy directly from the internal processes from which it emerges.
+We refer to this approach as \gls{me} (Definition~\ref{def:mechanistic_explainability}).\footnote{Commonly referred to as \emph{mechanistic interpretability} \parencite{bereska2024mechanistic}. We use the term \emph{explainability} since the internal mechanisms of an \gls{nn} are not interpretable in the sense of Definition~\ref{def:interpretable}.}
 
 \begin{definition}{Mechanistic Explainability}{mechanistic_explainability}
-\gls{me} is the approach that seeks to explain the behavior of an \gls{nn} by analyzing its internal mechanisms.
+
+\gls{me} is the approach that seeks to explain an \gls{nn} by transforming its internal representations into interpretable information.
+
 \end{definition}
 
-To understand how \glspl{nn} work internally, \gls{me} studies the intermediate representations learned by these networks.
+\gls{me} is particularly promising because it addresses a core question of \gls{dl}, namely how an \gls{nn} processes information.
+Explaining how an agent processes information to reach its decisions would therefore improve not only our understanding of agent behavior, but also our understanding of \gls{dl} itself.
+Such understanding is also a first step toward control, as identifying how a behavior is represented within a network makes it possible to act on it \parencite{mini2023understanding}.
+Nevertheless, \gls{me} remains relatively underexplored in \gls{rl}.
+This is partly due to its recency, as \gls{me} emerged only recently within \gls{xrl}, itself a recent branch of the young field of \gls{xai} \parencite{gunning2019darpa, puiutta2020explainable, olah2020zoom}.
+
+To understand how an \gls{nn} processes information, \gls{me} studies the intermediate representations it learns.
 These representations are called \glspl{lr} \parencite{bengio2014representationlearningreviewnew}.
 Together, they form the network's \gls{ls}.
 Analyzing the structure of this \gls{ls} provides insights into how information relevant to decision-making is organized.
-
 To develop an \gls{xrl} method based on \gls{me}, we need to address several research questions.
