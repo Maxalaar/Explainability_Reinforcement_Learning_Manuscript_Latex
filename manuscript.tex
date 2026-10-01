@@ -8,7 +8,7 @@
 
 % Print (recto-verso): two-sided, alternating margins, chapters opening on a
 % recto, links in black (still clickable), all figures rendered.
-\printversiontrue
+% \printversiontrue
 
 % Working draft: line numbers, and a footer with the compile date.
 % \draftversiontrue
@@ -60,12 +60,11 @@
 \listoftables
 \input{chapters/notation/notation.tex}
 
-% Main matter (arabic page numbers), opened by the Golem myth.
+% Main matter (arabic page numbers).
 % In the print version, the main matter starts on a recto, so that printed
 % and physical page parities agree.
 \cleartorightpage
 \mainmatter
-\input{chapters/the_golem_myth/the_golem_myth.tex}
 \input{chapters/introduction/introduction.tex}
 \input{chapters/deep_learning/deep_learning.tex}
 \input{chapters/latent_space_analysis/latent_space_analysis.tex}

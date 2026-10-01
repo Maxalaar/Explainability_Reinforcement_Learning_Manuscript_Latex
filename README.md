@@ -31,7 +31,7 @@ The manuscript is organized as follows:
 The names are derived mechanically from the titles, with no exception:
 
 * A chapter folder and its main file are named after the chapter title in
-  `snake_case` (e.g. "The Golem Myth" → `chapters/the_golem_myth/the_golem_myth.tex`).
+  `snake_case` (e.g. "Deep Learning" → `chapters/deep_learning/deep_learning.tex`).
 * A section file is named after the section title in `snake_case`
   (e.g. "Evaluation Metrics" → `evaluation_metrics.tex`).
 * Labels follow the files: `chap:<chapter folder>` and
