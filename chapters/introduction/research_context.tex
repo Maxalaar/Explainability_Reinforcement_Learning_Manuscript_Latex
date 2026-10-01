@@ -3,7 +3,7 @@
 
 This section presents the context of this thesis.
 We first introduce \gls{dl} and \gls{rl}, whose combination today enables highly capable agents.
-We then discuss the alignment problem raised by increasingly capable agents.
+We then discuss the alignment problem raised by such agents.
 Next, we show how the black-box nature of \glspl{nn} makes this problem difficult to address.
 Finally, we introduce \gls{me}, the approach adopted in this thesis.
 
@@ -29,7 +29,8 @@ These behaviors are not explicitly programmed by the designer but emerge from th
 \subsection{Alignment of Autonomous Agents}
 
 As the capabilities of an agent increase, the resulting behaviors can become more difficult to anticipate and control.
-In some cases, an agent may exploit unintended properties of its environment or objective, resulting in behaviors that do not correspond to the intentions of its designers \parencite{krakovna2020specification}.
+In some cases, an agent may exploit unintended properties of its environment or objective.
+Such behaviors then no longer correspond to the intentions of its designers \parencite{krakovna2020specification}.
 An illustrative example comes from agents trained to play hide-and-seek in a physics-based environment \parencite{baker2020emergent}.
 To find the hiders, seekers learned to run into a wall with a ramp at a specific angle in order to launch themselves into the air.
 This behavior, impossible under the intended rules of the environment, exploited a flaw in the physics engine that the designers had not anticipated.
@@ -43,6 +44,7 @@ When given a goal conflicting with that of their developers, some agents have at
 Finally, when tasked with winning a chess game against a strong engine, some reasoning models manipulated the game environment rather than playing \parencite{bondarenko2025demonstrating}.
 
 These examples relate to the problem of alignment (Definition~\ref{def:alignment}), which has become a central concern in \gls{ai} research \parencite{ji2023ai}.
+The more capable agents become, the more pressing the need to ensure their alignment.
 
 \begin{definition}{Alignment}{alignment}
 
@@ -50,14 +52,13 @@ Alignment is the problem of ensuring that the behavior of an \gls{ai} system cor
 
 \end{definition}
 
-The more capable agents become, the more pressing the need to ensure their alignment.
-
 \subsection{The Black-Box Problem}
 
 The difficulty of controlling such agents stems in part from the fact that we only observe sequences of interactions between the agent and its environment.
 These observations reveal how the agent's strategy is realized in particular situations.
 However, understanding the strategy itself requires knowing how the agent would behave across all the situations it may encounter.
 Since these situations are generally too numerous to be observed exhaustively, a collection of observed behaviors may not be sufficient to characterize the strategy.
+
 To gain further insight into the agent's strategy, an alternative approach is to analyze the agent itself.
 However, due to their connectionist nature, \glspl{nn} that model the agent's policy are not directly interpretable.
 The information underlying a decision is distributed across many units and connections, making the processes leading to a decision difficult to trace.
@@ -81,7 +82,6 @@ We refer to this approach as \gls{me} (Definition~\ref{def:mechanistic_explainab
 Explaining how an agent processes information to reach its decisions would therefore improve not only our understanding of agent behavior, but also our understanding of \gls{dl} itself.
 Such understanding is also a first step toward control, as identifying how a behavior is represented within a network makes it possible to act on it \parencite{mini2023understanding}.
 Nevertheless, \gls{me} remains relatively underexplored in \gls{rl}.
-This is partly due to its recency, as \gls{me} emerged only recently within \gls{xrl}, itself a recent branch of the young field of \gls{xai} \parencite{gunning2019darpa, puiutta2020explainable, olah2020zoom}.
 
 To understand how an \gls{nn} processes information, \gls{me} studies the intermediate representations it learns.
 These representations are called \glspl{lr} \parencite{bengio2014representationlearningreviewnew}.
