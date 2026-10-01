@@ -2,9 +2,8 @@
 \label{sec:conclusion_perspectives}
 
 The limitations discussed above suggest several directions for future research.
-This section presents four of them.
-For each of them, we first identify the main scientific challenge it raises.
-We then describe the approach we propose and how it could be validated.
+This section presents four of them, ordered from short-term to long-term.
+For each of them, we first identify the main scientific challenge it raises, then describe the approach we propose and how it could be validated.
 
 \subsection{Automatic Textual Description of Clusters}
 \label{subsec:conclusion_perspectives_textual_description}
@@ -27,7 +26,7 @@ This approach would thus fully automate the \gls{car} method, from the identific
 
 The second perspective addresses the lack of a direct link between the clusters and the agent's decisions.
 Its goal is to derive an explanation of the agent's strategy from the similarity of its \glspl{lr}.
-The main challenge is that the clusters group states that the agent perceives as similar, but provide no information about the dynamics of its interaction with the environment.
+The difficulty is that the clusters group states that the agent perceives as similar, but provide no information about the dynamics of its interaction with the environment.
 It is therefore necessary to move from a static view of the \gls{ls} to a dynamic view of the agent's behavior.
 
 Each episode can first be converted into a sequence of clusters, by assigning each observation to its cluster and merging consecutive repetitions.
@@ -38,24 +37,10 @@ Such a graph thus summarizes the agent's strategy.
 
 The graph can be validated by checking that it correctly predicts the transitions observed in episodes not used to build it.
 
-\subsection{Human Evaluation of Explanations}
-\label{subsec:conclusion_perspectives_human_evaluation}
-
-The third perspective concerns the observers to whom the explanations are addressed.
-Its objective is to verify that the explanations produced by \gls{car} actually improve the observer's mental model of the agent.
-The main challenge is that understanding has no consensual operational definition, which makes it difficult to measure.
-Such an evaluation requires an experimental protocol involving human observers.
-This protocol should be defined in collaboration with researchers in cognitive science and psychology.
-
-Building on the two previous perspectives, the protocol can assess understanding at two levels of increasing difficulty.
-At the level of concepts, observers receive the textual descriptions of the clusters and must assign new video segments to the corresponding cluster.
-Their accuracy would show whether the descriptions, in addition to being meaningful for a vision-language model, are also meaningful for humans.
-At the level of strategy, observers receive the graph and a video of an episode, and must reconstruct the order in which the agent goes through the clusters.
-
 \subsection{Hypotheses on the Structure of the Latent Space}
 \label{subsec:conclusion_perspectives_latent_structure}
 
-The last perspective addresses the comparison of \gls{car} with the other families of methods, and in particular with those based on superposition.
+The third perspective addresses the comparison of \gls{car} with the other families of methods, and in particular with those based on superposition.
 \gls{car} assumes that concepts are organized as clusters, whereas the \SuperpositionHypothesisName assumes that they are encoded as directions.
 The objective is to determine which of these hypotheses best describes the \gls{ls}.
 The main challenge is that the two families of methods do not produce the same kind of object, a partition in one case and a set of directions in the other.
@@ -66,3 +51,19 @@ For instance, each observation can be assigned to the direction along which it i
 To ensure a fair comparison, both families of methods should produce the same number of concepts.
 Both hypotheses can then be evaluated with these metrics on the same agents and environments.
 If one hypothesis yields more universal and abstract concepts, this would provide evidence that it better describes the structure of the \gls{ls}.
+
+\subsection{Human Evaluation of Explanations}
+\label{subsec:conclusion_perspectives_human_evaluation}
+
+The last perspective concerns the observers to whom the explanations are addressed.
+Its objective is to verify that the explanations produced by \gls{car} actually improve the observer's mental model of the agent.
+Measuring understanding is difficult, since it has no consensual operational definition.
+Such an evaluation requires an experimental protocol involving human observers.
+This protocol should be defined in collaboration with researchers in cognitive science and psychology.
+
+Building on the first two perspectives, the protocol can assess understanding at two levels of increasing difficulty.
+At the level of concepts, observers receive the textual descriptions of the clusters and must assign new video segments to the corresponding cluster.
+Their accuracy would show whether the descriptions, in addition to being meaningful for a vision-language model, are also meaningful for humans.
+At the level of strategy, observers first study the graph summarizing the agent's strategy.
+They are then shown the beginning of a new episode and must predict which clusters the agent will go through next, and in which order.
+Since this prediction requires anticipating the agent's behavior in a situation that has not been observed before, its accuracy would show whether the graph has actually conveyed the strategy to the observer.

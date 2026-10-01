@@ -63,7 +63,7 @@ Under this formulation, each dimension of $\mathcal{Z}$ is interpreted as a dedi
 In practice, both $\Encoder$ and $\Decoder$ are implemented as linear projections between the original \gls{ls} and the high-dimensional space $\mathcal{Z}$. This choice is motivated by the same principle underlying probing methods. The transformation applied to the \gls{lr} should remain as simple as possible.
 Using more expressive projection functions could introduce additional structures into the transformed \gls{lr}. In this case, it would become difficult to determine whether an observed concept was already encoded in the model's \gls{lr}, or whether it was introduced by the projection itself. Restricting $\Encoder$ and $\Decoder$ to linear projections therefore helps ensure that the concepts identified in $\mathcal{Z}$ can be attributed to the original \gls{lr}, rather than to the transformation used to analyze it.
 
-The method proves to be powerful when successfully applied to language models \parencite{templeton2024scaling}.
+The method proves to be powerful when successfully applied to \glspl{llm} \parencite{templeton2024scaling}.
 In these applications, \glspl{sae} are used to desuperpose the \gls{lr} of \glspl{llm}.
 Once this \gls{lr} is obtained, it has been shown that many concept vectors exhibit semantic properties.
 An example is the Golden Gate Bridge concept direction, illustrated in Figure~\ref{fig:sparse_autoencoder_illustration}, which activates systematically whenever the input text or image refers to the Golden Gate Bridge, regardless of the language or modality.

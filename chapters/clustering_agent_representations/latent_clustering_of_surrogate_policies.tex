@@ -43,7 +43,7 @@ Their role is not to simplify the decision process but to provide multiple indep
 
 Throughout the remainder of this thesis, the initial policy we aim to explain is denoted as $\InitialPolicy$.
 This initial policy is obtained without imposing any constraints on its origin.
-It may result from classical or deep reinforcement learning \parencite{sutton2018reinforcement}, alpha-beta algorithm \parencite{knuth1975analysis}, or even from demonstrations provided by humans \parencite{pmlr-v9-ross10a}.
+It may result from classical or deep \gls{rl} \parencite{sutton2018reinforcement}, alpha-beta algorithm \parencite{knuth1975analysis}, or even from demonstrations provided by humans \parencite{pmlr-v9-ross10a}.
 The crucial requirement is the availability of a dataset containing a sufficient number of projections from the observation space $\ObsSet$ to the action space $\ActionSet$ induced by $\InitialPolicy$ to train a \gls{nn}.
 
 The replicated policies are referred to as surrogate policies.
@@ -88,7 +88,7 @@ This comparison is the basis of the evaluation introduced in the following secti
 Algorithm~\ref{alg:car} states the complete \gls{car} procedure, whose lines map directly onto the stages described above.
 Lines~\ref{alg:car:dataset}--\ref{alg:car:loss} prepare the imitation of the initial policy.
 They build the training dataset by pairing each observation with the parameters of the action distribution produced by $\InitialPolicy$, and define the \gls{mse} loss of Equation~\eqref{eq:car_loss}.
-Lines~\ref{alg:car:train_loop}--\ref{alg:car:sgd} correspond to the first stage, in which each of the $n$ surrogate policies is initialized randomly and trained independently by stochastic gradient descent.
+Lines~\ref{alg:car:train_loop}--\ref{alg:car:sgd} correspond to the first stage, in which each of the $n$ surrogate policies is initialized randomly and trained independently by \gls{sgd}.
 
 Lines~\ref{alg:car:cluster_loop}--\ref{alg:car:clust} correspond to the second stage.
 The encoder of each surrogate policy embeds the shared observation set $\ObsData$ (Line~\ref{alg:car:embed}), and the resulting point cloud is partitioned by $\ClusteringFunction$ (Line~\ref{alg:car:clust}).

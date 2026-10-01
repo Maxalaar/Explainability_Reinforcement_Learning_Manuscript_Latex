@@ -169,7 +169,7 @@ We cluster these continuous parameters rather than the sampled discrete action, 
 
 The third baseline addresses the case where the \gls{ls} merely reflects an inductive bias of the network architecture rather than something learned.
 To this end, we introduce $U$ untrained networks sharing the same architecture as the surrogate policies, but with randomly initialized, never-updated weights.
-Each of these $U$ untrained networks is used to project the same observations into its own latent space, which is then clustered in the same way, yielding partitions $\BaselineClustering[1]{untr}, \dots, \BaselineClustering[U]{untr}$.
+Each of these $U$ untrained networks is used to project the same observations into its own \gls{ls}, which is then clustered in the same way, yielding partitions $\BaselineClustering[1]{untr}, \dots, \BaselineClustering[U]{untr}$.
 This baseline isolates what the architecture already imposes on the representation before any learning takes place, so that a high similarity between $\mathcal{C}_i$ and this baseline indicates that the corresponding structure cannot be attributed to training.
 
 For each latent clustering $\mathcal{C}_{i}$, we define its similarity to these three baselines using the \gls{ari}:

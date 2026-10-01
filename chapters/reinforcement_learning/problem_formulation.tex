@@ -5,7 +5,7 @@ This section translates the agent-environment interaction of Figure~\ref{fig:age
 In this framework, the goal of \gls{rl}, finding a policy that makes sequential decisions so as to maximize the cumulative reward over the long term, can be stated precisely.
 The presentation proceeds step by step:
 \begin{enumerate}
-    \item Modeling the \gls{rl} problem as a Markov Decision Process.
+    \item Modeling the \gls{rl} problem as an \gls{mdp}.
     \item Defining the notion of a policy, which formalizes the agent's behavior.
     \item Describing the interaction between the agent and the environment through trajectories.
     \item Introducing value functions to evaluate policies.
@@ -30,7 +30,7 @@ We therefore restrict the analysis to the following configuration:
     \item The partially observable framework is adopted, where the agent does not have direct access to the true state of the system, but instead relies on limited observations that provide only partial information about the environment.  
 \end{itemize}
 
-The resulting framework can be formally described as a single-agent finite-horizon partially observable Markov decision process.
+The resulting framework can be formally described as a single-agent finite-horizon partially observable \gls{mdp}.
 For simplicity, we will refer to this setting as an \enquote{\gls{mdp}} throughout this thesis.
 
 A \gls{mdp} is defined by the tuple \((\StateSet, \ObsSet, \ActionSet, \RewardSet, p)\):  

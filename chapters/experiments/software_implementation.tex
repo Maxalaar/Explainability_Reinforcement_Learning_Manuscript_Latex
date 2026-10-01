@@ -47,7 +47,7 @@ This is useful here because the datasets contain around one million observation-
 
 \subsection{Surrogate Policy Training}
 
-The third stage trains the surrogate policies using behavioral cloning on the trajectory dataset.
+The third stage trains the surrogate policies using \gls{bc} on the trajectory dataset.
 This provides a supervised learning approach for replicating the initial policy.
 The training procedure is implemented using PyTorch Lightning \parencite{falcon2019lightning}.
 PyTorch Lightning provides a simplified interface for training \glspl{nn} with PyTorch.
