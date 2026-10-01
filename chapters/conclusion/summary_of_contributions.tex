@@ -2,34 +2,48 @@
 \label{sec:conclusion_summary_of_contributions}
 
 This section revisits the four research questions introduced in Section~\ref{sec:introduction_research_questions}.
-For each of them, it summarizes the answer provided by this thesis.
+It is organized around the three contributions of this thesis, each of which is presented in a dedicated subsection.
+
+\subsection{Survey of Latent Space Analysis Methods}
 
 Research Question~\ref{rq:latent_space} concerned the approaches proposed in the literature to analyze the internal workings of \glspl{nn}.
 To answer it, we first made explicit the working hypothesis shared by most of this literature, the \ConceptHypothesisName.
 According to this hypothesis, \glspl{nn} generalize by organizing their \glspl{ls} around concepts.
-We then conducted a state-of-the-art review and organized existing methods into four families: probing, interpretable directions, \glspl{sae}, and clustering.
+We then organized existing methods into four families, namely probing, interpretable directions, \glspl{sae}, and clustering.
+
+This review shows that the first three families assume that concepts can be recovered from \glspl{lr} through a linear decomposition.
+Clustering is the only family that does not rely on this assumption, which makes it the basis of the method proposed in this thesis.
+The review also reveals that there is no consensus on how to evaluate whether these methods truly capture the concepts of a model.
+
+\subsection{Taxonomy of Explainable Reinforcement Learning Methods}
 
 Research Question~\ref{rq:taxonomy} concerned the organization of existing \gls{xrl} methods \parencite{alaarabiou:hal-04685607, alaarabiou2026taxonomy}.
 Our starting point was to clarify what an explanation means in the context of \gls{rl}.
-Building on this framework, we identified the notions of subject and source of an explanation.
-Regarding the subject, we distinguish two levels: a single decision and the agent's strategy.
-For the source, we identify three possibilities: policies, trajectories, and value functions.
+Building on this framework, we characterized each explanation by its subject, its source, and its form.
+The subject distinguishes the explanation of a single decision from that of the agent's strategy, which is specific to the temporal nature of \gls{rl}.
 From these elements, we proposed a taxonomy that accounts for the specificities of \gls{rl} and used it to review the state of the art.
 
-Research Question~\ref{rq:mechanisms} concerned the use of \glspl{lr} to identify the mechanisms underlying the decisions of \gls{rl} agents.
-To address it, we introduced \gls{car}, an \gls{xrl} method based on the principles of \gls{me} \parencite{alaarabiou2026car}.
-\gls{car} independently trains several surrogate policies to reproduce the same behavior.
-It then clusters their \glspl{lr} and compares the resulting partitions.
-This procedure relies on the \RepresentationConvergenceHypothesisName, according to which networks trained on the same task develop similar concepts.
-Applied to six Atari environments, \gls{car} recovers similar clustering structures across surrogate policies.
-The qualitative analysis shows that these clusters capture interpretable aspects of the task.
-These results therefore provide empirical support for this hypothesis.
+This review led to three main observations.
+None of the reviewed methods explains the learning process itself.
+The field lacks unified metrics for evaluating explanations.
+Finally, current research remains dominated by substitutive approaches, which replace the deep policy with a simpler model and thus lose part of what makes it effective.
+These observations point to the need for an intrinsic and objectively evaluated method.
 
-Research Question~\ref{rq:evaluation} concerned the objective quantification of explanation quality.
-We addressed it by introducing three metrics.
-The \gls{cu} measures the consistency of the clusters across surrogate policies.
-The \gls{as} measures how much these clusters differ from the structure of the observations, the actions, and an untrained network.
-The \gls{acu} combines both properties into a single measure, which indicates the relevance of the identified representations.
+\subsection{The CAR Method and Its Evaluation}
+
+Research Questions~\ref{rq:mechanisms} and~\ref{rq:evaluation} concerned the use of \glspl{lr} to explain \gls{rl} agents and the objective evaluation of such explanations.
+To address them, we introduced \gls{car}, an \gls{xrl} method based on the principles of \gls{me} \parencite{alaarabiou2026car}.
+\gls{car} independently trains several surrogate policies to reproduce the same behavior, then clusters their \glspl{lr} and compares the resulting partitions.
+This procedure relies on the \RepresentationConvergenceHypothesisName, according to which networks trained on the same task develop similar concepts.
+To evaluate it, we introduced three metrics.
+The \gls{cu} measures the consistency of the clusters across surrogate policies, the \gls{as} measures how much they differ from trivial baselines, and the \gls{acu} combines both properties.
+
+Applied to six Atari environments, \gls{car} recovers similar clustering structures across independently trained surrogate policies, with a \gls{cu} that frequently exceeds $0.5$.
+This convergence reflects concepts that emerge during learning, since the \gls{as} verifies that the clusters are abstract and do not merely reproduce the structure of the observations, the actions, or an untrained network.
+This interpretation is confirmed by the qualitative analysis, which shows that the clusters capture interpretable aspects of the task, such as the progression of the episode or specific game situations.
+Overall, these results provide empirical support for the \RepresentationConvergenceHypothesisName.
+
+\subsection{A Coherent Chain of Hypotheses}
 
 Throughout these contributions, we developed three hypotheses that form a coherent chain.
 The \MechanisticHypothesisName states that \glspl{nn} can be understood through their internal mechanisms.
