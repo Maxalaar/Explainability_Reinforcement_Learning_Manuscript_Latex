@@ -4,52 +4,60 @@
 The limitations discussed above suggest several directions for future research.
 This section presents four of them.
 For each of them, we first identify the main scientific challenge it raises.
-We then describe the approach we propose and how it could be validated.
+We then describe the approach we propose, how it could be validated, and its main limitations.
 
 \subsection{Automatic Textual Description of Clusters}
 \label{subsec:conclusion_perspectives_textual_description}
 
 The first perspective addresses the manual interpretation of the clusters, since the meaning of each cluster is currently assigned by hand.
-The challenge is to obtain a reliable textual description of each cluster automatically.
+The main challenge is to obtain a reliable textual description of each cluster automatically.
 
 One possible approach is to first extract, for each cluster, the video segments formed by consecutive observations belonging to it.
 Each segment is then described in natural language by a vision-language model.
-Finally, the descriptions of all segments of a cluster are synthesized into a single description of the cluster.
+The descriptions of all segments of a cluster are synthesized into a single description of the cluster.
 
 The reliability of these descriptions can be assessed through a classification test.
-Given a new video segment, not used to produce the descriptions, a model must identify the cluster to which it belongs, using only the textual descriptions of the clusters.
+Given a new video segment, not used to produce the descriptions, a vision-language model must identify the cluster to which it belongs, using only the textual descriptions of the clusters.
 The predicted cluster is then compared with the one assigned by \gls{car}.
-If the classification accuracy is high, the textual description faithfully captures what distinguishes the cluster.
-This would fully automate the \gls{car} method, from the identification of the clusters to their interpretation.
+If the classification accuracy is well above chance level, the textual description faithfully captures what distinguishes the cluster.
 
-\subsection{From Latent to the Strategy}
+One limitation is that the vision-language model may describe visible elements that are not discriminative.
+In Atari environments, for example, it may describe the level or elements that remain identical from one cluster to another.
+The contrastive synthesis partly mitigates this risk, since it focuses on the features that separate the clusters.
+If successful, this approach would fully automate the \gls{car} method, from the identification of the clusters to their interpretation.
+
+\subsection{From the Latent Space to the Strategy}
 \label{subsec:conclusion_perspectives_strategy}
 
-The second perspective addresses the lack of a direct link between the clusters and the decisions of the agent.
-Its goal is to derive an explanation of the strategy of the agent from the similarity of its \glspl{lr}.
+The second perspective addresses the lack of a direct link between the clusters and the agent's decisions.
+Its goal is to derive an explanation of the agent's strategy from the similarity of its \glspl{lr}.
 The main challenge is that the clusters group states that the agent perceives as similar, but provide no information about the dynamics of its interaction with the environment.
-They must therefore be turned from a static view of the \gls{ls} into a dynamic view of the behavior of the agent.
+It is therefore necessary to move from a static view of the \gls{ls} to a dynamic view of the agent's behavior.
 
-Each cluster can be treated as an abstract state.
-The transitions observed between clusters during episodes then define a simplified \gls{mdp}.
-This \gls{mdp} can be represented as a high-level graph.
+Each episode can first be converted into a sequence of clusters, by assigning each observation to its cluster and merging consecutive repetitions.
+Each cluster then becomes an abstract state.
+The transitions observed between clusters define a graph that represents the dynamics of the interaction between the agent and its environment.
 Its nodes are the concepts identified by \gls{car}, and its edges describe how the agent moves between them.
-This graph thus summarizes the strategy of the agent.
+Such a graph thus summarizes the agent's strategy.
 
-Such a graph is useful only if it is truly informative for an observer.
-An observer with the graph should be able to describe the behavior of the agent better than an observer without it.
+A first validation consists in checking that the graph correctly predicts the transitions observed in episodes not used to build it.
+One limitation is that, when the number of clusters is large, the graph may become too dense to be read.
+Rare transitions can then be pruned, keeping only those that characterize the agent's strategy.
 
 \subsection{Human Evaluation of Explanations}
 \label{subsec:conclusion_perspectives_human_evaluation}
 
 The third perspective concerns the observers to whom the explanations are addressed.
 Its objective is to verify that the explanations produced by \gls{car} actually improve the observer's mental model of the agent.
-This would also confirm the relevance of the associated metrics, namely \gls{cu}, \gls{as}, and \gls{acu}.
 The main challenge is that understanding has no consensual operational definition, which makes it difficult to measure.
-
 Such an evaluation requires an experimental protocol involving human observers.
 This protocol should be defined in collaboration with researchers in cognitive science and psychology.
-It would then be tested by comparing the understanding of observers with and without the explanations of \gls{car}.
+
+Building on the two previous perspectives, the protocol can assess understanding at two levels of increasing difficulty.
+At the level of concepts, observers receive the textual descriptions of the clusters and must assign new video segments to the corresponding cluster.
+Their accuracy would show whether the descriptions, in addition to being meaningful for a vision-language model, are also meaningful for humans.
+At the level of strategy, observers receive the graph and a video of an episode, and must reconstruct the order in which the agent goes through the clusters.
+The main practical limitation is the cost of such a study, which requires a sufficient number of participants to draw reliable conclusions.
 
 \subsection{Hypotheses on the Structure of the Latent Space}
 \label{subsec:conclusion_perspectives_latent_structure}
@@ -61,5 +69,10 @@ The main challenge is that the two families of methods do not produce the same k
 
 The metrics proposed in this thesis, namely \gls{cu}, \gls{as}, and \gls{acu}, can serve as a common framework.
 They can be applied to the concepts extracted by methods based on superposition, provided that these concepts are expressed as a partition of the observations.
+For instance, each observation can be assigned to the direction along which it is most strongly activated.
+To ensure a fair comparison, both families of methods should produce the same number of concepts.
 Both hypotheses can then be evaluated with these metrics on the same agents and environments.
-The hypothesis that yields the most universal and abstract concepts would be the one that best describes the structure of the \gls{ls}.
+If one hypothesis yields more universal and abstract concepts, this would provide evidence that it better describes the structure of the \gls{ls}.
+
+One limitation is that forcing a partition may disadvantage methods based on superposition, since several directions can be active for the same observation.
+Extending the metrics to overlapping assignments would remove this bias.
