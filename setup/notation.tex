@@ -26,6 +26,10 @@
 % Function computed by layer #1 of a network.
 \newcommand{\LayerFunction}[1]{f^{(#1)}}
 
+% Attention mechanism: softmax operator and dimension of queries and keys.
+\DeclareMathOperator{\softmax}{softmax}
+\newcommand{\KeyDim}{d_{\mathrm{key}}}
+
 % Latent representation h^{(l)}: optional #1 = layer, optional #2 = decoration
 % (e.g. \prime or *), placed in the same superscript.
 \NewDocumentCommand{\latentRepresentation}{o o}{%

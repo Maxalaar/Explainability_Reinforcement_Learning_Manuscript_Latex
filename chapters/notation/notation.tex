@@ -70,6 +70,16 @@ $\latentRepresentation[l]$ & Latent representation of layer $l$, given by its ac
 $h^{(l)}_i$ & Activation of neuron $i$ of layer $l$ \\
 $\sigma$ & Activation function, applied element-wise \\
 $\LayerFunction{l}$ & Function computed by layer $l$ \\
+$\mat{H}^{(l)}$ & Representation of layer $l$, as feature maps or as a sequence of tokens \\
+$\mat{H}^{(l)}_k, \mat{W}^{(l)}_k, b^{(l)}_k$ & Feature map, kernel and bias of channel $k$ of a convolutional layer \\
+$\kappa$ & Size of a convolution kernel \\
+$\ast$ & Convolution \\
+$m$ & Number of tokens \\
+$\mat{Q}, \mat{K}, \mat{V}$ & Queries, keys and values of the tokens \\
+$\mat{W}^{(l)}_Q, \mat{W}^{(l)}_K, \mat{W}^{(l)}_V$ & Projection matrices of an attention mechanism \\
+$\KeyDim$ & Dimension of queries and keys \\
+$\mat{A}$ & Attention weights \\
+$\softmax$ & Softmax function \\
 $\Encoder, \Decoder$ & Encoder and decoder \\
 $\vect{z} \in \mathcal{Z}$ & Code produced by an encoder, and the space of codes \\
 \end{notationgroup}

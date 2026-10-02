@@ -1,0 +1,67 @@
+\begin{figure}[t]
+    \centering
+    \resizebox{0.85\textwidth}{!}{
+        \begin{tikzpicture}
+
+        %%── Input feature map (layer l-1): 6x6 grid, cell = 0.5 ─────────────────────
+        \begin{scope}[shift={(0,-1.5)}]
+            \fill[gray!10] (0,0) rectangle (3,3);
+            \fill[myorange!35] (0.5,1.0) rectangle (2.0,2.5);
+            \foreach \i in {0,...,6} {
+                \draw[gray!60] (0.5*\i,0) -- (0.5*\i,3);
+                \draw[gray!60] (0,0.5*\i) -- (3,0.5*\i);
+            }
+            \draw[thick] (0,0) rectangle (3,3);
+            \draw[very thick, myorange] (0.5,1.0) rectangle (2.0,2.5);
+        \end{scope}
+        \node at (1.5,2.0) {Layer $l-1$};
+        \node[anchor=east] at (-0.1,0) {$\mat{H}^{(l-1)}$};
+        \node[text=myorange] at (1.5,-2.0) {Receptive field};
+
+        %%── Column titles ───────────────────────────────────────────────────────────
+        \node at (5.8,4.9) {Kernels};
+        \node at (10,4.9) {Layer $l$};
+
+        %%── One kernel and its output feature map per row ───────────────────────────
+        \foreach \yc/\col/\k in {3.2/myblue/1, 0/mygreen/2, -3.2/myred/n_l} {
+
+            % Kernel: 3x3 grid, cell = 0.4
+            \begin{scope}[shift={(5.2,\yc-0.6)}]
+                \fill[\col!25] (0,0) rectangle (1.2,1.2);
+                \foreach \i in {0,...,3} {
+                    \draw[\col] (0.4*\i,0) -- (0.4*\i,1.2);
+                    \draw[\col] (0,0.4*\i) -- (1.2,0.4*\i);
+                }
+                \draw[thick, \col] (0,0) rectangle (1.2,1.2);
+                \node[text=\col] at (0.6,1.5) {$\mat{W}^{(l)}_{\k}$};
+            \end{scope}
+
+            % Output feature map: 4x4 grid, cell = 0.5
+            \begin{scope}[shift={(9,\yc-1)}]
+                \fill[\col!12] (0,0) rectangle (2,2);
+                \fill[\col!70] (0.5,1.0) rectangle (1.0,1.5);
+                \foreach \i in {0,...,4} {
+                    \draw[\col!50] (0.5*\i,0) -- (0.5*\i,2);
+                    \draw[\col!50] (0,0.5*\i) -- (2,0.5*\i);
+                }
+                \draw[thick, \col] (0,0) rectangle (2,2);
+                \node[text=\col, anchor=west] at (2.15,1) {$\mat{H}^{(l)}_{\k}$};
+            \end{scope}
+
+            % Receptive field -> kernel
+            \draw[dashed, \col] (2.0, 1.0) -- (5.2,\yc+0.6);
+            \draw[dashed, \col] (2.0,-0.5) -- (5.2,\yc-0.6);
+            % Kernel -> output cell
+            \draw[dashed, \col] (6.4,\yc+0.6) -- (9.5,\yc+0.5);
+            \draw[dashed, \col] (6.4,\yc-0.6) -- (9.5,\yc);
+        }
+
+        %%── Vertical dots between the second and the last kernel ───────────────────
+        \node at (5.8,-1.6) {$\vdots$};
+        \node at (10,-1.6) {$\vdots$};
+
+        \end{tikzpicture}
+    }
+    \caption{Convolutional layer.}
+    \label{fig:convolutional_layer}
+\end{figure}

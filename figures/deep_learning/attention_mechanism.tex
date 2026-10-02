@@ -1,0 +1,85 @@
+\begin{figure}[t]
+    \centering
+
+    % \matgrid{x}{y}{cols}{rows}{color}: grid with lower-left corner at (x,y), cell = 0.4.
+    \newcommand{\matgrid}[5]{%
+        \begin{scope}[shift={(#1,#2)}]
+            \fill[#5!20] (0,0) rectangle (0.4*#3,0.4*#4);
+            \foreach \i in {0,...,#3} \draw[#5!70] (0.4*\i,0) -- (0.4*\i,0.4*#4);
+            \foreach \j in {0,...,#4} \draw[#5!70] (0,0.4*\j) -- (0.4*#3,0.4*\j);
+            \draw[thick, #5] (0,0) rectangle (0.4*#3,0.4*#4);
+        \end{scope}}
+
+    \resizebox{\textwidth}{!}{
+        \begin{tikzpicture}[
+            arr/.style={-{Stealth[length=4pt, width=3pt]}, thick},
+            op/.style={draw, thick, rounded corners=3pt, fill=gray!10, inner sep=5pt},
+        ]
+
+        %%── Input tokens H^{(l-1)} ──────────────────────────────────────────────────
+        \matgrid{0}{-0.8}{4}{4}{darkgray}
+        \foreach \r in {1,...,4}
+            \node[anchor=east, font=\footnotesize] at (-0.05,1.0-0.4*\r) {$\r$};
+        \node at (0.8,1.3) {Layer $l-1$};
+        \node at (0.8,-1.3) {$\mat{H}^{(l-1)}$};
+
+        %%── Queries, keys and values ────────────────────────────────────────────────
+        \matgrid{3.6}{1.8}{3}{4}{myblue}
+        \matgrid{3.6}{-0.8}{3}{4}{mygreen}
+        \matgrid{3.6}{-3.4}{3}{4}{myred}
+        \node[text=myblue]  at (4.2,3.7)  {Queries $\mat{Q}$};
+        \node[text=mygreen] at (4.2,1.1)  {Keys $\mat{K}$};
+        \node[text=myred]   at (4.2,-1.5) {Values $\mat{V}$};
+
+        \draw[arr, myblue]  (1.7,0.3)  -- node[fill=white, inner sep=1.5pt] {$\mat{W}^{(l)}_Q$} (3.5,2.6);
+        \draw[arr, mygreen] (1.7,0)    -- node[fill=white, inner sep=1.5pt] {$\mat{W}^{(l)}_K$} (3.5,0);
+        \draw[arr, myred]   (1.7,-0.3) -- node[fill=white, inner sep=1.5pt] {$\mat{W}^{(l)}_V$} (3.5,-2.6);
+
+        %%── Scores and softmax ──────────────────────────────────────────────────────
+        \node[op] (score) at (6.7,1.3) {$\dfrac{\mat{Q}\mat{K}^{\top}}{\sqrt{\KeyDim}}$};
+        \node[op] (soft)  at (8.7,1.3) {$\softmax$};
+        \draw[arr, myblue]  (4.9,2.6) -- (score);
+        \draw[arr, mygreen] (4.9,0)   -- (score);
+        \draw[arr] (score) -- (soft);
+
+        %%── Attention weights A (heat map) ──────────────────────────────────────────
+        \begin{scope}[shift={(10.9,0.5)}]
+            \foreach \r/\a/\b/\c/\d in {0/70/15/10/5, 1/20/50/25/5, 2/5/35/40/20, 3/5/10/30/55} {
+                \fill[myorange!\a] (0.0,1.2-0.4*\r) rectangle (0.4,1.6-0.4*\r);
+                \fill[myorange!\b] (0.4,1.2-0.4*\r) rectangle (0.8,1.6-0.4*\r);
+                \fill[myorange!\c] (0.8,1.2-0.4*\r) rectangle (1.2,1.6-0.4*\r);
+                \fill[myorange!\d] (1.2,1.2-0.4*\r) rectangle (1.6,1.6-0.4*\r);
+            }
+            \foreach \i in {0,...,4} {
+                \draw[myorange!50] (0.4*\i,0) -- (0.4*\i,1.6);
+                \draw[myorange!50] (0,0.4*\i) -- (1.6,0.4*\i);
+            }
+            \draw[thick, myorange] (0,0) rectangle (1.6,1.6);
+            \foreach \r in {1,...,4} {
+                \node[anchor=east, font=\footnotesize] at (-0.05,1.8-0.4*\r) {$\r$};
+                \node[anchor=south, font=\footnotesize] at (-0.2+0.4*\r,1.62) {$\r$};
+            }
+            \node[font=\footnotesize] at (-0.55,0.8) {$i$};
+            \node[font=\footnotesize] at (0.8,2.15) {$j$};
+        \end{scope}
+        \node[text=myorange] at (11.7,3.1) {Attention weights $\mat{A}$};
+        \draw[arr] (soft) -- (9.9,1.3);
+
+        %%── Weighted sum of the values ──────────────────────────────────────────────
+        \node[op] (mul) at (11.7,-2.6) {$\mat{A}\mat{V}$};
+        \draw[arr, myorange] (11.7,0.4) -- (mul);
+        \draw[arr, myred] (4.9,-2.6) -- (mul);
+
+        %%── Output H^{(l)} ──────────────────────────────────────────────────────────
+        \matgrid{13.6}{-3.4}{3}{4}{mypurple}
+        \draw[arr] (mul) -- (13.5,-2.6);
+        \foreach \r in {1,...,4}
+            \node[anchor=west, font=\footnotesize, text=mypurple] at (14.85,-1.6-0.4*\r) {$\r$};
+        \node[text=mypurple] at (14.2,-0.9) {Layer $l$};
+        \node[text=mypurple] at (14.2,-3.9) {$\mat{H}^{(l)}$};
+
+        \end{tikzpicture}
+    }
+    \caption{Attention mechanism.}
+    \label{fig:attention_mechanism}
+\end{figure}

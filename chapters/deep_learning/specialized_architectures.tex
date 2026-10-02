@@ -1,0 +1,123 @@
+\section{Specialized Architectures}\label{sec:deep_learning_specialized_architectures}
+
+The concepts presented so far have been introduced with the \gls{mlp}.
+In this architecture, each neuron is connected to all neurons of the previous layer, and no assumption is made about the structure of the input.
+However, many types of data have a structure that can be exploited.
+The pixels of an image are organized in a spatial grid, and the words of a sentence form an ordered sequence in which each word depends on its context.
+Specialized architectures organize the connections between neurons so as to take this structure into account.
+
+These architectures do not modify the principles introduced in this chapter.
+A network remains a composition of layers, where each layer computes its representation from that of the previous one,
+\begin{equation}
+\latentRepresentation[l] = \LayerFunction{l}\left(\latentRepresentation[l-1]\right).
+\label{eq:layer_function}
+\end{equation}
+Its parameters are still optimized by gradient descent, and it is still evaluated on data it has not seen during training.
+Only the function $\LayerFunction{l}$ computed by each layer changes.
+This section presents two architectures used throughout this thesis, the \gls{cnn} and the attention mechanism, which is the basis of the Transformer architecture.
+
+\subsection{Convolutional Neural Networks}
+
+\glspl{cnn} were introduced to process images \parencite{lecun1989backpropagation}.
+Applying a \gls{mlp} to an image would require connecting each neuron to every pixel.
+The number of parameters would then grow with the size of the image, and the spatial organization of the pixels would be ignored.
+\glspl{cnn} rely instead on two properties of images.
+The first is locality, since the information needed to detect a pattern such as an edge is contained in a small region of the image.
+The second is that the same pattern can appear at any position in the image.
+
+A convolutional layer exploits these two properties by means of kernels, also called filters.
+A kernel is a small matrix of weights, typically of size $3 \times 3$, which is applied to a local region of the representation of the previous layer, called its receptive field.
+The kernel is then slid over every position of this representation.
+At each position, a weighted sum of the elements of the receptive field is computed, which gives one element of the output.
+The set of outputs obtained over all positions forms a feature map.
+Since the same weights are used at every position, the number of parameters of the layer does not depend on the size of the input, and a pattern is detected in the same way wherever it appears.
+
+A convolutional layer uses several kernels, each detecting a different pattern.
+The representation of layer $l$ is therefore composed of $n_l$ feature maps, also called channels, and is denoted $\mat{H}^{(l)}$.
+The feature map produced by the $k$-th kernel is given by:
+\begin{equation}
+\mat{H}^{(l)}_k = \sigma^{(l)}\left(\mat{W}^{(l)}_k \ast \mat{H}^{(l-1)} + b^{(l)}_k\right), \qquad k = 1, \dots, n_l,
+\label{eq:convolutional_layer}
+\end{equation}
+where:
+\begin{itemize}
+\item $\mat{W}^{(l)}_k$ is the $k$-th kernel of layer $l$,
+\item $b^{(l)}_k$ is the bias associated with this kernel,
+\item $\ast$ denotes the convolution operation, which applies the kernel at every position of $\mat{H}^{(l-1)}$.
+\end{itemize}
+For a single-channel input and a kernel of size $\kappa \times \kappa$, the element at position $(i, j)$ of the convolution is:
+\begin{equation}
+\left(\mat{W}^{(l)}_k \ast \mat{H}^{(l-1)}\right)_{i,j} = \sum_{i'=1}^{\kappa} \sum_{j'=1}^{\kappa} W^{(l)}_{k,i',j'} \, H^{(l-1)}_{i+i'-1,\, j+j'-1}.
+\label{eq:convolution}
+\end{equation}
+When $\mat{H}^{(l-1)}$ has several channels, each kernel covers all of them, and the sum also runs over the $n_{l-1}$ channels.
+For the first layer, $\mat{H}^{(0)}$ is the input image, whose channels correspond for instance to the color components of the pixels.
+The kernel can also be moved by steps larger than one element, called the stride, which reduces the size of the feature maps.
+
+Figure~\ref{fig:convolutional_layer} illustrates this computation for a single-channel input.
+The receptive field, highlighted in orange on the representation $\mat{H}^{(l-1)}$, is combined with each kernel $\mat{W}^{(l)}_k$.
+Each combination gives one element of the corresponding feature map $\mat{H}^{(l)}_k$, shown in the same color as the kernel.
+Sliding the receptive field over every position of $\mat{H}^{(l-1)}$ produces all the other elements of these feature maps.
+
+\input{figures/deep_learning/convolutional_layer.tex}
+
+As with the \gls{mlp}, convolutional layers are stacked.
+The receptive field of a neuron, measured on the input image, grows with depth.
+The first layers thus detect simple local patterns, while the deeper layers combine them into patterns that cover larger regions of the image \parencite{goodfellow2016deep}.
+The last feature maps are then flattened into a vector and passed through a \gls{mlp}, which produces the output of the network.
+The surrogate policies studied in this thesis follow this structure, as shown in Figure~\ref{fig:neural_architecture}.
+\glspl{cnn} trained on \glspl{gpu} were at the origin of the rise of \gls{dl} in computer vision \parencite{krizhevsky2012imagenet}, and are widely used in \gls{rl} to process visual observations \parencite{mnih2013playingatarideepreinforcement, espeholt2018impala}.
+
+\subsection{Attention Mechanism}
+
+The attention mechanism processes an input made of a sequence of elements, called tokens.
+Depending on the task, a token can represent a part of a word, a region of an image, or an element of an observation.
+Each token is a vector, and the $m$ tokens of layer $l-1$ are stacked as the rows of a matrix $\mat{H}^{(l-1)}$.
+Unlike a convolutional layer, which only combines neighboring elements, the attention mechanism allows each token to gather information from all the other tokens of the sequence, whatever their position \parencite{vaswani2017attention}.
+
+Three matrices are first computed from the tokens by learned linear projections:
+\begin{equation}
+\mat{Q} = \mat{H}^{(l-1)} \mat{W}^{(l)}_Q, \qquad
+\mat{K} = \mat{H}^{(l-1)} \mat{W}^{(l)}_K, \qquad
+\mat{V} = \mat{H}^{(l-1)} \mat{W}^{(l)}_V,
+\label{eq:queries_keys_values}
+\end{equation}
+where the rows of $\mat{Q}$, $\mat{K}$ and $\mat{V}$ are respectively the queries, the keys and the values of the tokens.
+The query of a token describes the information it is looking for, its key describes the information it contains, and its value is the information it transmits.
+The queries and keys are vectors of dimension $\KeyDim$.
+
+The query of each token is then compared with the keys of all tokens by a scalar product.
+These scores are normalized into attention weights by the softmax function, applied to each row:
+\begin{equation}
+\mat{A} = \softmax\left(\frac{\mat{Q}\mat{K}^{\top}}{\sqrt{\KeyDim}}\right),
+\qquad \text{with} \quad \softmax(\vect{u})_i = \frac{\exp(u_i)}{\sum_{j} \exp(u_j)}.
+\label{eq:attention_weights}
+\end{equation}
+The weight $A_{i,j}$ indicates how much token $i$ attends to token $j$.
+The weights of each row are positive and sum to one.
+The division by $\sqrt{\KeyDim}$ prevents the scores from becoming too large as the dimension increases, which would concentrate the softmax on a single token.
+Finally, each output token is the weighted sum of the values according to these weights:
+\begin{equation}
+\mat{H}^{(l)} = \mat{A}\mat{V} = \softmax\left(\frac{\mat{Q}\mat{K}^{\top}}{\sqrt{\KeyDim}}\right) \mat{V}.
+\label{eq:attention}
+\end{equation}
+
+Figure~\ref{fig:attention_mechanism} illustrates this mechanism for a sequence of $m = 4$ tokens, numbered from $1$ to $4$ and stacked as the rows of $\mat{H}^{(l-1)}$.
+The tokens are projected into queries, keys and values, shown in blue, green and red respectively.
+The queries and keys are combined to give the attention weights $\mat{A}$, represented in orange as a heat map in which darker cells correspond to larger weights.
+Row $i$ of this heat map indicates how much token $i$ attends to each token $j$.
+The output tokens of layer $l$, shown in purple, are then obtained by weighting the values with these attention weights.
+
+\input{figures/deep_learning/attention_mechanism.tex}
+
+The main difference with the layers presented so far lies in the weights that combine the inputs.
+In a \gls{mlp} or a \gls{cnn}, these weights are parameters, fixed once training is completed.
+In the attention mechanism, the weights $\mat{A}$ are computed from the input itself, so that the way tokens are combined adapts to each input.
+Only the projection matrices $\mat{W}^{(l)}_Q$, $\mat{W}^{(l)}_K$ and $\mat{W}^{(l)}_V$ are learned, and their size does not depend on the number of tokens $m$.
+Since this mechanism does not take the order of the tokens into account, information about the position of each token is generally added to its vector before the first layer.
+
+The Transformer architecture is built by stacking blocks that combine an attention mechanism with a \gls{mlp} applied independently to each token \parencite{vaswani2017attention}.
+In practice, several attention mechanisms are computed in parallel within each block, each with its own projections, which allows different relations between tokens to be captured simultaneously.
+This architecture underlies \glspl{llm}, which are trained on very large text corpora to predict the next token of a sequence \parencite{brown2020language}.
+In \gls{rl}, it is used to build policies that retain a memory of past observations \parencite{parisotto2020stabilizing}.
+Because the attention weights $\mat{A}$ indicate which tokens contribute to each output, they are also used to explain the decisions of agents, as discussed in Section~\ref{subsubsec:attention_based_architecture}.
