@@ -87,6 +87,14 @@
        \Hy@raisedlink{\hypertarget{cite.\the\c@refsection @\abx@field@entrykey}{}}}}}
 \makeatother
 
+% Page breaking: never leave a single line of a paragraph alone at the top or
+% bottom of a page, and let pages end short instead of stretching the vertical
+% space between paragraphs (book.cls uses \flushbottom in two-sided mode).
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000
+\raggedbottom
+
 % Floats and positioning
 \usepackage{float}
 \usepackage{placeins}
