@@ -72,12 +72,26 @@ mode, so this single command is always enough — no extra flags required.
 LuaLaTeX stops and silently waits for keyboard input on the first warning,
 which looks exactly like the terminal being frozen.
 
-To clean up generated build files (`.aux`, `.log`, `.bbl`, ...) without
-touching the PDF:
+The PDF and all build files (`.aux`, `.log`, `.bbl`, ...) go to
+`build/Working/`. To clean up the build files without touching the PDF:
 
 ```bash
 latexmk -c manuscript.tex
 ```
+
+### Release PDFs
+
+To produce the two versions to send:
+
+```bash
+./build_release.sh
+```
+
+It compiles the screen version (`..._Computer.pdf`) and the recto-verso
+version (`..._Print.pdf`) in `build/Computer/` and `build/Print/`, copies both
+into `release/`, and replaces the versioned `manuscript.pdf` at the repo root
+with the Computer version. Draft switches in `manuscript.tex` are forced off
+for these builds.
 
 ---
 

@@ -21,6 +21,14 @@
 % as if that sheet were included.
 % \notitlepagetrue
 
+% Release build (see build_release.sh): the mode is forced from the command
+% line, and draft switches are disabled whatever their state above.
+\ifdefined\releaseprint \printversiontrue \fi
+\ifdefined\releasebuild
+  \draftversionfalse
+  \draftfiguresfalse
+\fi
+
 \ifprintversion
   \PassOptionsToClass{twoside, openright}{book}
 \else

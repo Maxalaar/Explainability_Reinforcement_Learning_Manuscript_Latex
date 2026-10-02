@@ -6,5 +6,6 @@
   urlcolor=mygreen,
   filecolor=mygreen
 }
-% Acronyms stay clickable but are printed in black, to avoid coloring every one.
-\renewcommand*{\glstextformat}[1]{\textcolor{black}{#1}}
+% Acronyms are always clickable, but colored only on their first use in each
+% chapter (first uses are reset by \glsresetall); later uses are in black.
+\renewcommand*{\glstextformat}[1]{\ifglsused{\glslabel}{\textcolor{black}{#1}}{#1}}

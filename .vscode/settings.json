@@ -1,5 +1,6 @@
 {
     "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.latex.outDir": "%DIR%/build/Working",
     "latex-workshop.latex.tools": [
         {
             "name": "latexmk",
