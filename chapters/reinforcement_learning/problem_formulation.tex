@@ -23,14 +23,14 @@ We therefore restrict the analysis to the following configuration:
     \item The single-agent learning setting is considered.
     If any other agents are present in the environment, they are treated as part of the environment dynamics.
 
-    \item Finite-horizon \glspl{mdp} are considered.  
+    \item Episodic \glspl{mdp} are considered.  
     Each interaction sequence between the \gls{mdp} and the policy has a defined beginning and a defined end.  
     Between these two points, the number of interaction steps may vary depending on the situation, but it always remains finite.
 
     \item The partially observable framework is adopted, where the agent does not have direct access to the true state of the system, but instead relies on limited observations that provide only partial information about the environment.  
 \end{itemize}
 
-The resulting framework can be formally described as a single-agent finite-horizon partially observable \gls{mdp}.
+The resulting framework can be formally described as a single-agent episodic partially observable \gls{mdp}.
 For simplicity, we will refer to this setting as an \enquote{\gls{mdp}} throughout this thesis.
 
 A \gls{mdp} is defined by the tuple \((\StateSet, \ObsSet, \ActionSet, \RewardSet, p)\):  
@@ -42,11 +42,11 @@ A \gls{mdp} is defined by the tuple \((\StateSet, \ObsSet, \ActionSet, \RewardSe
     The set of terminal states is denoted by \(\StateSetTerminal\), with a terminal state written as \(\StateTerminal \in \StateSetTerminal\).
     
     \item \textbf{\(\ObsSet\)}: The set of observations that the agent can perceive from the environment.
-    A observation belonging to this set is denoted by \(o \in \ObsSet\). 
+    An observation belonging to this set is denoted by \(o \in \ObsSet\). 
     Unlike the state \(s \in \StateSet\), which is hidden from the agent, the observation \(o \in \ObsSet\) provides partial information about the current state.
 
     \item \textbf{\(\ActionSet\)}: The set of actions that the agent may execute.
-    A action belonging to this set is denoted by \(a \in \ActionSet\). 
+    An action belonging to this set is denoted by \(a \in \ActionSet\). 
     Actions influence the dynamics of the \gls{mdp}, thereby shaping its future course.  
     They represent the agent's capacity to act upon its environment.
 
@@ -83,12 +83,13 @@ The notation \(a \sim \pi(\cdot \mid o)\) means that the action \(a\) is sampled
 The notation \(\pi(a \mid o)\) denotes the probability of selecting action \(a\) under the distribution \(\pi(\cdot \mid o)\).
 
 It is important to note that this policy does not include any explicit mechanism for estimating the underlying state from the observations.
-Instead, the policy must learn from experience how to infer the information about the underlying state that is not directly available in the observations.
+Instead, the policy must learn from experience which actions are best given an observation, taking implicitly into account the different states that may underlie it.
 This reflects the design of many modern \gls{rl} implementations.
-Policies are often parameterized by architectures capable of summarizing past observations, such as recurrent networks \parencite{hochreiter1997long, hausknecht2015deep, kapturowski2019recurrent} or attention-based networks \parencite{vaswani2017attention, parisotto2020stabilizing}.
-Such a policy maintains an internal state, updated at each time step from the new observation, which acts as a memory of past observations.
-For simplicity, this internal state is not made explicit in the notation, and the policy is still written \(\pi(a \mid o)\).
-These architectures do not explicitly model the uncertainty over the underlying state.
+
+In this chapter, the policy is memoryless, meaning that its decision depends only on the current observation \(o\).
+Policies can also be given a memory, by parameterizing them with architectures capable of summarizing past observations, such as recurrent networks \parencite{hochreiter1997long, hausknecht2015deep, kapturowski2019recurrent} or attention-based networks \parencite{vaswani2017attention, parisotto2020stabilizing}.
+Such a policy maintains an internal state, updated at each time step from the new observation.
+This case is not detailed here, since it only complicates the notation without changing the concepts presented in this chapter.
 
 \subsection{Trajectory}
 \label{subsec:trajectory}
@@ -121,7 +122,7 @@ Since the dynamics \(p\) are fixed, they are omitted from the notation.
 The probability of observing the trajectory \(\tau\) when following the policy \(\pi\), starting from state \(s\) with observation \(o\), is denoted by \(\Pr_\pi(\tau \mid s, o)\).
 
 An important property of the trajectory distribution is its recursive structure.
-Since both the policy \(\pi\) and the transition function \(p\) are known, the distribution over trajectories starting from \(s_1\) with observation \(o_1\) can be expressed in terms of the distribution over trajectories starting from the next state \(s_2\) with observation \(o_2\).
+Since trajectories are generated step by step by the policy \(\pi\) and the transition function \(p\), the distribution over trajectories starting from \(s_1\) with observation \(o_1\) can be expressed in terms of the distribution over trajectories starting from the next state \(s_2\) with observation \(o_2\).
 Specifically, the probability of a trajectory \(\tau\) factorizes as:
 \[
 \Pr_\pi(\tau \mid s_1, o_1) = \pi(a_1 \mid o_1) \; p(s_2, o_2, r_1 \mid s_1, a_1) \; \Pr_\pi(\tau_{2:} \mid s_2, o_2),
@@ -129,7 +130,8 @@ Specifically, the probability of a trajectory \(\tau\) factorizes as:
 where \(\tau_{t:} = (s_t, o_t, a_t, r_t, \ldots, s_T, o_T, a_T, r_T)\) denotes the part of the trajectory starting from time step \(t\).
 
 There exist two special types of trajectories.
-First, a trajectory that terminates in a terminal state is called a terminal trajectory, and is denoted by \(\tau^{\mathrm{ter}}\).
+First, a trajectory whose last transition leads to a terminal state \(s_{T+1} \in \StateSetTerminal\) is called a terminal trajectory, and is denoted by \(\tau^{\mathrm{ter}}\).
+Since no action is taken in a terminal state, this state is not included in \(\tau\).
 Second, a terminal trajectory that starts from an initial state \(\StateInitial\) and an initial observation is called an episode, and is denoted by \(\tau^{\mathrm{ep}}\).
 
 Since trajectories are stochastic, the state, observation, action and reward at each time step are random variables.
@@ -262,13 +264,13 @@ This policy is called the optimal policy and is denoted by \(\OptimalPolicy\).
 Since the policy only receives observations, it must act on an estimate of the underlying state.
 The best possible estimate given \(o\) is the distribution \(\Belief{\pi}(s \mid o)\), the probability that the state is \(s\) when \(o\) is observed.
 It depends on the policy \(\pi\), since the states in which \(o\) is encountered depend on the actions taken before, and it is learned implicitly by a policy trained on its own experience.
-The optimal policy selects the action that maximizes the expected state-action value over this estimate:
+The optimal policy only selects actions that maximize the expected state-action value over this estimate:
 \[
-\OptimalPolicy(a \mid o) =
+\OptimalPolicy(a \mid o)
 \begin{cases}
-1 & \text{if } a = \argmax_{a' \in \ActionSet}\;
+\in [0, 1] & \text{if } a \in \argmax_{a' \in \ActionSet}\;
 \sum_{s \in \StateSet} \Belief{\OptimalPolicy}(s \mid o)\, q_{\OptimalPolicy}(s, a'), \\[6pt]
-0 & \text{otherwise}.
+= 0 & \text{otherwise}.
 \end{cases}
 \]
 

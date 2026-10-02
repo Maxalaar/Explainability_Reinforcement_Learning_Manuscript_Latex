@@ -40,7 +40,7 @@ Naturally, many variants and extensions of this basic scheme exist, but the core
 
 When implementing a \gls{rl} algorithm, one of the first questions is how to represent the value function.
 In critic-only methods, this means choosing a model for \(\hat{q}\).
-Any machine learning model capable of regression task can be used for this purpose.
+Any machine learning model capable of performing regression can be used for this purpose.
 The parameters of the model are gathered in the vector \(\valueParams\), and the approximation is written \(\hat{q}_{\valueParams}\) when this dependence matters.
 In deep \gls{rl}, a \gls{nn} is used to model this function, in which case \(\valueParams\) gathers the weights and biases of the network.
 
@@ -104,7 +104,7 @@ Convergence guarantees for such algorithms have been proved under a different se
 For example, in the classical convergence results, the \gls{mdp} is fully observable, the value function is stored in a table, and the learning rate is decreased at a suitable rate over time \parencite{watkins1992qlearning}.
 In modern implementations, the value function is approximated by a \gls{nn}.
 Theoretical convergence proofs no longer hold in this setting.
-Nevertheless, deep methods have demonstrated remarkable empirical success, making them the tool of choice for RL tasks.
+Nevertheless, deep methods have demonstrated remarkable empirical success, making them the tool of choice for \gls{rl} tasks.
 
 Critic-only approaches suffer from several limitations.
 The main limitation is scalability to large action spaces.
@@ -122,6 +122,9 @@ The critic is a value function approximation \(\hat{v}_{\valueParams}(s, o)\) wi
 Analogously to critic-only methods, it is trained using supervised learning on data obtained from interaction with the \gls{mdp}.
 For each time step \(t\) along a trajectory, the input is the state-observation pair \((s_t, o_t)\) and the target is the observed return \(g_t\).
 The critic thus learns to predict the return expected under the current policy.
+Unlike \(\hat{q}\) in critic-only methods, the critic can take the state \(s_t\) as input in addition to the observation \(o_t\).
+This is possible because the critic is only used during learning, to guide the updates of the actor.
+Once learning is over, only the actor is kept to act in the environment, and it relies on observations alone.
 
 The actor is a parameterized policy \(\pi_{\params}\) with parameters \(\params\).
 
@@ -158,11 +161,12 @@ The advantage of each collected action is therefore estimated by
 
 When \(\AdvEst_t > 0\), the action \(a_t\) performed better than the critic expected, and the parameters \(\params\) are adjusted to increase the probability \(\pi_{\params}(a_t \mid o_t)\).
 When \(\AdvEst_t < 0\), the action \(a_t\) performed worse than expected, and this probability is decreased.
-Since the critic prediction is subtracted from every return, the update of the actor depends on whether an action did better or worse than usual, and not on the overall magnitude of the returns.
+Subtracting the critic prediction from the return does not change the direction of the update on average, since the advantage averages to zero under the policy.
+However, it greatly reduces the variance of the update, because each action is judged relative to the expected return of its situation rather than by the raw return.
 
 Both \(\hat{v}\) and \(\pi_{\params}\) are improved simultaneously within the same loop.
 The critic provides a learned baseline for the actor, and the actor generates the data used to train the critic.
-This interplay reduces the instability inherent to \gls{rl}.
+By reducing the variance of the updates of the actor, this interplay mitigates the instability inherent to \gls{rl}.
 Algorithm~\ref{alg:actor_critic} summarizes this whole actor-critic learning loop.
 Lines~\ref{alg:actor_critic:init}--\ref{alg:actor_critic:init_end} initialize the parameters of the critic and of the actor, and Line~\ref{alg:actor_critic:loss} sets the \gls{mse} as the loss of the critic.
 Each iteration of the loop starting at Line~\ref{alg:actor_critic:loop} first collects an episode with the current actor (Line~\ref{alg:actor_critic:collect}).
@@ -172,5 +176,5 @@ Finally, Line~\ref{alg:actor_critic:actor} updates the actor in the direction gi
 
 \input{algorithms/reinforcement_learning/actor_critic.tex}
 
-PPO (Proximal Policy Optimization), which is the current standard in \gls{rl}, belongs to this family of actor-critic methods.
+\gls{ppo} \parencite{schulman2017proximalpolicyoptimizationalgorithms}, one of the most widely used \gls{rl} algorithms, belongs to this family of actor-critic methods.
 It will be used throughout this thesis for all \gls{rl} experiments.

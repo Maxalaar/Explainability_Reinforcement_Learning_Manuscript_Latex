@@ -41,13 +41,13 @@ $\mathcal{L} \leftarrow$ \gls{mse}\nllabel{alg:critic_only:loss}\;
     $\mathcal{D}' \leftarrow \big\{\big((o, a), g\big) \mid (s, o, a, g) \in \mathcal{D}\big\}$\nllabel{alg:critic_only:dataset}
 
     \BlankLine
-    \tcp{Model update whith SGD see Algorithm~\ref{alg:stochastic_gradient_descent}}
+    \tcp{Model update with SGD see Algorithm~\ref{alg:stochastic_gradient_descent}}
     $\valueParams \leftarrow$ \FnSGD{$\mathcal{D}', \hat{q}, \mathcal{L}, \eta, \valueParams$}\nllabel{alg:critic_only:sgd}
 }
 
 \BlankLine
 \tcp{Final policy without exploration as defined in Equation~\eqref{eq:greedy_policy}}
-$\pi_{\valueParams} \leftarrow$ policy with respect to $\hat{q}_{\valueParams}$\nllabel{alg:critic_only:greedy}\;
+$\pi_{\valueParams} \leftarrow$ greedy policy with respect to $\hat{q}_{\valueParams}$\nllabel{alg:critic_only:greedy}\;
 
 \BlankLine
 \Return{$\pi_{\valueParams}$}
