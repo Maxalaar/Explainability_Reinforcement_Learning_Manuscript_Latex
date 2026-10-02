@@ -10,9 +10,8 @@ Finally, we introduce \gls{me}, the approach adopted in this thesis to explain \
 \subsection{Deep Reinforcement Learning}
 
 Over the past decade, \gls{ai} has advanced rapidly, driven largely by major developments in \gls{dl}.
-This type of approach relies on artificial \glspl{nn}, which offer an unprecedented level of performance.
-Inspired by their biological counterparts, these networks are known as connectionist models.
-In such models, information is represented and transformed through patterns of interactions among interconnected elementary computational units \parencite{rumelhart1986learning}.
+This type of approach relies on artificial \glspl{nn}, which have achieved unprecedented performance across a wide range of tasks \parencite{goodfellow2016deep}.
+Inspired by biological neurons, these networks belong to the family of connectionist models, in which information is represented and transformed through patterns of interactions among interconnected elementary computational units \parencite{rumelhart1986learning}.
 
 Among the fields transformed by \gls{dl}, \gls{rl} holds a particular place and is the main focus of this thesis.
 The purpose of \gls{rl} is to enable an agent to learn how to make decisions through interactions with an environment \parencite{sutton2018reinforcement}.
@@ -21,7 +20,7 @@ This action changes the state of the environment and results in a reward.
 The objective of the agent is then to learn a behavior that maximizes the cumulative rewards obtained over time.
 
 The combination of \gls{rl} and \gls{dl}, known as deep \gls{rl}, is currently one of the most effective approaches for creating autonomous agents \parencite{arulkumaran2017deep}.
-Due to their flexibility, \glspl{nn} provide a powerful means of representing the agent's information-processing capabilities.
+Due to their flexibility, \glspl{nn} provide a powerful means of representing the agent's policy.
 Their use has consequently made it possible to apply \gls{rl} to problems that were previously intractable \parencite{mnih2013playingatarideepreinforcement, silver2017mastering, openai2019dota2largescale}.
 The ability of \gls{rl} to operate in increasingly complex environments also allows agents to learn increasingly complex behaviors.
 These behaviors are not explicitly programmed by the designer but emerge from the interaction between the learned policy, the environment, and the reward function.
@@ -46,7 +45,7 @@ In a game environment, such behaviors have limited consequences, and they can be
 However, agents trained with \gls{rl} are increasingly deployed in open-ended settings where they interact with the real world, notably \glspl{llm} trained with \gls{rl} and deployed as agents.
 In such settings, unintended behaviors can have far more serious consequences, and they are not always visible.
 
-In controlled experiments, some of these agents complied with their training objective only when they believed they were being trained, in order to preserve their original behavior otherwise \parencite{greenblatt2024alignment}.
+In controlled experiments, some of these agents strategically complied with a new training objective when they believed they were being trained, so as to avoid being modified and to preserve their original behavior outside of training \parencite{greenblatt2024alignment}.
 Others, given a goal conflicting with that of their developers, attempted to disable the mechanisms used to oversee them and then denied having done so \parencite{meinke2024frontier}.
 
 Such behaviors relate to the problem of alignment (Definition~\ref{def:alignment}), which has become a central concern in \gls{ai} research \parencite{ji2023ai}.
@@ -60,12 +59,9 @@ Alignment is the problem of ensuring that the behavior of an \gls{ai} system cor
 
 \subsection{The Black-Box Problem}
 
-The last examples show that an agent can behave as intended while it is observed, and differently otherwise.
+These examples show that an agent can behave as intended while it is observed, and differently otherwise.
 Observing the behavior of an agent is therefore not sufficient to verify its alignment.
-More generally, we only observe sequences of interactions between the agent and its environment.
-These observations reveal how the agent's strategy is realized in particular situations.
-However, understanding the strategy itself requires knowing how the agent would behave across all the situations it may encounter.
-Since these situations are generally too numerous to be observed exhaustively, a collection of observed behaviors may not be sufficient to characterize the strategy.
+Indeed, observations only reveal how the agent's strategy is realized in particular situations, not the strategy itself.
 
 To gain further insight into the agent's strategy, an alternative approach is to analyze the agent itself.
 However, due to their connectionist nature, \glspl{nn} that model the agent's policy are not directly interpretable.
@@ -80,7 +76,7 @@ In the specific context of \gls{rl}, this research area is referred to as \gls{x
 
 These methods can be divided into two general approaches, which are detailed in Section~\ref{subsec:explainable_artificial_intelligence}.
 Substitutive explainability adopts the \enquote{black-box} view and seeks to replace the \gls{nn} with alternative models that can be directly understood \parencite{rudin2019stop}.
-Intrinsic explainability, in contrast, assumes that \glspl{nn} contain mechanisms that can be explained, the limitation being the lack of adequate tools to analyze them \parencite{olah2020zoom}.
+Intrinsic explainability, in contrast, assumes that \glspl{nn} contain mechanisms that can be explained, the limitation being the lack of adequate tools to analyze them \parencite{olah2020zoom}.\footnote{The term \emph{intrinsic} should not be confused with \emph{intrinsic interpretability}, which in the literature refers to the use of interpretable models (Definition~\ref{def:interpretable}), such as decision trees. Such models fall under substitutive explainability.}
 This thesis adopts the intrinsic approach, and more specifically the one that seeks to explain the agent's strategy directly from the internal processes from which it emerges.
 We refer to this approach as \gls{me} (Definition~\ref{def:mechanistic_explainability}).\footnote{Commonly referred to as \emph{mechanistic interpretability} \parencite{bereska2024mechanistic}. We use the term \emph{explainability} since the internal mechanisms of an \gls{nn} are not interpretable in the sense of Definition~\ref{def:interpretable}.}
 
@@ -90,7 +86,7 @@ We refer to this approach as \gls{me} (Definition~\ref{def:mechanistic_explainab
 
 \end{definition}
 
-\gls{me} is particularly promising because it addresses how an \gls{nn} processes information, rather than only relating its inputs to its outputs.
+\gls{me} is particularly promising because it examines the internal representations through which an \gls{nn} processes information, rather than only relating its inputs to its outputs.
 In the context of alignment, explaining how an agent processes information to make its decisions would make it possible to examine its strategy directly, rather than inferring it from observed behaviors alone.
 This understanding is also a first step toward control \parencite{mini2023understanding}.
 
