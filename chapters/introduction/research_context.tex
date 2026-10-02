@@ -30,9 +30,15 @@ These behaviors are not explicitly programmed by the designer but emerge from th
 
 As the capabilities of an agent increase, the resulting behaviors can become more difficult to anticipate and control.
 In some cases, an agent may exploit unintended properties of its environment.
-An illustrative example comes from agents trained to play hide-and-seek in a physics-based environment \parencite{baker2020emergent}.
-To find the hiders, seekers learned to run into a wall with a ramp at a specific angle in order to launch themselves into the air.
+An illustrative example comes from agents trained to play hide-and-seek in a physics-based environment \parencite{baker2020emergent}, as shown in Figure~\ref{fig:hide_and_seek}.
+In the intended course of the game, the hiders (blue) move boxes to block the entrances of their shelter (Figure~\ref{fig:hide_and_seek_1}).
+They then lock the boxes in place (Figure~\ref{fig:hide_and_seek_2}), so that the seekers (red) cannot enter the shelter (Figure~\ref{fig:hide_and_seek_3}).
+However, the seekers also discovered an unintended strategy.
+When the hiders barricade themselves in a corner (Figure~\ref{fig:hide_and_seek_4}), a seeker brings a ramp against the outer wall (Figure~\ref{fig:hide_and_seek_5}).
+By running into the wall with this ramp at a specific angle, it launches itself into the air and lands behind the barricade (Figure~\ref{fig:hide_and_seek_6}).
 This behavior, impossible under the intended rules of the environment, exploited a flaw in the physics engine that the designers had not anticipated.
+
+\input{figures/introduction/hide_and_seek.tex}
 
 In a game environment, such behaviors have limited consequences.
 However, agents trained with \gls{rl} are increasingly deployed in open-ended settings where they interact with the real world, notably \glspl{llm} trained with \gls{rl} and deployed as agents.
