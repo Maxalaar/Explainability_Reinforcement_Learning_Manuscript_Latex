@@ -71,11 +71,11 @@ This demonstrates that the learned concept is not tied to a specific surface for
 
 \input{figures/latent_space_analysis/sparse_autoencoder_illustration.tex}
 
-\glspl{sae} also provide a way to intervene directly on the \gls{lr} learned by the model.
+\glspl{sae} also provide a way to perform latent interventions (see Definition~\ref{def:latent_intervention}) on the \gls{lr} learned by the model.
 A concept can be artificially activated by modifying its corresponding feature in the sparse representation $\vect{z}$, even when the input contains no reference to it.
-The modified \gls{lr} is then projected back into the original activation space, after which the model proceeds with standard next-token generation from $\latentRepresentation^{*}$:
+The modified \gls{lr} is then projected back into the original activation space, after which the model proceeds with standard next-token generation from $\latentRepresentation'$:
 \[
-\latentRepresentation^{*} = \Decoder(\vect{z}^*), \quad \text{where} \quad \vect{z}^* = \vect{z} + \alpha \, \vect{e}^{(i)},
+\latentRepresentation' = \Decoder(\vect{z}^*), \quad \text{where} \quad \vect{z}^* = \vect{z} + \alpha \, \vect{e}^{(i)},
 \]
 where:
 \begin{itemize}
@@ -83,13 +83,13 @@ where:
     \item $\vect{z}^*$ is the modified sparse representation,
     \item $\vect{e}^{(i)}$ is the basis vector of $\mathcal{Z}$ associated with the target concept direction,
     \item $\alpha$ controls the strength of the artificial activation,
-    \item $\latentRepresentation^{*}$ is the resulting edited \gls{lr} in the original activation space.
+    \item $\latentRepresentation'$ is the resulting edited \gls{lr} in the original activation space.
 \end{itemize}
 
 With this method, a reference to the Golden Gate Bridge can be injected into the \gls{llm}'s internal representation.
 This causes the model's output to shift toward discussing the Golden Gate Bridge, even when the prompt contains no reference to it.
 This provides evidence that the learned feature plays a causal role in the model's behavior.
-Such interventions enable control over specific model behaviors through \gls{ls} editing.
+Such latent interventions enable control over specific model behaviors through \gls{ls} editing.
 
 Despite their empirical success, \SuperpositionHypothesisName exhibit several important limitations that question their assumptions. 
 These limitations can be summarized as follows:
