@@ -18,7 +18,7 @@ We then introduce the \gls{ari} measure, which serves as the foundation for the 
 
 We introduce the \BehaviorReconstructionName metric to assess whether $\SurrogatePolicy{}$ faithfully reproduces the behavior of $\InitialPolicy$.
 This metric compares the returns obtained by the initial policy $\InitialPolicy$ and the surrogate policies $\SurrogatePolicy{}$ over a set of evaluation episodes.
-We use the definition of return introduced in Section~\ref{subsec:value_functions}, where $G(\tau)$ denotes the discounted sum of rewards collected along a whole trajectory $\tau$.
+We use the definition of return introduced in Section~\ref{subsubsec:return}, where $G(\tau)$ denotes the discounted sum of rewards collected along a whole trajectory $\tau$.
 Here, the return is computed over complete episodes with $\gamma=1$, so $G(\tau^{\mathrm{ep}})$ corresponds to the total reward collected during the episode $\tau^{\mathrm{ep}}$.
 
 Each policy is evaluated over $M$ episodes.
