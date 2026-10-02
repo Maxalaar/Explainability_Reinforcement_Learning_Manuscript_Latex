@@ -52,7 +52,7 @@
   \maketitle
   \restoremargins
 \fi
-\input{chapters/acknowledgements/acknowledgements.tex}
+\input{front_matter/acknowledgements/acknowledgements.tex}
 \tableofcontents
 \clearpage\phantomsection
 \addcontentsline{toc}{chapter}{\listfigurename}
@@ -65,8 +65,8 @@
 \chapter*{List of Definitions and Hypotheses}
 \tcblistof[\section*]{def}{Definitions}
 \tcblistof[\section*]{hyp}{Hypotheses}
-\input{chapters/supplementary_material/supplementary_material.tex}
-\input{chapters/notation/notation.tex}
+\input{front_matter/supplementary_material/supplementary_material.tex}
+\input{front_matter/notation/notation.tex}
 
 % Main matter (arabic page numbers).
 % In the print version, the main matter starts on a recto, so that printed
@@ -89,12 +89,12 @@
 \input{appendix/additional_results/additional_results.tex}
 
 % Back matter: reference lists, bibliography, institutional
-% acknowledgements and back cover (abstract).
+% acknowledgements and back cover.
 \backmatter
 \pdfbookmark[-1]{Back Matter}{backmatter}
 \printglossary[type=\acronymtype, nonumberlist]
 \printbibliography[heading=bibintoc]
-\input{chapters/institutional_acknowledgements/institutional_acknowledgements.tex}
-\input{chapters/abstract/abstract.tex}
+\input{back_matter/institutional_acknowledgements/institutional_acknowledgements.tex}
+\input{back_matter/back_cover/back_cover.tex}
 
 \end{document}

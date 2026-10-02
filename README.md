@@ -17,8 +17,12 @@ The manuscript is organized as follows:
   `colors`, `links`, `draft`, `boxes`, `names`, `glossary`, `notation`,
   `environments`, `timeline`, `plots`, `floats`, `appendix_tables`.
 
-* `chapters/`, `appendix/`
+* `front_matter/`, `chapters/`, `appendix/`, `back_matter/`
   One folder per chapter, holding the chapter file and one file per section.
+  The four folders follow the parts of the document, and the PDF bookmarks:
+  front matter (acknowledgements, supplementary material, notation), main
+  chapters, appendices, and back matter (institutional acknowledgements,
+  back cover).
 
 * `figures/`, `tables/`, `algorithms/`
   One folder per chapter, holding the floats included by that chapter.
