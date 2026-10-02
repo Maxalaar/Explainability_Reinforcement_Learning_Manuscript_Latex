@@ -61,10 +61,15 @@
 \addbibresource{references/mathematical_tools.bib}
 \addbibresource{references/software.bib}
 \addbibresource{references/epigraphs.bib}
-% URLs are shown as "URL: link", the word "link" being clickable.
-\DeclareFieldFormat{url}{\mkbibacro{URL}\addcolon\space\href{#1}{link}}
-% arXiv preprints are shown as "arXiv: link", the word "link" pointing to the arXiv page.
-\DeclareFieldFormat{eprint:arxiv}{arXiv\addcolon\space\href{https://arxiv.org/abs/#1}{link}}
+% Every web link of the bibliography is shown as "Label: link", the word "link"
+% being clickable.
+\newcommand*{\biblink}[2]{#1\addcolon\space\href{#2}{link}}
+\DeclareFieldFormat{url}{\biblink{URL}{#1}}
+\DeclareFieldFormat{doi}{\biblink{DOI}{https://doi.org/#1}}
+\DeclareFieldFormat{eprint:arxiv}{\biblink{ArXiv}{https://arxiv.org/abs/#1}}
+% Extra links, used in the addendum field of the .bib files.
+\newcommand*{\codelink}[1]{\biblink{Code}{#1}}
+\newcommand*{\videolink}[1]{\biblink{Video}{#1}}
 % More space between two references.
 \setlength{\bibitemsep}{0.6\baselineskip}
 % Allow line breaks inside long URLs and DOIs (after digits and letters).
