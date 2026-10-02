@@ -8,11 +8,12 @@
 
 \glsresetall
 
-Today, the majority of \gls{ai} agents with which humans interact are deployed in controlled or low-risk environments.
+Today, most \gls{ai} agents with which humans interact are deployed either in low-risk environments or under human supervision.
 For example, agents capable of playing games such as Go operate in settings where potential errors remain limited in terms of consequences \parencite{silver2017mastering}.
-Even more autonomous systems, such as agents based on \glspl{llm}, remain constrained by human supervision mechanisms and are often restricted to tasks such as code generation or information retrieval \parencite{chen2021evaluating, lewis2021retrievalaugmentedgenerationknowledgeintensivenlp}.
+More autonomous systems, such as agents based on \glspl{llm}, are used for tasks such as code generation or information retrieval, where their outputs are generally reviewed by humans \parencite{chen2021evaluating, lewis2021retrievalaugmentedgenerationknowledgeintensivenlp}.
+However, as discussed in Section~\ref{sec:introduction_research_context}, human supervision alone cannot guarantee that an agent behaves as intended.
 
-Safety-critical applications integrating machine learning components are still rare.
+Safety-critical applications integrating machine learning components are therefore still rare.
 Introducing autonomous agents in such environments, requires the establishment of strong guarantees \parencite{seshia2022toward}.
 These requirements include in particular:
 \begin{itemize}

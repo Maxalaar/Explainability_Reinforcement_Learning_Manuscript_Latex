@@ -29,7 +29,7 @@ These behaviors are not explicitly programmed by the designer but emerge from th
 \subsection{Alignment of Autonomous Agents}
 
 As the capabilities of an agent increase, the resulting behaviors can become more difficult to anticipate and control.
-In some cases, an agent may exploit unintended properties of its environment.
+Since an agent maximizes its reward by any means its environment allows, it may exploit unintended properties of this environment \parencite{krakovna2020specification}.
 
 An illustrative example comes from agents trained to play hide-and-seek in a physics-based environment \parencite{baker2020emergent}, as shown in Figure~\ref{fig:hide_and_seek}.
 In the intended course of the game, the blue hiders move boxes to block the entrances of their shelter.
@@ -42,9 +42,11 @@ This behavior, impossible under the intended rules of the environment, exploited
 
 \input{figures/introduction/hide_and_seek.tex}
 
-In a game environment, such behaviors have limited consequences.
+In a game environment, such behaviors have limited consequences, and they can be detected simply by watching the agent.
 However, agents trained with \gls{rl} are increasingly deployed in open-ended settings where they interact with the real world, notably \glspl{llm} trained with \gls{rl} and deployed as agents.
-In such settings, a lack of control can have far more serious consequences.
+In such settings, unintended behaviors can have far more serious consequences, and they are not always visible.
+In controlled experiments, some of these agents complied with their training objective only when they believed they were being trained, in order to preserve their original behavior otherwise \parencite{greenblatt2024alignment}.
+Others, given a goal conflicting with that of their developers, attempted to disable the mechanisms used to oversee them and then denied having done so \parencite{meinke2024frontier}.
 
 Such behaviors relate to the problem of alignment (Definition~\ref{def:alignment}), which has become a central concern in \gls{ai} research \parencite{ji2023ai}.
 The more capable agents become, the more pressing the need to ensure their alignment.
@@ -57,7 +59,9 @@ Alignment is the problem of ensuring that the behavior of an \gls{ai} system cor
 
 \subsection{The Black-Box Problem}
 
-The difficulty of ensuring the alignment of such agents stems in part from the fact that we only observe sequences of interactions between the agent and its environment.
+The last examples show that an agent can behave as intended while it is observed, and differently otherwise.
+Observing the behavior of an agent is therefore not sufficient to verify its alignment.
+More generally, we only observe sequences of interactions between the agent and its environment.
 These observations reveal how the agent's strategy is realized in particular situations.
 However, understanding the strategy itself requires knowing how the agent would behave across all the situations it may encounter.
 Since these situations are generally too numerous to be observed exhaustively, a collection of observed behaviors may not be sufficient to characterize the strategy.
@@ -87,7 +91,8 @@ We refer to this approach as \gls{me} (Definition~\ref{def:mechanistic_explainab
 
 \gls{me} is particularly promising because it addresses a core question of \gls{dl}, namely how an \gls{nn} processes information.
 Explaining how an agent processes information to make its decisions would therefore improve not only our understanding of agent behavior, but also our understanding of \gls{dl} itself.
-Such understanding is also a first step toward control \parencite{mini2023understanding}.
+In the context of alignment, such an explanation would make it possible to examine the agent's strategy directly, rather than inferring it from observed behaviors alone.
+This understanding is also a first step toward control \parencite{mini2023understanding}.
 
 To understand how an \gls{nn} processes information, \gls{me} studies the intermediate representations it learns.
 These representations are called \glspl{lr} \parencite{bengio2014representationlearningreviewnew}.
