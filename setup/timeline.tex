@@ -10,7 +10,7 @@
         draw, rounded corners, very thick, fill=#8,
         minimum height=#5, text width=#4, align=center, font=#7,
         execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}
-    ] at (\x,\y) {\textbf{\textcite{#2}} \\[2pt] #3};
+    ] at (\x,\y) {\textbf{#1} \\ \textbf{\textcite{#2}} \\[2pt] #3};
 }
 
 % ----- Main timeline command -----

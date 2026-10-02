@@ -20,39 +20,39 @@ Trained policy $\pi_{\params}$
 
 \AlgoRule
 
-\uIf{$\valueParams$ is not given}{
+\uIf{$\valueParams$ is not given\nllabel{alg:actor_critic:init}}{
     Initialize $\valueParams$ randomly\;
 }
 \uIf{$\params$ is not given}{
-    Initialize $\params$ randomly\;
+    Initialize $\params$ randomly\nllabel{alg:actor_critic:init_end}\;
 }
 
 \BlankLine
 \tcp{MSE loss function as defined in Equation~\eqref{eq:mse}}
-$\mathcal{L} \leftarrow$ \gls{mse}\;
+$\mathcal{L} \leftarrow$ \gls{mse}\nllabel{alg:actor_critic:loss}\;
 
 \BlankLine
-\While{stopping criterion not satisfied}{
+\While{stopping criterion not satisfied\nllabel{alg:actor_critic:loop}}{
     \tcp{Data collection see Algorithm~\ref{alg:data_collection}}
-    $\mathcal{D} \leftarrow$ \FnDataCollection{\gls{mdp}, $\pi_{\params}, \gamma$}
+    $\mathcal{D} \leftarrow$ \FnDataCollection{\gls{mdp}, $\pi_{\params}, \gamma$}\nllabel{alg:actor_critic:collect}
 
     \BlankLine
     \tcp{Advantage estimation: how much better/worse each action performed compared to the critic's expectation}
-    \For{$(s_t, o_t, a_t, G_t) \in \mathcal{D}$}{
-        $A(s_t, a_t) \leftarrow G_t - \hat{v}_{\valueParams}(s_t, o_t)$\;
+    \For{$(s_t, o_t, a_t, G_t) \in \mathcal{D}$\nllabel{alg:actor_critic:advantage}}{
+        $A(s_t, a_t) \leftarrow G_t - \hat{v}_{\valueParams}(s_t, o_t)$\nllabel{alg:actor_critic:advantage_end}\;
     }
 
     \BlankLine
     \tcp{state-observation pairs and their returns, from $\mathcal{D}$}
-    $\mathcal{D}' \leftarrow \big\{\big((s, o), G\big) \mid (s, o, a, G) \in \mathcal{D}\big\}$
+    $\mathcal{D}' \leftarrow \big\{\big((s, o), G\big) \mid (s, o, a, G) \in \mathcal{D}\big\}$\nllabel{alg:actor_critic:dataset}
 
     \BlankLine
     \tcp{Critic update with SGD see Algorithm~\ref{alg:stochastic_gradient_descent}}
-    $\valueParams \leftarrow$ \FnSGD{$\mathcal{D}', \hat{v}, \mathcal{L}, \eta, \valueParams$}
+    $\valueParams \leftarrow$ \FnSGD{$\mathcal{D}', \hat{v}, \mathcal{L}, \eta, \valueParams$}\nllabel{alg:actor_critic:critic}
 
     \BlankLine
     \tcp{Actor update: increase the probability of actions with positive advantage, decrease it for those with negative advantage}
-    $\params \leftarrow \params + \eta \displaystyle\sum_{(s_t, o_t, a_t, G_t) \in \mathcal{D}} A(s_t, a_t) \, \nabla_{\params} \log \pi_{\params}(a_t \mid o_t)$\;
+    $\params \leftarrow \params + \eta \displaystyle\sum_{(s_t, o_t, a_t, G_t) \in \mathcal{D}} A(s_t, a_t) \, \nabla_{\params} \log \pi_{\params}(a_t \mid o_t)$\nllabel{alg:actor_critic:actor}\;
 }
 
 \BlankLine

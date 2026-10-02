@@ -162,10 +162,8 @@ The first baseline addresses the case where the \gls{ls} merely reproduces the s
 It is the clustering of the observations $\ObsData$ themselves, denoted by $\BaselineClustering{obs}$.
 
 The second baseline addresses the case where the \gls{ls} merely reproduces the decisions of the initial policy.
-It is the clustering of the action distribution of the initial policy, denoted by $\BaselineClustering{act}$.
-Concretely, $\BaselineClustering{act}$ is computed on the parameters of this distribution, namely the logits before the softmax, produced by the initial policy for the same observations.
-These are precisely the quantities the surrogate policies are trained to reproduce.
-We cluster these continuous parameters rather than the sampled discrete action, since a discrete action takes only a few distinct values, which would limit the number of clusters that can be distinguished.
+It is the clustering, denoted by $\BaselineClustering{act}$, of the logits produced by the initial policy for the same observations, which are the targets the surrogate policies are trained to reproduce.
+These continuous parameters are preferred to the sampled discrete action, whose few distinct values would limit the number of distinguishable clusters.
 
 The third baseline addresses the case where the \gls{ls} merely reflects an inductive bias of the network architecture rather than something learned.
 To this end, we introduce $U$ untrained networks sharing the same architecture as the surrogate policies, but with randomly initialized, never-updated weights.

@@ -18,38 +18,38 @@ Trained parameters $\params$
 
 \AlgoRule
 
-\uIf{$\params$ is given}{
+\uIf{$\params$ is given\nllabel{alg:sgd:init}}{
     $\params_{1} \leftarrow \params$\;
 }\uElse{
-    Initialize $\params_{1}$ randomly\;
+    Initialize $\params_{1}$ randomly\nllabel{alg:sgd:init_end}\;
 }
 
 \BlankLine
 $k \leftarrow 1$\;
-\While{stopping criterion not satisfied}{
-    Select a random example $(\vect{x}^{(i)}, \vect{y}^{(i)}) \in \mathcal{D}$\;
+\While{stopping criterion not satisfied\nllabel{alg:sgd:loop}}{
+    Select a random example $(\vect{x}^{(i)}, \vect{y}^{(i)}) \in \mathcal{D}$\nllabel{alg:sgd:sample}\;
 
     \BlankLine
     \tcp{Model prediction for the selected example}
-    $\hat{\vect{y}}^{(i)} \leftarrow \hat{f}_{\params_{k}}(\vect{x}^{(i)})$\;
+    $\hat{\vect{y}}^{(i)} \leftarrow \hat{f}_{\params_{k}}(\vect{x}^{(i)})$\nllabel{alg:sgd:predict}\;
 
     \BlankLine
     \tcp{Per-example loss between the prediction and the ground truth}
-    $\loss{\params_{k}}{i} \leftarrow \mathcal{L}(\hat{\vect{y}}^{(i)}, \vect{y}^{(i)})$\;
+    $\loss{\params_{k}}{i} \leftarrow \mathcal{L}(\hat{\vect{y}}^{(i)}, \vect{y}^{(i)})$\nllabel{alg:sgd:loss}\;
 
     \BlankLine
     \tcp{Gradient of the per-example loss, since it is differentiable}
-    $\vect{g} \leftarrow \nabla_{\params} \loss{\params_{k}}{i}$\;
+    $\vect{g} \leftarrow \nabla_{\params} \loss{\params_{k}}{i}$\nllabel{alg:sgd:gradient}\;
 
     \BlankLine
     \tcp{Error minimization via a gradient descent step}
-    $\params_{k+1} \leftarrow \params_{k} - \eta \, \vect{g}$\;
+    $\params_{k+1} \leftarrow \params_{k} - \eta \, \vect{g}$\nllabel{alg:sgd:update}\;
 
     $k \leftarrow k + 1$\;
 }
 
 \BlankLine
 
-\Return{$\params_{k}$}
+\Return{\nllabel{alg:sgd:return}$\params_{k}$}
 
 \end{algorithm}

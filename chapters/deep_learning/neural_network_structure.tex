@@ -118,7 +118,11 @@ The precise relationship between depth and function complexity remains primarily
 
 With a layer-wise representation, the propagation of information can be described as a sequence of transformations applied from the input layer (indexed $0$) to the output layer (indexed $L$):
 \begin{equation}
-\hat{f}(\vect{x}) = \latentRepresentation[L] = \sigma^{(L)}\left(\mat{W}^{(L)} \sigma^{(L-1)}\left(\dots \sigma^{(1)}\left(\mat{W}^{(1)} \vect{x} + \vect{b}^{(1)}\right) \dots \right) + \vect{b}^{(L)}\right) = \hat{\vect{y}}.
+\begin{split}
+\hat{f}(\vect{x}) &= \latentRepresentation[L] \\
+&= \sigma^{(L)}\left(\mat{W}^{(L)} \sigma^{(L-1)}\left(\dots \sigma^{(1)}\left(\mat{W}^{(1)} \vect{x} + \vect{b}^{(1)}\right) \dots \right) + \vect{b}^{(L)}\right) \\
+&= \hat{\vect{y}}.
+\end{split}
 \label{eq:network_full}
 \end{equation}
 
