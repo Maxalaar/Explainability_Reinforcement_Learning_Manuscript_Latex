@@ -7,7 +7,7 @@ The pixels of an image are organized in a spatial grid, and the words of a sente
 Specialized architectures organize the connections between neurons so as to take this structure into account.
 
 These architectures do not modify the principles introduced in this chapter.
-A network remains a composition of layers, where each layer computes its representation from that of the previous one,
+A network remains a composition of layers, where each layer computes its representation from that of the previous one:
 \begin{equation}
 \latentRepresentation[l] = \LayerFunction{l}\left(\latentRepresentation[l-1]\right).
 \label{eq:layer_function}
@@ -16,7 +16,8 @@ Its parameters are still optimized by gradient descent, and it is still evaluate
 Only the function $\LayerFunction{l}$ computed by each layer changes.
 In particular, each layer still produces an intermediate representation of the input, which may take the form of feature maps or of a sequence of tokens.
 This representation is shaped by the same learning process as in a \gls{mlp}.
-This section presents two architectures used throughout this thesis, the \gls{cnn} and the attention mechanism, which is the basis of the Transformer architecture.
+This section presents two architectures.
+The \gls{cnn} is used in the experiments of this thesis, while the attention mechanism, which is the basis of the Transformer architecture, underlies several works discussed in the following chapters.
 
 \subsection{Convolutional Neural Networks}\label{subsec:deep_learning_convolutional_neural_networks}
 
@@ -37,6 +38,7 @@ Since the same weights are used at every position, the number of parameters of t
 A convolutional layer uses several kernels, each detecting a different pattern.
 The representation of layer $l$ is therefore composed of $n_l$ feature maps, also called channels, and is denoted $\mat{H}^{(l)}$.
 The feature map produced by the $k$-th kernel is given by:
+\begin{equationwhere}
 \begin{equation}
 \mat{H}^{(l)}_k = \sigma^{(l)}\left(\mat{W}^{(l)}_k \ast \mat{H}^{(l-1)} + b^{(l)}_k\right), \qquad k = 1, \dots, n_l,
 \label{eq:convolutional_layer}
@@ -47,6 +49,7 @@ where:
 \item $b^{(l)}_k$ is the bias associated with this kernel,
 \item $\ast$ denotes the convolution operation, which applies the kernel at every position of $\mat{H}^{(l-1)}$.
 \end{itemize}
+\end{equationwhere}
 For a single-channel input and a kernel of size $\kappa \times \kappa$, the element at position $(i, j)$ of the convolution is:
 \begin{equation}
 \left(\mat{W}^{(l)}_k \ast \mat{H}^{(l-1)}\right)_{i,j} = \sum_{i'=1}^{\kappa} \sum_{j'=1}^{\kappa} W^{(l)}_{k,i',j'} \, H^{(l-1)}_{i+i'-1,\, j+j'-1}.
@@ -67,13 +70,12 @@ As with the \gls{mlp}, convolutional layers are stacked.
 The receptive field of a neuron, measured on the input image, grows with depth.
 The first layers thus detect simple local patterns, while the deeper layers combine them into patterns that cover larger regions of the image \parencite{goodfellow2016deep}.
 The last feature maps are then flattened into a vector and passed through a \gls{mlp}, which produces the output of the network.
-More generally, the feature maps $\mat{H}^{(l)}$ of any convolutional layer can be flattened into a vector, which plays the same role as the representation $\latentRepresentation[l]$ of a layer of a \gls{mlp}.
-\glspl{cnn} trained on \glspl{gpu} were at the origin of the rise of \gls{dl} in computer vision \parencite{krizhevsky2012imagenet}.
-This combination of convolutional layers followed by a \gls{mlp} is also widely used in \gls{rl} to process visual observations \parencite{mnih2013playingatarideepreinforcement, espeholt2018impala}.
+\glspl{cnn} trained on \glspl{gpu} were at the origin of the rise of \gls{dl} in computer vision \parencite{krizhevsky2012imagenet}, and this combination is also widely used in \gls{rl} to process visual observations \parencite{mnih2013playingatarideepreinforcement, espeholt2018impala}.
 
 \subsection{Attention Mechanism}\label{subsec:deep_learning_attention_mechanism}
 
 The attention mechanism processes an input made of a sequence of elements, called tokens.
+This subsection presents self-attention, its most widely used form, in which the queries, keys and values are all computed from the same sequence of tokens.
 Depending on the task, a token can represent a part of a word, a region of an image, or an element of an observation.
 Each token is a vector, and the $m$ tokens of layer $l-1$ are stacked as the rows of a matrix $\mat{H}^{(l-1)}$.
 Unlike a convolutional layer, which only combines neighboring elements, the attention mechanism allows each token to gather information from all the other tokens of the sequence, whatever their position \parencite{vaswani2017attention}.
@@ -113,19 +115,13 @@ The output tokens of layer $l$, shown in purple, are then obtained by weighting 
 
 \input{figures/deep_learning/attention_mechanism.tex}
 
-The main difference with the layers presented so far lies in the weights that combine the inputs.
-In a \gls{mlp} or a \gls{cnn}, these weights are parameters, fixed once training is completed.
-In the attention mechanism, the weights $\mat{A}$ are computed from the input itself, so that the way tokens are combined adapts to each input.
-Only the projection matrices $\mat{W}^{(l)}_Q$, $\mat{W}^{(l)}_K$ and $\mat{W}^{(l)}_V$ are learned, and their size does not depend on the number of tokens $m$.
-Since this mechanism does not take the order of the tokens into account, information about the position of each token is generally added to its vector before the first layer.
+Unlike in a \gls{mlp} or a \gls{cnn}, where the weights that combine the inputs are fixed once training is completed, the weights $\mat{A}$ are computed from the input itself.
+The way tokens are combined thus adapts to each input.
 
-The Transformer architecture is built by stacking blocks that combine an attention mechanism with a \gls{mlp} applied independently to each token \parencite{vaswani2017attention}.
-In practice, several attention mechanisms are computed in parallel within each block, each with its own projections, which allows different relations between tokens to be captured simultaneously.
+The Transformer architecture stacks blocks that combine attention with a \gls{mlp} applied independently to each token \parencite{vaswani2017attention}.
 This architecture underlies \glspl{llm}, which are trained on very large text corpora to predict the next token of a sequence \parencite{brown2020language}.
-In \gls{rl}, it is used to build policies that retain a memory of past observations \parencite{parisotto2020stabilizing}.
-Because the attention weights $\mat{A}$ indicate which tokens contribute to each output, they are also used to explain the decisions of agents, as discussed in Section~\ref{subsubsec:attention_based_architecture}.
 
 Whatever the architecture, a network therefore produces a sequence of intermediate representations, whether they take the form of activation vectors, feature maps, or sequences of tokens.
-These representations are shaped by the same learning process, since the parameters of every layer are adjusted by gradient descent to minimize the same loss.
+These representations are shaped by the same learning process, since the parameters of every layer are adjusted by \gls{sgd} to minimize the same loss.
 Methods that analyze the representations of a network layer by layer can therefore be applied regardless of its architecture.
 In particular, the interpretability studies of \glspl{llm} presented in the following chapter rely on the representations produced by the layers of Transformers.

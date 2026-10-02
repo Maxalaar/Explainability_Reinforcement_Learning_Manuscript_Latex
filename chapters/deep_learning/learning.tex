@@ -92,6 +92,7 @@ A change in $\theta_j$ first affects the output $\latentRepresentation[l]$ of it
 This change then propagates through the subsequent layers, affecting $\latentRepresentation[l+1]$, and so on.
 The effect reaches the output $\latentRepresentation[L]$, from which the loss $\loss{\params}{i}$ is computed.
 This layer-by-layer propagation is referred to as backpropagation:
+\begin{equationwhere}
 \begin{equation}
 \frac{\partial \loss{\params}{i}}{\partial \theta_j}
 =
@@ -108,6 +109,7 @@ where:
 \item each subsequent $\mat{J}_{\LayerFunction{m+1}}(\latentRepresentation[m])$ denotes the Jacobian of the function $\LayerFunction{m+1}$ with respect to its input $\latentRepresentation[m]$,
 \item $\mat{J}_{\LayerFunction{l}}(\theta_j)$ denotes the Jacobian of the function $\LayerFunction{l}$ with respect to the parameter $\theta_j$.
 \end{itemize}
+\end{equationwhere}
 
 Once $\frac{\partial \loss{\params}{i}}{\partial \theta_j}$ can be computed for every parameter, all of these values are stacked into one vector, called the gradient:
 \begin{equation}
@@ -163,7 +165,7 @@ However, \gls{nn} training involves highly non-convex loss surfaces, so the opti
 Figure~\ref{fig:multiple_gradient_descents_non_convex} illustrates this dependence on four classical non-convex test functions, namely the Goldstein-Price, Rosenbrock, Sombrero, and Ackley functions.
 On each surface, two gradient descents are started from different initial parameters, and their trajectories are drawn in red.
 Unlike the convex case of Figure~\ref{fig:simple_gradient_descent}, the two trajectories never end at the same point.
-Each one follows the slope of its own neighborhood and settles in a nearby local minimum, as on the Goldstein-Price, Sombrero, and Ackley surfaces, or slows down in a flat region where the gradient becomes too small to make progress, as in the narrow valley of the Rosenbrock function.
+Each one follows the slope of its own neighborhood and either settles in a nearby local minimum or slows down in a flat region where the gradient becomes too small.
 In both cases, the final parameters are determined by the starting point rather than by the location of the global minimum.
 
 \heavyfig{fig:multiple_gradient_descents_non_convex}{figures/deep_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
@@ -176,6 +178,7 @@ In this limit, a \gls{nn} behaves like a linear model in its parameters, and gra
 However, the network then no longer learns internal representations.
 Yet learning such representations is considered an important reason for the practical success of deep learning.
 This framework therefore cannot fully explain the behavior of the \glspl{nn} used in practice.
+
 Other theoretical approaches start from assumptions closer to these networks \parencite{roberts2022principles}.
 They capture some aspects of representation learning but still rely on simplifying assumptions and provide only partial explanations.
 A general theory of the optimization of deep \glspl{nn} thus remains an open problem.

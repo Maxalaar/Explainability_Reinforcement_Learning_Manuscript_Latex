@@ -47,7 +47,7 @@ Figure~\ref{fig:probes_decision_boundaries} illustrates the decision boundaries 
 \input{figures/latent_space_analysis/probes_decision_boundaries.tex}
 
 An application of this technique can be found in studies investigating whether \glspl{llm} develop internal representations of their environment \parencite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
-In these works, researchers train \gls{llm} architectures, which rely on the Transformer presented in Section~\ref{subsec:deep_learning_attention_mechanism}, to play games such as chess or Othello in a purely textual setting.
+In these works, researchers train \gls{llm} architectures, which rely on the Transformer architecture, built on the attention mechanism presented in Section~\ref{subsec:deep_learning_attention_mechanism}, to play games such as chess or Othello in a purely textual setting.
 The model is provided only with sequences of moves and information about the actions it can take, all expressed in textual form.
 The central question is whether the \gls{llm} develops an internal representation of the game state.
 To address this question, the probed concepts correspond to the presence or absence of different game pieces on specific board positions.
@@ -72,6 +72,7 @@ To this end, the \gls{lr} is minimally modified such that the probe prediction f
 This goal can be formulated as an optimization problem over the \gls{lr} itself.
 The optimization is performed directly on the \gls{lr}, using \gls{sgd}.
 The solution to this problem is the optimal modified \gls{lr}, defined as:
+\begin{equationwhere}
 \[
 \begin{aligned}
 \latentRepresentation[l][*] =
@@ -91,6 +92,7 @@ where:
     \item $\|\latentRepresentation[l][\prime] - \latentRepresentation[l]\|_2^2$: regularization term ensuring the modified \gls{lr} remains close to the original one,
     \item $\lambda_1, \lambda_2, \lambda_3$: weighting coefficients controlling the trade-off between the intervention strength, the preservation of other concepts, and the minimality of the perturbation.
 \end{itemize}
+\end{equationwhere}
 
 In the context of \glspl{llm} studied previously, such latent interventions have been used to remove specific pieces from the model's internal representation of the game state \parencite{li2024emergentworldrepresentationsexploring, karvonen2024emergentworldmodelslatent}.
 The main observation is that, in the vast majority of cases, the model behaves as if the piece had effectively disappeared.

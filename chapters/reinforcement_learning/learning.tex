@@ -121,52 +121,26 @@ Second, the actor is a policy with its own dedicated set of parameters, instead 
 The critic is a value function approximation \(\hat{v}_{\valueParams}(s, o)\) with parameters \(\valueParams\).
 Analogously to critic-only methods, it is trained using supervised learning on data obtained from interaction with the \gls{mdp}.
 For each time step \(t\) along a trajectory, the input is the state-observation pair \((s_t, o_t)\) and the target is the observed return \(g_t\).
-The critic thus learns to predict the return expected under the current policy.
-Unlike \(\hat{q}\) in critic-only methods, the critic can take the state \(s_t\) as input in addition to the observation \(o_t\).
-This is possible because the critic is only used during learning, to guide the updates of the actor.
-Once learning is over, only the actor is kept to act in the environment, and it relies on observations alone.
+The critic thus learns to predict the return expected under the current policy.\footnote{Since the critic is only used during learning, it can also take the state \(s_t\) as input, whereas the actor, which is kept to act in the environment, relies on observations alone.}
 
 The actor is a parameterized policy \(\pi_{\params}\) with parameters \(\params\).
 
 The key difference with critic-only methods lies in how the policy itself is optimized.
 Since the actor has its own parameters, it can be updated directly, using the critic's predictions.
-To do so, each action taken by the actor must be judged against what the policy usually does in the same situation.
-Since \(v_\pi(s, o)\) is the return expected on average when acting according to \(\pi\), the difference \(q_\pi(s, a) - v_\pi(s, o)\) measures how much better or worse it is to take action \(a\) than to follow the policy's usual behavior.
-This difference is called the advantage function \(\Adv_\pi : \StateSet \times \ObsSet \times \ActionSet \to \mathbb{R}\), defined as
-\begin{equation}
-\Adv_\pi(s, o, a) = q_\pi(s, a) - v_\pi(s, o).
-\label{eq:advantage}
-\end{equation}
-A positive advantage means that action \(a\) yields a higher expected return than the policy does on average in this situation, and a negative advantage means the opposite.
-Because \(v_\pi\) is the average of \(q_\pi\) weighted by \(\pi\) (Equation~\eqref{eq:v_from_q}), the advantage averages to zero under the policy,
-\[
-\begin{aligned}
-\sum_{a} \pi(a \mid o) \, \Adv_\pi(s, o, a)
-&= \sum_{a} \pi(a \mid o) \, q_\pi(s, a) - v_\pi(s, o) \sum_{a} \pi(a \mid o) \\
-&= v_\pi(s, o) - v_\pi(s, o) \\
-&= 0.
-\end{aligned}
-\]
-The advantage is therefore a relative measure.
-It does not tell how good a situation is overall, but which actions are better or worse than what the policy would do on average.
-
-The true advantage \(\Adv_{\pi_{\params}}(s_t, o_t, a_t)\) is unknown, but both of its terms can be estimated from the collected data.
-The observed return \(g_t\), obtained by taking action \(a_t\) in state \(s_t\) and then following \(\pi_{\params}\) for all subsequent steps, is a realization of the random return \(G_t\).
-By definition of \(q_{\pi_{\params}}\), its expected value is \(\mathbb{E}_{\pi_{\params}}\big[\, G_t \mid S_t = s_t, A_t = a_t \,\big] = q_{\pi_{\params}}(s_t, a_t)\).
-The critic prediction \(\hat{v}_{\valueParams}(s_t, o_t)\) approximates \(v_{\pi_{\params}}(s_t, o_t)\).
-The advantage of each collected action is therefore estimated by
+To do so, each action taken by the actor must be judged against what the policy would do on average in the same situation.
+This is measured by the advantage \(q_\pi(s, a) - v_\pi(s, o)\), which is positive when action \(a\) yields a higher expected return than the policy on average.
+Since the observed return \(g_t\) is a sample of \(q_{\pi_{\params}}(s_t, a_t)\) and the critic approximates \(v_{\pi_{\params}}\), the advantage of each collected action is estimated by
 \[
 \AdvEst_t = g_t - \hat{v}_{\valueParams}(s_t, o_t).
 \]
 
 When \(\AdvEst_t > 0\), the action \(a_t\) performed better than the critic expected, and the parameters \(\params\) are adjusted to increase the probability \(\pi_{\params}(a_t \mid o_t)\).
 When \(\AdvEst_t < 0\), the action \(a_t\) performed worse than expected, and this probability is decreased.
-Subtracting the critic prediction from the return does not change the direction of the update on average, since the advantage averages to zero under the policy.
-However, it greatly reduces the variance of the update, because each action is judged relative to the expected return of its situation rather than by the raw return.
+Judging each action relative to the expected return of its situation, rather than by the raw return, reduces the variance of the updates.
 
 Both \(\hat{v}\) and \(\pi_{\params}\) are improved simultaneously within the same loop.
 The critic provides a learned baseline for the actor, and the actor generates the data used to train the critic.
-By reducing the variance of the updates of the actor, this interplay mitigates the instability inherent to \gls{rl}.
+
 Algorithm~\ref{alg:actor_critic} summarizes this whole actor-critic learning loop.
 Lines~\ref{alg:actor_critic:init}--\ref{alg:actor_critic:init_end} initialize the parameters of the critic and of the actor, and Line~\ref{alg:actor_critic:loss} sets the \gls{mse} as the loss of the critic.
 Each iteration of the loop starting at Line~\ref{alg:actor_critic:loop} first collects an episode with the current actor (Line~\ref{alg:actor_critic:collect}).

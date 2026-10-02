@@ -33,6 +33,7 @@ A neuron is characterized by:
 
 The activation of a neuron is determined by a weighted combination of its input signals, to which a bias is added, followed by the application of a nonlinear activation function.
 Mathematically, for a neuron receiving inputs $(x_1, \dots, x_n)$, its activation $h$ is given by:
+\begin{equationwhere}
 \begin{equation}
 h = \sigma\left(\sum_{i=1}^{n} w_i x_i + b\right),
 \label{eq:neuron_activation}
@@ -43,6 +44,7 @@ where:
 \item $b$ is the bias,
 \item $\sigma$ is the activation function.
 \end{itemize}
+\end{equationwhere}
 
 Figure~\ref{fig:artificial_neuron} shows a schematic view of this basic unit.
 The set of weights $w_1, \dots, w_i$ with the bias $b$ constitute the parameters of the neuron, and they are the elements that evolve during training.
@@ -91,6 +93,7 @@ For a layer $l$ composed of $n_l$ neurons, the activations are given by:
 \label{eq:layer_activation_vector}
 \end{equation}
 Using this formulation, the interaction between two consecutive layers can be written compactly as:
+\begin{equationwhere}
 \begin{equation}
 \latentRepresentation[l] = \sigma^{(l)}\left(\mat{W}^{(l)} \latentRepresentation[l-1] + \vect{b}^{(l)}\right),
 \label{eq:layer_interaction}
@@ -102,6 +105,7 @@ where:
 \item $\vect{b}^{(l)} \in \mathbb{R}^{n_l}$ is the bias vector associated with layer $l$,
 \item $\sigma^{(l)}$ is the activation function applied element-wise to the neurons of layer $l$.
 \end{itemize}
+\end{equationwhere}
 
 This matrix-vector representation is visualized in Figure~\ref{fig:matrix_interaction_between_layers}, which highlights how each neuron in layer $l$ receives weighted signals from all neurons in the previous layer.
 

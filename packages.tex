@@ -179,6 +179,9 @@
 \BeforeBeginEnvironment{enumerate}{\begin{samepage}}
 \AfterEndEnvironment{enumerate}{\end{samepage}}
 
+% Keep an equation on the same page as the "where:" list that defines its symbols
+\newenvironment{equationwhere}{\begin{samepage}}{\end{samepage}}
+
 % Debug
 \usepackage[most]{tcolorbox}
 \usepackage{lipsum}   % dummy text for placeholders

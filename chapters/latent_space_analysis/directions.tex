@@ -8,6 +8,7 @@ This provides information that a binary probe cannot express.
 
 Empirically, it has been observed that shifting a \gls{lr} along such a direction can induce coherent and semantically meaningful changes in the model's output \parencite{haas2024discovering, voynov2020unsuperviseddiscoveryinterpretabledirections}.
 Such a shift is a latent intervention (see Definition~\ref{def:latent_intervention}) and can be expressed mathematically as:
+\begin{equationwhere}
 \[
 \latentRepresentation' = \latentRepresentation + \alpha \vect{v}_i,
 \]
@@ -18,6 +19,7 @@ where:
     \item $\alpha$ controls the strength of the intervention,
     \item $\latentRepresentation'$ is the resulting perturbed \gls{lr}.
 \end{itemize}
+\end{equationwhere}
 
 In many cases, the resulting change in the model's output varies smoothly with \(\alpha\), suggesting an approximately linear \gls{cs} with respect to certain semantic factors.
 This observation has led to the hypothesis that neural representations may organize concepts in a partially linear manner within the \gls{ls}.

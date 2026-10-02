@@ -11,6 +11,7 @@ When the number of concepts exceeds the available dimensions, multiple concepts 
 
 According to this hypothesis, in an unconstrained \gls{ls}, each concept is represented in its own independent linear direction.
 The idealized non-superposed \gls{lr} can be mathematically expressed as follows:
+\begin{equationwhere}
 \[
 \latentRepresentation = \sum_{i=1}^{n} \alpha_i \vect{v}_i,
 \qquad
@@ -27,6 +28,7 @@ where:
     \item $\vect{v}_i^\top \vect{v}_j \approx 0$ indicates that concept directions are approximately orthogonal, meaning each concept independently controls a single factor of variation,
     \item $\|\boldsymbol{\alpha}\|_0 \ll n$ indicates that only a small fraction of concepts are active for a given \gls{lr}.
 \end{itemize}
+\end{equationwhere}
 
 However, \glspl{nn} operate in finite-dimensional spaces, so when the number of concepts exceeds the available dimensions, such a one-to-one correspondence becomes impractical.
 The network must therefore reuse its representational dimensions, allowing multiple concepts to be encoded using the same directions.
@@ -40,6 +42,7 @@ This transformation is illustrated in Figure~\ref{fig:dense_to_sparse_sae}, whil
 \input{figures/latent_space_analysis/dense_to_sparse_sae.tex}
 
 \glspl{sae} provide a practical implementation of this approach and can be defined as follows:
+\begin{equationwhere}
 \[
 \vect{z} = \Encoder(\latentRepresentation), \quad \hat{\latentRepresentation} = \Decoder(\vect{z}),
 \]
@@ -56,6 +59,7 @@ where:
     \item $\|\vect{z}\|_1$ is the sparsity regularization term that encourages most components of $\vect{z}$ to be zero,
     \item $\lambda$ is a weighting coefficient controlling the trade-off between reconstruction fidelity and sparsity.
 \end{itemize}
+\end{equationwhere}
 
 The parameters of these projection functions $\Encoder$ and $\Decoder$ are learned by minimizing $\mathcal{L}_{\mathrm{auto}}$ using \gls{sgd}.
 Under this formulation, each dimension of $\mathcal{Z}$ is interpreted as a dedicated concept direction.
@@ -74,6 +78,7 @@ This demonstrates that the learned concept is not tied to a specific surface for
 \glspl{sae} also provide a way to perform latent interventions (see Definition~\ref{def:latent_intervention}) on the \gls{lr} learned by the model.
 A concept can be artificially activated by modifying its corresponding feature in the sparse representation $\vect{z}$, even when the input contains no reference to it.
 The modified \gls{lr} is then projected back into the original activation space, after which the model proceeds with standard next-token generation from $\latentRepresentation'$:
+\begin{equationwhere}
 \[
 \latentRepresentation' = \Decoder(\vect{z}^*), \quad \text{where} \quad \vect{z}^* = \vect{z} + \alpha \, \vect{e}^{(i)},
 \]
@@ -85,6 +90,7 @@ where:
     \item $\alpha$ controls the strength of the artificial activation,
     \item $\latentRepresentation'$ is the resulting edited \gls{lr} in the original activation space.
 \end{itemize}
+\end{equationwhere}
 
 With this method, a reference to the Golden Gate Bridge can be injected into the \gls{llm}'s internal representation.
 This causes the model's output to shift toward discussing the Golden Gate Bridge, even when the prompt contains no reference to it.

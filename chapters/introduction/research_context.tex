@@ -20,7 +20,7 @@ At each step, the agent observes the current state of the environment and select
 This action changes the state of the environment and results in a reward.
 The objective of the agent is then to learn a behavior that maximizes the cumulative rewards obtained over time.
 
-The combination of \gls{rl} and \gls{dl}, known as deep \gls{rl}, is currently the most effective approach for creating autonomous agents \parencite{arulkumaran2017deep}.
+The combination of \gls{rl} and \gls{dl}, known as deep \gls{rl}, is currently one of the most effective approaches for creating autonomous agents \parencite{arulkumaran2017deep}.
 Due to their flexibility, \glspl{nn} provide a powerful means of representing the agent's information-processing capabilities.
 Their use has consequently made it possible to apply \gls{rl} to problems that were previously intractable \parencite{mnih2013playingatarideepreinforcement, silver2017mastering, openai2019dota2largescale}.
 The ability of \gls{rl} to operate in increasingly complex environments also allows agents to learn increasingly complex behaviors.
@@ -45,6 +45,7 @@ This behavior, impossible under the intended rules of the environment, exploited
 In a game environment, such behaviors have limited consequences, and they can be detected simply by watching the agent.
 However, agents trained with \gls{rl} are increasingly deployed in open-ended settings where they interact with the real world, notably \glspl{llm} trained with \gls{rl} and deployed as agents.
 In such settings, unintended behaviors can have far more serious consequences, and they are not always visible.
+
 In controlled experiments, some of these agents complied with their training objective only when they believed they were being trained, in order to preserve their original behavior otherwise \parencite{greenblatt2024alignment}.
 Others, given a goal conflicting with that of their developers, attempted to disable the mechanisms used to oversee them and then denied having done so \parencite{meinke2024frontier}.
 
@@ -89,9 +90,8 @@ We refer to this approach as \gls{me} (Definition~\ref{def:mechanistic_explainab
 
 \end{definition}
 
-\gls{me} is particularly promising because it addresses a core question of \gls{dl}, namely how an \gls{nn} processes information.
-Explaining how an agent processes information to make its decisions would therefore improve not only our understanding of agent behavior, but also our understanding of \gls{dl} itself.
-In the context of alignment, such an explanation would make it possible to examine the agent's strategy directly, rather than inferring it from observed behaviors alone.
+\gls{me} is particularly promising because it addresses how an \gls{nn} processes information, rather than only relating its inputs to its outputs.
+In the context of alignment, explaining how an agent processes information to make its decisions would make it possible to examine its strategy directly, rather than inferring it from observed behaviors alone.
 This understanding is also a first step toward control \parencite{mini2023understanding}.
 
 To understand how an \gls{nn} processes information, \gls{me} studies the intermediate representations it learns.
