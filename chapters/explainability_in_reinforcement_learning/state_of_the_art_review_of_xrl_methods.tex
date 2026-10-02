@@ -99,10 +99,10 @@ Based on these weightings, a \textit{heatmap} is constructed to allow the observ
 \subsubsection{\textit{Attention-Based Architecture}}
 \label{subsubsec:attention_based_architecture}
 
-Attention blocks constitute a \gls{nn} architecture that makes it possible to weight the relative importance of one part of a vector with respect to the other parts of the same vector \parencite{vaswani2017attention}.
-These weights are computed as a function of the vector itself and are learned by the \gls{nn} during training.
-For a given observation, each component of the observation vector is assigned a scalar value.
-It can therefore be assumed that the components associated with the highest weights are the most influential in determining the output \parencite{mott2019towards, itaya2021visual}.
+The attention mechanism, presented in Section~\ref{subsec:deep_learning_attention_mechanism}, computes attention weights $\mat{A}$ that indicate how much each token contributes to the representation of the others \parencite{vaswani2017attention}.
+These weights are not fixed parameters, since they are computed from the input itself.
+When the tokens correspond to regions of the observation, each region is thus assigned a scalar weight.
+It can therefore be assumed that the regions associated with the highest weights are the most influential in determining the output \parencite{mott2019towards, itaya2021visual}.
 
 This attention-based \textit{heatmap} is then provided to the observer as the explanation, as illustrated for the Atari game \BreakoutName in Figure~\ref{fig:attention_map_heatmap_clear}, where the highlighted regions are easily interpretable.
 However, as shown for \MsPacManName in Figure~\ref{fig:attention_map_heatmap_unclear}, the attention weights are not always concentrated on a small, easily interpretable set of regions, which can make this type of explanation difficult to exploit.

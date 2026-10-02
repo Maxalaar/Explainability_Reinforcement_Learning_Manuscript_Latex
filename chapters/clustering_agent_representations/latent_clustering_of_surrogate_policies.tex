@@ -53,6 +53,8 @@ All surrogate policies share the same architecture.
 It consists of a \gls{nn} with two components, an encoder $\SurrogateEncoder$ and a decoder $\Decoder$, highlighted by the blue and black dashed rectangles, respectively, in Figure~\ref{fig:surrogate_policy_architecture}.
 The encoder maps the observation $o$ to the embedding, and the decoder reconstructs the parameters of the action distribution from this embedding.
 For a given surrogate policy $\SurrogatePolicy{i}$, parameterized by $\params_i$, its encoder and decoder are written $\SurrogateEncoder[i]$ and $\Decoder[i]$.
+The figure represents the encoder with fully connected layers, but \gls{car} places no constraint on its architecture.
+The encoder can also rely on convolutional layers or on attention mechanisms, since these architectures produce intermediate representations shaped by the same learning process, as discussed in Section~\ref{sec:deep_learning_specialized_architectures}.
 
 \input{figures/clustering_agent_representations/surrogate_policy_architecture.tex}
 

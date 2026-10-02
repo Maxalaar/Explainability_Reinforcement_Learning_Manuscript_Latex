@@ -14,9 +14,11 @@ A network remains a composition of layers, where each layer computes its represe
 \end{equation}
 Its parameters are still optimized by gradient descent, and it is still evaluated on data it has not seen during training.
 Only the function $\LayerFunction{l}$ computed by each layer changes.
+In particular, each layer still produces an intermediate representation of the input, which may take the form of feature maps or of a sequence of tokens.
+This representation is shaped by the same learning process as in a \gls{mlp}.
 This section presents two architectures used throughout this thesis, the \gls{cnn} and the attention mechanism, which is the basis of the Transformer architecture.
 
-\subsection{Convolutional Neural Networks}
+\subsection{Convolutional Neural Networks}\label{subsec:deep_learning_convolutional_neural_networks}
 
 \glspl{cnn} were introduced to process images \parencite{lecun1989backpropagation}.
 Applying a \gls{mlp} to an image would require connecting each neuron to every pixel.
@@ -65,10 +67,11 @@ As with the \gls{mlp}, convolutional layers are stacked.
 The receptive field of a neuron, measured on the input image, grows with depth.
 The first layers thus detect simple local patterns, while the deeper layers combine them into patterns that cover larger regions of the image \parencite{goodfellow2016deep}.
 The last feature maps are then flattened into a vector and passed through a \gls{mlp}, which produces the output of the network.
-The surrogate policies studied in this thesis follow this structure, as shown in Figure~\ref{fig:neural_architecture}.
-\glspl{cnn} trained on \glspl{gpu} were at the origin of the rise of \gls{dl} in computer vision \parencite{krizhevsky2012imagenet}, and are widely used in \gls{rl} to process visual observations \parencite{mnih2013playingatarideepreinforcement, espeholt2018impala}.
+More generally, the feature maps $\mat{H}^{(l)}$ of any convolutional layer can be flattened into a vector, which plays the same role as the representation $\latentRepresentation[l]$ of a layer of a \gls{mlp}.
+\glspl{cnn} trained on \glspl{gpu} were at the origin of the rise of \gls{dl} in computer vision \parencite{krizhevsky2012imagenet}.
+This combination of convolutional layers followed by a \gls{mlp} is also widely used in \gls{rl} to process visual observations \parencite{mnih2013playingatarideepreinforcement, espeholt2018impala}.
 
-\subsection{Attention Mechanism}
+\subsection{Attention Mechanism}\label{subsec:deep_learning_attention_mechanism}
 
 The attention mechanism processes an input made of a sequence of elements, called tokens.
 Depending on the task, a token can represent a part of a word, a region of an image, or an element of an observation.
@@ -121,3 +124,8 @@ In practice, several attention mechanisms are computed in parallel within each b
 This architecture underlies \glspl{llm}, which are trained on very large text corpora to predict the next token of a sequence \parencite{brown2020language}.
 In \gls{rl}, it is used to build policies that retain a memory of past observations \parencite{parisotto2020stabilizing}.
 Because the attention weights $\mat{A}$ indicate which tokens contribute to each output, they are also used to explain the decisions of agents, as discussed in Section~\ref{subsubsec:attention_based_architecture}.
+
+Whatever the architecture, a network therefore produces a sequence of intermediate representations, whether they take the form of activation vectors, feature maps, or sequences of tokens.
+These representations are shaped by the same learning process, since the parameters of every layer are adjusted by gradient descent to minimize the same loss.
+Methods that analyze the representations of a network layer by layer can therefore be applied regardless of its architecture.
+In particular, the interpretability studies of \glspl{llm} presented in the following chapter rely on the representations produced by the layers of Transformers.

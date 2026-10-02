@@ -69,7 +69,7 @@ The architecture of the surrogate policies was deliberately kept simple.
 The objective of this chapter is not to search for the best-performing architecture, but to obtain surrogate policies that faithfully reproduce the initial policy while remaining easy to analyze.
 A standard convolutional architecture was therefore selected because it is sufficient to reach a high \BehaviorReconstructionName on the six environments, as shown in Section~\ref{sec:experiments_policy_performance_and_surrogate_fidelity}.
 
-The surrogate policies use a \gls{cnn} to process the visual observations.
+The surrogate policies use a \gls{cnn}, as presented in Section~\ref{subsec:deep_learning_convolutional_neural_networks}, to process the visual observations.
 The convolutional part consists of four layers with $16$, $32$, $64$, and $128$ channels, using $4 \times 4$ kernels with a stride of $2$.
 Each convolutional layer is followed by a LeakyReLU activation.
 The resulting representation is then flattened and passed through a \gls{mlp} that produces the parameters of the action distribution.
@@ -82,6 +82,7 @@ The size of the output layer matches the number of actions available in each env
 Figure~\ref{fig:neural_architecture} illustrates both configurations, together with the shape of the representation produced by each convolutional layer.
 Throughout the remainder of this chapter, the analyzed representations are numbered from $1$ to $5$.
 These representations correspond to the four convolutional layers and the flattened representation, which are common to all six environments.
+The feature maps produced by the convolutional layers are flattened into vectors before clustering.
 
 The representations produced by the \gls{mlp} are numbered separately.
 For \PongName and \SpaceInvadersName, which use a single hidden layer, the representation is numbered $6\text{a}$.
