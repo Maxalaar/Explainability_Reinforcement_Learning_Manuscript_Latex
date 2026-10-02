@@ -149,7 +149,7 @@ Finally, Line~\ref{alg:sgd:return} returns the last parameters obtained.
 
 \input{algorithms/deep_learning/stochastic_gradient_descent.tex}
 
-To develop an intuition for this update rule, Figure~\ref{fig:simple_gradient_descent} illustrates it applied to the simple convex loss function $\mathcal{L}(\theta_1,\theta_2)=\theta_1^2+\theta_2^2$, where the red path shows the parameter updates converging to the minimum.\footnote{The gradient descent figures of this chapter were produced with Interactive Gradient Descent, a software developed for this thesis \url{https://github.com/Maxalaar/Interactive_Gradient_Descent}.}
+To develop an intuition for this update rule, Figure~\ref{fig:simple_gradient_descent} illustrates it applied to the simple convex loss function $\mathcal{L}(\theta_1,\theta_2)=\theta_1^2+\theta_2^2$, where the red path shows the parameter updates converging to the minimum.\footnote{The gradient descent figures of this chapter were produced with Interactive Gradient Descent, a software developed for this thesis \LinkInteractiveGradientDescent.}
 The point $\params_{1}$ represents the initial parameter values, with $\theta_1$ and $\theta_2$ randomly initialized, and the subsequent points, from $\params_{2}$ to $\params_{6}$, represent the successive updates produced by applying Equation~\eqref{eq:gradient_descent_update}, progressively moving the trajectory toward the minimum of the loss function.
 
 \heavyfig{fig:simple_gradient_descent}{figures/deep_learning/gradient_descent/simple_gradient_descent/simple_gradient_descent.tex}

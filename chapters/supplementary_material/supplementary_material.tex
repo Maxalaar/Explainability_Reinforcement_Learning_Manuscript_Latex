@@ -1,0 +1,36 @@
+\chapter*{Supplementary Material}
+\addcontentsline{toc}{chapter}{Supplementary Material}
+\label{chap:supplementary_material}
+\markboth{Supplementary Material}{Supplementary Material}
+
+This section gathers the resources produced during this thesis.
+The source code is publicly available as open-source, and the data that cannot be included in this document are archived on Zenodo.
+
+\section*{Source Code}
+
+\begin{description}
+  \item[Manuscript.] The \LaTeX{} source of this document. \\
+  \LinkManuscriptRepository
+
+  \item[\glsfmtlong{car}.] The implementation of the method proposed in this thesis, used for all the experiments of Chapter~\ref{chap:experiments} (see Section~\ref{sec:experiments_software_implementation}). \\
+  \LinkCarRepository
+
+  \item[Interactive Gradient Descent.] A software developed for this thesis, which produced the gradient descent figures of Section~\ref{sec:deep_learning_learning}. \\
+  \LinkInteractiveGradientDescent
+
+  \item[Paper Retrieval.] The code used to count the publications on explainability in \gls{rl} shown in Figure~\ref{fig:count_publications_xrl}. \\
+  \LinkPaperRetrievalRepository
+\end{description}
+
+\section*{Archived Data}
+
+\begin{description}
+  \item[Paper Retrieval Protocol.] The full search protocol behind Figure~\ref{fig:count_publications_xrl}. \\
+  \LinkPaperRetrievalProtocol
+
+  \item[Policy Videos.] Recordings of the initial policies playing each game (see Section~\ref{sec:experiments_policy_performance_and_surrogate_fidelity}). \\
+  \LinkPolicyVideos
+
+  \item[Cluster Images.] Images of the clusters obtained for every analyzed layer (see Section~\ref{sec:experiments_semantic_interpretation_of_the_clusters}). \\
+  \LinkClusterImages
+\end{description}
