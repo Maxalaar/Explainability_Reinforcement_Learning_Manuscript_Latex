@@ -70,7 +70,6 @@ As with the \gls{mlp}, convolutional layers are stacked.
 The receptive field of a neuron, measured on the input image, grows with depth.
 The first layers thus detect simple local patterns, while the deeper layers combine them into patterns that cover larger regions of the image \parencite{goodfellow2016deep}.
 The last feature maps are then flattened into a vector and passed through a \gls{mlp}, which produces the output of the network.
-\glspl{cnn} trained on \glspl{gpu} were at the origin of the rise of \gls{dl} in computer vision \parencite{krizhevsky2012imagenet}, and this combination is also widely used in \gls{rl} to process visual observations \parencite{mnih2013playingatarideepreinforcement, espeholt2018impala}.
 
 \subsection{Attention Mechanism}\label{subsec:deep_learning_attention_mechanism}
 
@@ -123,5 +122,3 @@ This architecture underlies \glspl{llm}, which are trained on very large text co
 
 Whatever the architecture, a network therefore produces a sequence of intermediate representations, whether they take the form of activation vectors, feature maps, or sequences of tokens.
 These representations are shaped by the same learning process, since the parameters of every layer are adjusted by \gls{sgd} to minimize the same loss.
-Methods that analyze the representations of a network layer by layer can therefore be applied regardless of its architecture.
-In particular, the interpretability studies of \glspl{llm} presented in the following chapter rely on the representations produced by the layers of Transformers.
