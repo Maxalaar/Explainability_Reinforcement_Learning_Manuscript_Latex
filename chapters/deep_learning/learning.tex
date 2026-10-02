@@ -169,3 +169,13 @@ In both cases, the final parameters are determined by the starting point rather 
 \heavyfig{fig:multiple_gradient_descents_non_convex}{figures/deep_learning/gradient_descent/multiple_gradient_descents_non_convex/multiple_gradient_descents_non_convex.tex}
 
 Despite the lack of theoretical guarantees of convergence to a global optimum, the simple procedure of random initialization followed by iterative gradient-based updates is sufficient in practice to train complex \glspl{nn}.
+
+Explaining this empirical success is an active area of mathematical research.
+An influential approach is the neural tangent kernel framework \parencite{jacot2018neural}, which studies \glspl{nn} whose width tends to infinity.
+In this limit, a \gls{nn} behaves like a linear model in its parameters, and gradient descent provably converges to a global minimum.
+However, the network then no longer learns internal representations.
+Yet learning such representations is considered an important reason for the practical success of deep learning.
+This framework therefore cannot fully explain the behavior of the \glspl{nn} used in practice.
+Other theoretical approaches start from assumptions closer to these networks \parencite{roberts2022principles}.
+They capture some aspects of representation learning but still rely on simplifying assumptions and provide only partial explanations.
+A general theory of the optimization of deep \glspl{nn} thus remains an open problem.
