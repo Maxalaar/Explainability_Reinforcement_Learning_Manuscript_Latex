@@ -1,0 +1,13 @@
+% Contents of a chapter (sections and subsections), shown at its opening,
+% after the epigraph, between two horizontal rules. Placed in each chapter of
+% the main matter, appendices excluded.
+\newcommand{\chaptercontents}{%
+  \begingroup
+  \etocsettocstyle
+    {\par\noindent\rule{\textwidth}{0.4pt}\par\smallskip
+     \noindent{\large\bfseries\contentsname}\par\medskip}
+    {\par\noindent\rule{\textwidth}{0.4pt}\par\bigskip}%
+  \etocsetnexttocdepth{subsection}%
+  \localtableofcontents
+  \endgroup
+}
