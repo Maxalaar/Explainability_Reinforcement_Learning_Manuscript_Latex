@@ -38,12 +38,12 @@ Observe $o_1$\nllabel{alg:data_collection:init_end}\;
 \tcp{Return computation for each step of the trajectory.}
 $T \leftarrow t - 1$\nllabel{alg:data_collection:returns}\;
 \For{$t = 1, \dots, T$}{
-    $G_t \leftarrow \sum_{k=t}^{T} \gamma^{k-t} r_k$\nllabel{alg:data_collection:returns_end}\;
+    $g_t \leftarrow \sum_{k=t}^{T} \gamma^{k-t} r_k$\nllabel{alg:data_collection:returns_end}\;
 }
 
 \BlankLine
 \tcp{Dataset construction}
-$\mathcal{D} \leftarrow \big\{\big(s_t, o_t, a_t, G_t\big)\big\}_{t=1}^{T}$\nllabel{alg:data_collection:dataset}\;
+$\mathcal{D} \leftarrow \big\{\big(s_t, o_t, a_t, g_t\big)\big\}_{t=1}^{T}$\nllabel{alg:data_collection:dataset}\;
 
 \BlankLine
 \Return{$\mathcal{D}$}

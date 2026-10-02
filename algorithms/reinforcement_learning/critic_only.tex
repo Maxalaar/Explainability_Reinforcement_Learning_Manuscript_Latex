@@ -38,7 +38,7 @@ $\mathcal{L} \leftarrow$ \gls{mse}\nllabel{alg:critic_only:loss}\;
 
     \BlankLine
     \tcp{observation-action pairs and their returns, from $\mathcal{D}$}
-    $\mathcal{D}' \leftarrow \big\{\big((o, a), G\big) \mid (s, o, a, G) \in \mathcal{D}\big\}$\nllabel{alg:critic_only:dataset}
+    $\mathcal{D}' \leftarrow \big\{\big((o, a), g\big) \mid (s, o, a, g) \in \mathcal{D}\big\}$\nllabel{alg:critic_only:dataset}
 
     \BlankLine
     \tcp{Model update whith SGD see Algorithm~\ref{alg:stochastic_gradient_descent}}

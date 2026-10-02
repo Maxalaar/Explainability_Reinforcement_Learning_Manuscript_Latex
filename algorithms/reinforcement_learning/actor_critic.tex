@@ -38,13 +38,13 @@ $\mathcal{L} \leftarrow$ \gls{mse}\nllabel{alg:actor_critic:loss}\;
 
     \BlankLine
     \tcp{Advantage estimation: how much better/worse each action performed compared to the critic's expectation}
-    \For{$(s_t, o_t, a_t, G_t) \in \mathcal{D}$\nllabel{alg:actor_critic:advantage}}{
-        $A(s_t, a_t) \leftarrow G_t - \hat{v}_{\valueParams}(s_t, o_t)$\nllabel{alg:actor_critic:advantage_end}\;
+    \For{$(s_t, o_t, a_t, g_t) \in \mathcal{D}$\nllabel{alg:actor_critic:advantage}}{
+        $\AdvEst_t \leftarrow g_t - \hat{v}_{\valueParams}(s_t, o_t)$\nllabel{alg:actor_critic:advantage_end}\;
     }
 
     \BlankLine
     \tcp{state-observation pairs and their returns, from $\mathcal{D}$}
-    $\mathcal{D}' \leftarrow \big\{\big((s, o), G\big) \mid (s, o, a, G) \in \mathcal{D}\big\}$\nllabel{alg:actor_critic:dataset}
+    $\mathcal{D}' \leftarrow \big\{\big((s, o), g\big) \mid (s, o, a, g) \in \mathcal{D}\big\}$\nllabel{alg:actor_critic:dataset}
 
     \BlankLine
     \tcp{Critic update with SGD see Algorithm~\ref{alg:stochastic_gradient_descent}}
@@ -52,7 +52,7 @@ $\mathcal{L} \leftarrow$ \gls{mse}\nllabel{alg:actor_critic:loss}\;
 
     \BlankLine
     \tcp{Actor update: increase the probability of actions with positive advantage, decrease it for those with negative advantage}
-    $\params \leftarrow \params + \eta \displaystyle\sum_{(s_t, o_t, a_t, G_t) \in \mathcal{D}} A(s_t, a_t) \, \nabla_{\params} \log \pi_{\params}(a_t \mid o_t)$\nllabel{alg:actor_critic:actor}\;
+    $\params \leftarrow \params + \eta \displaystyle\sum_{(s_t, o_t, a_t, g_t) \in \mathcal{D}} \AdvEst_t \, \nabla_{\params} \log \pi_{\params}(a_t \mid o_t)$\nllabel{alg:actor_critic:actor}\;
 }
 
 \BlankLine

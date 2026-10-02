@@ -18,14 +18,14 @@ We then introduce the \gls{ari} measure, which serves as the foundation for the 
 
 We introduce the \BehaviorReconstructionName metric to assess whether $\SurrogatePolicy{}$ faithfully reproduces the behavior of $\InitialPolicy$.
 This metric compares the returns obtained by the initial policy $\InitialPolicy$ and the surrogate policies $\SurrogatePolicy{}$ over a set of evaluation episodes.
-We use the definition of return introduced in Section~\ref{subsec:value_functions}, where $G_1$ denotes the discounted sum of rewards collected along a whole trajectory.
-Here, the return is computed over complete episodes with $\gamma=1$, so $G_1$ corresponds to the total reward collected during the episode.
+We use the definition of return introduced in Section~\ref{subsec:value_functions}, where $G(\tau)$ denotes the discounted sum of rewards collected along a whole trajectory $\tau$.
+Here, the return is computed over complete episodes with $\gamma=1$, so $G(\tau^{\mathrm{ep}})$ corresponds to the total reward collected during the episode $\tau^{\mathrm{ep}}$.
 
 Each policy is evaluated over $M$ episodes.
-We denote by $G^{(e)}_{\InitialPolicy}$ the return obtained by the initial policy in episode $e$, and by $G^{(e)}_{\SurrogatePolicy{j}}$ the return obtained by surrogate policy $\SurrogatePolicy{j}$ in episode $e$.
+We denote by $g^{(e)}_{\InitialPolicy}$ the return obtained by the initial policy in episode $e$, and by $g^{(e)}_{\SurrogatePolicy{j}}$ the return obtained by surrogate policy $\SurrogatePolicy{j}$ in episode $e$.
 The \BehaviorReconstructionName{} is then defined as the mean return of the surrogate policies normalized by the mean return of the initial policy:
 \begin{align}
-    \BR = \frac{1}{n \sum_{e=1}^{M} G^{(e)}_{\InitialPolicy}} \sum_{j=1}^{n} \sum_{e=1}^{M} G^{(e)}_{\SurrogatePolicy{j}}.
+    \BR = \frac{1}{n \sum_{e=1}^{M} g^{(e)}_{\InitialPolicy}} \sum_{j=1}^{n} \sum_{e=1}^{M} g^{(e)}_{\SurrogatePolicy{j}}.
 \end{align}
 
 In imitation learning, it is unlikely to expect the surrogate policy $\SurrogatePolicy{}$ to outperform the initial policy $\InitialPolicy$ it aims to approximate through supervised learning \parencite{pmlr-v9-ross10a}.
