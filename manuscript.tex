@@ -36,13 +36,15 @@
 \newcommand{\ThesisAuthor}{Maxime Alaarabiou}
 \title{\ThesisTitle}
 \author{\ThesisAuthor}
-\date{\today}
+\date{November 23, 2026}
 
 \begin{document}
 
 % Front matter (roman page numbers): title, acknowledgements, contents, notation.
 
 \frontmatter
+% PDF bookmarks: front matter entries are grouped under one parent entry.
+\pdfbookmark[-1]{Front Matter}{frontmatter}
 \ifnotitlepage
   \setcounter{page}{3}
 \else
@@ -71,6 +73,8 @@
 % and physical page parities agree.
 \cleartorightpage
 \mainmatter
+% Chapters are bookmarked at the top level again, outside the front matter group.
+\bookmarksetup{startatroot}
 \input{chapters/introduction/introduction.tex}
 \input{chapters/deep_learning/deep_learning.tex}
 \input{chapters/latent_space_analysis/latent_space_analysis.tex}
@@ -87,6 +91,7 @@
 % Back matter: reference lists, bibliography, institutional
 % acknowledgements and back cover (abstract).
 \backmatter
+\pdfbookmark[-1]{Back Matter}{backmatter}
 \printglossary[type=\acronymtype, nonumberlist]
 \printbibliography[heading=bibintoc]
 \input{chapters/institutional_acknowledgements/institutional_acknowledgements.tex}
